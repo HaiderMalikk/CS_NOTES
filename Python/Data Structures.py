@@ -83,6 +83,7 @@ class LinkedList:
             while n is not None:
                 print(n.data, end="->") # the end"-" is used to prevent newline after each element and add a arrow
                 n = n.ref
+            print("None")
         
 myLL = LinkedList() # create the Linked List
 myLL.add_begin(10) # create a node and add it to the start
