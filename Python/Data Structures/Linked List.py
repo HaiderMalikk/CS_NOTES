@@ -36,6 +36,21 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #       self.head = new_node # store refrence of first node in its head this refrence points to the next node
 #       # you can think of the head as being blind the refrence is its guide it gives it cordinates (ref = head) then the head goes to those cordinates (newnode)
 #       # whos refrence ? new nodes refrence, where dose head go ? new node beacuse here we add it to start
+#     def add_end(self, data):
+#       new_node = node(data)
+#       # check if LL is empty as if it is cant add to end this is your first node so just check if empty
+#       if self.head is None:
+#       # if empty just add node by pointing head to new node this is done in add begin 
+#           new_node.ref =self.head
+#           self.head = new_node
+#       else:
+#       # not empty so now go to end of LL this is done by checking when ref ends ie n = self.head which points to new node so when n.ref or newnodes ref is none there is no next node and end of LL is reached 
+#           n = self.head
+#           while n.ref is not None:
+#           # treverse the LL but dont print data 
+#               n = n.ref
+#       # now we have reched the end n.ref is none this is the end now as node has no ref hence no next node add new node so the ref of last node points to new node here now n.ref is ref of last node as we have broken out of while loop
+#       n.ref = new_node
 #     def display_LL(self):
 #         if self.head is None: # if list is empty
 #             print("Linked List is empty")
@@ -53,9 +68,9 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 
 
 # LL1 = LinkedList() # creating empty linked list 
-# LL1.display_LL() # calling method to print list
 # LL1.add_begin(50) # adding number 50 at beginning of list
 # LL1.add_begin(10) # 10 is val of data, ref is 50 new first node is 10
+# LL1.display_LL() # calling method to print list
 
 ## LINKED LIST implementation
 print("Linked List:")
@@ -75,6 +90,17 @@ class LinkedList:
         new_node.ref = self.head
         self.head = new_node
     
+    def add_end(self, data):
+        new_node = node(data)
+        if self.head is None:
+            new_node.ref = self.head
+            self.head = new_node
+        else:
+            n = self.head
+            while n.ref is not None:
+                n = n.ref
+            n.ref = new_node
+    
     def display_LL(self): # iterate through Linked list and display nodes
         if self.head is None:
             print("empty")
@@ -86,7 +112,9 @@ class LinkedList:
             print("None") # prints None at end of LL
         
 myLL = LinkedList() # create the Linked List
+myLL.add_end(30) # add 30 to end but right noew LL is empty so its added to start
+myLL.add_begin(20) # create a node and add it to the start
 myLL.add_begin(10) # create a node and add it to the start
-myLL.add_begin(15) # create a node and add it to the start
+myLL.add_end(40) # add node to end
 myLL.display_LL() # iterate through and show all nodes in the Linked List
-# OUTPUT: 15->10->None
+# OUTPUT: 10->20->30->40->None
