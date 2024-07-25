@@ -169,11 +169,11 @@ class LinkedList:
             new_node.ref = self.head
             self.head = new_node
             return
-        while n.ref is not None:
+        while n is not None:
             if n.ref.data == x:
                 break
             n = n.ref
-        if n.ref is None:
+        if n is None:
             print(f"node '{x}' DNE")
         else:
             new_node = node(data)
