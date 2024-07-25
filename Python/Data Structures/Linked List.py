@@ -18,7 +18,8 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
                         ^ node 1 ref = 1001
               ^ ref first node            
 """
-# class Node: # define node
+## LL (THINK OF 'n' AS NODE)
+# class Node: # define node 
 #     def __init__(self, data): # node constructer 
 #         self.data = data # data part of node the acc value
 #         self.ref = None # ref value of node empty to start the ref points to the next node but initially we have No next node no no refrence
@@ -36,6 +37,7 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #       self.head = new_node # store refrence of first node in its head this refrence points to the next node
 #       # you can think of the head as being blind the refrence is its guide it gives it cordinates (ref = head) then the head goes to those cordinates (newnode)
 #       # whos refrence ? new nodes refrence, where dose head go ? new node beacuse here we add it to start
+#
 #     def add_end(self, data):
 #       new_node = node(data)
 #       # check if LL is empty as if it is cant add to end this is your first node so just check if empty
@@ -51,6 +53,24 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #               n = n.ref
 #       # now we have reched the end n.ref is none this is the end now as node has no ref hence no next node add new node so the ref of last node points to new node here now n.ref is ref of last node as we have broken out of while loop
 #       n.ref = new_node
+#
+#     def add_afterNode(self, data, x): # in the format (data to add, node to add after give the nodes data)
+#         n = self.head # n can be short for node
+#         while n is not None: # simple check to see if LL empty 
+#             if x == n.data: # if the node we are looking for is equal to current node
+#                 break # stop loop
+#             n = n.ref # if current node is not the node x we are looking for then treverse the LL by updating n to n.ref (current node n's ref points to nect node)
+#         # if either the loop dose not run (no LL exists) or n.ref is not possible ie n.ref DNE as we are at the last node so now n = None while loop stops and as n = None this conditional runs
+#         # but what if we are at the last node ? there is not refrence after that but n = n.ref is not n = None becasue if node x is last node n = n.ref will go from second last node to last node then while loop will run and break after x==n.data 
+#         if n is None:
+#             print("node not found")
+#         else: # if there is a node selected 
+#             new_node = node(data) # create new node usinf node class
+#             #the order done here is first assign the new nodes ref to point to next node (remembering that the next node was originally n.ref as the ref of a node points to next node), the take the ref of the now prevoius node and point it to the new node (our current node is the node we stopped at)
+#             #n.ref is the ref of the node we are adding after so basiclly then take the node x we are adding after and let its reference (node x's refrece) point to the new node
+#             new_node.ref = n.ref  # take newnodes ref and assign it to next node (originally n.ref)
+#             n.ref = new_node # then take the node x we are adding after and let its reference (node x's refrece) point to the new node
+#
 #     def display_LL(self):
 #         if self.head is None: # if list is empty
 #             print("Linked List is empty")
@@ -101,6 +121,19 @@ class LinkedList:
                 n = n.ref
             n.ref = new_node
     
+    def add_after_Node(self, data, x):
+        n = self.head
+        while n is not None:
+            if x == n.data:
+                break
+            n = n.ref
+        if n is None:
+            print(f"node '{x}' DNE or LL is empty")
+        else:
+            new_node = node(data)
+            new_node.ref = n.ref
+            n.ref = new_node
+    
     def display_LL(self): # iterate through Linked list and display nodes
         if self.head is None:
             print("empty")
@@ -116,5 +149,6 @@ myLL.add_end(30) # add 30 to end but right noew LL is empty so its added to star
 myLL.add_begin(20) # create a node and add it to the start
 myLL.add_begin(10) # create a node and add it to the start
 myLL.add_end(40) # add node to end
+myLL.add_after_Node(50, 40) # add node with data 50 after node with data 40
 myLL.display_LL() # iterate through and show all nodes in the Linked List
-# OUTPUT: 10->20->30->40->None
+# OUTPUT: 10->20->30->40->50->None
