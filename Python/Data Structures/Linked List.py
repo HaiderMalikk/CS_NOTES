@@ -54,6 +54,8 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #       # now we have reched the end n.ref is none this is the end now as node has no ref hence no next node add new node so the ref of last node points to new node here now n.ref is ref of last node as we have broken out of while loop
 #       n.ref = new_node
 #
+#     
+#     # note: for the while loops you can do while n is or while n.ref is as if n is none n.ref is node and at the end of the list n.ref is null but since n = n.ref n will also be none
 #     def add_afterNode(self, data, x): # in the format (data to add, node to add after give the nodes data)
 #         n = self.head # n can be short for node
 #         while n is not None: # simple check to see if LL empty 
@@ -83,13 +85,13 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #             self.head = new_node
 #             return # we do not want while loop to run after we insert node before first node if we dont n.ref.data will not check the first node and we have alredy added it so it will say node x DNE but x node has been added as first node
 #         # now we are adding at the second node at leaste so there is a node before and after new node
-#         while n.ref is not None: while we have a next node
+#         while n is not None: while we have a next node
 #             # n.data checks the current nodes data n.ref is next node so n.ref.data checks the data of the next node after x node
 #             # if we check the data of the node after we can add the node after a given node but that gievn node is the node before the x node (the rest of code follows add_after given node here gievn node is the node before x node)
 #             if n.ref.data == x: 
 #                 break
 #             n = n.ref
-#         if n.ref is None: # here this would check if node is not found or LL is empty but we have checked for empty LL before so this will for sure mean node DNE
+#         if n is None: # here this would check if node is not found or LL is empty but we have checked for empty LL before so this will for sure mean node DNE
 #             print("Node not found")
 #         else: # add after the node before x node
 #             new_node = node(data)
