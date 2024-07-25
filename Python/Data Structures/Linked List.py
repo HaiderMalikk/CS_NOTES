@@ -18,7 +18,7 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
                         ^ node 1 ref = 1001
               ^ ref first node            
 """
-## LL (THINK OF 'n' AS NODE)
+## LL (THINK OF 'n' AS NODE) also self.head changes within functions but innitally self.head points to first node
 # class Node: # define node 
 #     def __init__(self, data): # node constructer 
 #         self.data = data # data part of node the acc value
@@ -39,7 +39,7 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #       # whos refrence ? new nodes refrence, where dose head go ? new node beacuse here we add it to start
 #
 #     def add_end(self, data):
-#       new_node = node(data)
+#       new_node = node(data) # to avoid puttinh in each conditional 
 #       # check if LL is empty as if it is cant add to end this is your first node so just check if empty
 #       if self.head is None:
 #       # if empty just add node by pointing head to new node this is done in add begin 
@@ -62,6 +62,7 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #             n = n.ref # if current node is not the node x we are looking for then treverse the LL by updating n to n.ref (current node n's ref points to nect node)
 #         # if either the loop dose not run (no LL exists) or n.ref is not possible ie n.ref DNE as we are at the last node so now n = None while loop stops and as n = None this conditional runs
 #         # but what if we are at the last node ? there is not refrence after that but n = n.ref is not n = None becasue if node x is last node n = n.ref will go from second last node to last node then while loop will run and break after x==n.data 
+#         # note if n = n.ref dose not run then x == n.data is true and since n =self.head is first node x is the first node and loop breaks on first run
 #         if n is None:
 #             print("node not found")
 #         else: # if there is a node selected 
@@ -70,6 +71,30 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #             #n.ref is the ref of the node we are adding after so basiclly then take the node x we are adding after and let its reference (node x's refrece) point to the new node
 #             new_node.ref = n.ref  # take newnodes ref and assign it to next node (originally n.ref)
 #             n.ref = new_node # then take the node x we are adding after and let its reference (node x's refrece) point to the new node
+#
+#     def add_before_node(self, data, x): # adding before node in form (self, data to add, data of node to add before)
+#         n = self.head
+#         if n is None: # check if LL empty to aviod error for next conditional if you dont n.data DNE and so error
+#             print("empty")
+#             return # if we dont return then the while loop will run 
+#         if n.data == x: # if self.head's data (which is the first node data as head initially points to first node) is the same as our nodes data we are trying to add before that means we are adding a node before the first node and we must treat that as the first node so copy add begin
+#             new_node = node(data)
+#             new_node.ref = self.head
+#             self.head = new_node
+#             return # we do not want while loop to run after we insert node before first node if we dont n.ref.data will not check the first node and we have alredy added it so it will say node x DNE but x node has been added as first node
+#         # now we are adding at the second node at leaste so there is a node before and after new node
+#         while n.ref is not None: while we have a next node
+#             # n.data checks the current nodes data n.ref is next node so n.ref.data checks the data of the next node after x node
+#             # if we check the data of the node after we can add the node after a given node but that gievn node is the node before the x node (the rest of code follows add_after given node here gievn node is the node before x node)
+#             if n.ref.data == x: 
+#                 break
+#             n = n.ref
+#         if n.ref is None: # here this would check if node is not found or LL is empty but we have checked for empty LL before so this will for sure mean node DNE
+#             print("Node not found")
+#         else: # add after the node before x node
+#             new_node = node(data)
+#             new_node.ref = n.ref
+#             n.ref = new_node
 #
 #     def display_LL(self):
 #         if self.head is None: # if list is empty
@@ -133,6 +158,27 @@ class LinkedList:
             new_node = node(data)
             new_node.ref = n.ref
             n.ref = new_node
+            
+    def add_before_node(self, data, x):
+        n = self.head
+        if n is None:
+            print("LL is empty")
+            return
+        if n.data == x:
+            new_node = node(data)
+            new_node.ref = self.head
+            self.head = new_node
+            return
+        while n.ref is not None:
+            if n.ref.data == x:
+                break
+            n = n.ref
+        if n.ref is None:
+            print(f"node '{x}' DNE")
+        else:
+            new_node = node(data)
+            new_node.ref = n.ref
+            n.ref = new_node
     
     def display_LL(self): # iterate through Linked list and display nodes
         if self.head is None:
@@ -150,5 +196,7 @@ myLL.add_begin(20) # create a node and add it to the start
 myLL.add_begin(10) # create a node and add it to the start
 myLL.add_end(40) # add node to end
 myLL.add_after_Node(50, 40) # add node with data 50 after node with data 40
+myLL.add_before_node(5, 10) # add node with data 0 before node with data 10 (here 0 will become first node)
+myLL.add_before_node(45, 50) # add node with data 45 before node with data 50
 myLL.display_LL() # iterate through and show all nodes in the Linked List
-# OUTPUT: 10->20->30->40->50->None
+# OUTPUT: 5->10->20->30->40->45->50->None
