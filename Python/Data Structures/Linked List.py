@@ -74,7 +74,7 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #             new_node.ref = n.ref  # take newnodes ref and assign it to next node (originally n.ref)
 #             n.ref = new_node # then take the node x we are adding after and let its reference (node x's refrece) point to the new node
 #
-#     if you want to not use return just wrap the while loop in a else statement 
+#     # if you want to not use return just wrap the while loop in a else statement 
 #     def add_before_node(self, data, x): # adding before node in form (self, data to add, data of node to add before)
 #         n = self.head
 #         if n is None: # check if LL empty to aviod error for next conditional if you dont n.data DNE and so error
