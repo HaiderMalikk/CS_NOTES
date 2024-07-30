@@ -74,6 +74,7 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #             new_node.ref = n.ref  # take newnodes ref and assign it to next node (originally n.ref)
 #             n.ref = new_node # then take the node x we are adding after and let its reference (node x's refrece) point to the new node
 #
+#     if you want to not use return just wrap the while loop in a else statement 
 #     def add_before_node(self, data, x): # adding before node in form (self, data to add, data of node to add before)
 #         n = self.head
 #         if n is None: # check if LL empty to aviod error for next conditional if you dont n.data DNE and so error
@@ -200,5 +201,6 @@ myLL.add_end(40) # add node to end
 myLL.add_after_Node(50, 40) # add node with data 50 after node with data 40
 myLL.add_before_node(5, 10) # add node with data 0 before node with data 10 (here 0 will become first node)
 myLL.add_before_node(45, 50) # add node with data 45 before node with data 50
+myLL.add_after_Node(55, 50) # add 55 aftew node 50
 myLL.display_LL() # iterate through and show all nodes in the Linked List
 # OUTPUT: 5->10->20->30->40->45->50->None
