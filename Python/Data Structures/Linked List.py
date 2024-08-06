@@ -58,6 +58,9 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #     # note: for the while loops you can do while n is or while n.ref is as if n is none n.ref is node and at the end of the list n.ref is null but since n = n.ref n will also be none
 #     def add_afterNode(self, data, x): # in the format (data to add, node to add after give the nodes data)
 #         n = self.head # n can be short for node
+#         if n is None: # check if LL is empty so later on we know for sure node not found
+#             print("empty LL")
+#             return
 #         while n is not None: # simple check to see if LL empty 
 #             if x == n.data: # if the node we are looking for is equal to current node
 #                 break # stop loop
@@ -66,7 +69,7 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #         # but what if we are at the last node ? there is not refrence after that but n = n.ref is not n = None becasue if node x is last node n = n.ref will go from second last node to last node then while loop will run and break after x==n.data 
 #         # note if n = n.ref dose not run then x == n.data is true and since n =self.head is first node x is the first node and loop breaks on first run
 #         if n is None:
-#             print("node not found")
+#             print("node not found") #  alredy checked for empty LL so know that node DNE
 #         else: # if there is a node selected 
 #             new_node = node(data) # create new node usinf node class
 #             #the order done here is first assign the new nodes ref to point to next node (remembering that the next node was originally n.ref as the ref of a node points to next node), the take the ref of the now prevoius node and point it to the new node (our current node is the node we stopped at)
@@ -151,12 +154,15 @@ class LinkedList:
     
     def add_after_Node(self, data, x):
         n = self.head
+        if n is None:
+            print("empty LL cannot add")
+            return
         while n is not None:
             if x == n.data:
                 break
             n = n.ref
         if n is None:
-            print(f"node '{x}' DNE or LL is empty")
+            print(f"node '{x}' DNE")
         else:
             new_node = node(data)
             new_node.ref = n.ref
