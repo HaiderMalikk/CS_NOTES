@@ -58,7 +58,7 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #     # note: for the while loops you can do while n is or while n.ref is as if n is none n.ref is node and at the end of the list n.ref is null but since n = n.ref n will also be none
 #     def add_afterNode(self, data, x): # in the format (data to add, node to add after give the nodes data)
 #         n = self.head # n can be short for node
-#         if n is None: # check if LL is empty so later on we know for sure node not found
+#         if n is None: # check if LL is empty so later on we know for sure node not found unlike aff before this is optional
 #             print("empty LL")
 #             return
 #         while n is not None: # simple check to see if LL empty 
@@ -89,13 +89,14 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #             self.head = new_node
 #             return # we do not want while loop to run after we insert node before first node if we dont n.ref.data will not check the first node and we have alredy added it so it will say node x DNE but x node has been added as first node
 #         # now we are adding at the second node at leaste so there is a node before and after new node
-#         while n is not None: while we have a next node
+#         # why is it n.ref and not n unlike after node adding, at end if node is not found and the end n exists and its the last node but n.ref DNE and so n.ref.data DNE and a error comes also after while n.ref stops as the last node has no ref(no next node) n exits but n.ref is node and so we check if n.ref is none to confirm node not found
+#         while n.ref is not None: while we have a next nodes ref
 #             # n.data checks the current nodes data n.ref is next node so n.ref.data checks the data of the next node after x node
 #             # if we check the data of the node after we can add the node after a given node but that gievn node is the node before the x node (the rest of code follows add_after given node here gievn node is the node before x node)
 #             if n.ref.data == x: 
 #                 break
 #             n = n.ref
-#         if n is None: # here this would check if node is not found or LL is empty but we have checked for empty LL before so this will for sure mean node DNE
+#         if n.ref is None: # here this would check if node is not found or LL is empty but we have checked for empty LL before so this will for sure mean node DNE
 #             print("Node not found")
 #         else: # add after the node before x node
 #             new_node = node(data)
@@ -178,11 +179,11 @@ class LinkedList:
             new_node.ref = self.head
             self.head = new_node
             return
-        while n is not None:
+        while n.ref is not None:
             if n.ref.data == x:
                 break
             n = n.ref
-        if n is None:
+        if n.ref is None:
             print(f"node '{x}' DNE")
         else:
             new_node = node(data)
@@ -191,7 +192,7 @@ class LinkedList:
     
     def display_LL(self): # iterate through Linked list and display nodes
         if self.head is None:
-            print("empty")
+            print("empty LL nothing to display")
         else:
             n = self.head
             while n is not None:
