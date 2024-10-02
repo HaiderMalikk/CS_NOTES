@@ -1,4 +1,4 @@
-// Javascript intro
+// Javascript intro and syntax
 // ! the ';'  is not needed in js but is good practice
 
 console.log("start") // print to console
