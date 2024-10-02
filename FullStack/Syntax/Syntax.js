@@ -1,4 +1,5 @@
 // Javascript intro and syntax
+// JS6 syntax and features
 // ! the ';'  is not needed in js but is good practice
 
 console.log("start") // print to console
@@ -6,10 +7,10 @@ console.log("start") // print to console
 //  * data types and varibles (any type can be null, bool, Str, symbol(immutable primative), num, obj)
 // same operators as python/ java
 
-// 3 ways to declare a variable can be any of the above
-var myName = "Haider"; // avalible in whole program
-let num = 10; // avalible in scope of block
-const constant = "Malik"; // cannot change its constant for arrays you cant cahneg array but can change its elements also can use object.freeze to make it constant
+// ! 3 ways to declare a variable can be any of the above
+var myName = "Haider"; // avalible in whole program no scope
+let num = 10; // avalible in scope of block only 
+const constant = "Malik"; // cannot change its constant for arrays you cant cahneg array but can change its elements // block only scope 
 
 // you can add strings in js type DN matter
 console.log(myName + constant);
