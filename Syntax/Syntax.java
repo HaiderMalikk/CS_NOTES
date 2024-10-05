@@ -1,4 +1,4 @@
-package FullStack.Syntax; // package must include you path so here we are in the syntax folder which is in the fullstack folder which is the root
+package Syntax; // package must include you path so here we are in the syntax folder which is in the fullstack folder which is the root
 
 import java.util.Arrays;
 import java.util.Scanner;
