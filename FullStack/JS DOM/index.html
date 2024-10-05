@@ -69,6 +69,26 @@
           
 
       }
+      .div3 {
+          border: solid 5px #fff;
+          border-radius: 20px;
+          font-size: 3.5rem;
+          text-align: center;
+          padding: 50px;
+          color: #fff;
+          
+
+      }
+      .div4 {
+          border: solid 5px #fff;
+          border-radius: 20px;
+          font-size: 3.5rem;
+          text-align: center;
+          padding: 50px;
+          color: #fff;
+          
+
+      }
 
       button {
           display: block;
@@ -81,6 +101,13 @@
         margin-top: 10px;
       }
 
+      /* here we will hide the content inside div2 so its only reveal when button is cliked*/
+      .hidden-content {
+          display: none;
+      }
+      .hidden-content.reveal-btn {
+          display: block;
+      }
      
     </style>
 </head>
@@ -98,10 +125,38 @@
         </ul>
     </div>
 
+    <!--  FIest type of event listner   -->
+    <div class="div1">
+        <h4>BUTTON</h4>
+        <button onclick="alert('I am clicked')">Click Me</button>
+        <!-- THIS BUTTON IS USING JS  -->
+        <button class="button">Click Me JS</button>
+        <button class="button2">Hover Over</button>
+    </div>
 
-    
+    <div class="div2">
+        <h4>BUTTON</h4>
+        <button class="reveal-btn">Click Me to reveal</button>
+        <div class="hidden-content">
+            Lorem ipsum 
+        </div>
+    </div>
+
+    <h4>Event propigation =></h4>
+    <div class="div4">
+        2
+        <div class ="div3">
+            1
+            <button class="EventButton">Click me</button>   
+            </div>
+        </div>
+            
+    </div>
+
+
  
 </body>
+
 
 
 <script src="DOM.js"></script>
