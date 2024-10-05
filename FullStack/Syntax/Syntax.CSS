@@ -1,0 +1,121 @@
+/* Targeting hyperlinks using class */
+.hyperlink {
+    text-decoration: none;
+    color: #0066cc;
+}
+  
+  .hyperlink:hover {
+    color: #ff0000;
+}
+
+/* Styling images using class */
+.styled-image {
+    border: 2px solid black;
+    border-radius: 10px;
+}
+  
+/* Applying styles to audio and video using IDs */
+#audio-player, #video-player {
+    margin: 20px 0;
+}
+
+/* Styling bold and italic text using classes */
+.bold-text {
+    font-weight: bold;
+    color: #333;
+}
+  
+  .italic-text {
+    font-style: italic;
+    color: #555;
+}
+  
+/* Styling unordered and ordered lists using classes */
+.unordered-list {
+    list-style-type: square;
+    color: #333;
+}
+  
+.ordered-list {
+    list-style-type: decimal-leading-zero;
+    color: #333;
+}
+  
+/* Styling tables using an ID */
+#styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  
+  #styled-table th, #styled-table td {
+    padding: 8px;
+    text-align: center;
+}
+  
+/* Changing text and background colors using an ID */
+#colored-paragraph {
+    color: white;
+    background-color: #0073e6;
+    padding: 10px;
+}
+
+/* Styling span and div using classes */
+.highlight-span {
+    color: red;
+}
+  
+.highlight-div {
+    background-color: green;
+    color: white;
+    padding: 10px;
+}
+
+/* Styling iframe using a class */
+.styled-iframe {
+    border: 3px solid black;
+    border-radius: 5px;
+}
+
+/* Styling button using an ID */
+#styled-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+  
+  #styled-button:hover {
+    background-color: #45a049;
+}
+
+/* Styling form and input elements using IDs and classes */
+#user-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+  }
+  
+  .form-submit {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .form-submit:hover {
+    background-color: #45a049;
+  }
+
+
+  
+  
+  
