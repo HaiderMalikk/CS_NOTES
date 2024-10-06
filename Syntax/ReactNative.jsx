@@ -163,3 +163,24 @@ function Counter() {
     </View>
   );
 }
+
+// ! EXAMPLE OF TYPESCRIPT in REACT NATIVE
+/* 
+import React from 'react';
+import { View, Text, Button } from 'react-native';
+
+interface Props {
+    name: string; // Define the expected prop type
+}
+
+const Greeting: React.FC<Props> = ({ name }) => {
+    return (
+        <View>
+            <Text>Hello, {name}!</Text>
+            <Button title="Press me" onPress={() => alert(`Hello, ${name}`)} />
+        </View>
+    );
+};
+
+export default Greeting;
+*/
