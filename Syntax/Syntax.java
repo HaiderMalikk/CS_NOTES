@@ -219,6 +219,7 @@ class Syntax {
     // to delete an element you need to know the index of the element you want to delete
     // to replace an element you need to know the index of the element you want to replace
     // to replace the first element of the numbers array with 0
+    // ! NOTE FOR OBJS LIKE STRINGS YOU NEED TO USE .length() FOR ARRAYS ITS .length NO '()' !
     numbers2[numbers2.length - 1] = 0; // lreplacing ast element of array to 0
     // array num2 is now print using tostring
     System.out.println(Arrays.toString(numbers2));
