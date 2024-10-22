@@ -953,6 +953,62 @@ import random as rd
 
 # print(new_arr)
 
+# list comprehention ( a way to make a list with loops and conditions inside these help build the list)
+# syntax general: new_list = [expression for item in iterable if condition]
+# EX 
+squares = [x ** 2 for x in range(10)]
+print(squares)  # Output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+# EX
+fruits = ['apple', 'banana', 'cherry']
+upper_fruits = [fruit.upper() for fruit in fruits]
+print(upper_fruits)  # Output: ['APPLE', 'BANANA', 'CHERRY']
+# EX
+coordinates = [(x, y) for x in range(3) for y in range(3)]
+print(coordinates)  # Output: [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+# EX flat lists
+nested_list = [[1, 2], [3, 4], [5, 6]]
+flat_list = [num for sublist in nested_list for num in sublist]
+print(flat_list)  # Output: [1, 2, 3, 4, 5, 6]
+
+
+# sets in python 
+""" In Python, sets are unordered collections of unique elements. 
+They are defined using curly braces {} or the set() function, 
+and they automatically remove duplicate values. """
+my_set = {1, 2, 3, 4} # using dictionaries and {}
+my_set = set([1, 2, 3, 4]) # using the set() function
+my_set.add(5) # add 5 to the set
+my_set.remove(3)  # Raises KeyError if element is not found
+my_set.discard(3)  # Does not raise an error if the element is not found
+# checking set
+if 2 in my_set:
+    print("2 is in the set")
+# ! NOTE you can also compare sets iterate over them and do unions intersection etc etc
+
+# tuple unpacking (a way to delare and assign multiple variables at once)
+# syntax general a, b, c = (1, 2, 3)
+# ! NOTE that the variables and arguments must be in the same order and the number of variables must match the number of arguments (a, b) = (1, 2, 3) is not allowed
+# EX
+coordinates = (10, 20)
+x, y = coordinates
+print(x)  # Output: 10
+print(y)  # Output: 20
+# EX 
+data = ("Alice", 25, "Engineer")
+name, age, profession = data
+print(name)       # Output: Alice
+print(age)        # Output: 25
+print(profession) # Output: Engineer
+# EX with negating the variables
+data = ("Bob", 30, "Designer", "New York")
+name, _, profession, _ = data
+print(name)       # Output: Bob
+print(profession) # Output: Designer
+# EX lists
+employees = [("John", 28), ("Jane", 32), ("Doe", 25)]
+for name, age in employees:
+    print(f"{name} is {age} years old.")
+
 # ! QUICK PYthon easy oop syntax ex
 class Person:
     def __init__(self, name, age): #  this function is the counstructer (__init__) means constructer
@@ -962,3 +1018,4 @@ class Person:
         print(f"Hello, my name is {self.name} and I am {self.age} years old.")
 
 person1 = Person("Alice", 30) # the object has two parameters name, age. self is not a parameter here we make the object
+person1.greet() # Output: "Hello, my name is Alice and I am 30 years old."
