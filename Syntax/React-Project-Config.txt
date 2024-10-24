@@ -1,0 +1,79 @@
+REACT JS (web only)
+
+1) basic start
+ ‘npx create-react-app’
+
+2) vite + gsap animation start
+‘npm create vite@latest’
+to use vite gsap with existing react project made using 1 or 2
+‘npm install gsap @gsap/react’
+to start again: ’npm run dev’
+
+————————————————————————————————————————————————
+REACT NATIVE (APPS/ web)
+
+3) basic expo project 
+‘npx create-expo-app appname’
+add ‘-t’ at end to create a template 
+to start: ‘npx expo start’ NOTE: expo go dose not always work
+-> 
+prettier with expo:
+to add prettier: ’npx add -D prettier’
+create files in project folder ‘.prettierrc’ for options and ‘.prettierignore’ for files to ignore
+to format code: ‘npx prettier —write .’
+->
+Eslint with expo (to avoid react errors)
+use: “ npm add -D eslint eslint-plugin-react eslint-plugin-react-hooks”
+for settings make a ‘.eslintrc.json’ and ‘.eslintignore’ fro ignoring files. make in project folder
+->
+for expo router: ‘npx expo install expo-router’
+for options with router: ‘react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar’
+- Make sure to have ‘app’ folder under ’src’ folder 
+- Move ‘app.tsx’ or jsx file into this app folder
+- rename app file Using ‘_layout.tsx’ or jsx will allow all files under app folder to have the same layout
+- in the package.json chnage ‘main’ to “expo-router/entry”
+
+FOR DOWNLOADING EXPO APP LOCALY ON SIM(better no expo go): 
+- have expo app ready
+- open ios sim
+- “npx expo run: ios” Note: must have dependiencies installed THIS WILL MAKE THE IOS APP
+- ios folder built, use this for Xcode
+- to stop kill terminal, to start again use ‘npx expo start” NOTE: can use expo or app
+- NOTE: to reinstall app: “npx expo run:ios” 
+-> expo dev (for app)
+to get expo dev client: “npx expo install expo-dev-client” 
+- now we have the dev menu for our app make sure to re download app using run ios
+- you can use the dev menu with: ‘command + d”
+
+FOR EXPORTING IOS REACTAPP:
+- have above step for ios build done
+- in ios build folder open appname.xcworkspace
+- when in xcode goto: product->scheme->edit Scheme->build config->release
+- after this you will have final product on ios
+NOTE: you can get cocoapods w: “npx pod-install ios” this is auto done when you do run:ios
+
+5) react native no expo with next.js add “./” at end to innit in current folder 
+‘npx create-next-app@latest appname’
+
+4) react native no expo (for xcode or andriod studio)
+‘npx react-native@latest init projectname’
+then follow instuctions and download dependencies
+to start: ‘npm start’
+————————————————————————————————————————————————
+TO STOP: ‘Ctrl+C’ or other commands 
+
+————————————————————————————————————————————————
+NOTE: for packages not made localy using to run use: ‘run dev’ if fails use with ‘npm/npx’
+NOTE: if error try ‘npx/npx intall’ to get packages for project
+NOTE: to rebuild app: ‘npx expo prebuild —clean’ then to rebuild do: ’npx expo run:ios’
+NOTE: use expo commands to re run expo apps see section
+NOTE: Make sure you are in path of project folder before running any commands
+NOTE: Leave app running by leaving the terminal it ran in, make new terminal for adding stuff
+NOTE: To rename app (seperate from app name given at creation) Must change all occurances of app name in all json and other relevent folder, note that you must use unix rules for package.json but this wont be you app name that will be changed in other files and must match througout
+————————————————————————————————————————————————
+TO BUILD (for reactjs)
+1) in next.config.mjs goto const nextConfig and put: output: ‘export’ , typescript: {ignoreBuildErrors: true,} NOTE that the second part is if you get a error in p2
+2) in terminal do npm run build it will return it in a out folder after compile succsessful NOTE delete unneeded folders, 
+3) in hoststinger goto dashboard - filemanager - public_html then delete default then put your out folder inside public_html then you can visit website.
+
+
