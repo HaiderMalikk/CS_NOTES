@@ -6,8 +6,6 @@
 */
 
 // ! NOTE: this code dose not run it is just an example of syntax !!!!!!
-// ! NOTE: '*' is added to the start of varoables to make it a pointer goto pointers to learn more
-
 
 // ! Comments & Escape Sequences
 
@@ -282,7 +280,7 @@ void sortArray(int arr[], int n) {
     }
 }
 
-// ! Pointers
+// ! Pointers NOTE: '*' is used to denote a pointer. at runtime we can use *pointername to access the value at that address and &pointername to get the address
 
 // A pointer is a variable that stores the memory address of another variable.
 int *ptr;
