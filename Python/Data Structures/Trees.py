@@ -33,7 +33,7 @@ Tree Properties:
 
 - **Sibling**: Nodes that share the same parent. `[Child 1]` and `[Child 2]` are siblings since they share the same parent `[Root]` notice how there on the same level.
 
-- **Subtree**: A tree consisting of a node and all its descendants. For example, the subtree rooted at `[Child 1]` includes `[Child 1]`, `[Grandchild 1]`, and `[Great Grandchild 1]`. NOTE: for the subtree at child 1 the grandchild 1 would acctualy be a child of child 1 if we were to traverse it
+- **Subtree**: A tree consisting of a node and all its descendants. For example, the subtree rooted at `[Child 1]` includes `[Child 1]` (the subtrees new root), `[Grandchild 1]`, `[Grandchild 2]`, and `[Great Grandchild 1]`. NOTE: for the subtree at child 1 the grandchild 1 would acctualy be a child of child 1 if we were to traverse it. NOTE: every next node will have its own subtree or subtrees on left right etc.
 
 - **Height**: The height of a tree is the length of the longest path from the root to a leaf. The height of a tree is measured in edges (or nodes, depending on definition). NOTE: the height starts at 0 so here the height is 3, at height 0 we have root at height 3 we have great grandchild 1.
 
@@ -48,21 +48,34 @@ Tree Properties:
 # ! here are some common tree structures and descriptions
 """
 Tree Types Overview:
+0. **General Tree**:
+   - Definition: A tree in which each node can have any number of child nodes i.e there is no limit on the number of child nodes a node can have.
+   - Characteristics:
+     - any node can have any number of children.
+     - the tree above given in teh example is a general tree.
+   - Uses: Various.
 
 1. **Binary Tree**:
    - Definition: A tree in which each node has at most two children, referred to as the left child and the right child.
    - Characteristics: 
      - Each node can have 0, 1, or 2 children.
      - The height of a balanced binary tree is minimal for a given number of nodes.
-     - In a full binary tree, every node other than the leaves has exactly two children.
+     - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf).
+     - In a complete binary tree, all levels of the tree except the last level are completely filled (meaning mus thave 2 child nodes). Last level can be either completely filled or filled left to right meaning that if the last level has 2 child nodes they must be on the left most node of the previous level. if we have one node it must be a left node to the left most node of the previous level. This left most node must be filled first before moving to the right
+     - In a Perfect binary tree, all the nodes except for leaf nodes have 2 children and all the leaf nodes are at the same level.
+     - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1.
+     - In a pathalogical binary tree, every parent node has only 1 child node.
    - Uses: Commonly used in various applications such as expression trees for evaluating mathematical expressions and heaps for efficient data storage.
 
 2. **Binary Search Tree (BST)**:
    - Definition: A special type of binary tree that maintains a sorted order of elements.
    - Characteristics:
-     - The left subtree contains only nodes with values less than the parent node.
-     - The right subtree contains only nodes with values greater than the parent node.
+     - The left subtree at every node contains only nodes with values less than the parent node.
+     - The right subtree at every node contains only nodes with values greater than the parent node.
+     - NOTE: if root is 50 , left subreet is 30 and right subtree is 70 then this is fine, BUT the node 30's left subtree must me less than 30 while its right node must be greater than 30 but less than 50 as 30 (its parent node) is on the left of node 50 (the node 30's parent node) hence all of the values below it the left must be less than 50. 
+     - the left and right subtrees at every node must be a BST themselves.
      - Duplicate values are typically not allowed, or handled in a specific way (e.g., by allowing duplicates in the right subtree).
+     - Given a list of values you can create a BST using the rules above inserting elements only when it dose not break the BST.
    - Uses: Efficient searching, insertion, and deletion of elements with an average time complexity of O(log n) when balanced; used in applications requiring sorted data, such as databases.
 
 3. **Balanced Trees**:
@@ -111,3 +124,4 @@ Tree Types Overview:
      - Forms the basis for the heapsort algorithm, sorting elements in O(n log n) time.
      - Utilized in graph algorithms, such as Dijkstra's algorithm, for efficient minimum element retrieval.
 """
+
