@@ -76,6 +76,7 @@ Tree Types Overview:
      - the left and right subtrees at every node must be a BST themselves.
      - Duplicate values are typically not allowed, or handled in a specific way (e.g., by allowing duplicates in the right subtree).
      - Given a list of values you can create a BST using the rules above inserting elements only when it dose not break the BST.
+     - 2 Equal Node values: if 2 nodes in any level of the tree have the same value then; 1) it must be on the left side of the parent. 2) it must be on the right side of the parent 3) ignore duplicates. NOTE: (these are the most common cases and BST's duplicate rules may vary). Another approach is too use a counter to count the number of nodes that have the same value. and only update that nodes first occurance with that counter.
    - Uses: Efficient searching, insertion, and deletion of elements with an average time complexity of O(log n) when balanced; used in applications requiring sorted data, such as databases.
 
 3. **Balanced Trees**:
