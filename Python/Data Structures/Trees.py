@@ -79,6 +79,38 @@ Tree Types Overview:
      - 2 Equal Node values: if 2 nodes in any level of the tree have the same value then; 1) it must be on the left side of the parent. 2) it must be on the right side of the parent 3) ignore duplicates. NOTE: (these are the most common cases and BST's duplicate rules may vary). Another approach is too use a counter to count the number of nodes that have the same value. and only update that nodes first occurance with that counter.
    - Uses: Efficient searching, insertion, and deletion of elements with an average time complexity of O(log n) when balanced; used in applications requiring sorted data, such as databases.
 
+  - Operations: 
+    - Search: Starting at root node we serch for our given value in our BST
+      NOTE: we run the function below recursively until we find the value or run out of nodes at each node we check if this is out value if not we branch accordingly to the left or right subtree depeneding on given node (in else block) when our node is found we return it in line 2 if we run out of nodes we return not found in line 1 
+      Recurtion: // we start at the root and search until found meaning recurtion
+        if node == Null: return not found or Empty BST // if node is empty we are finished, after n branches we will branch again to a empty node (where no node exists) and this statement will return not found
+        if node == given value: return node // if node is found return it 
+        if given value < root node: search left subtree by branching to left child this will be the new node (root) // in BST values smaller than root are on the left
+        if given value > root node: search right subtree by branching to right child this will be the new node (root) // in BST values greater than root are on the right
+    
+    - Insertion: To add a given node at the corrent position in a BST
+      Recurtion: // start at rote node find a place to insert the given node
+        if node == Null: insert element // if BST in empty we can instert the element at the root, When we treverse the tree (meaning function runs and BST not empty initially) and eventualy run out of nodes after n branches and we will branch to a empty node, we can insert the node here (this safe spot was found by line 3&4)
+        if node == newnode: return // Duplicate value NOTE: duplicates instertion is subjective 
+        if node < newnode: insert at right subtree so we will branch right and the right child will be the new node (new root) // if node is less than new node we branch to the right subtree as nodes smaller that current node (can be root) are on the right
+        if node > newnode: insert at left subtree so we will branch left and the left child will be the new node (new root)// if node is greater than new node we branch to the left subtree as nodes greater that current node (can be root) are on the left
+
+    - Deletion: To delete a given node in a BST
+      NOTE: the deletion is not always at the end if its in middle we must link our tree back so it has no gaps from the deleted element: There are 3 cases
+      - 1. node to be deleted is a leaf node (no children)
+      - 2. node to be deleted has only 1 child
+      - 3. node to be deleted has 2 children (max childern for BST)
+      The deletion operation will depend on the 3 cases
+      Recurtion: // start at root node and find the node to be deleted
+        Searchfor(given node) // serch fofr node using serch operation
+        if node == Null: return not found or Empty BST // if node is empty we are finished no node to delete, after n branches we will branch again to a empty node (where no node exists) and this statement will return not found
+        if node == given node && has 0 Childen: delete node // if node is found and has no children delete it as we dont need to keep track of children before deletion there is nothing after it   
+        if node == given node && has 1 Childen: node = node.child  // if node is found and has 1 child replace that node with its child (basicaly deleting that node) NOTE: the notes after node.child will be preserved meaning node.child.child will we node.child after this line runs
+        if node == given node && has 2 Childen: node = node.largestvalueinleftsubtree || node = node.smallestvalueinrightsubtree // if node is found and has 2 children we have two options and they are self explanitory. we can choose any. 
+        
+        ~ // EX: lets say node 10 has leftnode(7) rightnode(12) if we replace node 10 with right node(12) the 7 will still be on the left side on newnode, we replaced 10 with 12 but 7 was on the left of 10 so it will be on the left of 12. This also works for choosing the left subtree as newnode. NOTE WE ASSUME THAT 7 & 12 have NO children
+        ~ // EX NOTE: if the child nodes had mor child nodes we need to pick largestleftval or smallestrightval because all values after this new node have to follow BST lets say the node 7 had 8 as a child i need to replace 10 with 8 because 7 was on the left of 10 and it will be on the left of 8 after replaceing here the largest value in the left subtree satisfies BST if we chose 7 then the left subtree will have value > than parent which is not allowed in BST (NOTE: same logic for right subtree)
+
 3. **Balanced Trees**:
    - Definition: Trees that automatically keep their height minimal, such as AVL trees and Red-Black trees.
    - Characteristics:
