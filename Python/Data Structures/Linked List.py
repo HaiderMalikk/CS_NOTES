@@ -157,6 +157,18 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #        # n.ref is 2 so else runs, n.ref which points at 2 is updated to be n.ref.ref which is 3 so LL skips from 1 to 3 basicly deleting 2 form LL
 #        else:
 #            n.ref = n.ref.ref
+#   
+#    # reverse LL
+#    def reverse_LL(self, head):
+#       current = head # new node points to first node 
+#       prev = None # inittily theres no prevoius node to the first node
+#       while current is not None:
+#           new_node = current.ref #  to get our newnode "the node after first node which is current" we use the current nodes refrence witch points us to the next node, after frist iteration current is prev our last moved node now this node stores the refrence to get us to our next node
+#           current.ref = prev # let this selected node be moves to a spot prevous "behind" the current first node, in the second iteration since current was node last moved we move our new mode behind the prevously moved node
+#           prev = current # that node we just moved to prev is now our currrent node becuse we will need its ref later 
+#           current = new_node # that current node is our new node becuse of the first line it pulls currents refrence we have to let our newly moved node ("prev" thats = current) be our new node so we can take its refrence and go to next node
+#       self.head = prev # remember how the head points to the first node to start with, when we are done reversing our last node moved "prev" is now our first node so let the head point to new first node
+#    
 #
 #     def display_LL(self):
 #         if self.head is None: # if list is empty
@@ -286,6 +298,16 @@ class LinkedList:
         else:
             n.ref = n.ref.ref
     
+    def Reverse_LL(self):
+        prev = None
+        current = self.head
+        while current is not None:
+            next_node = current.ref
+            current.ref = prev
+            prev = current
+            current = next_node
+        self.head = prev
+    
     def display_LL(self): # iterate through Linked list and display nodes
         if self.head is None:
             print("empty LL nothing to display")
@@ -310,5 +332,6 @@ myLL.delete_begin() # deletes the first node currently 5
 myLL.delete_end() # deletes the last node currently 55
 myLL.delete_by_value(10) # deletes first node 10
 myLL.delete_by_value(0) # deletes node 0 
+# myLL.Reverse_LL() # reverse LL (commented out as its optional but still a good method to use) after uncommenting LL = 50->45->40->30->20->None
 myLL.display_LL() # iterate through and show all nodes in the Linked List
 # OUTPUT: 20->30->40->45->50->None
