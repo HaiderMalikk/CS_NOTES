@@ -195,6 +195,7 @@ Tree Types Overview:
 # you can think of the edges (the path to the next node) as a pointer. with the reference we can go to the next node this reference is the path (simmilar to linked list).
 
 # A repesentation of a BST in memory:
+# NOTE: the ref is a random number repeseting the address of the object in memory for the sake of simplicity this address would give us the object so then we could access the data and the children
                          ____________
                         |  ref: 5100 |
                         |  value: 10 |
@@ -210,8 +211,8 @@ Tree Types Overview:
         |  ref: 5100  |                   | ref: 2100  |
         |  value: 5   |                   | value: 20  |
         |-------------|                   |------------|
-        | Left: Φ     |                   | Left: 7900 |
-        | Right: Φ    |                   | Right: 3200|
+        | Left: null  |                   | Left: 7900 |
+        | Right: null |                   | Right: 3200|
         |_____________|                   |____________|
                                                |
                                ________________|____________________
@@ -228,3 +229,44 @@ Tree Types Overview:
 
 """
 
+# BST code
+# here like linked list we can have 2 classes (one for node and one for LL) but here we will have just one class for BST and no class for the node in our BST
+class BST: # create class
+    # create constructor, constructor makes teh object(in our case the node) our node has 3 properties: key, left child and right child 
+    # but when we create the node we only need to give the key as initially the node has no children and  we can define the variables for them and fill them when we creat the left or right node 
+    # now when we create the node object we only need to give the key and the rest will be filled automatically by the otehr methods when we difine the left or right child
+    def __init__(self, key): 
+        self.key = key
+        self.leftchild = None
+        self.rightchild = None
+    
+# using this lets create the Ex bst above:
+"""
+     10
+    /  \
+   5   20
+       / \
+     15  100 
+"""
+
+# create a BST object
+root = BST(10) # here we create a node and give it a key this has a left and right child but they are None this is our first node (root)
+print(root.key)  # print the key of the root node which is 10
+print(root.leftchild)   # print the left child of the root node which is None right now
+print(root.rightchild)   # print the right child of the root node which is None right now
+
+# assigning the left child and right child to the root
+root.leftchild = BST(5)  # here we create a new node object with a key of 5 and assign it to the left child of our root. but rememeber in creating node we also give the left and right child variables that can be added (currently none). this means this child node can have 2 more children and so on.
+root.rightchild = BST(20) # here we create a new node object with a key of 20 and assign it to the right child of our root. this right child node can also have 2 more children and so on.
+print(root.leftchild.key)   # print the key of the left child of the root which is 5
+print(root.rightchild.key)   # print the key of the right child of the root which is 20
+
+# creating the roots right grandchild or the right childs right child
+root.rightchild.rightchild = BST(100) # just like mentioned above the right child node is made with BST class so it too has left and right child variables that can be assigned here we assign the right child of root with its own right child with a key of 100. so node 100 is rigth child of rightchild or right grandchild of root
+print(root.rightchild.rightchild.key)   # print the key of the left grandchild of root which is 2
+# creating the right childs left child or the roots left grandchild
+root.leftchild.leftchild = BST(15) # here we assign the left child of the
+print(root.leftchild.leftchild.key)   # print the key of the left grandchild of root which is 15
+
+# now our bst is completed, see the memory digram above to see how the tree looks like in memory at this moment note the ref is a random number repeseting the address of the object in memory 
+#so whe we make a new BSt objec it gets a new ref for accsessing the object and it properties are filled
