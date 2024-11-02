@@ -129,6 +129,7 @@ Tree Types Overview:
     - Min and Max values (nodes): (Given a Non Empty BST) The min value is the smallest value in the BST and will be in the left subtree. The max value is the largest value in the BST  and will be in the right subtree. IF no left node or IF no right node then root is the smaller or larger value respectively.
       since each time a new node is made the smaller child is on the left this means the smallest value will be on the left most node of the tree. same logic for max value it will be on the right most node. EX: in the first ex tree assuming its a BST like we said: Min = GG1, Max = Child 3
       to find it manually we would treverse the trees left and right subtrees and find the smallest and largest value by traversing untill no left or right node exits the nwe will know that our currrent node is a minimum or maximum node respectfully.
+
 3. **Balanced Trees**:
    - Definition: Trees that automatically keep their height minimal, such as AVL trees and Red-Black trees.
    - Characteristics:
@@ -229,8 +230,9 @@ Tree Types Overview:
 
 """
 
-# BST code
+# ! BST code
 # here like linked list we can have 2 classes (one for node and one for LL) but here we will have just one class for BST and no class for the node in our BST
+# ! creating the binary search tree
 class BST: # create class
     # create constructor, constructor makes teh object(in our case the node) our node has 3 properties: key, left child and right child 
     # but when we create the node we only need to give the key as initially the node has no children and  we can define the variables for them and fill them when we creat the left or right node 
@@ -249,7 +251,7 @@ class BST: # create class
      15  100 
 """
 
-# create a BST object
+# ! create a BST object and adding nodes
 root = BST(10) # here we create a node and give it a key this has a left and right child but they are None this is our first node (root)
 print(root.key)  # print the key of the root node which is 10
 print(root.leftchild)   # print the left child of the root node which is None right now
@@ -270,3 +272,82 @@ print(root.leftchild.leftchild.key)   # print the key of the left grandchild of 
 
 # now our bst is completed, see the memory digram above to see how the tree looks like in memory at this moment note the ref is a random number repeseting the address of the object in memory 
 #so whe we make a new BST objec it gets a new ref for accsessing the object and its properties by doing root.leftchild we can assign the ref of the left child of the root so now when we print root.leftchild.key the computer have the ref of the left child and can access its key property and print it
+
+# ! Insertion (this allows us to add new nodes to the tree) see notes above for details on this operation
+# first check if inserting to empty BST then the new node is the root
+# if not empty (has 1 or mpore node) we need to find the position of the new node. rmemeber the BST rules : all nodes to the left of a node have keys less than the node and all nodes to the right of a node have keys greater than the node so we would need to find a place for this new node that follows this rule
+# but we only have 2 options at everynode we can go left or right so we just nee to find if we need to add the tree to the left or right subtree at everynode once we reach a leaf node we add it to its right or left child depending on if its greater or less than this leaf node.
+# duplicate values are not allowed but we can handle duplicates in a specific way (e.g., by allowing duplicates in the right subtree). see notes above for details on this operation
+
+# lets create out bst and then add the function to instert a new node
+class BST: 
+    def __init__(self, key): 
+        self.key = key
+        self.leftchild = None
+        self.rightchild = None  
+      
+    def insert(self, data): # create insertion method with data as input
+        if self.key is None: # if root is empty ie key is nune note, key is the value of node. if there is no value meaning no key then there is no root node. EX: say we make BST(None) and call BST.insert(10) since at the moment of calling insert, the key of our BST is None, hence we have no root node. so we assign the BST obejcts key (its value) by using 'self.key' with data of 10. now the BST object has a key of 10 this the root node. 
+            self.key = data  # if there is no root node then we assign the nodes key with the value of data. NOTE: we dont create a new node we just check if its null if it is then we assign the key to data. NOTE: this must the root as we cannot have empty nodes in the middle of the tree initially the key can be null and that will become teh root node once we assign it a value. 
+            return # we stop the insertion process here as we have created the root node and are done with the insertion
+
+        # if tree not empty check if the node is greater or less than the current node so we know wether to go to the left or right subtree
+        # note that key is the value of our root note as we traverse the tree this root changes and we check if its greater or less than the current node recursively.
+        if self.key > data: # goto left subtree as value of new node is less than current node 
+          # here we must check if the left subtree is empty then we can dd the new node here. if its not emoty after travering some times we will reach the left subtree again and again untill we find a leaf nod at this leaf node the left child will be none and we can add the new node here
+          if self.leftchild: # leftchild can be true or false but the condition only runs if its true that means we do have a left child
+            # since we have a left child we must take the current node 'leftchild' as our new root node and do a insert again with the same value by calling the insert method on this leftnode (making it our root). 
+            # when this function runs again and again at some point we will reach a leaf node then since we do still have a key(value) so if the comparison key > data is true (meaing we are still adding to left subtree) we will check if leftsubtree again but since the las troot node is a leaf node and its left child is none so now we can add the new node in the else block
+            self.leftchild.insert(data)
+          else:
+            # since we have reached a leaf node the leftchild of this leaf node is none hand we can add the node here
+            self.leftchild = BST(data) # create the new node with the value of data and assign it to the left child of the current node which before this was none
+            
+        # the code to add to right subtree is the same as the code to add to left subtree but we just need to change leftchild to rightchild
+        else: # goto right subtree as value of new node is greater than current node
+          if self.rightchild: # if we have a right child
+            self.rightchild.insert(data) # call the insert method again on this right child node
+          else: # at some point we will call the instert above on a leaf node and the right child of that node we called instert on is null and this part runs
+            self.rightchild = BST(data) # since we have no right child here, we can add the new node here safely  
+            
+    # ! dealing with duplicates
+    # 1) we can add the follwing beofre branching: if key == data: return with this we do not add the node to the tree if the key is the same as the data we are trying to
+    # 2) we can add the following at bracanging: if key > > data and key == data. or  if key < data and key == data. this way we add the node to the right or left subtree if the key is the same as the data we are trying to
+          
+    # ! Summary: 
+    # we compare value with data and brach left or right depending on the comparison. after the branch if we have a root node and depending on what subtree we branched to we call the insert method on the left or right child. 
+    # once we reach a point where we have a leaf node we still have a key so we call insert again but this time after branching the left or right child will be null and we create the new node with data and it gets added to the left or right child of the leaf node.
+    
+# lets build the tree again with insert only
+"""
+     10
+    /  \
+   5   20
+       / \
+     15  100 
+"""
+# ! inserting automatically to tree using a list and loop
+BSTnodes = [10, 5, 20, 15, 100]
+root = BST(None)
+for node in BSTnodes:
+  root.insert(node)
+
+# insetring manually to the tree
+# create BST object
+# root = BST(None)
+# root.insert(10) # add 10 to the root node as so far the root node is empty
+# root.insert(5) # add 5 to the left subtree of the root node
+# root.insert(20) # add 20 to the right subtree of the root node
+# root.insert(15) # add 15 to the left subtree of the right subtree of the root
+# root.insert(100) # add 100 to the right subtree of the right subtree of the root
+
+# uncooment to see output
+# print(root.key) # prints 10
+# print(root.leftchild.key) # prints 5
+# print(root.rightchild.key) # prints 20
+# print(root.rightchild.leftchild.key) # prints 15
+# print(root.rightchild.rightchild.key) # prints 100
+# all the nodes are printed all nodes after will have value of NONE
+
+
+  
