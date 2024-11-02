@@ -176,3 +176,55 @@ Tree Types Overview:
      - Utilized in graph algorithms, such as Dijkstra's algorithm, for efficient minimum element retrieval.
 """
 
+# ! IMPLEMENTING TREES IN PYTHON CODE
+
+# ! Bianary Search Tree Implementation in python (for more detail refer to the topic aboove where BST are explained in full detail)
+# a tree is a selection of nodes, each node has 3 parts: key(data) left child and right child. We will use class and object to create a tree
+# each node is a object and it will have 3 properties: key, left child and right child
+""" 
+# EX of a BST diagram:
+
+     10
+    /  \
+   5   20
+       / \
+     15  100
+
+# in the repersentation below we can see what the tree above would look like in actual memory. each square is a node with key(data) left child and right child (the references to them) 
+# once we get to the left child or right child we then have accsess to data and there children and the proccess is repeated until we reach a leaf node (recursively done).
+# you can think of the edges (the path to the next node) as a pointer. with the reference we can go to the next node this reference is the path (simmilar to linked list).
+
+# A repesentation of a BST in memory:
+                         ____________
+                        |  ref: 5100 |
+                        |  value: 10 |
+                        |------------|
+                        | Left: 5100 |
+                        | Right: 2100|
+                        |____________|
+                               |
+                 ______________|________________
+                |                               |
+                |                               |
+         _____________                     ____________
+        |  ref: 5100  |                   | ref: 2100  |
+        |  value: 5   |                   | value: 20  |
+        |-------------|                   |------------|
+        | Left: Φ     |                   | Left: 7900 |
+        | Right: Φ    |                   | Right: 3200|
+        |_____________|                   |____________|
+                                               |
+                               ________________|____________________
+                              |                                     |
+                              |                                     |
+                       _____________                        _____________
+                      |  ref: 7900  |                      |  ref: 3200  |
+                      |  value: 15  |                      |  value: 100 |
+                      |-------------|                      |-------------|
+                      | Left: null  |                      | Left: null  |
+                      | Right: null |                      | Right: null |
+                      |_____________|                      |_____________|
+
+
+"""
+
