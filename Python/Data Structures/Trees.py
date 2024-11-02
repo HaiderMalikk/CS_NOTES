@@ -269,4 +269,4 @@ root.leftchild.leftchild = BST(15) # here we assign the left child of the
 print(root.leftchild.leftchild.key)   # print the key of the left grandchild of root which is 15
 
 # now our bst is completed, see the memory digram above to see how the tree looks like in memory at this moment note the ref is a random number repeseting the address of the object in memory 
-#so whe we make a new BSt objec it gets a new ref for accsessing the object and it properties are filled
+#so whe we make a new BST objec it gets a new ref for accsessing the object and its properties by doing root.leftchild we can assign the ref of the left child of the root so now when we print root.leftchild.key the computer have the ref of the left child and can access its key property and print it
