@@ -49,3 +49,28 @@ for key, value in hash_table.items():
 # Check if a key exists in the dictionary
 if 'apple' in hash_table:
     print("Apple is in the hash table")
+
+# ! EX (just keys no values) finding vowels in a string array
+# Creating a hash table to store vowels
+vowels = {'a', 'e', 'i', 'o', 'u'}
+vowelscounter = 0
+# Iterating over each character in the string
+for char in 'hello':
+    # Checking if the character is a vowel
+    if char in vowels:
+        vowelscounter += 1
+        
+print("number of vowels: ",vowelscounter)
+
+# ! EX (with key and value) finding values of gems given a array of gem strings
+# Creating a hash table to store gem values
+gem_values = {'ruby': 10, 'emerald': 20, 'sapphire': 30, 'topaz': 40, 'diamond': 50}
+earning = 0
+# Iterating over each gem in the array
+for gem in ['ruby', 'emerald', 'diamond', "dirt"]:
+    # Checking if the gem exists in the hash table
+    if gem in gem_values:
+        earning += gem_values[gem]
+        print(f'{gem}: {gem_values[gem]}') # prints the type (gem) and value of the gem (genvalue[gem])
+
+print(earning) # prints the total earning from the gems

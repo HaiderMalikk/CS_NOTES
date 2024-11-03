@@ -33,6 +33,8 @@ Tree Properties:
 
 - **Sibling**: Nodes that share the same parent. `[Child 1]` and `[Child 2]` are siblings since they share the same parent `[Root]` notice how there on the same level.
 
+- **Neighbors**: In a graph, a neighbor node is any node that is directly connected by an edge. here child 1 is a  neighbor of root, GC1 and GC2
+
 - **Subtree**: A tree consisting of a node and all its descendants. For example, the subtree rooted at `[Child 1]` includes `[Child 1]` (the subtrees new root), `[Grandchild 1]`, `[Grandchild 2]`, and `[Great Grandchild 1]`. NOTE: for the subtree at child 1 the grandchild 1 would acctualy be a child of child 1 if we were to traverse it. NOTE: every next node will have its own subtree or subtrees on left right etc.
 
 - **Height**: The height of a tree is the length of the longest path from the root to a leaf. The height of a tree is measured in edges (or nodes, depending on definition). NOTE: the height starts at 0 so here the height is 3, at height 0 we have root at height 3 we have great grandchild 1.
@@ -52,7 +54,7 @@ Tree Types Overview:
    - Definition: A tree in which each node can have any number of child nodes i.e there is no limit on the number of child nodes a node can have.
    - Characteristics:
      - any node can have any number of children.
-     - the tree above given in teh example is a general tree.
+     - the tree above given in the example is a general tree.
    - Uses: Various.
 
 1. **Binary Tree**:
@@ -63,9 +65,9 @@ Tree Types Overview:
      - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf).
      - In a complete binary tree, all levels of the tree except the last level are completely filled (meaning mus thave 2 child nodes). Last level can be either completely filled or filled left to right meaning that if the last level has 2 child nodes they must be on the left most node of the previous level. if we have one node it must be a left node to the left most node of the previous level. This left most node must be filled first before moving to the right
      - In a Perfect binary tree, all the nodes except for leaf nodes have 2 children and all the leaf nodes are at the same level.
-     - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1.
+     - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1. in a Unbalanced binary tree the difference in height between the left and right subtrees of every node is more than 1.
      - In a pathalogical binary tree, every parent node has only 1 child node.
-     - total number of nodes = #of nodes in left subtree + #of nodes in right subtree + 1. (+1 for the root node)
+     - total number of nodes = num of nodes in left subtree + num of nodes in right subtree + 1. (+1 for the root node)
    - Uses: Commonly used in various applications such as expression trees for evaluating mathematical expressions and heaps for efficient data storage.
 
 2. **Binary Search Tree (BST)**:
@@ -119,12 +121,13 @@ Tree Types Overview:
       - 1. Pre order Traversal: (Given a Non Empty BST) Visit the root node, then the left subtree(left child of root), then the right subtree(right child of root). DO THIS RECURSIVELY! meaning the node on left and right subtree will become the new root node 
            and we will do steps 2 and 3 on both left and right nodes over and over Recursilvely until we run out of nodes meaning the node is a leaf node. NOTE: we dont do step one as we alredy checked the left and right nodes of the root node so when the 
            child nodes become the root node they would have alredy been treversed. EX: in the first ex tree after first run we will get in this order: (Root, Child1, Child2) now new root is child 1 once we run out of nodes on left side (child1) we move on to our second root node Child 2 (right subtree)
-      - 2. In order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first left most node on left side of root), then the root node (at first is the root of our left most node we just traversed), then the right subtree (at first the node right of the root). DO THIS RECURSIVLY!  
+      - 2. In order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first left most node, it will be on left side of root), then the root node (at first is the root of our left most node we just traversed), then the right subtree (at first the node right of the root). DO THIS RECURSIVLY!  
            EX: in the first ex tree after first run we will get in this order: (GG1, G1, null) since G1 has no right node we are done step one NEW root is child one (the new left node would be the parent of the prevoius root but since we alredy travered this new left node as root in the last iteration we dont count it ). 
            once we reach the root of bst we do the. NOTE!: by doing this traversal we will get the values in order smallest to largest
       - 3. Post order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first the left most node on left side of root), then the right subtree (at first right of the root), then the root node (at first parent of left and right nod we just traversed). DO THIS RECURSIVELY at each node! just like before after this step the new root node will
            be the parent of the rprevoius root node but now our new left node was arlerdy traversed as the root node last time so we dont count it EX from tree: (GG1, null, G1) since G1 has no right node we are done step new root node is child one (the new left node is G1 but since we traverd it last time as our root we skip it).
-      - 4. Level order Traversal: (Given a Non Empty BST) Traverse each level of the tree from left to right then move onto the next level do this from top to bottom (level 0 to level n). DO THIS RECURSIVELY! EX from tree: 1) root, 2) Child one and child two 3) GC 1 and GC2 and Child 3 and so on. going level by level in each level left to right. NOTE: this is the only traversal that is linear. 
+      - 4. Breadth First Traversal: (Given a Non Empty BST) Traverse each level of the tree from left to right then move onto the next level do this from top to bottom (level 0 to level n). DO THIS RECURSIVELY! EX from tree: 1) root, 2) Child one and child two 3) GC 1 and GC2 and Child 3 and so on. going level by level in each level left to right. NOTE: this is the only traversal that is linear. 
+      - 5. Depth First Traversal: (Given a Non Empty BST) Traverse the tree in a depth first manner. meaning starting a the root visit any neigbour node and keep doing deaper traversing each neighbours neighbours until you reach a node with no unvisited neighbors (leaf), backtrack to the last node with unvisited neighbors. Repeat until all nodes are visited. EX: root, Child, G1, GG1, G2, Child 2, Child3
 
     - Min and Max values (nodes): (Given a Non Empty BST) The min value is the smallest value in the BST and will be in the left subtree. The max value is the largest value in the BST  and will be in the right subtree. IF no left node or IF no right node then root is the smaller or larger value respectively.
       since each time a new node is made the smaller child is on the left this means the smallest value will be on the left most node of the tree. same logic for max value it will be on the right most node. EX: in the first ex tree assuming its a BST like we said: Min = GG1, Max = Child 3
