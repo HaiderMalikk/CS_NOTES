@@ -1011,10 +1011,11 @@ for name, age in employees:
 
 # ! QUICK PYthon easy oop syntax ex
 class Person:
-    def __init__(self, name, age): #  this function is the counstructer (__init__) means constructer
+    # ! note the first argument can be anything but is conventionally named self
+    def __init__(self, name, age): #  this function is the counstructer (__init__) means constructer its runs automatically when you create a new object
         self.name = name
         self.age = age
-    def greet(self): # the self parameter allows greet to access the self parameters name and age
+    def greet(self): # the self parameter allows greet to access the self parameters name and age. the self is the object itself
         print(f"Hello, my name is {self.name} and I am {self.age} years old.")
 
 person1 = Person("Alice", 30) # the object has two parameters name, age. self is not a parameter here we make the object

@@ -300,7 +300,7 @@ class BST:
           # here we must check if the left subtree is empty then we can dd the new node here. if its not emoty after travering some times we will reach the left subtree again and again untill we find a leaf nod at this leaf node the left child will be none and we can add the new node here
           if self.leftchild: # leftchild can be true or false but the condition only runs if its true that means we do have a left child
             # since we have a left child we must take the current node 'leftchild' as our new root node and do a insert again with the same value by calling the insert method on this leftnode (making it our root). 
-            # when this function runs again and again at some point we will reach a leaf node then since we do still have a key(value) so if the comparison key > data is true (meaing we are still adding to left subtree) we will check if leftsubtree again but since the las troot node is a leaf node and its left child is none so now we can add the new node in the else block
+            # when this function runs again and again at some point we will reach a leaf node then since we do still have a key(value) so if the comparison key > data is true (meaing we are still adding to left subtree) we will check if leftsubtree again but since the last root node we called insert on is a leaf node and its left child is none so now we can add the new node in the else block
             self.leftchild.insert(data)
           else:
             # since we have reached a leaf node the leftchild of this leaf node is none hand we can add the node here
@@ -352,5 +352,66 @@ for node in BSTnodes:
 # print(root.rightchild.rightchild.key) # prints 100
 # all the nodes are printed all nodes after will have value of NONE
 
+# ! Search (we can add nodes like we did at the very starts but since we know the insert operation lets use it and build on what we have so far)
+class BST:
+  def __init__(self, data):
+    self.key = data
+    self.leftchild = None
+    self.rightchild = None
 
-  
+  def insert(self, data):
+    if self.key is None:
+      self.key = data
+    elif self.key == data:
+      return
+    elif self.key > data:
+      if self.leftchild:
+        self.leftchild.insert(data)
+      else:
+        self.leftchild = BST(data)
+    else:
+      if self.rightchild:
+        self.rightchild.insert(data)
+      else:
+        self.rightchild = BST(data)
+
+  # ! Serch function (same idea as insert but insted of inserting we just check the current node = data if not we go left or right depending on data. at the end (leaf) or if theres no root insted of insterting a node we just return not found )
+  def search(self, data):
+    if self.key == data: # if the current node is the data we return found
+      print("Node Found")  # print this message and return
+      return
+    
+    if data < self.key: # if data is less than the current node we go left as the data is present of the left side of teh current root node
+      if self.leftchild: # if left child is not null we call the serch operation of that leftchild. this serch runs with our leftchild as the new root and at the start of serch we check if current node is the data if its not we will branch again depending on the data if theres no leftchild we return not found
+          self.leftchild.search(data) # if there is a leftchild search that left child. the serch function runs on LC as new root and 1) leftchild will be checked 2) if not = data we will branch again
+      else:  # if there is no left child we return not found. NOTE: at some point we will reach a leaf and we will call the serch on this leaf node and this leaf will have no left child (same logic for right child) and we will return not found
+        print("Node Not found")
+        return
+    
+    # same as left subtree but for right subtree
+    else: # if data is greater than the current node we go right
+      if self.rightchild: # if right child is not null we call the serch operation of that rightchild
+          self.rightchild.search(data) # there is a rightchild so we search that right child this will first check if RC = data is not we move forward in teh serch function and bracnch again 
+      else:  # if there is no right child we return not found
+        print("Node Not found")  # print this message and return
+        return #  return from the serch function we are done
+    
+# Lets build this tree
+"""
+     10
+    /  \
+   5   20
+       / \
+     15  100 
+"""
+root = BST(None) # creating empty tree
+# insterting all our nodes
+root.insert(10)
+root.insert(5)
+root.insert(20)
+root.insert(15)
+root.insert(100)
+
+# now lets serch
+root.search(15) # this will print Node 15 Found
+root.search(33) # this will print Node not Found
