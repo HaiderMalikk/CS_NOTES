@@ -4,9 +4,10 @@ My CS notes. Include Topics Like Data structures, Algorithms, OOP concepts, Synt
 DATA STRUCTURES PYTHON ONLY:
 - Linked List (Building LinkedList (nodes and LinkedList), Iterating Through List, Adding Node to Start, Adding Node to End, Adding a Node After a Given Node, Adding Before a Given Node, Adding To Empty LL, Deleting First Node, Deleting Last Node, Deleting Node By Value)
 - Queue
-- Priority
+- Priority Queue
 - Stack
 - Hash table
+- Tree (Charactaristics of Trees, Many types of trees, Operations on Trees: Serching, Insertion, Deletion, Traversal, Building trees like BST all using python and OOP)
 
 Algorithms PYTHON ONLY:
 - Quick Sort 
