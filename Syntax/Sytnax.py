@@ -970,6 +970,26 @@ nested_list = [[1, 2], [3, 4], [5, 6]]
 flat_list = [num for sublist in nested_list for num in sublist]
 print(flat_list)  # Output: [1, 2, 3, 4, 5, 6]
 
+# Try catch 
+try:
+    # Code that might raise an exception
+    result = 10 / 0
+except ZeroDivisionError:
+    # Code to handle the exception
+    print("Error: Division by zero is not allowed.")
+except ValueError:
+    # Handle a different type of exception if needed
+    print("Error: Invalid value.")
+except Exception as e:
+    # Catch any other exception and print it
+    print(f"An error occurred: {e}")
+else:
+    # This block runs if no exceptions were raised
+    print("Operation was successful.")
+finally:
+    # This block always runs, regardless of what happened
+    print("Execution complete.")
+
 
 # sets in python 
 """ In Python, sets are unordered collections of unique elements. 

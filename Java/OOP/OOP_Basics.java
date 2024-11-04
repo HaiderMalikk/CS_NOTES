@@ -373,12 +373,12 @@ class UserInputExceptions {
 // each method trows value to small and to big expetions respectively 
 // and we want to test it using Junit text we. Note that we want some tests to pass and some to fail depending of if exeption is thrown or not
 /// we can use assert equals to test that the exeption is thrown 
-// ! we can have try cathe exeptions in junit
+// ! we can have try catch exeptions in junit
 /* 
 
 // code conter class nd from notes
- 
-// in this test no exeption should be thrown
+/* 
+in this test no exeption should be thrown as min value = 0 and that means try blovk runs and increments
 @ Test 
 public void testGetValue() {
     counter c = new counter(); new counter obj ASSUME INITIAL VALUE 0
@@ -388,11 +388,250 @@ public void testGetValue() {
         assertEquals (1, c.getValue());
     }
     catch (ValueTooLargeEXeption e){
-        fail ("ValueTooLargeExeption should not have been thrown");
+        // fail alwasy fails a test. 
+        // here we want to throw fail as this should not run we can incerment and get value its ok here so the ctach should not run
+        fail ("ValueTooLargeExeption should not have been thrown"); 
     }
 }
 
-// now lets do a example where it is throwm
+here we expect an exeption as min value = 0 and new counter will be 0 so its get value is zero and so decrement will throw exeption
+@Test
+    public void testDecFromMinValue() {
+        Counter c = new Counter();
+        assertEquals(Counter.MIN_VALUE, c.getValue()); // passes as min value = 0 and new counter will be 0 so its get value is zero
+        try {
+            c.decrement();
+            // we put a fail here and this should not run, we cannot deceremt from min value
+            // NOTE: after the line in  a try block fails we go to the catch block so in this case the fail should not run and decerement should not run
+            fail ("ValueTooSmallException is expected.");
+        }
+        catch(ValueTooSmallException e) {
+         // Exception is expected to be thrown.
+         // can do like e.print(" ..... ")
+        }
+    }
 
+! note in the 2 examples after we fail a test we go to the catch block but what was wrong? did we increment after max value 
+! did we decrement after min value? how will the catch block know the error type. 
+! onr way to solve is using a loop that keeps on running as long as we dont get the exeption when we do we know what the exetion is and what the numbers were
+
+*/
+
+// * Obejct equality 
+// object equality (overide or no overide)
+/* 
+ d = 7 e = 7
+ then d == e true
+ is obj p1 and obj p2 exist 
+ p1 == p2 false as they are comparing the address not the values
+ p1.equals(p2) true -> as we compare the values of the objects 
+ ! the equals method is only avalible for reference types. the .equals used on primitive types is the same as using the '==' operator
+ the equals method is built into the object class in java
+ by deafult when we use .equals it overrides equals in the object class but we can change it using override
+ p1.equals(p2) is turned into p1 == p2 wher we override (meaning change the equals method
+ this is called inheriting the equals method from the object class. 
+ in the class is would look like this: 
+ class object{
+    public boolean equals(Object obj){
+        return this == obj; // note that 'this' refers to teh context object here that would be the object p1 so we would do p1 == obj where the object here is p2
+    }
+ }
+ */
+// ex:
+class Personeq {
+    String name;
+    int age;
+    public Personeq(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    // use source actions to generatre equals and hashcode on varables 
+    @Override
+    public boolean equals(Object obj) {
+        // this is to avoid NPE as the next line would throw an exception if obj is null thats why this must come first 
+        // NOTE 'this' refers to the object that is calling the equals method
+        // if obj empty then return false or if the two objects are from different class then they are not the same object
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        // if the two objects we are comparing are equlas then they are the same object as the == compares address and if two objects have the same address they are the same object
+        if (obj == this) {
+            return true;
+        }
+        // ! WHY TYPE CAST: when we recive the obj as a argument in the equals method it is passed as a type Object meaning it might not have accsess to the methods of a obj of type personeq hence we must cast this 'obj' into type personeq so we can call the methods from person eq on it 
+        Personeq p = (Personeq) obj; // ! here we add cast '(Personeq)' on obj as we know that 'obj' is of type Personeq as we are comparing with obj of type personeq. We can fix the type of obj to Personeq by changing parameter of equlas method to (Personeq obj) but the object might not be of type Personeq so here we can choose what type to cast our obj to
+        return this.name == p.name && this.age == p.age; // returns true if name and age of obj p1 and obj passed into equals are equal. // 'this' is still the context obj and 'p' is the casted version of 'obj'
+        //! NOTE in the line above we can use '==' as we are no longer dealing with reference types name and age are primitive (string and int). Also for name we could have used .equals() but here it dose not matter
+    }
+    // ! since our class has a equals method when we do .equal we have a method to use if we did not it would use the default equals method in the object class
+    public static void main(String[] args) {
+        // two objects with the same name and age
+        Personeq p1 = new Personeq("John", 30);
+        Personeq p2 = new Personeq("John", 30);
+        Personeq p3 = new Personeq("John", 31);
+        // ! if the equals method is not overriden then both will return false as both will be comparing the address
+        System.out.println(p1.equals(p2)); // true
+        System.out.println(p1 == p2); // false as this compares the address
+        System.out.println(p1.equals(p3)); // false
+    }
+}
+
+// * satic type, dynamic type, and type cast 
+// static type: a ref variables decrated type
+// dynamic type: type of address curruntly stored in a ref variable
+// type casting: is a way to convert one type to another type in the personeqclass in the equals oeriden method we cast obj as Personeq so we convert the object type to Personeq type
+// Ex
+/* 
+ class C1(){
+    public m1{}
+ }
+ class C2(){
+    public m2{}
+ }
+
+ main:
+ C1 o1 = new c1();
+ C2 o2 = new c2();
+ o1.m1(); static type as o1 has m1
+ o3 = o1
+ o3.m1 // dynamic type as o3 must goto o1 and get m1
+ // type casting 
+ o3 = (C1) o1; // here we cast o1 whcih is of type C2 to C1 type now we can use C1's methods and do o3.m1
+ */
+
+// !Assert equals for dynamic vs static and Overriding equals
+/* 
+Lets say obj p1 is a object with a overriden equals method
+ then let p2 be an object with a default equals method
+ if we say p2 = p1
+ then we do p2.equals(p2) 
+ p2 points to p1 meaning p2's equals method is called on p1 so we are using p2's equal method
+ also in the equals method we return true as p1 ==  p2, also p1 == p1 returns true as well as p2 == p2 returns true
+ 
+ ! NOTE: if two objects are from different classes then there not not equal in terms of address and value so class1obj.equals(class2obj) is false always
+
+ // SAY WE HAVE THIS CODE
+public class PointV2 {
+    private int x; private int y;
+    public boolean equals (Object obj) {
+        if(this == obj) { return true; }
+        if(obj == null) { return false; }
+        // must compare classes are objs from 2 different classes cannot be equals interms of ref or value
+        if(this.getClass() != obj.getClass()) { return false; } PointV2 other = (PointV2) obj;
+        return this.x == other.x && this.y == other.y;
+    } 
+}
+
+// then
+1 String s = "(2, 3)";
+2 PointV2 p1 = new PointV2(2, 3);
+3 PointV2 p2 = new PointV2(2, 3);
+4 PointV2 p3 = new PointV2(4, 6);
+5 System.out.println(p1 == p2);  false as its comparing the address
+6 System.out.println(p2 == p3); false
+7 System.out.println(p1.equals(p1));  true 
+8 System.out.println(p1.equals(null));  false 
+9 System.out.println(p1.equals(s)); /false 
+10 System.out.println(p1.equals(p2)); true 
+11 System.out.println(p2.equals(p3)); false 
+
+if we say p2 = p3
+then we do p2.equals(p3) 
+p2 points to p3 meaning p2's equals method is called on p3 but since p2 points to p3 p3's equals method is called on p3 which returns true
 
  */
+
+// !IMPLICATION
+/* 
+ if obj1 == obj2 then obj1.equals(obj2) == true as if the two objs have the same address they must have the same values 
+ the opposite is NOT true as if two objects have the same values that dose not mean that they must have the same values 
+ in notation this is "obj1 == obj2 => obj1.equals(obj2)"
+ 
+  
+ */
+
+// !assertsame vs assertequals
+/* 
+ in junit we have assertsame and assertequals
+ assert equal is for objects equality for its values is both exp1 and ep2 (assertEquals(exp1, exp2)) are primitive its just '==' if its references type then its exp1.equals(exp2) the order of the assert method arguments (exp1/2) matters
+ assert same is for objects equality for its refernce and only passes if the two objects are the same object: assertsame(obj1, obj2) is true if both obj1 and obj2 are the same object meaning they have the same address
+ assert same is the same as Asserttrue(obj1 == obj2) or Asserttrue(obj1.equals(obj2)) or assert false with the '!' t oflip value // NOTE this is for the case assertsame is true 
+ ! NOTE: For assert equals there are 3 options for the equals method: 1,Obj class default (if no overriden) 2, the exp1's equals method (if overriden) 3, the exp1's equals method and exp2's equals method (if overriden) 
+ */
+
+// ! OBJ CLASS DIFFERENCES NOTE:
+ /* 
+    if we have p1, p2 and they are from different classes then p1 == p2 will not run its a error as we cannot compare objects from different classes if they were the same class this would compare the address
+    if we now do p1.equals(p2) this will return false as in teh overriden equals method we have a conditional to check the classes of the two objects and if they are the same object then it will return true
+    if we have not overridded the equals method "here for p1 ans we call p1's equal method on p2" than the default equals method in the object class will be called and we will return false as it dose p1 == p2 which just compares there address
+    also the default equals method dose not check the dynamic type i.e it dose not see if the two obj's p1 and p2 are the same class or not all the defult equals method dose is p1 == p2
+ */
+// ! Comparing types in the equals method +  equality for array
+/* 
+ lets say we have a person class with name and age
+ we have two objects p1 and p2 in our equals method we do this.name == other.name where other is p2 it will use the string equals method to evaluate 
+ BUT lets say we were iteraing through a list of objects type person and we checked if this.person[i] == other.person[i] we now use the person class equals method specificly this.persons equals method
+ this will go into the person equals method where we can define what attributes of person to compare ie name age etc. if no eq meth exits the address is compared and false is returned
+ */
+
+// ! short circuit effect
+/* 
+ MATH Logic vs LOGIC in java ie short circuit
+ NOTE p and q and p or q are not the same as p&&q and p||q. 
+ because p and q == q and p and same for or They are commutitive but && and || are not commutitive meaning p&&q and q&&p are not the same
+ at runtime the evaluation of these logics are left to right the right sides evaluation depends of the left side passing or failing 
+ EX: if p = false and q = true and we do p&&qthen after checking p if false it wont run q and returns false as q is not evaluated as we know the result is false
+ how ever its not the same as q&&p as q is true it will run q then as its true we proceed to evaluate p then see that p is false so we return false
+ EX: the same is true for p||q if p is true we skip over q and return true as its true no matter value of q 
+ if p was false we would need to check q and return true as its true. from this we can say p||q is not q||p as in the first one p determines if we can short circuit and in the second one q determines if we can skip over p (short circuit)
+ THIS is known as short circuiting
+
+ Actual use case for short circuiting:
+ if we want to divide a number by 0 then we can check the value of the devisor and if its 0 then we should not evaluate the division and return 0 right away note how the order we check matters and is not commutitive 
+ */
+
+ // !Call by value (primative vs reference)
+/* 
+ call by value is when we pass a value to a method as a parameter and the method makes a copy of the value and works on the copy then returns the copy
+    lets say we have: int radius and void setradius(int r){this.radius = r} and we have a circle object C, when we do C.setraduis(4) we are passing 4 to the method setradius, the method makes a copy of 4 by doing r = 4 and works on the copy here its 'r' then returns the copy to int radius var
+    EX2: Lets say we have a method void number (i) {i = i+1 return i} and we say number(2) it will return 3 but the value of 2 is not changed only i is changed and i is a copy of 2
+ 
+ call by reference is when we pass a reference to a method and the method works on the reference here no copy is made and we return the reference
+    lets say we have int radius method setradius(Circle c){this.radius = c.radius} and in a class we have a circle object C and another circle object C2 both with a radius defined, then we do C.setradius(c2) we are passing C2 to the method setradius, the method works on the reference of C2 in the method its 'c' then returns the reference to int radius var now the value of c's radius is changed 
+    NOTE: we could make a copy of the object and pass that to our method to preserve the original object.
+    EX2: NOTE we want to not use copies and most likely we want out object to chnage after we call some methods on it hence why we dont make a copy for references when we call by reference
+    if we did make a copy then we would make a new local objec tfor setradius method and that would not be the same object as C2 so the change would be lost (meaning they would be reflected in the copy of obj).
+
+ call by value and equals methods: in a equals method we pass a object as a parameter and later we cast it and say p1 = (Personeq) obj. p1 is now a copy of obj but still have the same address as obj 
+ 
+ */
+
+// ! container:
+/* 
+ a container is an object that holds other objects ie a list of objects (a container can have one or more objects)
+ a containee in the objects that are in the container (these objects can have their own attributes and methods)
+ NOTE: let BigOBJ = [obj1, obj2] obj1 and obj2 = {name, age}. Here container  is BigOBJ and containee is obj1 and obj2 we can accsess name and age from obj1 and obj2 or BIGOBJ by first using BIGOBJ to get to obj1/2 then using obj1/2 to get to name/age.
+ NOTE: if there is a BIGOBJ2 with obj1 then there is sharing(alasing) between BIGOBJ and BIGOBJ2 over obj1 this means chanign obj1 will change obj1 in BIGOBJ and BIGOBJ2. 
+ // ! Aggrigation = sharing, composition = not sharing
+ in diagram: CLASS then a arrow (line); start of arrow if (aggrigation = dimond ) end of arrow has number of contanees (1 = single, * =  multiple) 
+ Dot NOATTION: BIGOBJ.obj1.name will get name. NOTE if we cannot acsess name in another class if name was a private attribute. but we can have a getter method in that class that is also in BIGOBJ and we can call that method to get name. 
+ NOTE: this is because if both BIGOBJS share the same method and they will both get the same result. so if we get private var name from BIGOBJ one using getname, then add getname to BIGOBJ (the method with private var) then BIGOBJ2 (the place we want to accsess var) they botg will get the same name.
+ NOTE: to actually get the name we need to call the method getname on BIGOBJ2 (as we want this bigobj to get 'name') using BIGOBJ2.getname(). this will go to the getname method and get name from BIGOBJ
+ //! note that the getname method since its in both classes has accsess to the variables in both BIGOBJ classes so when it dose get name it will get it from BIGOBJ.
+ NOTE: if we made a method to use the getname method in a method: BIGOBJ2{ methodgetter{this.getname()} } the 'this' context obj specifies that when we call this method 'methodgetters' using say class BIGOBJ2.methodgetter() the 'this' will be the object of BIGOBJ2.
+ */
+
+ // ! AGGREGATION
+ /* aggrigation is when we share objects within other objects (contaners) */
+
+ // ! COMPOSITION
+/* composition is when we do not share objects within other objects(containers) opposite of aggrigation 
+ EX: say we have 2 contaers BIGOBJ and BIGOBJ2. BIGOBJ has a obj1 and BIGOBJ2 has a obj2. no methods are shared meaning we do not share the attribuites of obj2 not in BIGOBJ, it cannot accsess obj2 and vise versa for BIGOBJ2.
+
+ // ! COPY  CONSTRUCTOR
+ /* 
+  copy constructor is when we make a copy of an object using object address as a parameter we do not make any new objects
+  Class  A{ A(A other){numberA = this.numberA }} // here we pass in a object into this contructor that has numberA  and we make a copy of that numberA and assign it to this numberA in the A class
+  */
+
+

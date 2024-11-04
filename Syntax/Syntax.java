@@ -291,6 +291,19 @@ class Syntax {
     }
     // you can also nest otehr types of loops
     
+    // ! sometimes the arrays address is printed to avoid this we will add to a trype string the values of the array using stringbuilder
+    String[] strarr = {"one", "two", "three"}; // works for string array int array etc
+        
+        StringBuilder strarrnew = new StringBuilder();
+        // loop over array and add the elements to strarrnew
+        for (int i = 0; i < strarr.length; i++){
+            strarrnew.append(strarr[i]);
+            if (i < strarr.length-1){
+                strarrnew.append(", "); // if we still have a element to add add a comma
+            }
+        }
+        
+        System.out.println(strarrnew); // prints [one, two, three]
     
     
   }    // end of main method
