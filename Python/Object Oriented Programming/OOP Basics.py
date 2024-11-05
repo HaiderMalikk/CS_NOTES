@@ -20,51 +20,57 @@ In object-oriented programming (OOP), inheritance is a mechanism that allows a n
 This promotes code reuse and allows you to create a hierarchy of classes. 
 """
 # Parent Class (Superclass)
+# Base class representing a generic animal
 class Animal:
     def __init__(self, name):
-        self.name = name
+        self.name = name  # Initialize the name attribute
     
     def speak(self):
-        print("Animal speaks")
+        print("Animal speaks")  # Generic animal sound
 
-# Child Class (Subclass)
+
+# Child class that inherits from Animal
 class Dog(Animal):
     def __init__(self, name, breed):
-        super().__init__(name)  # Call the parent class constructor
-        self.breed = breed
+        super().__init__(name)  # Call the parent class constructor to initialize the name
+        self.breed = breed  # Initialize the breed attribute
+    
     def speak(self):
-        print("woof woof")
+        print("woof woof")  # Override the speak method with a specific sound for dogs
 
-# Another Parent Class
+
+# Another parent class representing canines
 class Canine:
     def __init__(self, state):
-        self.state = state
-        print(state)
-        
+        self.state = state  # Initialize the state attribute
+        print(state)  # Print the state when the Canine object is created
+    
     def bark(self):
-        print("Canine barking")
+        print("Canine barking")  # Method for barking behavior
 
-# Multi-Inherited Child Class
+
+# Multi-inherited child class that inherits from both Animal and Canine
 class GuardDog(Animal, Canine):
     def __init__(self, name, state):
-        Animal.__init__(self, name)  # Call Animal constructor
-        Canine.__init__(self, state) # Call Canine constructor
-        
+        Animal.__init__(self, name)  # Call the Animal constructor to initialize the name
+        Canine.__init__(self, state)  # Call the Canine constructor to initialize the state
+    
     def guard(self):
-        print("Guarding the house")
+        print("Guarding the house")  # Method specific to GuardDog for guarding behavior
 
-# Usage
-dog = Dog("Buddy", "Golden Retriever")
-print(dog.name)        # Output: Buddy
-print(dog.breed)       # Output: Golden Retriever
-dog.speak()            # Output: Animal speaks
 
-guard_dog = GuardDog("Rex", "alert")
-print(guard_dog.name)    # Output: Rex
-print(guard_dog.state)   # Output: alert
-guard_dog.speak()        # Inherited from Animal: Output: Animal speaks
-guard_dog.bark()         # Inherited from Canine: Output: Canine barking
-guard_dog.guard()        # Defined in GuardDog: Output: Guarding the house
+# Usage example
+dog = Dog("Buddy", "Golden Retriever")  # Create a Dog instance with a name and breed
+print(dog.name)        # Output: Buddy (Print the dog's name)
+print(dog.breed)       # Output: Golden Retriever (Print the dog's breed)
+dog.speak()            # Output: woof woof (Invoke the speak method specific to Dog)
+
+guard_dog = GuardDog("Rex", "alert")  # Create a GuardDog instance with a name and state
+print(guard_dog.name)    # Output: Rex (Print the guard dog's name)
+print(guard_dog.state)   # Output: alert (Print the guard dog's state)
+guard_dog.speak()        # Output: Animal speaks (Invoke the speak method inherited from Animal)
+guard_dog.bark()         # Output: Canine barking (Invoke the bark method inherited from Canine)
+guard_dog.guard()        # Output: Guarding the house (Invoke the guard method specific to GuardDog)
 
 
 """
