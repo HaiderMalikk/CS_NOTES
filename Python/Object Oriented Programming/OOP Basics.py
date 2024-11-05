@@ -19,45 +19,63 @@ In object-oriented programming (OOP), inheritance is a mechanism that allows a n
 (subclass or derived class) to inherit properties and behaviors (attributes and methods) from an existing class (base class or parent class). 
 This promotes code reuse and allows you to create a hierarchy of classes. 
 """
-# Parent class
+# Parent Class (Superclass)
 class Animal:
     def __init__(self, name):
         self.name = name
-
+    
     def speak(self):
-        pass
+        print("Animal speaks")
 
-# Subclass 1
+# Child Class (Subclass)
 class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)  # Call the parent class constructor
+        self.breed = breed
     def speak(self):
-        return f"{self.name} says Woof!"
+        print("woof woof")
 
-# Subclass 2
-class Cat(Animal):
-    def speak(self):
-        return f"{self.name} says Meow!"
+# Another Parent Class
+class Canine:
+    def __init__(self, state):
+        self.state = state
+        print(state)
+        
+    def bark(self):
+        print("Canine barking")
 
-# Subclass 3
-class Duck(Animal):
-    def speak(self):
-        return f"{self.name} says Quack!"
+# Multi-Inherited Child Class
+class GuardDog(Animal, Canine):
+    def __init__(self, name, state):
+        Animal.__init__(self, name)  # Call Animal constructor
+        Canine.__init__(self, state) # Call Canine constructor
+        
+    def guard(self):
+        print("Guarding the house")
 
-# Creating instances of the subclasses
-dog = Dog("Buddy")
-cat = Cat("Whiskers")
-duck = Duck("Daffy")
+# Usage
+dog = Dog("Buddy", "Golden Retriever")
+print(dog.name)        # Output: Buddy
+print(dog.breed)       # Output: Golden Retriever
+dog.speak()            # Output: Animal speaks
 
-# Calling the speak method on each instance
-print(dog.speak())   # Output: Buddy says Woof!
-print(cat.speak())   # Output: Whiskers says Meow!
-print(duck.speak())  # Output: Daffy says Quack!
+guard_dog = GuardDog("Rex", "alert")
+print(guard_dog.name)    # Output: Rex
+print(guard_dog.state)   # Output: alert
+guard_dog.speak()        # Inherited from Animal: Output: Animal speaks
+guard_dog.bark()         # Inherited from Canine: Output: Canine barking
+guard_dog.guard()        # Defined in GuardDog: Output: Guarding the house
+
 
 """
 In this example:
-
-Animal is the base class with a constructor (__init__) that takes a name as a parameter and a speak method (which is a placeholder here).
-Dog, Cat, and Duck are subclasses that inherit from the Animal class. They override the speak method to provide their own implementation.
-Instances of the subclasses (dog, cat, duck) can use both the attributes and methods from the base class and their own implementations.
+This Python example demonstrates multiple inheritance through the GuardDog class, 
+which inherits from both the Animal and Canine classes. 
+The Animal class initializes a name attribute and provides a speak method that prints a generic message.
+The Dog class, as a subclass of Animal, overrides the speak method to output "woof woof" and adds an additional breed attribute. Meanwhile,
+the Canine class initializes a state attribute and includes a bark method. In the GuardDog class, both parent class constructors are explicitly
+called to initialize name and state, allowing it to access methods from both parent classes—speak from Animal and bark from Canine—while defining its own guard method. 
+The example effectively illustrates the concept of multiple inheritance, showcasing the interaction between the different classes and their respective functionalities.
 """
 
 ## Composition
