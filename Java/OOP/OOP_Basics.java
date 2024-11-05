@@ -634,4 +634,3 @@ p2 points to p3 meaning p2's equals method is called on p3 but since p2 points t
   Class  A{ A(A other){numberA = this.numberA }} // here we pass in a object into this contructor that has numberA  and we make a copy of that numberA and assign it to this numberA in the A class
   */
 
-
