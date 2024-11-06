@@ -119,13 +119,14 @@ Tree Types Overview:
 
     - Treversal: To traverse a BST its not linear, we must visit each node once and in a specific order not linear (i.e first second third etc). There are different types of traversal for BST, different alogrithims visit nodes in different orders. here are some: NOTE(for the tree examples assume that the given tree is a BST in that smaller value on left and larger value on right for every node)
       - 1. Pre order Traversal: (Given a Non Empty BST) Visit the root node, then the left subtree(left child of root), then the right subtree(right child of root). DO THIS RECURSIVELY! meaning the node on left and right subtree will become the new root node 
-           and we will do steps 2 and 3 on both left and right nodes over and over Recursilvely until we run out of nodes meaning the node is a leaf node. NOTE: we dont do step one as we alredy checked the left and right nodes of the root node so when the 
-           child nodes become the root node they would have alredy been treversed. EX: in the first ex tree after first run we will get in this order: (Root, Child1, Child2) now new root is child 1 once we run out of nodes on left side (child1) we move on to our second root node Child 2 (right subtree)
-      - 2. In order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first left most node, it will be on left side of root), then the root node (at first is the root of our left most node we just traversed), then the right subtree (at first the node right of the root). DO THIS RECURSIVLY!  
-           EX: in the first ex tree after first run we will get in this order: (GG1, G1, null) since G1 has no right node we are done step one NEW root is child one (the new left node would be the parent of the prevoius root but since we alredy travered this new left node as root in the last iteration we dont count it ). 
+           and we will do steps 2 and 3 on both left and right nodes over and over Recursilvely until we run out of nodes meaning the node is a leaf node. NOTE: the step 1 is checking the root but here the root is the left or right subtree of the prevoius root. 
+           so after printing this root which is on the left or right subtree we will do the same steps on the left node of this left node until  we run out of nodes on the left subtree then we go right and check for left children on this right node until we run out of left children on this right node then we go right on this right node and do the same steps until we have no left children on this right node we repete this until we run out of nodes
+           EX: in the first ex tree after first run we will get in this order: (Root, Child1, G1, GG1, G2, C2, C3) at each root we alwasy fully traverse all the left nodes of each left nodes (ie the left subtree) when we run out of left nodes we go right this is our new root and we must first now cehc kif this root has a left serch the left like befrore if it dose then once we run out we go right. and so on until we are done with all the nodes.
+      - 2. In order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first left most node, it will be on left side of root), then the root node (at first is the root of our left most node we just traversed), then the right subtree (at first the node right of the root). DO THIS RECURSIVLY! meaning after going to thr right node we must go to the left most node of this right node and so on until we run out of nodes meaning the node is a leaf node
+           EX: in the first ex tree after first run we will get in this order: (GG1, G1, C1, GC2, Root, c2, c3) note how from the left most node we bo back up checking to see if we can go right after finishing the right subtree we go right back where we branched right and move back once more
            once we reach the root of bst we do the. NOTE!: by doing this traversal we will get the values in order smallest to largest
-      - 3. Post order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first the left most node on left side of root), then the right subtree (at first right of the root), then the root node (at first parent of left and right nod we just traversed). DO THIS RECURSIVELY at each node! just like before after this step the new root node will
-           be the parent of the rprevoius root node but now our new left node was arlerdy traversed as the root node last time so we dont count it EX from tree: (GG1, null, G1) since G1 has no right node we are done step new root node is child one (the new left node is G1 but since we traverd it last time as our root we skip it).
+      - 3. Post order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first the left most node on left side of root), then the right subtree (going to the right most node of this prevoius left node), then the root node (the curretn node it will have no left or right child). DO THIS RECURSIVELY at each node! just like before after this step the new root node will
+           EX from tree: (GG1, G1, G2, C1, C3, C2, Root) note how we go to left most then backwards until we reach a node with right node and do the same first step of going as left as we can and repeting.
       - 4. Breadth First Traversal: (Given a Non Empty BST) Traverse each level of the tree from left to right then move onto the next level do this from top to bottom (level 0 to level n). DO THIS RECURSIVELY! EX from tree: 1) root, 2) Child one and child two 3) GC 1 and GC2 and Child 3 and so on. going level by level in each level left to right. NOTE: this is the only traversal that is linear. 
       - 5. Depth First Traversal: (Given a Non Empty BST) Traverse the tree in a depth first manner. meaning starting a the root visit any neigbour node and keep doing deaper traversing each neighbours neighbours until you reach a node with no unvisited neighbors (leaf), backtrack to the last node with unvisited neighbors. Repeat until all nodes are visited. EX: root, Child, G1, GG1, G2, Child 2, Child3
 
@@ -234,6 +235,7 @@ Tree Types Overview:
 """
 
 # ! BST code
+
 # here like linked list we can have 2 classes (one for node and one for LL) but here we will have just one class for BST and no class for the node in our BST
 # ! creating the binary search tree
 class BST: # create class
@@ -241,7 +243,7 @@ class BST: # create class
     # but when we create the node we only need to give the key as initially the node has no children and  we can define the variables for them and fill them when we creat the left or right node 
     # now when we create the node object we only need to give the key and the rest will be filled automatically by the otehr methods when we difine the left or right child
     def __init__(self, key): 
-        self.key = key
+        self.key = key # * Here self represents the current node
         self.leftchild = None
         self.rightchild = None
     
@@ -313,11 +315,11 @@ class BST:
           else: # at some point we will call the instert above on a leaf node and the right child of that node we called instert on is null and this part runs
             self.rightchild = BST(data) # since we have no right child here, we can add the new node here safely  
             
-    # ! dealing with duplicates
+    # * dealing with duplicates
     # 1) we can add the follwing beofre branching: if key == data: return with this we do not add the node to the tree if the key is the same as the data we are trying to
     # 2) we can add the following at bracanging: if key > > data and key == data. or  if key < data and key == data. this way we add the node to the right or left subtree if the key is the same as the data we are trying to
           
-    # ! Summary: 
+    # * Summary: 
     # we compare value with data and brach left or right depending on the comparison. after the branch if we have a root node and depending on what subtree we branched to we call the insert method on the left or right child. 
     # once we reach a point where we have a leaf node we still have a key so we call insert again but this time after branching the left or right child will be null and we create the new node with data and it gets added to the left or right child of the leaf node.
     
@@ -329,7 +331,7 @@ class BST:
        / \
      15  100 
 """
-# ! inserting automatically to tree using a list and loop
+# * inserting automatically to tree using a list and loop
 BSTnodes = [10, 5, 20, 15, 100]
 root = BST(None)
 for node in BSTnodes:
@@ -375,7 +377,7 @@ class BST:
       else:
         self.rightchild = BST(data)
 
-  # ! Serch function (same idea as insert but insted of inserting we just check the current node = data if not we go left or right depending on data. at the end (leaf) or if theres no root insted of insterting a node we just return not found )
+  # * Search function (same idea as insert but insted of inserting we just check the current node = data if not we go left or right depending on data. at the end (leaf) or if theres no root insted of insterting a node we just return not found )
   def search(self, data):
     if self.key == data: # if the current node is the data we return found
       print("Node Found")  # print this message and return
@@ -415,3 +417,93 @@ root.insert(100)
 # now lets serch
 root.search(15) # this will print Node 15 Found
 root.search(33) # this will print Node not Found
+
+# ! Traversals (traversal meaning to visit each node once and here its in a specific, then we we can do things like print each node) we leaned 3 types:
+# *  pre order traversal is root -> left -> right
+# *  in order traversal is left -> root -> right
+# *  post order traversal is left -> right -> root
+# NOTE: the traversal is called on a node, and it can be called on any node, the node its called on will be the root of the traversal
+class BST:
+  def __init__(self, data):
+    self.key = data
+    self.leftchild = None
+    self.rightchild = None
+
+  def insert(self, data):
+    if self.key is None:
+      self.key = data
+    elif self.key == data:
+      return
+    elif self.key > data:
+      if self.leftchild:
+        self.leftchild.insert(data)
+      else:
+        self.leftchild = BST(data)
+    else:
+      if self.rightchild:
+        self.rightchild.insert(data)
+      else:
+        self.rightchild = BST(data)
+        
+  def preorder(self): # this is pre order traversal root -> left -> right
+    print(self.key) # print the root (as key the value initially is the root, after ot can be any node)
+    # now goto left subtree but check is it exist or not(as at some point the code needs to reach a leaf node (a node with no childern left or right) and stop)
+    # the if's make sure we call the function on both the left and right child and we call left first and then right
+    if self.leftchild:
+        self.leftchild.preorder() # recurively call the preorder function on the left subtree this makes the left subree's left child a root(as we just called preorder on the left child) and then we go root -> left -> right again 
+    if self.rightchild:    
+        self.rightchild.preorder() # recurively call the preorder function on the right subtree this makes the right subree's right child a root(as we just called preorder on the right child) and then we go root -> left -> right again 
+  
+    # NOTE: 
+    # 1) here we call the function recursively on a node, left or right of the root, but after calling that fucntion on a node that node becomes the root of the traversal and we repeat this untill we reach a root and we no longer have a left or right child
+    # 2) Here we have 2 if's no elif or else this is because we want to call the function on both the left and right child if they exist, if they dont exist we just return and dont do anything. but we need to traverse both the left and right subtree hence we use 2 'if' blocks making sure both blocks run.
+    # How it works: once we branch at the root we keep branching left first everytime until we have no left nodes left then the recurtion stops and we return back and finish the conditional now left child is none but if we have a right child we now serch the right child but if this right child has a left child we go left ..... come back branch again untill no left or right nodes exist. 
+
+  def inorder(self): # this is in order traversal left -> root -> right
+    if self.leftchild:
+      self.leftchild.inorder() # recurively call the inorder function on the left subtree this makes
+      
+    print(self.key) # print the root this wont run until left child is none meaning we are at the left most node
+    
+    if self.rightchild: # once we reach the left most node we check if right child exists as we need to traverse the right subtree after left and root
+      self.rightchild.inorder() # recurively call the inorder function on the right subtree this means we branch right and must now go all the way left again before printing root and then checking for right child again
+
+  def postorder(self): # this is post order traversal left -> right -> root
+    if self.leftchild: # if we have a left child
+      self.leftchild.postorder() # recurively call the postorder function on the left subtree this makes
+      
+    # now we are all the way left just like before but we do not print the root (left most node like in inorder)
+    # what we do is check if we can go right first, we will then repete teh whole function on this right node so we will go as left as we can on right node and so on until we have no left or right nodes left
+    # then we print the curretn node (root) and as we return back to the function call one by one, we will print all nodes going left and then right and then root (current node)
+    
+    if self.rightchild: # once we reach the left most node we check if right child exists as we need to traverse the right subtree after left and root
+      self.rightchild.postorder() # recurively call the postorder function on the right subtree this
+      
+    print(self.key) # print the root this wont run until left and right child is none (root is just the current node we are on its value is 'key')
+    
+
+# Lets build this tree and traverse it 
+"""
+     10
+    /  \
+   5   20
+       / \
+     15  100 
+"""
+root = BST(None) # creating empty tree
+# insterting all our nodes
+root.insert(10)
+root.insert(5)
+root.insert(20)
+root.insert(15)
+root.insert(100)
+
+# now lets traverse
+# Pre order traversal
+root.preorder() # prints 10 5 20 15 100 None(before we branch we print root but root at the end is none so it prints none)
+# In order traversal
+print("in")
+root.inorder()  # prints 5 10 15 20 100 None (note its in lowest to highest order)
+# Post order traversal
+print("post")
+print(root.postorder()) # prints 5 15 100 20 10 None 
