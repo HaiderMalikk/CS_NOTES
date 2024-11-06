@@ -130,6 +130,11 @@ Tree Types Overview:
       - 4. Breadth First Traversal: (Given a Non Empty BST) Traverse each level of the tree from left to right then move onto the next level do this from top to bottom (level 0 to level n). DO THIS RECURSIVELY! EX from tree: 1) root, 2) Child one and child two 3) GC 1 and GC2 and Child 3 and so on. going level by level in each level left to right. NOTE: this is the only traversal that is linear. 
       - 5. Depth First Traversal: (Given a Non Empty BST) Traverse the tree in a depth first manner. meaning starting a the root visit any neigbour node and keep doing deaper traversing each neighbours neighbours until you reach a node with no unvisited neighbors (leaf), backtrack to the last node with unvisited neighbors. Repeat until all nodes are visited. EX: root, Child, G1, GG1, G2, Child 2, Child3
 
+    NOTE!: When i say left node right etc, i mean from the root(first node) we go left until we cant go left anymore meaning no left node exits only then can we move on to the next step in this case we goto node
+    node is just the current node (we can print this node etc), after this node we can goto the right of this root (as no more left nodes) and right after this we repeat meaning we check for left nodes again on this right node until no more left nodes then we goto root then right so on
+    until none of the condtions are met meaning on the last node we will have no left or right node to go to. NOTE: when we reach a node with no childen we go backwards meaning we go to the last node we visited before we branched. once we reach a point where we have no left or right node to go to we go back to the last node we visited before we branched we end.
+    in the code you will se this as recurtion we keep going deeper and as one recusive call finsihes we go to the prevoius one ie the call than called this call we just finished and once we reach the first call thats when we go back to the first node we branched at (meanign the caller of the first recursive call) and we end.
+
     - Min and Max values (nodes): (Given a Non Empty BST) The min value is the smallest value in the BST and will be in the left subtree. The max value is the largest value in the BST  and will be in the right subtree. IF no left node or IF no right node then root is the smaller or larger value respectively.
       since each time a new node is made the smaller child is on the left this means the smallest value will be on the left most node of the tree. same logic for max value it will be on the right most node. EX: in the first ex tree assuming its a BST like we said: Min = GG1, Max = Child 3
       to find it manually we would treverse the trees left and right subtrees and find the smallest and largest value by traversing untill no left or right node exits the nwe will know that our currrent node is a minimum or maximum node respectfully.
@@ -502,8 +507,117 @@ root.insert(100)
 # Pre order traversal
 root.preorder() # prints 10 5 20 15 100 None(before we branch we print root but root at the end is none so it prints none)
 # In order traversal
-print("in")
 root.inorder()  # prints 5 10 15 20 100 None (note its in lowest to highest order)
 # Post order traversal
-print("post")
-print(root.postorder()) # prints 5 15 100 20 10 None 
+root.postorder() # prints 5 15 100 20 10 None 
+
+
+# ! Deleting a node from a tree 
+""" 
+procedure:
+1) check if tree is empty: if yes then return and either tree is empty or we ran out of nodes to delete and key is null
+2) if not empty find the node to be deleted (using custom search not serch method)
+3) if the node is found then delete it 
+"""
+class BST:
+  def __init__(self, data):
+    self.key = data
+    self.leftchild = None
+    self.rightchild = None
+
+  def insert(self, data):
+    if self.key is None:
+      self.key = data
+    elif self.key == data:
+      return
+    elif self.key > data:
+      if self.leftchild:
+        self.leftchild.insert(data)
+      else:
+        self.leftchild = BST(data)
+    else:
+      if self.rightchild:
+        self.rightchild.insert(data)
+      else:
+        self.rightchild = BST(data)
+      
+        
+  def delete(self, data):
+    if self.key is None:  # if tree is empty or when we ran out of nodes to delete and key is null, NOTE: self is teh current node
+      print("Tree is empty")
+      return # return as we are done with the function 
+    
+    # to find a note recall it can be on left or right (data is less than or greater than key) or data is equal to key
+    if data < self.key: # if data is less than key we go left
+      if self.leftchild: # if left child exists we call the delete function on that left child as the node we are deleting might be in the left subtree
+         # call the delete function on the left child until we find node or we ran out of nodes to delete, this along with the recusive call in right branch "elif" will run until we have no left or right child left
+        self.leftchild = self.leftchild.delete(data) # here we store the result given by the delete function (found or not) in left child beacuse we are deleting a node from the left subtree
+      else: # if left child does not exist but the data we are looking for is less than key then we return None as we ran out of nodes to delete the node has to be on left and it is not so node we want to delete DNE
+        print("Node not found")
+    elif data > self.key: # if data is greater than key we go right
+      if self.rightchild: # if right child exists we call the delete function on that right child as the node we are deleting might be in the right subtree
+        self.rightchild = self.rightchild.delete(data) # call the delete function on the right child until we find node or we ran out of nodes
+      else: # if right child does not exist but the data we are looking for is greater than
+        print("Node not found")
+        
+    else: # if data is equal to key than the node we are deleting in the root node ie our current node is the node we want to delete
+      # * here we have three cases: 1) no child then just delete, 2) one child then that child will replace the parent, 3) two child then replace the gretest value in the left subtree or smallest value in the right subtree with the parent 
+      # case 1 and 2 combined
+      if self.leftchild is None: # if there is no left child then we delete the current node and replace it with its right child, i choose the right child as it is the only child
+        temp = self.rightchild # store the right child in a temp variable (as we will soon delete its parent and lose accsess to it), if RC is none that ignore and LC and Rc are none its a leaf and condition 1 applies
+        self = None  # delete the current node
+        return temp  # return the right child as we have deleted the current node now we return this and it will get stored in the lef tor rigth child of the parent of the current node (as that parent called the detetion on its left or right child) EX: see the line where we do LC = LC.delete(data) to get here that LC's LC would be nome and hence we would change LC's LC to the right child by returning the LC = temp (temp = RC) now LC is the LC's RC NOTE: its the same logic for RC = RC.delete(data)
+        # NOTE: we use temp because we need to store the child before deleteing its parent (current node) as we will lose access to it after deletion we still have all of rightchilds children but to get to right child and its children we had to use the parent which is why we has to keep the link to rightchild using temp and returning it so we can essentially fill in the deleted nodes gap
+      if self.rightchild is None: # if there is no right child then we delete the current node and replace it with its left child, i choose the left child as it is the only child
+        temp = self.leftchild  # store the left child in a temp variable 
+        self = None # delete the current node
+        return temp # return the LC
+      # case 3 2 children as past two if blocks did not run NOTE: i choose option 2 replace the parent with the smallest value in the right subtree
+      # to find the largest or smallest we use a while loop
+      node = self.rightchild # start at the right child
+      while node.leftchild:  # while the right child has a left child we keep going left as we want the smallest value of teh right subtree which is the leftmost node
+        node = node.leftchild # keep going left now the node is the left child and we run the loop again this time we go left again nso we goto the LC's LC we do this until we find the leftmost node where LC is none
+      # so far either we have the smallest value the leftmost node or if there was no left node of this parent node the curret node (right child) is the smallest value, so if theres no Lc than the left most node is the current node = RC
+      # Note that the last two if blocks failing means we have 2 children but we took node as RC so whe nwe did while node.RC we we said while RC.LC esentially cehcking the left child of this RC node which is one of two nodes of the node we are deleting 
+      self.key = node.key # set the key of the current node to the key of the leftmost node (which is the smallest value) so basically we say key(value of current node we called method on) = node.key( the smallest value in the right subtree the 'selfs' RC's smallest value) We basiclly insted of deleting the node we cahnge its value to the smallest value in the right subtree which is the leftmost node esantially deleting the node we want to delete by replacing its value
+      self.rightchild = self.rightchild.delete(node.key) # from the prevoius line we took the node we were deleting and gave it the value of its right childs smalest value (its RC's leftmost node) now that the node we were deleting is updated with what we wanted we need to delete the 'node' which was the leftmost node of the right subtree but since we set that to our current node to be deleted 'self' we essentialy deleted that node by replacing it with 'node' but now 'node' is a duplicate and must be deleted
+
+    return self #  return the current node as we are done with the function and we want to return the current node to the parent of the current node (as the parent called the delete function on its left or right child) now self is replaced with the node we wanted (the node to delete's RC's leftmost node ie the smallest value in the RC) for ex the LC = LC.delete(data) will get LC = self (self is the node to delete's right childs leftmost node ie RC's smallest value) by retrning this we esentially update the node we needed to delete basiacly removing it from the tree
+  def postorder(self): # this is post order traversal left -> right -> root
+    if self.leftchild: # if we have a left child
+      self.leftchild.postorder() # recurively call the postorder function on the left subtree this makes
+      
+    # now we are all the way left just like before but we do not print the root (left most node like in inorder)
+    # what we do is check if we can go right first, we will then repete teh whole function on this right node so we will go as left as we can on right node and so on until we have no left or right nodes left
+    # then we print the curretn node (root) and as we return back to the function call one by one, we will print all nodes going left and then right and then root (current node)
+    
+    if self.rightchild: # once we reach the left most node we check if right child exists as we need to traverse the right subtree after left and root
+      self.rightchild.postorder() # recurively call the postorder function on the right subtree this
+      
+    print(self.key) # print the root this wont run until left and right child is none (root is just the current node we are on its value is 'key')
+    
+# Lets build this tree and delete values from it 
+"""
+     10
+    /  \
+   5   20
+       / \
+     15  100 
+"""
+root = BST(None) # creating empty tree
+# insterting all our nodes
+root.insert(10)
+root.insert(5)
+root.insert(20)
+root.insert(15)
+root.insert(100)
+# lets delete a value
+root.delete(100)
+# new tree if you traverse or look for 100 it will not exist
+"""
+     10
+    /  \
+   5   20
+       /
+     15    
+"""
