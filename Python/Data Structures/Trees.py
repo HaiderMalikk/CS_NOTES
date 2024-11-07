@@ -512,7 +512,7 @@ root.inorder()  # prints 5 10 15 20 100 None (note its in lowest to highest orde
 root.postorder() # prints 5 15 100 20 10 None 
 
 
-# ! Deleting a node from a tree 
+# ! Deleting a node from a tree including root node, or if root has 1,2 children, see counter for deleting leaf root node
 """ 
 procedure:
 1) check if tree is empty: if yes then return and either tree is empty or we ran out of nodes to delete and key is null
@@ -542,7 +542,7 @@ class BST:
         self.rightchild = BST(data)
       
         
-  def delete(self, data):
+  def delete(self, data, current): # one arg is data (for serching) and current is the current node (for deleting) (used for node so you must give the root)
     if self.key is None:  # if tree is empty or when we ran out of nodes to delete and key is null, NOTE: self is teh current node
       print("Tree is empty")
       return # return as we are done with the function 
@@ -551,25 +551,41 @@ class BST:
     if data < self.key: # if data is less than key we go left
       if self.leftchild: # if left child exists we call the delete function on that left child as the node we are deleting might be in the left subtree
          # call the delete function on the left child until we find node or we ran out of nodes to delete, this along with the recusive call in right branch "elif" will run until we have no left or right child left
-        self.leftchild = self.leftchild.delete(data) # here we store the result given by the delete function (found or not) in left child beacuse we are deleting a node from the left subtree
+        self.leftchild = self.leftchild.delete(data, current) # here we store the result given by the delete function (found or not) in left child beacuse we are deleting a node from the left subtree, current mus talso be given as that was given at teh fuction call
       else: # if left child does not exist but the data we are looking for is less than key then we return None as we ran out of nodes to delete the node has to be on left and it is not so node we want to delete DNE
         print("Node not found")
     elif data > self.key: # if data is greater than key we go right
       if self.rightchild: # if right child exists we call the delete function on that right child as the node we are deleting might be in the right subtree
-        self.rightchild = self.rightchild.delete(data) # call the delete function on the right child until we find node or we ran out of nodes
+        self.rightchild = self.rightchild.delete(data, current) # call the delete function on the right child until we find node or we ran out of nodes
       else: # if right child does not exist but the data we are looking for is greater than
         print("Node not found")
         
     else: # if data is equal to key than the node we are deleting in the root node ie our current node is the node we want to delete
-      # * here we have three cases: 1) no child then just delete, 2) one child then that child will replace the parent, 3) two child then replace the gretest value in the left subtree or smallest value in the right subtree with the parent 
-      # case 1 and 2 combined
+      # * here we have three cases: 1) no child then just delete, 2) one child then that child will replace the parent, 3) two child then replace the gretest value in the left subtree or smallest value in the right subtree with the parent, one child then that child will replace the parent with that child
+      # * IF WE WANT TO DELETE ROOT THIS ONLY WORKS IF ROOT HAS 1 or 2 CHILDREN 
+      # * NOTE: all nodes are deleted regardless of the number of children. the case of having 1 or 2 children is only for root node (initial node of BST)
+      # case 1 and 2 combined (covers case of 1 child as 1 child means wither left or right child noe both)
       if self.leftchild is None: # if there is no left child then we delete the current node and replace it with its right child, i choose the right child as it is the only child
         temp = self.rightchild # store the right child in a temp variable (as we will soon delete its parent and lose accsess to it), if RC is none that ignore and LC and Rc are none its a leaf and condition 1 applies
+        # if root node has 1 node and left child is none
+        if data == current: # deleting root node with one child by replace it with the right child
+          self.key = temp.key # curretn node to delete = curretn nodes rigth child
+          self.leftchild = temp.leftchild # current nodes left child = current nodes right child's left child
+          self.rightchild = temp.rightchild # current nodes right child = current nodes right child's right child
+          temp = None
+          return 
         self = None  # delete the current node
         return temp  # return the right child as we have deleted the current node now we return this and it will get stored in the lef tor rigth child of the parent of the current node (as that parent called the detetion on its left or right child) EX: see the line where we do LC = LC.delete(data) to get here that LC's LC would be nome and hence we would change LC's LC to the right child by returning the LC = temp (temp = RC) now LC is the LC's RC NOTE: its the same logic for RC = RC.delete(data)
         # NOTE: we use temp because we need to store the child before deleteing its parent (current node) as we will lose access to it after deletion we still have all of rightchilds children but to get to right child and its children we had to use the parent which is why we has to keep the link to rightchild using temp and returning it so we can essentially fill in the deleted nodes gap
       if self.rightchild is None: # if there is no right child then we delete the current node and replace it with its left child, i choose the left child as it is the only child
         temp = self.leftchild  # store the left child in a temp variable 
+        # * if root node has 1 node and right child is none
+        if data == current: # deleting root node with one child by replace it with the left child
+          self.key = temp.key # curretn node to delete = curretn nodes left child
+          self.leftchild = temp.leftchild # current nodes left child = current nodes left child's left child
+          self.rightchild = temp.rightchild # current nodes right child = current nodes left child's right
+          temp = None
+          return
         self = None # delete the current node
         return temp # return the LC
       # case 3 2 children as past two if blocks did not run NOTE: i choose option 2 replace the parent with the smallest value in the right subtree
@@ -580,23 +596,41 @@ class BST:
       # so far either we have the smallest value the leftmost node or if there was no left node of this parent node the curret node (right child) is the smallest value, so if theres no Lc than the left most node is the current node = RC
       # Note that the last two if blocks failing means we have 2 children but we took node as RC so whe nwe did while node.RC we we said while RC.LC esentially cehcking the left child of this RC node which is one of two nodes of the node we are deleting 
       self.key = node.key # set the key of the current node to the key of the leftmost node (which is the smallest value) so basically we say key(value of current node we called method on) = node.key( the smallest value in the right subtree the 'selfs' RC's smallest value) We basiclly insted of deleting the node we cahnge its value to the smallest value in the right subtree which is the leftmost node esantially deleting the node we want to delete by replacing its value
-      self.rightchild = self.rightchild.delete(node.key) # from the prevoius line we took the node we were deleting and gave it the value of its right childs smalest value (its RC's leftmost node) now that the node we were deleting is updated with what we wanted we need to delete the 'node' which was the leftmost node of the right subtree but since we set that to our current node to be deleted 'self' we essentialy deleted that node by replacing it with 'node' but now 'node' is a duplicate and must be deleted
+      self.rightchild = self.rightchild.delete(node.key, current) # from the prevoius line we took the node we were deleting and gave it the value of its right childs smalest value (its RC's leftmost node) now that the node we were deleting is updated with what we wanted we need to delete the 'node' which was the leftmost node of the right subtree but since we set that to our current node to be deleted 'self' we essentialy deleted that node by replacing it with 'node' but now 'node' is a duplicate and must be deleted
 
     return self #  return the current node as we are done with the function and we want to return the current node to the parent of the current node (as the parent called the delete function on its left or right child) now self is replaced with the node we wanted (the node to delete's RC's leftmost node ie the smallest value in the RC) for ex the LC = LC.delete(data) will get LC = self (self is the node to delete's right childs leftmost node ie RC's smallest value) by retrning this we esentially update the node we needed to delete basiacly removing it from the tree
-  def postorder(self): # this is post order traversal left -> right -> root
-    if self.leftchild: # if we have a left child
-      self.leftchild.postorder() # recurively call the postorder function on the left subtree this makes
-      
-    # now we are all the way left just like before but we do not print the root (left most node like in inorder)
-    # what we do is check if we can go right first, we will then repete teh whole function on this right node so we will go as left as we can on right node and so on until we have no left or right nodes left
-    # then we print the curretn node (root) and as we return back to the function call one by one, we will print all nodes going left and then right and then root (current node)
-    
-    if self.rightchild: # once we reach the left most node we check if right child exists as we need to traverse the right subtree after left and root
-      self.rightchild.postorder() # recurively call the postorder function on the right subtree this
-      
-    print(self.key) # print the root this wont run until left and right child is none (root is just the current node we are on its value is 'key')
-    
-# Lets build this tree and delete values from it 
+  
+# ! DELETION for deleting the root node from BST (also has 3 cases) we only did the case of root having 2 children this is a helper method for case 1,2,3
+# 1 if root node is leaf node, 2) if root node has 1 child, 3) if root node has 2 children
+# the last method only works if root has 2 children CASE 3, lets make the method work for the other two cases
+# 1) if root is leaf than BST has 1 node ! we cannot delete this as its a leaf root node, 
+# We must count the number of nodes first before we do this using helper function
+def count(node): # counting number of nodes in the tree
+  if node is None:
+    return 0
+  # to count nodes do root + nodes in left subtree + right subtree
+  return 1 + count(node.leftchild) + count(node.rightchild) # by using recution we cover all the nodes by counting each node (1) + its left node + its right node, this line runs for each node in the tree recursively going deeper in the tree if no RC or LC we return zer o as node will we none
+
+# * when deleting you must give the root node as a parameter to the deletion method for it delete wrap in if else to check if # of children is 0 using count function if zero then cant delete root
+# * case 1 lets delete a root node that is a leaf I.e a BST with 1 node itslef
+root = BST(10)
+if count(root) > 1: # counts nodes including root so for this to run BST # of nodes must be more that 1 so root plus at least 1 other node (child)
+  root.delete(10, root.key)
+else:
+  print("cannot delete root node with less than 1 nodes") # will run as root is leaf 
+  
+#  * case 2 lets delete a root node that has 1 child
+root = BST(10)
+root.leftchild = BST(5)
+root.rightchild = None
+if count(root) > 1: # counts nodes including root so for this to run BST #
+  root.delete(10, root.key)
+else:
+  print("cannot delete root node with less than 1 nodes") # will run as root is
+# NODE 10 is deleted and new BST is '5' with no children
+
+# * case 3 lets delete a root node that has 2 children
+# Lets build this tree and delete values from it # works for case 3 if root has 2 children
 """
      10
     /  \
@@ -611,13 +645,28 @@ root.insert(5)
 root.insert(20)
 root.insert(15)
 root.insert(100)
-# lets delete a value
-root.delete(100)
-# new tree if you traverse or look for 100 it will not exist
+root.delete(100, root.key) # not root
+# new tree
 """
      10
     /  \
    5   20
        /
-     15    
+     15   
 """
+# deleting root here root has 2 childs so we can delete
+if count(root) > 1: # counts nodes including root so for this to run BST #
+  root.delete(10, root.key)
+else:
+  print("cannot delete root node with less than 1 nodes")
+# printing all nodes in the tree manually 
+print(root.key)
+print(root.rightchild.key)
+print(root.leftchild.key)
+# new tree note when root has 2 children we choose smallest val in rigth subtree
+"""
+     15
+    /  \
+   5   20  
+"""
+
