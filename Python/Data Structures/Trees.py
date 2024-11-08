@@ -50,6 +50,8 @@ Tree Properties:
 # ! here are some common tree structures and descriptions
 """
 Tree Types Overview:
+
+# Trees covered:
 0. **General Tree**:
    - Definition: A tree in which each node can have any number of child nodes i.e there is no limit on the number of child nodes a node can have.
    - Characteristics:
@@ -63,7 +65,7 @@ Tree Types Overview:
      - Each node can have 0, 1, or 2 children.
      - The height of a balanced binary tree is minimal for a given number of nodes.
      - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf).
-     - In a complete binary tree, all levels of the tree except the last level are completely filled (meaning mus thave 2 child nodes). Last level can be either completely filled or filled left to right meaning that if the last level has 2 child nodes they must be on the left most node of the previous level. if we have one node it must be a left node to the left most node of the previous level. This left most node must be filled first before moving to the right
+     - In a complete binary tree, all levels of the tree except the last level are completely filled (meaning must have 2 child nodes). Last level can be either completely filled or filled left to right meaning that if the last level has 2 child nodes they must be on the left most node of the previous level. if we have one node it must be a left node to the left most node of the previous level. This left most node must be filled first before moving to the right
      - In a Perfect binary tree, all the nodes except for leaf nodes have 2 children and all the leaf nodes are at the same level.
      - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1. in a Unbalanced binary tree the difference in height between the left and right subtrees of every node is more than 1.
      - In a pathalogical binary tree, every parent node has only 1 child node.
@@ -139,6 +141,21 @@ Tree Types Overview:
       since each time a new node is made the smaller child is on the left this means the smallest value will be on the left most node of the tree. same logic for max value it will be on the right most node. EX: in the first ex tree assuming its a BST like we said: Min = GG1, Max = Child 3
       to find it manually we would treverse the trees left and right subtrees and find the smallest and largest value by traversing untill no left or right node exits the nwe will know that our currrent node is a minimum or maximum node respectfully.
 
+8. **Binary Heap Tree**: (NOTE there are more types of heap trees)
+   - Definition: A complete binary tree that satisfies the heap property, where each node has a specific order relative to its children.
+   NOTE: complete BT => all levels of the tree except the last level are completely filled or filled left to right meaning the left most node of each level is filled first, heap property => for any given node, the parent node is either greater than (max heap) or less than (min heap) the children node, so if every node is greater than or equal to its children its max heap or if its less than or equal to its children its min heap.
+   this implies that for max heap the root node is the max value and for min heap the root node is the min value. ! this rule for heap must be true for all nodes in the tree.
+   - Characteristics:
+     - **Max-Heap**: The value of each node is greater than or equal to the values of its children.
+     - **Min-Heap**: The value of each node is less than or equal to the values of its children.
+     - Implemented as an array, where parent-child relationships are defined by indices. 
+   - Uses:
+     - Efficiently implements priority queues, enabling quick access to the highest or lowest priority elements.
+     - Forms the basis for the heapsort algorithm, sorting elements in O(n log n) time.
+     - Utilized in graph algorithms, such as Dijkstra's algorithm, for efficient minimum element retrieval. and kth largest element.
+     
+
+# other trees not covered:
 3. **Balanced Trees**:
    - Definition: Trees that automatically keep their height minimal, such as AVL trees and Red-Black trees.
    - Characteristics:
@@ -174,16 +191,6 @@ Tree Types Overview:
      - It is designed to work well on disk and can handle large amounts of data efficiently, minimizing disk reads.
    - Uses: Used in databases and file systems for efficient data retrieval, ensuring that operations remain efficient even with large datasets.
 
-8. **Heap Tree**:
-   - Definition: A complete binary tree that satisfies the heap property, where each node has a specific order relative to its children.
-   - Characteristics:
-     - **Max-Heap**: The value of each node is greater than or equal to the values of its children.
-     - **Min-Heap**: The value of each node is less than or equal to the values of its children.
-     - Implemented as an array, where parent-child relationships are defined by indices.
-   - Uses:
-     - Efficiently implements priority queues, enabling quick access to the highest or lowest priority elements.
-     - Forms the basis for the heapsort algorithm, sorting elements in O(n log n) time.
-     - Utilized in graph algorithms, such as Dijkstra's algorithm, for efficient minimum element retrieval.
 """
 
 # ! IMPLEMENTING TREES IN PYTHON CODE
@@ -336,7 +343,7 @@ class BST:
        / \
      15  100 
 """
-# * inserting automatically to tree using a list and loop
+# ! inserting automatically to tree using a list and loop
 BSTnodes = [10, 5, 20, 15, 100]
 root = BST(None)
 for node in BSTnodes:
@@ -670,3 +677,145 @@ print(root.leftchild.key)
    5   20  
 """
 
+# ! Min and Max of BST
+# NOTE: we dod not have to serch the whole tree and find the max its a BST the smaller value will be in the left subtree and the larger value will be in the right subtree
+# so the smallest vlaue (MIN) is at the left most node and the largest value (MAX) is at the rightmost node
+# So until we have no left node or no right node then the current node is the smaller or larger value respectively
+class BST:
+  def __init__(self, data):
+    self.key = data
+    self.leftchild = None
+    self.rightchild = None
+
+  def insert(self, data):
+    if self.key is None:
+      self.key = data
+    elif self.key == data:
+      return
+    elif self.key > data:
+      if self.leftchild:
+        self.leftchild.insert(data)
+      else:
+        self.leftchild = BST(data)
+    else:
+      if self.rightchild:
+        self.rightchild.insert(data)
+      else:
+        self.rightchild = BST(data)
+  
+  def min_node(self):
+    if self.leftchild: # if we have a left child then we go to the left child
+      return self.leftchild.min_node() # serch the left subtree for minimum this will keep running until we reach a node with no left child
+    return self.key # once we reach a node with no left child then this node is the minimum value
+
+  def max_node(self):
+    if self.rightchild: # if we have a right child then we go to the right child
+      return self.rightchild.max_node() # serch the right subtree for maximum this will keep running until we reach a node with no right
+    return self.key # once we reach a node with no right child then this node is the maximum value
+
+# lets build our tree and finf min adn max
+"""
+     10
+    /  \
+   5   20
+       / \
+     15  100 
+"""  
+  
+root = BST(None) # creating empty tree
+# insterting all our nodes
+root.insert(10)
+root.insert(5)
+root.insert(20)
+root.insert(15)
+root.insert(100)
+root.min_node() # 5
+root.max_node() # 100
+
+
+# ! Implementing Heap Tree in Python (see details on heap tree in tree types notes)
+# EX of heap tree (note both are complete Binary trees):
+# min heap:
+""" 
+     1
+    / \
+   4  10
+  / \
+70  100 
+"""
+# max heap:
+""" 
+     100
+    /   \
+   50   70 
+  / 
+10   
+"""
+
+# ! Operations on Heap Tree
+
+# ! Heapify
+# * Heapify is a process of converting a non-heap tree into a heap tree or updating the heap tree to maintain the heap property it also allows us to create min or max heap from a complete Binary tree
+# * we use the heapify funtion when we insert or delete a node and when we want to create a bianry heap from a array
+# * heapify has two types: 
+# 1) heapify up (from bottom to top, we compare node with its parent making sure the nodes are following heap propertie is not we will rearrange it) 
+# 2) heapify down (from top to bottom, we compare node with its children making sure the nodes are following heap propertie is not we will rearrange it)
+# when comparing we swap the nodes if they are not following the heap property
+# EX of not heap to heap (heapify down) after comparing we go down the tree
+"""
+   10          2
+  /  \   =>   / \
+2     6     10   6
+""" 
+# * if we are dealing with a min heap its min heapify, if we are dealing with a max heap its max heapify
+
+# ! Insertion (while mainting heap property)
+# 1) we add the new node to the first open stop avalible in the lower level (last level) of the tree (we insert here to maintain the complete binary tree property)
+# 2) check if this new node is following the heap property, if not we will use the heapify up function to rearrange it. (we use heapify up to maintain the heap property)
+# Ex of inserting from [4, 1, 6] in MAX HEAP; we first insert 3 as root then we insert 2 at the first open spot (to the left of 4) so far its still max heap when we check using heapify as parent is greater than child 4>2
+# after inserting 6 to the next avalible spot (left to right so its right of 4) we check using heapify if its still heap and its not so we swap 4 and 6 (4<6) so now its max heap
+""" 
+  4           6
+ /  \   =>   / \
+1     6     1   4
+"""
+
+# ! Deletion (while mainting heap property)
+# * for all nodes 
+# 1) we delete the node we want by replacing it with the last node in the tree (which is the right most node in the tree)
+# 2) delete the last node which is now in the deleted nodes position
+# 3) heapify the replaced node to maintain the heap property
+
+# ! min or max node
+# if we have map heap the max node is the root and the min node is the last node in the tree (on left or right)
+# if we have min heap the min node is the root and the max node is the last node in the tree (on left or right)
+
+# ! creating a min or max heap from a array 
+# williams method:
+# 1) we create an empty heap tree
+# 2) insert each element of the array into the heap tree one by one
+# 3) after each insertion we heapify the tree to maintain the heap property
+
+# we will fo the second method
+# 1) we create a complete binary tree using the given array of numbers
+# 2) we will start from the last internal node we will heapify the tree at each node, comparing the node with its children and rearranging them if they are not following the heap property
+# 3) a internal node is a node which has children so the las tinternal node is the last node in the tree that has children, we start here as leaf node has no children so nothing to compare with when heaping
+# NOTE: we need to heapify the tree depending on the type of heap we are creating (min or max heap)
+
+# ! creating a list of numbers from a binary tree (list representation of binary tree)
+# NOTE: since a heap tree is a complete binary tree we know exactly how many nodes are in each level of the tree expect the last level which can vary
+# at level 0 we have 1 node (the root) at level 1 we have 2 nodes (the children of the root) at level 2 we have 4 nodes so it will grow by a factor of 2 ie double each time but the last level can be full or have one node or anything in between
+# Building the list: 
+# 1) store the root node at the first position in the list index 0
+# 2) store the children of the root node at the next two positions in the list index 1 and 2 with left child at index 1 and right child at index 2
+# 3) now we look at the left child of the last node or gandchild or root and add its children to the list at the next two positions in the list with the left child at index 3 and right child at index 4 and then move onto the right grandchild of root and store its children in the next indexes before moving onto the left child of the leftgrandchild of root and so on
+# 4) we do this for all levels and since we go left to right the numebr of nodes at the last level dose not matter
+# 5) once we run out of nodes we stop and list is ready
+# * NOTE: this is the level order traversal of the binary tree
+
+# * now we can find the position in the heap tree of any node in the list using the formuals:
+# 1) root = list[0]
+# - let ith node be at position i in the list ith node = list[i] then:
+# 2) the parent node of ith node = list[(i-1)//2] # '//' is integer division so 3//2 = 1
+# 3) the left child of ith node = list[(2*i)+1] 
+# 4) the right child of ith node = list[(2*i)+2]
