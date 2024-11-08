@@ -27,5 +27,4 @@ queue.pop(0) # removing 10 now  my queue is  [20, 40]
 queue.pop(0) # removing 20 now  my queue is  [40]
 queue.pop(0) # removing 40 now  my queue is  []
 
-#! example of priority queue using bianry heap we can use imports but here we will make our own binary heap
-# TODO FILL
+#! example of priority queue using bianry heap in the the Trees.py file. "Cntrl or CMD + F" thrn serch for "proiority queue" to see the code faster.

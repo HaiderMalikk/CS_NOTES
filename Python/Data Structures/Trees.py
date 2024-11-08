@@ -819,3 +819,85 @@ root.max_node() # 100
 # 2) the parent node of ith node = list[(i-1)//2] # '//' is integer division so 3//2 = 1
 # 3) the left child of ith node = list[(2*i)+1] 
 # 4) the right child of ith node = list[(2*i)+2]
+
+# ! Heap queue 
+# * a heap queue is a data structure that is a combination of a queue and a heap specifically a min heap
+# * used to implement priority queues where elements are inserted with a priority (higher priority items are processed first)
+
+# * we will first use the heapq python module to implement a heap queue as we will get methods like heapify and insert by importing heapq
+import heapq # importing the heapq module
+
+# * we will now use lists to implement a heap queue
+heap = [] # creating an empty list for the heap queue
+
+# using heapq to make this min heap tree:
+""" 
+     1
+    / \
+   4  10
+  / \
+70  100 
+"""
+# note the order of insertion dose not matter the heapify method will rearrange the elements to maintain the heap property
+heapq.heappush(heap, 1) # adding 5 to the heap queue this methods ensures we insert 5 into the list 'heap while maintaining the min heap property
+heapq.heappush(heap, 4) # adding 4 to the heap queue here 4 will be inserted after 1 as the min heap property is => the child is greater than parent
+heapq.heappush(heap, 10) # adding 4 to the heap queue here
+heapq.heappush(heap, 70) # adding 10 to the heap queue here
+heapq.heappush(heap, 100) # adding 70 to the heap queue here
+
+# to remove an element from the heap queue we use the heappop method, NOTE the pop alwasy removes the root node
+heapq.heappop(heap) # removing the root node 1 from the heap queue
+# new tree note that 4 will be new root as all children must be greater than parent and 100 is in the left of 70 as we fill the left subtree first (i.e fill the left most node first before moving right)
+""" 
+     4
+    / \
+   70  10
+  /
+100 
+"""
+# the heap queue = [4, 70, 10, 100] note now the first 3 elements are [root, lchild, rchild, lgrandchild or lchild of lchild]
+
+# converting any list to a heap queue using the heapify method
+list = [1, 4, 10, 70, 100] # creating a list of numbers
+heapq.heapify(list) # converting the list to a heap queue 
+# list = [1, 4, 10, 70, 100] # same as original heap tree example
+
+# we also have heappushpop() method which is a combination of heappush() and heappop() and etc
+
+# we can also pop then push to replace the root but there is a method for this called replace
+# this method will pop the smallest element (root) and add the new element at the correct position
+heapq.heapreplace(heap, 20) # removes root and adds 20 to the corretn position (after 10)
+# heap = [10, 70, 20, 100]
+# tree is now
+""" 
+     10
+    /  \
+   70   20
+  /
+100 
+"""
+
+# we can also get teh nth smallest element meaning if n = 2 we will get the 2 smallest elements in the heap queue with index[list.len-1] being the 2nd smallest element and index[0] being the 1st smallest element
+heapq.nsmallest(2, heap) # getting the 2 smallest elements in the heap queue = [10, 20]
+# * note this methos works on any iterable object not just heap trees
+
+# we can do the same thing to get nth largest numbers
+heapq.nlargest(2, heap) # getting the 2 largest elements in the heap queue = [100, 70]
+
+# ! priority queue using heapq
+# NOTE: a priority queue is a queue where the elements are ordered based on their priority each element has a data and value to beused in determining the priority "see the priority Queue.py for more"
+# NOTE: smallest element is always at the front of the queue meaning => SMALLEST VALUE = HIGHEST PRIORITY so the smallest value is always popped first ie removed first from the queue
+priority_queue = [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')] # creating a list of tuples where each tuple has a data and value to be used in determining the priority the order dose not matter
+heapq.heapify(priority_queue) # converting the list to a heap queue note that now each tuple is ordered based on the value of the tuple with the smallest value at the root of the tree
+
+# pop i.e remove the elements from the queue to the the order of the queue mening the order the elements should be removed here the highest proirity is 1 and is given to 'a
+for i in range(len(priority_queue)):
+  print(heapq.heappop(priority_queue)) # removing the elements from the queue in the order of priority as we heapify the priority queue beforehand this will print the elements in the order of priority
+  
+""" 
+output:
+(1, 'a') = > highest priority
+(2, 'b')
+(3, 'c')
+(4, 'd') = > lowest priority
+"""
