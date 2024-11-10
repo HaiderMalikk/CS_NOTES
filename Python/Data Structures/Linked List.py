@@ -32,11 +32,21 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #     def add_begin(self, data): # new function for adding only takes in data as parameter
 #       new_node = node(data) # creating a new node using the class node
 #       # new node is the first node so its ref is stored in the head
-#       new_node.ref = self.head # the refrence of first node is now stored in head iniitally head was null
-#       # ref of first node in stored in head but, when we create that first node its refrence will be stored in its head that will point to the next node
-#       self.head = new_node # store refrence of first node in its head this refrence points to the next node
-#       # you can think of the head as being blind the refrence is its guide it gives it cordinates (ref = head) then the head goes to those cordinates (newnode)
-#       # whos refrence ? new nodes refrence, where dose head go ? new node beacuse here we add it to start
+#       new_node.ref = self.head # this new nodes ref should point to the next node in the list which would be the head of the list, we do this before updating the head 
+#       self.head = new_node # updating the new node to be the head of the list
+#       # what this dose is make a new nodes ref (its next node) equal to the current head or the current first node, now that we can get from this new node to the prevoius first node we can make the head point to this new node
+#       # now we have created a link from new node to first node and from head to new node => head => new node => second node (was first node and in line 2 this node was 'head')
+#
+#       """ # add begin demonstation
+#       let LL = Head -> 1001 -> None
+#       add_begin(LL, 1002)
+#       line 1) new_node = Node(1002)
+#       line 2) new_node.ref = Head = 1001
+#       line 3) Head = 1002
+#       
+#       now LL is:      
+#       LL = 1002 -> 1001 -> None
+#       """
 #
 #     def add_end(self, data):
 #       new_node = node(data) # to avoid puttinh in each conditional 
@@ -335,3 +345,91 @@ myLL.delete_by_value(0) # deletes node 0
 # myLL.Reverse_LL() # reverse LL (commented out as its optional but still a good method to use) after uncommenting LL = 50->45->40->30->20->None
 myLL.display_LL() # iterate through and show all nodes in the Linked List
 # OUTPUT: 20->30->40->45->50->None
+
+# ! Doubly Linked List
+""" 
+A doubly linked list is a type of linked list in which each node has two pointers, one pointing to the next node and one pointing to the previous node.
+
+each node contains three parts:
+
+Data: The value stored in the node.
+Next: A pointer (or reference) to the next node in the list.
+Prev: A pointer (or reference) to the previous node in the list.
+
+This allows traversal of the list in both directions: from the head to the tail (forward traversal) and from the tail to the head (backward traversal).
+
+ex from singly linked list to doubly linked list:
+def add_begin(self, data): # new addbegin function for doubly linked list
+    new_node = Node(data) # create new node
+    # Step 1: If the list is not empty, update the previous pointer of the current head (i.e the current first node as head initially points to the first node) to point to this new node as after inserting this new node the node that was the first node is now the second node and its previous pointer points to the new node we will insert (new first node)
+    if self.head:
+        self.head.prev = new_node  # current head's prev points to new node
+    # Step 2: Set new node's next to current head or "the current first node" as we want this new nodes next node to be the current head, next pointer points to the , we say 'next' and not ref as this is doubly linked list we teqnically have two refs as prev is also a ref
+    new_node.ref = self.head
+    # Step 3: Update head to the new node new new node is the first node
+    self.head = new_node
+
+# in this program we first make the new node and let our current first nodes prev pointer point to point to this new node and then we let this new nodes next pointer point to the current first node we then let the head point to this new node.
+
+# let Doubly LL be: head => 10
+LL.add_begin(20)
+now th LL is: head => 20 <=> 10 => None
+
+now we would add this prev pointer in each case of adding or removing a node  so we constantly have accsess to the previous node by updating the prev pointer
+"""
+
+# ! Circular Linked List
+""" 
+A circular linked list is a variation of a linked list where the last node points back to the first node, forming a circle. This circular structure can be applied to both singly and doubly linked lists.
+
+Types of Circular Linked Lists:
+Singly Circular Linked List: In this case, the next (or ref) of the last node points back to the head node, creating a circular loop.
+Doubly Circular Linked List: Here, both the next pointer of the last node points to the head node, and the prev pointer of the head node points back to the last node.
+"""
+
+# Ex in python for singly circular LL
+""" 
+# NOTE: THIS IS NOT JUST A LOOP. we cannot just update the add begin method to loop back to the first node after running out of nodes
+# this would just be looping over a LinkedList but there would not exist an actual path from the last node to the first node and the loop would never end
+# we do this inside the method by looping and finding the last node and then updating the last node's next pointer to point to the first node
+
+def add_begin(self, data):
+    new_node = Node(data)  # Create a new node with the given data
+    if self.head is None:
+        # If the list is empty, make the new node point to itself (circular)
+        self.head = new_node # head points to new node which is the first node
+        new_node.ref = self.head  # new nodes ref points to head which is the first node
+    else:
+        # If the list is not empty, the new node points to the current head (singly circular no prev)
+        new_node.ref = self.head
+        # Find the last node to update its ref to the new node
+        temp = self.head
+        while temp.ref != self.head:
+            temp = temp.ref
+        # Update the last node's ref to point to the new node
+        temp.ref = new_node
+        # Update head to the new node
+        self.head = new_node
+
+def display(self):
+    if self.head is None:
+        print("List is empty")  # If the list is empty, display a message
+        return
+    temp = self.head
+    while True:
+        print(temp.data, end=" -> ")  # Print the data of the current node
+        temp = temp.ref  # Move to the next node
+        if temp == self.head:  # If we've looped back to the head, stop as we dont want to print the head over and over (infinite loop)
+            break
+    print("(back to head)")  # Indicate that we have returned to the head
+
+        
+cll = CircularLinkedList()
+cll.add_begin(10)
+cll.add_begin(20)
+cll.add_begin(30)
+
+cll.display()  # Output: 30 -> 20 -> 10 -> (back to head)
+
+
+"""
