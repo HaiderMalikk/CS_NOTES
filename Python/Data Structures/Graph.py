@@ -39,6 +39,8 @@ Ordered Pairs (Directed Graph)
 In a directed graph (digraph), edges are represented as ordered pairs.
 This means that (A, B) is not the same as (B, A); (A, B) implies a one-way connection from A to B.
 Example: edges = [('A', 'B'), ('B', 'C')] # Edge (A, B) represents a direction from A to B only.
+
+- Both types can have cycles.
 """
 
 # Mathamatical Representation of Graphs
