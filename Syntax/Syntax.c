@@ -458,4 +458,3 @@ printf("Time: %s\n", __TIME__);    // Current time.
 
 // Constants can be declared in header files to be reused across multiple files.
 #define MAX_SIZE 100  // Defining a constant.
-
