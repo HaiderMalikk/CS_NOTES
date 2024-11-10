@@ -45,19 +45,19 @@ queues are used in many real world applications like job scheduling, print queue
 
 # implementing a queue using methods
 queue = [] # making the queue list
-def enqueue():
+def enqueue(): # adding to queue
     element = input("Enter the element to add to the queue: ")
-    queue.append(element)
+    queue.append(element) # adding to the end of the list
     print(element, "is added to queue")
     
-def dequeue():
+def dequeue(): # removing from queue
     if not queue: # checking if empty
         print("Queue is empty")
     else:
         element = queue.pop(0)
         print("removed element: ", element)
         
-# to peek at queue
+# to peek at queue getting the first element or the element thats going to be removed first i.e entered the queue first
 def peek():
     if not queue:
         print("Queue is empty")
@@ -119,3 +119,23 @@ queue.pop(0) # removing 40 now  my queue is  []
 
 #! example of priority queue using bianry heap in the the Trees.py file. "Cntrl or CMD + F" thrn serch for "proiority queue" to see the code faster.
 
+# ! Deque
+""" 
+Deque
+# not to be confused with Dequeue ie the act or removing a element from a queue
+A deque (short for double-ended queue) is a more flexible structure that allows adding and removing elements from both ends.
+It supports FIFO (by adding at one end and removing from the other) and LIFO (Last-In-First-Out) (by adding and removing from the same end).
+you can think of a deque as a combination of both a queue and a stack because it supports operations from both ends:
+"""
+
+# EX in python using lists
+""" 
+Queue: [1, 2, 3]
+Dequeued: 1 (removed from front using pop(0))
+Queue after dequeue: [2, 3]
+
+Deque: [2, 1, 3]
+Removed from front: 2 (removed from front using pop(0))
+Removed from back: 3 (removed from back using pop())
+Deque after operations: [1]
+"""
