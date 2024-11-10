@@ -143,6 +143,7 @@ Tree Types Overview:
 
 8. **Binary Heap Tree**: (NOTE there are more types of heap trees)
    - Definition: A complete binary tree that satisfies the heap property, where each node has a specific order relative to its children.
+   - Heap is Used for dynamic memory allocation, can grow and shrink in size during program execution.
    NOTE: complete BT => all levels of the tree except the last level are completely filled or filled left to right meaning the left most node of each level is filled first, heap property => for any given node, the parent node is either greater than (max heap) or less than (min heap) the children node, so if every node is greater than or equal to its children its max heap or if its less than or equal to its children its min heap.
    this implies that for max heap the root node is the max value and for min heap the root node is the min value. ! this rule for heap must be true for all nodes in the tree.
    - Characteristics:
@@ -153,6 +154,7 @@ Tree Types Overview:
      - Efficiently implements priority queues, enabling quick access to the highest or lowest priority elements.
      - Forms the basis for the heapsort algorithm, sorting elements in O(n log n) time.
      - Utilized in graph algorithms, such as Dijkstra's algorithm, for efficient minimum element retrieval. and kth largest element.
+     - Heap sort is a comparison-based sorting algorithm that uses a binary heap data structure.
      
 
 # other trees not covered:
