@@ -1029,7 +1029,27 @@ employees = [("John", 28), ("Jane", 32), ("Doe", 25)]
 for name, age in employees:
     print(f"{name} is {age} years old.")
 
-# ! QUICK PYthon easy oop syntax ex
+# ! global keyword in python
+# a global variable is a variable that is defined outside of a function or a class and can be accessed from anywhere in the program
+# but what is we want to modify this global variable from a function?
+# NOTE: In Python, you can modify a global variable inside a function, but only if you're not assigning a new value to it. for Ex adding a element to a list inside a function to a global list will change the global list everywhere
+# This means if we said in the function modify global: global_var = 20 this will not work and will raise a NameError
+# so to work out that problem we use the global keyword to let python know that we want to modify the global varible x and it should change it outside the function and hence everywhere the varible x is used
+
+global_var = 10 # creating a variable outside the function
+def print_global(): # this prints the global variable's current value
+    print(global_var)
+    
+def modify_global(): # this modifies the global variable 
+    global global_var # this is the key line that lets python know we want to modify the global variable here for that we use the global keyword
+    global_var = 20 # this is the line that modifies the global variable now that inside the scope of the function we have used global global_var we can modify globa_var and it will change everywhere the variable is used
+    
+print_global() # this will print 10
+modify_global() # this will modify the global variable and print 20
+
+# NOTE: global x = 20  # This will cause a syntax error you can only modify a global variable stright away follow the syntax
+
+# ! QUICK PYthon easy oop syntax ex, see OOP folder in python lang for full OOP stuff
 class Person:
     # ! note the first argument can be anything but is conventionally named self
     def __init__(self, name, age): #  this function is the counstructer (__init__) means constructer its runs automatically when you create a new object
