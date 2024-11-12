@@ -904,6 +904,30 @@ else:
 finally:
     # This block always runs, regardless of what happened
     print("Execution complete.")
+    
+# ! to create a custom error class we use the raise keyword
+# ex with just try catch and NO raise
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Division by zero is not allowed")
+    return a / b
+
+try:
+    divide(10, 0)
+except ValueError as e:
+    print(e)  # Output: Division by zero is not allowed
+    
+# * EX with raise keyword to make our own error class and raise it
+class CustomError(Exception): # we inherit a custom error class from the Exception class
+    pass # we pass an empty class we can add functionality later
+
+def test_function():
+    raise CustomError("This is a custom error") # we raise our custom error using the raise keyword
+
+try:
+    test_function()
+except CustomError as e:
+    print(e)  # Output: This is a custom error
 
 
 # sets in python 
