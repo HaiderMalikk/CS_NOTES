@@ -743,8 +743,74 @@ if 0 <= i < len(my_2d_array) and 0 <= j < len(my_2d_array[0]):
 else:
     print("Indices are out of bounds.")
 
+# Serching list max and min and using 'key' to filter
+# Sorting a list of tuples based on the second element
 
-### put this at end 
+# EX's
+list = [1, 2, 3, 4, 5]
+print(max(list), min(list)) # Output: 5 1
+
+# Labda function for key explained (see lambda function dection for what lambda is)
+# EX NUM 3: => lambda x: x**2 the lambda var here 'x' repersents every element in the iterable, this var is on the LSH
+# this means we can modify 'x' on the RHS to then change the element passed in, in EX 3 we say x**2 so every element in the list will be squared 
+# that squared number is then used to compare to the other numbers in the list
+# in the array example we can see how 
+
+data = [(1, 'apple'), (3, 'banana'), (2, 'cherry')]
+sorted_data = sorted(data, key=lambda x: x[1])  # Sort by fruit name
+print(sorted_data)  # Output: [(3, 'banana'), (2, 'cherry'), (1, 'apple')]
+
+words = ["apple", "banana", "cherry", "kiwi"]
+sorted_words = sorted(words, key=len)  # Sort by length of words
+print(sorted_words)
+
+numbers = [5, 1, 9, 3, 7]
+# Find the number with the highest square
+max_square = max(numbers, key=lambda x: x**2)
+print(max_square)  # Output: 9
+
+# filter also accepts this 
+# Filter even numbers
+numbers = [1, 2, 3, 4, 5, 6]
+even_numbers = filter(lambda x: x % 2 == 0, numbers)
+print(list(even_numbers))  # Output: [2, 4, 6]
+
+# NOTE: if you pass a matrix into a max or min function it will add up all the elements in teh subarray and return the max or min of those sums
+
+
+# # list comprihention
+# arr = [[1, 2, 3], [1, 3, 2], [3, 2, 1]]
+
+# # Create a new list to store the modified sublists
+# new_arr = []
+# count = 0
+# # the for value in sublist is the second loop 
+# # if value != 3 is our condition 
+# # value is just the variable like J
+# # value is just a variable name that represents each element in the sublist 
+# for sublist in arr:
+#     new_sublist = [value for value in sublist if value != 3]
+#     new_arr.append(new_sublist)
+
+# print(new_arr)
+
+# list comprehention ( a way to make a list with loops and conditions inside these help build the list)
+# syntax general: new_list = [expression for item in iterable if condition]
+# EX 
+squares = [x ** 2 for x in range(10)]
+print(squares)  # Output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+# EX
+fruits = ['apple', 'banana', 'cherry']
+upper_fruits = [fruit.upper() for fruit in fruits]
+print(upper_fruits)  # Output: ['APPLE', 'BANANA', 'CHERRY']
+# EX
+coordinates = [(x, y) for x in range(3) for y in range(3)]
+print(coordinates)  # Output: [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+# EX flat lists
+nested_list = [[1, 2], [3, 4], [5, 6]]
+flat_list = [num for sublist in nested_list for num in sublist]
+print(flat_list)  # Output: [1, 2, 3, 4, 5, 6]
+
 ## dictionary
 # You can create a dictionary by enclosing a comma-separated list of key-value pairs within curly braces {}.
 #  Each key is unique and maps to a corresponding value. Keys and values can be of various data types.  
@@ -812,90 +878,6 @@ if value is not None:
 else:
     print(f"{key_to_find} not found in the dictionary.")
 
-
-
-# radome guess
-import random as rd
-
-# def game():
-#     print(f"helo welcom to gess game pick num 1-10 hehe")
-#     num = (input("pick a number from 1-10: ")) # can do num(input)
-#     num = int(num)
-#     if num >= 1 and num <= 10:
-#         rdnum = rd.randint(1, 10)
-#         if rdnum == num:
-#             print("you win you are the best player everrrr!!!!!")
-        
-#         else: print(f"you lose the num was: {rdnum}")
-#     else:
-#         print('please enter a valid number')
-#         game()
-
-# game()
-
-# class Student:
-#     def __init__(self, name, major, student_num):
-#         self.name = name
-#         self.major = major
-#         self.student_num = student_num
-#     def greet(self):
-#         return f"hello my name is {self.name} my major is {self.major} my student id is {self.student_num}"
-    
-# stu1 = Student("john", "english", "23456789")
-
-
-# list = [stu1.name, stu1.major, stu1.student_num]
-
-# for i in list:
-#     print(i)
-
-# greeting = stu1.greet()
-# print(greeting)
-
-# class
-# class arrays:
-#     def array():
-#         arr = []
-#         n = int(input("how many numbers u want to add? :"))
-#         for i in range(n): # for loop runs until n integer starting from 0 if n=2 the for loop runs 2 times
-#             # i+1 in {} displayes the number of the number being added so on the second number it will say enter number 2 
-#             # but why i+1? becuase i starts at zero like mentioned before there for on the first run the number should be num1 not 0
-#             x = input(f"enter a number{i+1}: ")
-#             arr.append(int(x))
-#         return arr
-
-# # list comprihention
-# arr = [[1, 2, 3], [1, 3, 2], [3, 2, 1]]
-
-# # Create a new list to store the modified sublists
-# new_arr = []
-# count = 0
-# # the for value in sublist is the second loop 
-# # if value != 3 is our condition 
-# # value is just the variable like J
-# # value is just a variable name that represents each element in the sublist 
-# for sublist in arr:
-#     new_sublist = [value for value in sublist if value != 3]
-#     new_arr.append(new_sublist)
-
-# print(new_arr)
-
-# list comprehention ( a way to make a list with loops and conditions inside these help build the list)
-# syntax general: new_list = [expression for item in iterable if condition]
-# EX 
-squares = [x ** 2 for x in range(10)]
-print(squares)  # Output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
-# EX
-fruits = ['apple', 'banana', 'cherry']
-upper_fruits = [fruit.upper() for fruit in fruits]
-print(upper_fruits)  # Output: ['APPLE', 'BANANA', 'CHERRY']
-# EX
-coordinates = [(x, y) for x in range(3) for y in range(3)]
-print(coordinates)  # Output: [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
-# EX flat lists
-nested_list = [[1, 2], [3, 4], [5, 6]]
-flat_list = [num for sublist in nested_list for num in sublist]
-print(flat_list)  # Output: [1, 2, 3, 4, 5, 6]
 
 # Try catch 
 try:
