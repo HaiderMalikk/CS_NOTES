@@ -96,6 +96,18 @@ def switch_case(case_value):
 value = 2
 switch_case(value)
 
+# ! shorthand if else like ternary operator
+# syntax:
+# value_if_true if condition else value_if_false
+# EX:
+is_even = True if 4 % 2 == 0 else False
+print(is_even)  # Output: True
+
+age = 18
+status = "Adult" if age >= 18 else "Minor"
+print(status)  # Output: Adult
+
+
 ## While loops
 
 # while loops are loops that run if a statment is true the loop will check each time it runs if statment is true 
