@@ -49,6 +49,45 @@ for key, value in hash_table.items():
 # Check if a key exists in the dictionary
 if 'apple' in hash_table:
     print("Apple is in the hash table")
+    
+# ! adding key values to hash table using a list 
+counter = {}
+
+# List of items to count
+items = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple']
+
+# Loop through each item
+for item in items:
+    # Initialize the key if it doesn't exist, setting the starting count to 0
+    if item not in counter:
+        counter[item] = 0
+    
+    # Increment the count for this item by 1 as it appears in the list
+    counter[item] += 1
+
+print(counter)  # Output: {'apple': 3, 'banana': 2, 'orange': 1}
+
+#  ! EX with str
+# Sample string
+text = "hello world"
+
+# Initialize an empty dictionary for counting
+letter_count = {}
+
+# Loop through each character in the string
+for letter in text:
+    # Skip spaces (or any other characters you don't want to count)
+    if letter == " ":
+        continue
+
+    # Check if the letter is already a key in the dictionary
+    if letter not in letter_count:
+        letter_count[letter] = 0  # Initialize it if it doesn't exist
+
+    # Increment the count for this letter
+    letter_count[letter] += 1
+
+print(letter_count)  # Output: {'h': 1, 'e': 1, 'l': 3, 'o': 2, 'w': 1, 'r': 1, 'd': 1}
 
 # ! EX (just keys no values) finding vowels in a string array
 # Creating a hash table to store vowels

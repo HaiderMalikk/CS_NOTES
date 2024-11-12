@@ -2,7 +2,6 @@
 
 """
 # TOPICS COVERED:
-
 1. Inheritance
 2. Composition
 3. Encapsulation
@@ -11,7 +10,55 @@
 6. Method Overriding 
 7. Interface 
 8. Wrapper Function (not a consept but usefull in OOP)
+9. ETC
 """
+
+# Basic syntax
+class Person: # class Name:
+# By using self, you explicitly declare the variable as an instance variable,
+#  making it accessible throughout the class methods. Without self, 
+# you would create a local variable with the same name, which would only exist within the specific method 
+# and wouldn't be accessible elsewhere in the class.
+# Using self allows each instance of the class to have its own copy of the variable. 
+# If you don't use self, all instances would share the same variable, which may not be what you want. 
+# Instance variables with self are unique to each object, allowing you to have different values for different instances.
+# self can be any variable but self is convention
+
+#. If you used name = name, it would create a local variable within the constructor method, 
+# and you wouldn't be able to access it outside that method thats why you do self.name = name
+    def __init__(self, name, age): #  this function is the counstructer (__init__) means constructer 
+        self.name = name # initilizing attribute/ parameter name so it can be used outside class 
+        self.age = age
+
+    def greet(self): # the self parameter allows greet to access the self parameters name and age
+        return f"Hello, my name is {self.name} and I am {self.age} years old."
+
+# creating the objects using the cunstructer 
+#object --> name = classname(parameters)
+person1 = Person("Alice", 30) # the object has two parameters name, age. self is not a parameter
+person2 = Person("Bob", 25)
+
+print(person1.name)  # Output: "Alice"
+print(person2.age)   # Output: 25
+
+#Methods are functions associated with objects. You can call methods on an object using dot notation.
+greeting = person1.greet()
+print(greeting)  # Output: "Hello, my name is Alice and I am 30 years old."
+
+# creating obj attribuits after creating objects so constructer 
+class MyClass:
+    def greet(self):
+        return f"Hello, {self.name}!"
+
+# Creating an instance and setting an attribute
+obj = MyClass()
+obj.name = "Alice"  # Setting the 'name' attribute after creating the instance
+print(obj.greet())  # Output: Hello, Alice!
+
+
+## inheretance Inheritance allows you to create a new class that is a modified version of an existing class.
+#  The new class can inherit attributes and methods from the parent class and also add its own. also called subclass
+# here instred of using the student classes own name and age it borows name and age from person class using super method
 
 ## Inheritance
 """
@@ -328,3 +375,55 @@ defines a nested function (wrapper) that calls the original function, and return
 function is wrapped by calling wrapper_function(original_function), and the wrapped function is assigned to wrapped_function. 
 When the wrapped function is called, it executes the additional code defined in the wrapper function.
 """
+
+# ETC
+# In Python, attributes and methods can be public, protected, or private. 
+# Public attributes and methods can be accessed directly,
+# protected attributes and methods are denoted with a single underscore (e.g., _protected_attr), 
+# and private attributes and methods are denoted with a double underscore (e.g., __private_attr).
+
+class MyClass:
+    def __init__(self):
+        self.public_attr = "I'm a public attribute"
+        self._protected_attr = "I'm a protected attribute"
+        self.__private_attr = "I'm a private attribute"
+
+    def public_method(self): #Public members are accessible from anywhere, both inside and outside the class.
+        return "I'm a public method"
+
+    def _protected_method(self): #Protected members are not meant to be accessed from outside the class 
+        # but can still be accessed if desired.
+        return "I'm a protected method"
+
+    def __private_method(self): #Private members are intended to be private and are not accessible from outside the class.
+        return "I'm a private method"
+
+## private var ex
+class MyClass:
+    def __init__(self):
+        self.__private_var = 42
+
+    def get_private_var(self):
+        return self.__private_var
+
+# Creating an instance of MyClass
+obj = MyClass()
+
+# Accessing the private variable using a public method
+value = obj.get_private_var()
+print(value)  # This will print: 42
+
+# Attempting to access the private variable directly (not recommended)
+# This will not generate an error, but it's discouraged.
+# print(obj.__private_var)  # This is discouraged and not recommended
+
+
+## special methods Python provides special methods (also known as magic methods or dunder methods) 
+# that you can define in your classes to customize their behavior. For example, 
+# you can define __str__ to control how an object is represented as a string when using str()
+class MyClass: 
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return f"MyClass instance with value {self.value}"

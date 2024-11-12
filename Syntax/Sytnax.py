@@ -6,7 +6,7 @@
 # any var class function is public by default to make it protected use "_" to make it private use "__" before the name EX "__name"
 
 ## nested if statements 
-# sourcery skip: remove-dict-keys, use-itertools-product
+# or you can make many variables in one line by using the comma "," EX: a,b,c = 1,2,3
 x = 10
 y = 5
 # each if stament has a else stament connected to it 
@@ -65,11 +65,11 @@ else: ## this else stament runs if the if the if statement connected to it is fa
 # You can use multiple elif clauses to handle different cases or conditions in a structured way, 
 # making your code more organized and easier to read.
 x2 = 10
-if x2 > 10:
+if x2 > 10: # all if statements are checked 
     print("x2 is greater than 10")
-elif x2 < 10:
+elif x2 < 10: # and elif runs only if 'if' before is false
     print("x2 is less than 10")
-else:
+else: # only runs if 'if' and 'elif' are false
     print("x2 is equal to 10")
 
 ## if and
@@ -81,7 +81,7 @@ if x3 == 5 and y3 == 7:
 
 # using a mock swich case system
 def switch_case(case_value):
-    if case_value == 1:
+    if case_value == 1: #
         print("This is case 1")
     elif case_value == 2:
         print("This is case 2")
@@ -108,7 +108,7 @@ while count <= 5: # loop will run until this statement is false
     # Increment the count by 1 in each iteration
     # once count is 6 the loop breaks scince the loop breaks it cannot run so 6 will not be printed 
 
-## for loops !!
+#! for loops !!
 #In Python, a for loop is a control structure that is used to iterate over a sequence 
 # (such as a list, tuple, string, or range) or any iterable object.
 # for variable in sequence:
@@ -151,6 +151,31 @@ for key, value in person.items():
 for i in range(3):  # Outer loop
     for j in range(2):  # Inner loop
         print(f"Outer loop index: {i}, Inner loop index: {j}") # in a printf everything must be in "" a var must be in {}
+
+# break vs continue for loops and while loops
+# In Python, break and continue are control flow statements used to alter the flow of loops (for and while). 
+# EX:
+for i in range(1, 6):
+    if i == 3:
+        break  # Exit the loop when i equals 3
+    print(i)
+
+# Output:
+# 1
+# 2
+
+for i in range(1, 6):
+    if i == 3:
+        continue  # Skip the current iteration when i equals 3
+    print(i)
+
+# Output:
+# 1
+# 2
+# 4
+# 5
+
+# the same applies to while loops
 
 
 ## Functions
@@ -229,126 +254,16 @@ say_hello() # calling function (this one has no parameters)
 
 
 
-## python classes
-# __init__  is the constructer it initilizez the values of function
-#  it allows you to set innitial vals of a object by specifing ots values
-# In Python, when you want to create instance variables within a class, 
-# it's essential to use self to distinguish between instance variables and local variables or function parameters. 
-# In the Person class, __init__ takes two parameters: name and age. 
-# These parameters are used to initialize the name and age attributes of the object.
-# self is a refrence to the object itself When you create a new instance of a class, 
-# such as person = Person("Alice", 30), self inside the __init__ method refers to that specific instance (in this case, person).
-# self is used to access and manipulate the attributes of the object. In the __init__ method, 
-# self.name and self.age are used to set the name and `age
-
-class Person: # class Name:
-# By using self, you explicitly declare the variable as an instance variable,
-#  making it accessible throughout the class methods. Without self, 
-# you would create a local variable with the same name, which would only exist within the specific method 
-# and wouldn't be accessible elsewhere in the class.
-# Using self allows each instance of the class to have its own copy of the variable. 
-# If you don't use self, all instances would share the same variable, which may not be what you want. 
-# Instance variables with self are unique to each object, allowing you to have different values for different instances.
-
-#. If you used name = name, it would create a local variable within the constructor method, 
-# and you wouldn't be able to access it outside that method thats why you do self.name = name
-    def __init__(self, name, age): #  this function is the counstructer (__init__) means constructer 
-        self.name = name # initilizing attribute/ parameter name so it can be used outside class 
-        self.age = age
-
-    def greet(self): # the self parameter allows greet to access the self parameters name and age
-        return f"Hello, my name is {self.name} and I am {self.age} years old."
-
-# creating the objects using the cunstructer 
-#object --> name = classname(parameters)
-person1 = Person("Alice", 30) # the object has two parameters name, age. self is not a parameter
-person2 = Person("Bob", 25)
-
-print(person1.name)  # Output: "Alice"
-print(person2.age)   # Output: 25
-
-#Methods are functions associated with objects. You can call methods on an object using dot notation.
-greeting = person1.greet()
-print(greeting)  # Output: "Hello, my name is Alice and I am 30 years old."
-
-
-## inheretance Inheritance allows you to create a new class that is a modified version of an existing class.
-#  The new class can inherit attributes and methods from the parent class and also add its own. also called subclass
-# here instred of using the student classes own name and age it borows name and age from person class using super method
-
-# In this example, the Student class inherits from the Person class and adds its own attribute (student_id) and method (study).
-class Student(Person):
-    def __init__(self, name, age, student_id):
-        super().__init__(name, age)
-        self.student_id = student_id
-
-    def study(self):
-        return f"{self.name} is studying hard."
-
-student = Student("Carol", 22, "12345")
-
-## class variables Class variables are shared among all instances of a class. 
-# They are defined within the class but outside of any method.
-class Dog:
-    species = "Canis familiaris"
-
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-
-##Encapsulation refers to the practice of restricting direct access to some of an object's components. 
-# In Python, attributes and methods can be public, protected, or private. 
-# Public attributes and methods can be accessed directly,
-# protected attributes and methods are denoted with a single underscore (e.g., _protected_attr), 
-# and private attributes and methods are denoted with a double underscore (e.g., __private_attr).
-
+# python classes
+# classes are templates for creating objects
+# class name is PascalCase
 class MyClass:
-    def __init__(self):
-        self.public_attr = "I'm a public attribute"
-        self._protected_attr = "I'm a protected attribute"
-        self.__private_attr = "I'm a private attribute"
-
-    def public_method(self): #Public members are accessible from anywhere, both inside and outside the class.
-        return "I'm a public method"
-
-    def _protected_method(self): #Protected members are not meant to be accessed from outside the class 
-        # but can still be accessed if desired.
-        return "I'm a protected method"
-
-    def __private_method(self): #Private members are intended to be private and are not accessible from outside the class.
-        return "I'm a private method"
-
-## private var ex
-class MyClass:
-    def __init__(self):
-        self.__private_var = 42
-
-    def get_private_var(self):
-        return self.__private_var
+    def greet(self):
+        return "Hello, world!"
 
 # Creating an instance of MyClass
 obj = MyClass()
-
-# Accessing the private variable using a public method
-value = obj.get_private_var()
-print(value)  # This will print: 42
-
-# Attempting to access the private variable directly (not recommended)
-# This will not generate an error, but it's discouraged.
-# print(obj.__private_var)  # This is discouraged and not recommended
-
-
-## special methods Python provides special methods (also known as magic methods or dunder methods) 
-# that you can define in your classes to customize their behavior. For example, 
-# you can define __str__ to control how an object is represented as a string when using str()
-class MyClass: 
-    def __init__(self, value):
-        self.value = value
-
-    def __str__(self):
-        return f"MyClass instance with value {self.value}"
-
+print(obj.greet())  # Output: Hello, world!
 
 ## String methods 
 # In Python, strings are sequences of characters enclosed in either single (') or double (") quotes """ makes a docstring 
@@ -1049,14 +964,54 @@ modify_global() # this will modify the global variable and print 20
 
 # NOTE: global x = 20  # This will cause a syntax error you can only modify a global variable stright away follow the syntax
 
-# ! QUICK PYthon easy oop syntax ex, see OOP folder in python lang for full OOP stuff
-class Person:
-    # ! note the first argument can be anything but is conventionally named self
-    def __init__(self, name, age): #  this function is the counstructer (__init__) means constructer its runs automatically when you create a new object
-        self.name = name
-        self.age = age
-    def greet(self): # the self parameter allows greet to access the self parameters name and age. the self is the object itself
-        print(f"Hello, my name is {self.name} and I am {self.age} years old.")
+#! is vs == in python
+# is and == are both used to compare values in python but they are used in different ways
+# == is used to compare the values of two variables
+# is is used to compare the identities (reference) of two variables 
+# EX
+a = [1, 2, 3]
+b = a
+print(a is b)  # True, because both a and b reference the same list object in memory.
 
-person1 = Person("Alice", 30) # the object has two parameters name, age. self is not a parameter here we make the object
-person1.greet() # Output: "Hello, my name is Alice and I am 30 years old."
+a = [1, 2, 3]
+b = [1, 2, 3]
+print(a == b)  # True, because the contents of a and b are the same.
+print(a is b)  # False, because a and b are different objects in memory.
+
+# is is commonly used to check for none values
+# is also used with the not operator
+# EX
+x = None
+if x is not None:
+    print("x is not None")
+
+# ! any function in python
+# In Python, the any() keyword is a built-in function that returns True if any element of an iterable (like a list, tuple, set, etc.) is True. 
+# If all elements are False (or if the iterable is empty), it returns False.
+# syntax: any(iterable)
+# EX
+values = [0, 0, 5, 0]
+print(any(values))  # True, because 5 is a truthy value
+
+numbers = [1, 2, 3, 4]
+is_any_even = any(num % 2 == 0 for num in numbers)
+print(is_any_even)  # True, because 2 and 4 are even
+
+empty_list = []
+print(any(empty_list))  # False, because there are no truthy elements in an empty list
+
+# ! all function in python
+# The all() function returns True if all elements in an iterable are True. If any element is False, or if the iterable is empty, all() returns False.
+# syntax: all(iterable)
+# EX
+values = [1, 2, 3, 4]
+print(all(values))  # True, because all elements are truthy (non-zero)
+
+numbers = [2, 4, 6, 8]
+is_all_even = all(num % 2 == 0 for num in numbers)
+print(is_all_even)  # True, because all numbers are even
+
+empty_list = []
+print(all(empty_list))  # True, because there are no elements, so the condition is vacuously true
+
+
