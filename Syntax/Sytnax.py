@@ -582,7 +582,7 @@ print(my_list.index(1)) # returns position of 1 in mylist
 my_list = [1, 2, 3, 4, 5]
 
 # Using a for loop to iterate over elements
-for element in my_list:
+for element in my_list: # the in keyword is used to iterate over the elements of the list
     print(element)
 
 search_element = 3 # target
