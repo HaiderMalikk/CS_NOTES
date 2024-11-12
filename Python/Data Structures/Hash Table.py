@@ -113,3 +113,10 @@ for gem in ['ruby', 'emerald', 'diamond', "dirt"]:
         print(f'{gem}: {gem_values[gem]}') # prints the type (gem) and value of the gem (genvalue[gem])
 
 print(earning) # prints the total earning from the gems
+
+# using pythons get() funcrtion to safly get the value of a key from a dictionary without throwing an error if the key is not found
+# usally we say x = map[value]  but what is value DNE, use get() to get its value and then we can modify map[value] knowing it exists
+# EX;
+map = {'a': 1, 'b': 2, 'c': 3}
+print(map.get('a')) # prints 1
+print(map.get('d')) # prints None
