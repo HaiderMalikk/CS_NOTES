@@ -777,6 +777,22 @@ print(list(even_numbers))  # Output: [2, 4, 6]
 
 # NOTE: if you pass a matrix into a max or min function it will add up all the elements in teh subarray and return the max or min of those sums
 
+# ! sorted vs sort and using keys with sort (key is just a argument that is passed into the function stating how to do the task i.e based on length square etc of the iteams in the list insted of there original order or value)
+# sort is used to sort a list in place (i.e it changes the list) and returns None
+numbers = [3, 1, 4, 1, 5]
+numbers.sort()
+print(numbers)  # Output: [1, 1, 3, 4, 5]
+
+# The sorted() function returns a new sorted list from the iterable, leaving the original iterable unchanged.
+# syntax sorted(iterable, key=None, reverse=False)
+numbers = [3, 1, 4, 1, 5]
+sorted_numbers = sorted(numbers)
+print(sorted_numbers)  # Output: [1, 1, 3, 4, 5]
+
+# * using key
+items = [(1, 2), (3, 1), (5, 0)]
+items.sort(key=lambda x: x[1])  # Sort by the second element in each tuple
+print(items)  # Output: [(5, 0), (3, 1), (1, 2)]
 
 # # list comprihention
 # arr = [[1, 2, 3], [1, 3, 2], [3, 2, 1]]
