@@ -1,0 +1,132 @@
+* Time Complexity:
+
+Time complexity measures the computational efficiency of an algorithm by describing how the running time changes as the size of the input increases. 
+It is expressed using Big-O notation, which provides an upper bound on growth.
+here 'n' represents the size of the input to the algorithm
+
+Common Time Complexities (best to worst) : 
+
+Constant Time: O(1)
+    The running time does not change with input size.
+    Example: Accessing an array element by index.
+
+Logarithmic Time: O(log n)
+    The running time grows logarithmically with input size.
+    Example: Binary search in a sorted array.
+
+Linear Time: O(n)
+    The running time grows proportionally to input size.
+    Example: Iterating through all elements in an array.
+
+Linearithmic Time: O(n log n)
+    Common in efficient sorting algorithms like mergesort and heapsort.
+    Quadratic Time: O(n²)
+    The running time grows quadratically with input size.
+    Example: Nested loops iterating over the same array.
+
+Cubic Time: O(n³)
+    The running time grows cubically, often in algorithms with three nested loops.
+    Exponential Time: O(2ⁿ)
+    The running time doubles with each additional input size.
+    Example: Recursive solutions to problems like the traveling salesman.
+
+Factorial Time: O(n!)
+    Extremely slow, as time grows factorially with input size.
+    Example: Permutation-based algorithms.
+
+Key Concepts:
+    Best Case: Minimum running time for an input.
+    Average Case: Expected running time for a typical input.
+    Worst Case: Maximum running time for any input (focus of Big-O).
+    Optimizing algorithms aims to reduce time complexity for better scalability.
+
+* Determining Time Complexity of algorithms:
+Determining time complexity involves analyzing how the running time of an algorithm scales with the size of its input, n
+Here's a systematic approach with Examples:
+
+1. Identify the Basic Operations
+Determine the most frequent or expensive operation (e.g., comparisons, assignments, iterations) performed by the algorithm.
+Focus on this operation, as its count dominates the time complexity.
+
+2. Analyze Loops
+Single loop: If a loop runs n times, its complexity is O(n)
+Nested loops: Multiply the iterations of nested loops.
+Example:
+for (int i = 0; i < n; i++) {          // O(n)
+    for (int j = 0; j < n; j++) {      // O(n)
+        System.out.println(i + j);    // Total: O(n * n) = O(n²)
+    }
+}
+Dependent loops: Consider how the inner loop depends on the outer loop.
+
+3. Analyze Recursion
+Derive a recurrence relation for the algorithm and solve it.
+Example: For a recursive algorithm like merge sort:
+The recurrence relation describes how the time complexity is broken down across different levels of recursion.
+Recurrence: T(n)=2T(n/2)+O(n)
+T(n): The time it takes to solve the problem of size 
+2T(n/2): The time to solve two subproblems, each of size n/2
+O(n): The time to merge the two sorted subarrays (linear time).
+Solution: O(nlogn) using the Master Theorem.
+
+4. Count Dominant Operations
+Focus on the largest-growth term and drop lower-order terms.
+Example:
+def example_function(n):
+    for i in range(n):              # O(n)
+        for j in range(n):          # O(n)
+            print(i * j)            # O(1)
+
+    for k in range(n):              # O(n)
+        print(k)                    # O(1)
+Total: O(n^2 + n) = O(n^2) (drop lower-order)
+Why: As n grows, the n^2 term dominates, and the effect of the n term becomes less and less noticeable.
+
+5. Disregard Constants and Lower-Order Terms
+Ignore constants and smaller terms, as they don't affect scalability.
+5n+3 → O(n) (drop constant 3)
+n^2+n+10 → O(n^2) (drop constant 10 and linear term n as its growth is dominated by n^2 meaning n is the lower order term)x
+
+6. Use Standard Algorithm Time Complexities
+Linear Search: O(n)
+Binary Search: O(logn)
+Sorting Algorithms:
+Quick Sort (average): O(nlogn)
+Bubble Sort: O(n^2)
+
+7. Check Input Size Growth
+Simulate the algorithm for small inputs and observe how the running time changes as n increases.
+one way in python to check the time complexity is by using the time module to see the time taken for different inputs.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Space Complexity:
+Space complexity refers to the amount of memory (or space) an algorithm needs to run, relative to the size of the input. 
+Just like time complexity, space complexity is expressed using Big-O notation to describe how the memory usage grows as
+the size of the input increases.
+
+Key Concepts in Space Complexity:
+Auxiliary Space:
+This is the extra space or temporary space used by the algorithm apart from the input data. 
+For example, if an algorithm uses additional variables, arrays, or data structures during its execution, 
+the space used for them contributes to the auxiliary space complexity.
+Total Space:
+The total space includes the space needed to store the input data and the auxiliary space used by the algorithm. 
+For simplicity, most discussions focus on auxiliary space.
+
+Analyzing Space Complexity:
+The space complexity of an algorithm is determined by the following factors:
+
+Input Size: The space required to store the input data.
+If an algorithm takes an array of size n as input, it uses O(n) space just for storing that input.
+Auxiliary Space: Any additional space used by the algorithm during execution (e.g., extra variables, function calls, temporary arrays, etc.).
+Recursion Stack: For recursive algorithms, the space complexity also depends on the depth of the recursion stack. The maximum depth of recursion contributes to the space complexity.
+- in almost all cases the time complexity is equal to the space complexity.
+EX: Sorting Algorithms (Time vs Space Trade-off)
+Time Complexity: O(nlogn) because the array is divided in half recursively, and each level of recursion takes O(n) time to merge.
+Space Complexity: O(n) because the algorithm requires extra space to store temporary arrays during the merge process.
+EX: def infinite_loop():
+    data = []
+    while True:
+        data.append(1)
+in the case of a infinite loop the time complexity is O(∞) and the space complexity is O(n) because the space complexity is changing as the loop is running.

@@ -1,0 +1,62 @@
+* compile time vs runtime
+=============================================
+### Overview
+In programming, there are two main times when code is executed: compile time and runtime.
+### Compile Time
+Compile time is the time when the code is compiled into machine code.
+This is the time when the code is checked for errors and warnings related to syntax and type mismatch
+EX's
+System.out.println("Hello, World!) # this will give a compile time error because of the missing ;
+int x = 10;  // Value of x is known at compile-time and the type is also known at compile time so this dose not give any error.
+### Runtime
+Runtime is the time when the code is executed by the computer.
+This is the time when the code is checked for errors and warnings related to logic ot data like: invalid user input or unavailable resources.
+EX:
+int arr = {1,2,3}; int x = arr[5]; // this will give a runtime error because the array index is out of bounds.
+int y = (int) (Math.random() * 100);  // Random value generated at runtime
+- SUMMARY: the compiler converts the array to machine code and gives x the value of index at 5 is there is no syntax or type error in the code
+           the ex runs at compile time not knowing that at arr[5] there is nothing at runtime the value is determined for x where are[5] DNE and error is thown at runtime.
+
+* Strongly Typed vs Weakly Typed Languages or Static vs Dynamic Typing
+=============================================
+### Overview
+In programming, languages can be classified into two main categories: strongly typed and weakly typed. The
+difference between these two lies in how the language handles data types.
+### Strongly Typed Languages
+In strongly typed languages, the data type of a variable is known at compile time. 
+This means that we must declare the data type of a variable before using it. If we try to assign a value of the wrong type to a variable, the compiler will throw an error. 
+EX: in java we say int x = 5; here x is of type int and we can't asign a string to x. here x is a static type it cant be changed at runtime.
+### Weakly Typed Language
+In weakly typed languages, the data type of a variable is determined at runtime.
+This means that we do not need to declare the data type of a variable before using it and its type will automaticly be determined when we assign a value to it.
+# EX: in python we say x = 5; here x is of type int but we can also say x = "hello, here x is a Dynamic type it can be changed at runtime.
+
+* Compiled vs Interpreted Languages
+=============================================
+### Overview
+In programming, languages can be classified into two main categories: compiled and interpreted. The
+difference between these two lies in how the code is executed.
+### Compiled Languages
+In compiled languages, the code is first compiled into machine code before it is executed.
+This means that the code is converted into a format that the computer's processor can understand.
+EX: java, c, c++
+### Interpreted Languages
+In interpreted languages, the code is not compiled into machine code before it is executed.
+Instead, the code is interpreted line by line by an interpreter then this interpreter will convert the code into machine code.
+EX: python, ruby, javascript
+
+*  High -Level vs Low-Level Languages
+=============================================
+### Overview
+In programming, languages can be classified into two main categories: high-level and low-level. The
+difference between these two lies in how close the language is to the computer's hardware.
+### High-Level Languages
+In high-level languages, the language is far away from the computer's hardware.
+This means that the language is designed to be easy to use and understand, but it may not be
+as efficient as low-level languages.
+EX: python, java, c#
+### Low-Level Languages
+In low-level languages, the language is close to the computer's hardware.
+This means that the language is designed to be efficient and fast, but it may be difficult to use
+and understand.
+EX: assembly, c, c++
