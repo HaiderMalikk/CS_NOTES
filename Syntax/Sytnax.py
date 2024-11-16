@@ -975,13 +975,20 @@ print(age)        # Output: 25
 print(profession) # Output: Engineer
 # EX with negating the variables
 data = ("Bob", 30, "Designer", "New York")
-name, _, profession, _ = data
+name, _, profession, _ = data # here we use _ to negate the variable that is to be in that position here thats 30 and "New York"
 print(name)       # Output: Bob
 print(profession) # Output: Designer
 # EX lists
 employees = [("John", 28), ("Jane", 32), ("Doe", 25)]
 for name, age in employees:
     print(f"{name} is {age} years old.")
+
+# We can also reassign multiple variables at once
+a, b = 1, 2
+# we can also use this to map a result of a function to multiple variables
+def get_coordinates():
+    return 10, 20
+x, y = get_coordinates() # x = 10 and y = 20
 
 # ! global keyword in python
 # a global variable is a variable that is defined outside of a function or a class and can be accessed from anywhere in the program

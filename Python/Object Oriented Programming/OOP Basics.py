@@ -2,18 +2,20 @@
 
 """
 # TOPICS COVERED:
+0. basic syntax, dynamic attributes, slots, repr method ,dataclasses
 1. Inheritance
-2. Composition
-3. Encapsulation
-4. Polymorphism
-5. Abstraction
-6. Method Overriding 
-7. Interface 
-8. Wrapper Function (not a consept but usefull in OOP)
-9. ETC
+2. Aggregation
+3. Composition
+4. Encapsulation
+5. Polymorphism
+6. Abstraction
+7. Method Overriding 
+8. Interface 
+9. Wrapper Function (not a consept but usefull in OOP)
+10. ETC
 """
 
-# Basic syntax
+# ! Basic syntax
 class Person: # class Name:
 # By using self, you explicitly declare the variable as an instance variable,
 #  making it accessible throughout the class methods. Without self, 
@@ -29,6 +31,7 @@ class Person: # class Name:
     def __init__(self, name, age): #  this function is the counstructer (__init__) means constructer 
         self.name = name # initilizing attribute/ parameter name so it can be used outside class 
         self.age = age
+        self.address = "123 Main St" # this is the same for all instances of the class and is not a parameter it can be changed later with self.address = "new address"
 
     def greet(self): # the self parameter allows greet to access the self parameters name and age
         return f"Hello, my name is {self.name} and I am {self.age} years old."
@@ -36,7 +39,8 @@ class Person: # class Name:
 # creating the objects using the cunstructer 
 #object --> name = classname(parameters)
 person1 = Person("Alice", 30) # the object has two parameters name, age. self is not a parameter
-person2 = Person("Bob", 25)
+person2 = Person("Bob", 25) # this prints nothing but address of obj as the constructor returns nothing
+
 
 print(person1.name)  # Output: "Alice"
 print(person2.age)   # Output: 25
@@ -45,9 +49,9 @@ print(person2.age)   # Output: 25
 greeting = person1.greet()
 print(greeting)  # Output: "Hello, my name is Alice and I am 30 years old."
 
-# creating obj attribuits after creating objects so constructer 
+# ! dynamic attributes (adding attributes to an object at runtime after the class has been created)
 class MyClass:
-    def greet(self):
+    def greet(self): # in this EX you can add the attributes at runtime
         return f"Hello, {self.name}!"
 
 # Creating an instance and setting an attribute
@@ -55,12 +59,60 @@ obj = MyClass()
 obj.name = "Alice"  # Setting the 'name' attribute after creating the instance
 print(obj.greet())  # Output: Hello, Alice!
 
+# OR
+class User:
+    def __init__(self, name): # in this case you must give the obj a name but you can add more attributes at runtime
+        self.name = name
+        
+user = User("Jhon")
+User.new_attribute = "new attribute" # this is dynamic attribute the new _attribute is not in the class but we create it at runtime
+print(user.new_attribute)  # Output: new attribute
+
+# ! Slots
+# a hidden dictionary is created when an instance is created this is why we can add attributes at runtime
+# with slots python skips this hidden dictionary and sets up a fixed memory layout for each instance, reserving the attributes
+# her eyou can add all the attributes at runtim or add them when you create the class or anything in between but you can only add the attributes that are in the slots
+class fixed_User:
+    __slots__ = ['name', 'age'] # this is a tuple of strings that specifies the attributes of the class by name, the name matters they have to match the attribute names
+    
+    def __init__(self, name, age): # we can add the adtributes when creating the object or add the attributes at runtime dynamically but even dynamicaly we can only add the attributes that are in the slots
+        self.name = name
+        self.age = age
+        
+fixed_user = fixed_User("John", 30) # fixed_user is an instance of fixed_User
+# cannot add new attribute to fixed_user with fixed memory
+
+# ! repr method
+# the repr method is used to return a string representation of the object so basicaly it prints the object
+class repr_User:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        
+    def __repr__(self):
+        return f"User(name='{self.name}', age={self.age})"
+
+repr_user = repr_User("John", 30)
+print(repr_user) # Output: User(name='John', age=30) just like EX 1 with basic syntax the constructor returns nothing but the OBJ address but with repr method we can return something when the object is created    
+
+# ! data classes
+# with data classes we can eaily make classes that are just containers for data the last EX of the repermethod can be done as follows
+from dataclasses import dataclass # import the dataclass decorator from the dataclasses module
+@dataclass # this is a decorator that makes the class a data class
+class data_User: # the @dataclass decorator is used to create a data class
+    name: str # the name of the attribute and the type of the attribute
+    age: int # the name of the attribute and the type of the attribute
+    # you can alo provide a default value for the attribute
+    
+data_user = data_User("John", 30)
+print(data_user) # Output: User(name='John', age=30)
+
 
 ## inheretance Inheritance allows you to create a new class that is a modified version of an existing class.
 #  The new class can inherit attributes and methods from the parent class and also add its own. also called subclass
 # here instred of using the student classes own name and age it borows name and age from person class using super method
 
-## Inheritance
+## ! Inheritance
 """
 In object-oriented programming (OOP), inheritance is a mechanism that allows a new class
 (subclass or derived class) to inherit properties and behaviors (attributes and methods) from an existing class (base class or parent class). 
@@ -131,12 +183,52 @@ called to initialize name and state, allowing it to access methods from both par
 The example effectively illustrates the concept of multiple inheritance, showcasing the interaction between the different classes and their respective functionalities.
 """
 
-## Composition
+#!  Aggregation
+""" 
+In Python Object-Oriented Programming (OOP), aggregation is a design principle where one class (called the "whole")
+contains a reference to another class (called the "part") as an attribute. This establishes a "has-a" relationship between the two classes.
+Aggregation is a weaker relationship than composition because the lifetime of the "part" is not necessarily tied to the lifetime of the "whole." 
+The "part" can exist independently of the "whole."
+In aggregation, the "whole" conatains a "part
+in the EX the Car has a whole engine to itself hence we must create a engine then add it to the car
+here the class engine has its own constructor so the engine class can be used independently if needed 
+"""
+
+class Engine:
+    def __init__(self, horsepower):
+        self.horsepower = horsepower
+
+    def start(self):
+        print(f"Engine with {self.horsepower} horsepower is starting.")
+
+class Car:
+    def __init__(self, brand, engine):
+        self.brand = brand
+        self.engine = engine  # Aggregation: Car "has-a" Engine
+
+    def start_car(self):
+        print(f"{self.brand} car is starting.")
+        self.engine.start()
+
+# Create an Engine instance
+engine = Engine(horsepower=150)
+
+# Create a Car instance and pass the Engine instance to it
+car = Car(brand="Toyota", engine=engine)
+
+# Start the car
+car.start_car()
+
+
+## ! Composition
 """
 Composition is another fundamental concept in object-oriented programming (OOP), 
 and it involves building complex objects by combining simpler ones. Unlike inheritance, 
 which emphasizes an "is-a" relationship between classes, composition focuses on a "has-a" relationship. 
 In other words, a class can contain objects of other classes as components
+# basicaly there is no sharing of state between the classes
+in this EX the Car has a engine thats a part of the car it owns the engine class we dont need to ctrea a engine for the car its done in the car class
+her ethe engine class has no intitilizer as it is a part of the car not its own class
 """
 # Component class
 class Engine:
@@ -149,7 +241,7 @@ class Engine:
 # Composite class
 class Car:
     def __init__(self):
-        self.engine = Engine()
+        self.engine = Engine() # Composition: Car owns Engine
 
     def start(self):
         return f"Car started. {self.engine.start()}"
@@ -173,7 +265,7 @@ and it delegates part of the functionality to the Engine object. Composition all
 code by combining smaller, independent classes to build more complex ones.
 """
 
-## Encapsulation
+## ! Encapsulation
 """
 Encapsulation refers to the bundling of data (attributes or properties) and methods (functions or procedures) 
 that operate on the data into a single unit, called a class. In encapsulation, the internal state of an object 
@@ -216,11 +308,12 @@ which encapsulate the logic for interacting with the data. This protects the int
 state and ensures that the operations performed on it are valid
 """
 
-## Polymorphism
+## ! Polymorphism
 """
 Polymorphism allows objects of different classes to be treated as objects of a common superclass. 
 In this example, the make_speak function can accept any object that has a speak method, 
 regardless of its specific type (e.g., Dog or Cat).
+any class that is a child of the Animal class must implement the speak method as the speak method is incomplete if it was complete this would be inherited
 """
 class Animal:
     def speak(self):
@@ -253,7 +346,7 @@ The make_speak function takes an Animal object as an argument and calls its spea
 demonstrating polymorphism by treating different objects as instances of a common superclass.
 """
 
-## Abstraction
+## ! Abstraction
 """
 Abstraction hides the implementation details of a class, exposing only the essential features. 
 In this example, the Animal class defines an abstract speak method, forcing subclasses to provide their own implementation.
@@ -284,7 +377,7 @@ This demonstrates abstraction by defining a common interface (speak) that subcla
 while hiding the specific implementation details in each subclass.
 """
 
-## Method Overriding 
+## ! Method Overriding 
 """
 Method overriding allows a subclass to provide a specific implementation of a method that is already defined in its superclass. 
 This allows subclasses to customize or extend the behavior of inherited methods. In Python, 
@@ -309,7 +402,7 @@ the speak method to make a specific sound ("Dog barks"). When an instance of Dog
 it executes the overridden method in the Dog class, demonstrating method overriding in action.
 """
 
-## Interface 
+## ! Interface 
 """
 An interface defines a contract for classes to implement, specifying what methods they must provide. In this example,
 the Shape class defines an area method, and the Circle class implements this method to calculate the area of a circle.
@@ -343,7 +436,7 @@ the area of a circle based on its radius. This demonstrates how interfaces can b
 ABCs to ensure that classes provide specific methods.
 """
 
-## Wrapper Function: this can be used with other OOp concepts to extend functionality without modifying existing code
+## ! Wrapper Function: this can be used with other OOp concepts to extend functionality without modifying existing code
 """
 Wrapper functions, also known as wrapper methods or wrapper classes, are functions or methods that provide an interface for 
 invoking other functions or methods. They "wrap" around existing functionality, allowing you to add additional behavior 
@@ -376,7 +469,7 @@ function is wrapped by calling wrapper_function(original_function), and the wrap
 When the wrapped function is called, it executes the additional code defined in the wrapper function.
 """
 
-# ETC
+# ! public, protected, private
 # In Python, attributes and methods can be public, protected, or private. 
 # Public attributes and methods can be accessed directly,
 # protected attributes and methods are denoted with a single underscore (e.g., _protected_attr), 
@@ -398,7 +491,7 @@ class MyClass:
     def __private_method(self): #Private members are intended to be private and are not accessible from outside the class.
         return "I'm a private method"
 
-## private var ex
+## ! private var ex
 class MyClass:
     def __init__(self):
         self.__private_var = 42
@@ -418,7 +511,7 @@ print(value)  # This will print: 42
 # print(obj.__private_var)  # This is discouraged and not recommended
 
 
-## special methods Python provides special methods (also known as magic methods or dunder methods) 
+## ! special methods Python provides special methods (also known as magic methods or dunder methods) 
 # that you can define in your classes to customize their behavior. For example, 
 # you can define __str__ to control how an object is represented as a string when using str()
 class MyClass: 
