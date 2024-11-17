@@ -78,6 +78,17 @@ y3 = 7
 
 if x3 == 5 and y3 == 7:
     print("Both conditions are true")
+    
+# using return to end a function's 
+# insted of using if , elif, and else to decide what to do next, you can use return to end a function's execution and return a value
+# EX with if else here we check if either a or b is 1, if so we return 1, if not we return the result of a * b
+def multiply(a, b):
+    if a == 1:
+        return b # once this runs nothing should run not even the a*b as we have our result we can return it
+    elif b == 1:
+        return a
+    else:
+        return a * b
 
 # using a mock swich case system
 def switch_case(case_value):

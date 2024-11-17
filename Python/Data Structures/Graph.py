@@ -177,6 +177,7 @@ EX (undirected and unweighted graph)
 - EX from matrix: A-A has no edge and hence there intersection is 0, A-B has an edge and hence we give there intersection a value of 1, A-C has an edge and hence we give it a value of 1. ETC
 
 # EX of a Adjecency matrix of the graph above:
+# NOTE: the letters are just for reference and are not used in the matrix
   A B C D E
 A 0 1 1 1 0
 B 1 0 0 1 1
@@ -341,21 +342,22 @@ E: [(B, 3), (D, 2)]
 # ! Insertion Operations (Adding Nodes and Edges to the Graph -> Implementation)
 # python code using info above to implement the insertion operations
 # * Creating a Graph as a martrix 
-# our ex to implement the insertion operations:
+# we will implement the graph here
+# this is a directed and weighted graph where there is no weight its 1 (default) and where theres no direction its undirected
 """ 
 graph:
       A ------- B
       | \       | \
-      |    \    |  E
+    5 |    \    |  E
       |      \  | /
-      C ------ D
+      C ------> D
 Adjacency Matrix in matrix form:
-[
-  [0, 1, 1, 1, 0],
-  [1, 0, 0, 1, 1],
-  [1, 0, 0, 1, 0],
-  [1, 1, 1, 0, 1],
-  [0, 1, 0, 1, 0]
+[   A  B  C  D  E
+ A [0, 1, 5, 1, 0],
+ B [1, 0, 0, 1, 1],
+ C [5, 0, 0, 1, 0],
+ D [1, 1, 0, 0, 1],
+ E [0, 1, 0, 1, 0]
 ]
 Nodes list: ['A', 'B', 'C', 'D', 'E'] # index 0-4 repersents the node A-E respectively
 """
@@ -385,6 +387,35 @@ def add_node(node): # function to add a new node to the graph
       temp_list.append(0)
     graph_matrix.append(temp_list) # add the new filled list to the end of the graph_matrix using append method which adds to the end of the list
 
+# * adding edges to the graph (undirected and weighted or unweighted)
+# adding edges to the graph using the adjacency matrix
+def add_edge_undirected(node1, node2, weight = 1): # function to add an edge to the graph, takes in two nodes and the weight of the edge which defaults to 1
+  if node1 not in nodes or node2 not in nodes: # check if both nodes exist in the graph
+    print(f"One or both nodes: {node1}, {node2} do not exist in the graph")
+    return
+  else: # add the edge
+    # to add the dge we need to add the weight to the matrix at the intersection of the 2 nodes where first node1 is the column(inner index) and node2 is the row(outer index)
+    # then node2 is the column(inner index) and node1 is the row(outer index) to make it a undirected graph.
+    indexnode1 = nodes.index(node1) # get the index of the node1 using the index method
+    indexnode2 = nodes.index(node2) # get the index of the node2 using the index method
+    graph_matrix[indexnode1][indexnode2] = weight # add the edge by setting the value at the intersection of the two nodes to the weight
+    graph_matrix[indexnode2][indexnode1] = weight # add the edge by setting the value at the intersection of the two nodes the other way around to make it a undirected graph
+    # now we have a undirected unweighted edge between the two nodes
+    # NOTE: here we dont check to see if edge exists as thats not needed also in a weighted graph we can update the weight (edge value)
+
+# * adding edges to the graph (directed weighted or unweighted) 
+# all we need to cahnge is to only add the egde in one direction from node 1 to node 2
+# this means we only take node 1 as the column(inner index) and node 2 as the row(outer index)
+def add_edge_directed(node1, node2, weight = 1): # add edge from node 1 to node 2, default weight is 1
+  if node1 not in nodes or node2 not in nodes: # check if both nodes exist
+    print(f"One or both nodes: {node1}, {node2} do not exist in the graph") # print the error message
+    return
+  else: # add the edge
+    indexnode1 = nodes.index(node1) # get the index of the node1 using the index method
+    indexnode2 = nodes.index(node2) # get the index of the node2 using the
+    graph_matrix[indexnode1][indexnode2] = weight # add the edge by setting the value at the intersection of the two nodes to the weight
+    # Only do this from node 1 to node 2 to create a directed edge for directed graph
+
 # * printing graph 
 # if we just print the graph matrix it will print it in a linear format but we want a matrix format
 # NOTE  this can easily and iffeciently be solved insode the add node method but we will do it here for clarity
@@ -402,7 +433,7 @@ def print_graph(): # function to print the graph
       print(graph_matrix[i][j], end=" ") # print the value at the current row and column the end ensures the column is printed on the same line
     print() # print a new line after each row i.e after end of loop for column
 
-# * adding nodes to the graph (can be done in a loop)
+# * adding nodes to the graph using add_node (can be done in a loop)
 # creating nodes to add to graph matrix to create the graph above 
 add_node("A")
 add_node("B")
@@ -410,7 +441,19 @@ add_node("C")
 add_node("D")
 add_node("E")
 add_node("A") # test adding a node that already exists
-print_graph() # print the graph matrix
-    
-  
 
+# * adding edges to the graph using add_edge methods (we can create directed and undirected graphs with both weighted and unweighted edges)
+# creating edges between nodes we just added previously to create the Example graph above
+add_edge_undirected("A", "B") # no need to do add_edge_undirected_unweighted("B", "A") since its a undirected graph (has default weight of 1)
+add_edge_undirected("A", "C", 5) # test adding a weighted edge
+add_edge_undirected("A", "D")
+add_edge_undirected("B", "D")
+add_edge_directed("C", "D") # test adding a directed edge weight is 1
+add_edge_undirected("E", "B")
+add_edge_undirected("E", "D")
+add_edge_undirected("A", "R") # test adding an edge between nodes that dont exist
+
+# * printing the graph using print_graph 
+# creating a adjacency matrix of the graph EX above with added nodes and edges 
+# if we had to nodes the graph would be empty if we had no egdes the graph would have rows and columns for the nodes but all values would be 0
+print_graph() # print the graph matrix
