@@ -747,8 +747,8 @@ else:
 # Sorting a list of tuples based on the second element
 
 # EX's
-list = [1, 2, 3, 4, 5]
-print(max(list), min(list)) # Output: 5 1
+my_list = [1, 2, 3, 4, 5] # ! do not name any list 'list' as it is a python keyword
+print(max(my_list), min(my_list)) # Output: 5 1
 
 # Labda function for key explained (see lambda function dection for what lambda is)
 # EX NUM 3: => lambda x: x**2 the lambda var here 'x' repersents every element in the iterable, this var is on the LSH
@@ -773,7 +773,7 @@ print(max_square)  # Output: 9
 # Filter even numbers
 numbers = [1, 2, 3, 4, 5, 6]
 even_numbers = filter(lambda x: x % 2 == 0, numbers)
-print(list(even_numbers))  # Output: [2, 4, 6]
+print(even_numbers)  # Output: [2, 4, 6]
 
 # NOTE: if you pass a matrix into a max or min function it will add up all the elements in teh subarray and return the max or min of those sums
 
@@ -997,11 +997,13 @@ x, y = get_coordinates() # x = 10 and y = 20
 # This means if we said in the function modify global: global_var = 20 this will not work and will raise a NameError
 # so to work out that problem we use the global keyword to let python know that we want to modify the global varible x and it should change it outside the function and hence everywhere the varible x is used
 
-global_var = 10 # creating a variable outside the function
+global_var = 10 # creating a variable outside the function ! NOTE: this valiable is a global variable as it is outside the function
 def print_global(): # this prints the global variable's current value
+    # when accessing a global variable inside a function we dont need to use the global keyword
     print(global_var)
     
 def modify_global(): # this modifies the global variable 
+    # to use a global variable in the scope of a function we use the global keyword and mention the variable
     global global_var # this is the key line that lets python know we want to modify the global variable here for that we use the global keyword
     global_var = 20 # this is the line that modifies the global variable now that inside the scope of the function we have used global global_var we can modify globa_var and it will change everywhere the variable is used
     
@@ -1060,4 +1062,11 @@ print(is_all_even)  # True, because all numbers are even
 empty_list = []
 print(all(empty_list))  # True, because there are no elements, so the condition is vacuously true
 
-
+# ! zip function in python
+# The zip() function takes iterables, aggregates them in a tuple, and returns it.
+# syntax: zip(*iterables)
+# EX
+names = ["Alice", "Bob", "Charlie"]
+ages = [25, 30, 35]
+zip_result = zip(names, ages)
+print(list(zip_result))  # [('Alice', 25), ('Bob', 30), ('Charlie', 35)]

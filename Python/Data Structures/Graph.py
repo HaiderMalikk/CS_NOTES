@@ -308,3 +308,109 @@ E: [(B, 3), (D, 2)]
 - EX: { A: [B, C, D] } here A is the key and [B, C, D] is the value which is a list of adjacent nodes
 - EX: { A: { B: 5, C: 4, D: 10 } } here A is the key and the values are another dictionary where the key is the adjacent node and the value is the weight
 """
+
+# ! Implementing Graphs in Python
+
+# ! Insertion Operations (Adding Nodes and Edges to the Graph -> Theory)
+# used to insert a new node or edge into the graph
+
+# * Add node / vertex (no edge just the node)
+# first we need to check if the node already exists in the graph if false: addnode
+# after adding the node the graph will be disconnected, the number of nodes is increased by 1 but edges is the same as before
+# in a adjacency matrix we add a new row and column for the new node but the value for the new nodes intersection with any node is 0 (no edge)
+# in a adjacency list we create a new key in the dictionary and assign it an empty list as the value this will store the edges for the new node later
+# adding a new node to a directed/undirected graph will also create a disconected graph as there is no edge direction yet we add this to the list or matrix 
+# for a weighted graph when we add a new node we add a key to the dictionary and assign it an empty dictionary as we need to store the adjecency nodes (keys) and the weights (values) for the new node, for matrix we just add the value to the matrix
+# we can add the node like this: add_node('F'), then in the matrix we add the row and column by adding the node to our nodes list and adding a new row and incresing all the columns by 1 and filling the new position with 0s, for the adjecent list we do: graph['F'] = [] and for the weighted graph we do: graph['F'] = {}, where graph is the graph dictionary
+
+# * Add edge (we check and verify that nodes A and B exist in the graph)
+# when we add a new edge we need to specify 2 nodes
+ 
+# in a undirected and unweighted graph we add the edge mention 2 nodes to connect: We first check if the nodes exist if true we add the edge, add_edge(A, B)
+# in the matrix we need to update the matrix by adding the value to the matrix at the intersection of the 2 nodes (since its undirected we have 2 intersections A-B and B-A): matrix[A][B] = 1, matrix[B][A] = 1 where A and B are the nodes we want to connect
+# in the adjacency list we do: graph[A] = [B] and graph[B] = [A] where A and B are the nodes we want to connect (undirected so we do both)
+
+# in a directed and unweighted graph we can mention the strating node first then the end node: add_edge(A, B) this connects A to B only, we still must check if the nodes exist before adding the edge
+# in the matrix we need to update the matrix by adding we to the intersection of the 2 nodes: matrix[A][B] = 1 where A is the stating node (in the column) and B is the end node (in the row)
+# in the adjacency list we do: graph[A] = [B] where A is the stating node and B is the end node (directed so only one way A-B) so leave the value of key B as it is 
+
+# in a Weighted undirected graph we mention the two nodes to connect and the edge weight: add_edge(A, B, weight)
+# in the matrix we need to update the matrix by adding the value to the matrix at the intersection of the 2 nodes (since its undirected we have 2 intersections A-B and B-A): matrix[A][B] = weight, matrix[B][A] = weight where A and B are the nodes we want to connect and the weight is the value we want to assign to the edge
+# in the adjacency list we do: graph[A] = { B: weight } and graph[B] = { A: weight } where A and B are the nodes we want to connect (undirected so we do both)
+
+# ! Insertion Operations (Adding Nodes and Edges to the Graph -> Implementation)
+# python code using info above to implement the insertion operations
+# * Creating a Graph as a martrix 
+# our ex to implement the insertion operations:
+""" 
+graph:
+      A ------- B
+      | \       | \
+      |    \    |  E
+      |      \  | /
+      C ------ D
+Adjacency Matrix in matrix form:
+[
+  [0, 1, 1, 1, 0],
+  [1, 0, 0, 1, 1],
+  [1, 0, 0, 1, 0],
+  [1, 1, 1, 0, 1],
+  [0, 1, 0, 1, 0]
+]
+Nodes list: ['A', 'B', 'C', 'D', 'E'] # index 0-4 repersents the node A-E respectively
+"""
+# * creating the graph
+nodes = []
+graph_matrix = [] # we will ad the inner list later
+node_count = 0 # the number of nodes in the graph
+
+# * Adding a node to the graph
+def add_node(node): # function to add a new node to the graph
+  global node_count # to use node_count inside the function as we are modifying it # NOTE: for list types we need to use global
+  # check if the node already exists in the graph
+  if node in nodes:
+    print(f"Node: {node} already exists in the graph")
+    return
+  else:
+    nodes.append(node)
+    node_count += 1
+    # now we must add a extra column to all the inner lists (rows) in the graph_matrix + add a new inner list(row) to the end of the graph_matrix
+    # # we can do this with a for loop appending a empty element to the end of each inner list in the graph_matrix then adding a new list as inner list to graph but first lopping over node_count many times to add 0s to this new inner list (row)
+    # NOTE: we only add 0's as we only adds nodes here not edges
+    for n in graph_matrix: # adding the column by adding an empty element to the end of each inner list
+      n.append(0) # append always adds to the end of the list
+    
+    temp_list = [] # create a new list to add to the end of the graph_matrix we will add the value of 0 in this temp list n times where n is the number of nodes = node count, NOTE: we alredy incemented the node count to account for the added node i.e to account for the new column
+    for i in range(node_count): # add a new inner list to graph_matrix with the length of the number of nodes in the graph = nodecount (filled with zeros as we are only adding a node and no edges exist yet thats for add egde )
+      temp_list.append(0)
+    graph_matrix.append(temp_list) # add the new filled list to the end of the graph_matrix using append method which adds to the end of the list
+
+# * printing graph 
+# if we just print the graph matrix it will print it in a linear format but we want a matrix format
+# NOTE  this can easily and iffeciently be solved insode the add node method but we will do it here for clarity
+# we also add node headers for readability
+def print_graph(): # function to print the graph
+# Print column headers
+  print("  ", end="")  # Indent for the row headers
+  for node in nodes: # loop over the nodes to print the node headers in there respective columns
+      print(node, end=" ") # print the node name in the current column and 'end' makes it so all the nodes in the column are printed on the same line
+  print() # print a new line after each row i.e after end of loop for column
+    
+  for i in range(node_count): # loop over the number of nodes for the number of rows
+    print(nodes[i], end=" ")  # Print the row header in the current row
+    for j in range(node_count):  # loop over the number of nodes for the number of columns
+      print(graph_matrix[i][j], end=" ") # print the value at the current row and column the end ensures the column is printed on the same line
+    print() # print a new line after each row i.e after end of loop for column
+
+# * adding nodes to the graph (can be done in a loop)
+# creating nodes to add to graph matrix to create the graph above 
+add_node("A")
+add_node("B")
+add_node("C")
+add_node("D")
+add_node("E")
+add_node("A") # test adding a node that already exists
+print_graph() # print the graph matrix
+    
+  
+
