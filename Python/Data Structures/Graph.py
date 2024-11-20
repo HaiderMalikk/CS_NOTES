@@ -544,6 +544,6 @@ add_edge_directed("C", "D") # directed edge
 add_edge_undirected("E", "B")
 add_edge_undirected("E", "D")
 
-# * printing the graph
+# * printing the graph 
 print_graph() # prints the graph in the desired format
 

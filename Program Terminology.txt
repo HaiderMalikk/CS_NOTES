@@ -1,3 +1,47 @@
+* Stack vs Heap
+The stack and the heap are two key memory areas used by programs to store data during execution
+- Definition:
+Stack: Used for statically allocated memory (e.g., local variables).
+Heap: Used for dynamically allocated memory (e.g., objects).
+- Management:
+Stack: Managed automatically with LIFO order.
+Heap: Managed manually or via garbage collection.
+- Speed:
+Stack: Faster due to simple allocation/deallocation.
+Heap: Slower due to complex allocation and fragmentation.
+- Memory Size:
+Stack: Smaller, limited by OS (few MBs).
+Heap: Larger, limited by available RAM.
+- Scope and Lifetime:
+Stack: Local scope; lifetime ends when function returns.
+Heap: Global scope; lifetime persists until explicitly freed.
+- Use Cases:
+Stack: Function-local variables, parameters, and call info.
+Heap: Dynamic data structures like trees, graphs, or large arrays.
+- Common Errors:
+Stack: Stack overflow from deep recursion or large variables.
+Heap: Memory leaks and dangling pointers from poor memory management.
+- Example:
+Stack: int a = 10; (deallocated automatically).
+Heap: int *b = malloc(sizeof(int)); (must be explicitly freed)
+
+* Garbage Collection
+Garbage collection (GC) is a process by which a programming language's runtime environment 
+automatically manages memory by reclaiming unused memory, preventing memory leaks, 
+and freeing the developer from manually managing memory allocation and deallocation.
+
+* Pointers
+A pointer is a variable that stores the memory address of another variable. 
+Pointers are fundamental in languages like C, C++, and others that give you direct access to memory
+EX:
+int *ptr;  // Declares a pointer to an integer in C
+int x = 10;
+int *ptr = &x;  // ptr now holds the address of x
+EX: pointers allow to allocate and free memory at runtime
+int *ptr = (int *)malloc(sizeof(int));  // Allocates memory
+*ptr = 42;
+free(ptr);  // Frees the allocated memory
+
 * compile time vs runtime
 =============================================
 ### Overview
