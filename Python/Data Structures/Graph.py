@@ -339,7 +339,7 @@ E: [(B, 3), (D, 2)]
 # in the matrix we need to update the matrix by adding the value to the matrix at the intersection of the 2 nodes (since its undirected we have 2 intersections A-B and B-A): matrix[A][B] = weight, matrix[B][A] = weight where A and B are the nodes we want to connect and the weight is the value we want to assign to the edge
 # in the adjacency list we do: graph[A] = { B: weight } and graph[B] = { A: weight } where A and B are the nodes we want to connect (undirected so we do both)
 
-# ! Insertion Operations (Adding Nodes and Edges to the Graph -> Implementation)
+# ! Graph Operations Using Adjacency Matrix
 # python code using info above to implement the insertion operations
 # * Creating a Graph as a martrix 
 # we will implement the graph here
@@ -457,3 +457,93 @@ add_edge_undirected("A", "R") # test adding an edge between nodes that dont exis
 # creating a adjacency matrix of the graph EX above with added nodes and edges 
 # if we had to nodes the graph would be empty if we had no egdes the graph would have rows and columns for the nodes but all values would be 0
 print_graph() # print the graph matrix
+
+# ! Graph Operations Using Adjacency List
+# Creating a graph using adjacency list
+# EX graph to implement using adjacency list
+""" 
+# graph (undirected and unweighted graph):
+      A ------- B
+      | \       | \
+    5 |    \    |  E
+      |      \  | /
+      C ------> D
+
+- creating a list for each nodes adjacent nodes:
+- A: [B, (C, 5), D]
+- B: [A, D, E]
+- C: [A, D]
+- D: [A, B, E]
+- E: [B, D]
+"""
+# we will use dictionary to store the adjacency list where the key is the node and the value is the list of adjacent nodes
+# in a weighted graph we will use a tuple to store the adjacent node and the weight of the edge
+# we can also use a nested dictionary where the key is the node and the value is a dictionary where the key is the adjacent node and the value is the weight (see notes for more)
+# by using a a empty list and tuples insted of a nested dictionary we can use the same code for both unweighted and weighted graphs
+# * creating the graph
+graph_list = {} # dictionary to store the adjacency list
+
+# * adding nodes to the graph using add_node (can be done in a loop)
+def add_node(node): # function to add a node to the list (weighted and unweighted)
+  if node in graph_list: # first check if the node already exists in the graph if false: addnode if true do nothing;
+    print(f"Node {node} already exists in the graph")
+    return # we are done
+  else: # else add the node
+    # when adding the node we only add the node and no edge so all we do is add the node as a key to the dictionary with an empty list as the value
+    graph_list[node] = [] # add the node as a key to the dictionary with an empty list as the value
+    
+# * adding edges to the graph (undirected and weighted or unweighted) 
+def add_edge_undirected(node1, node2, weight=1): # function to add an edge to the graph, takes in two nodes and the weight of the edge which defaults to 1
+  if node1 not in graph_list or node2 not in graph_list: # first check if the nodes exists in the graph if false: add egde if true do nothing;
+    print(f"Node {node1} or {node2} does not exist in the graph")
+    return # we are done
+  else: # else add the edge
+    # when adding the edge we only add the edge and no node so all we do is add the node1 as a value to the node2 key in the dictionary and vice versa since the graph is undirected
+    graph_list[node1].append((node2, weight)) # add the node1 as a value to the node2 key in the dictionary
+    graph_list[node2].append((node1, weight)) # add the node2 as a value to the node1 key in the dictionary
+    # NOTE: the weight is added as a along with node but is optional if no weight is provided it will default to 1
+
+# * adding edges to the graph (directed and weighted or unweighted)
+def add_edge_directed(node1, node2, weight=1): # function to add an edge to the graph, we go from node 1 to node 2, default weight of the edge which defaults to 1
+  if node1 not in graph_list or node2 not in graph_list: # first check if
+    print(f"Node {node1} or {node2} does not exist in the graph")
+    return # we are done
+  else: # else add the edge
+    # when adding the edge we only add the edge and no node so all we do is add the node1 as a value to the node2 key in the dictionary since the graph is directed
+    graph_list[node1].append((node2, weight)) # add the node1 as a value to the node2 key in the dictionary
+    # NOTE: the weight is added as a along with node but is optional if no weight is provided it will default to 1
+    
+# * printing the graph using print_graph (optional just makes graph easier to read)
+# * Method to print the graph in the desired format
+# * Method to print the graph in the requested format
+# * Method to print the graph in a compact format
+def print_graph():
+    print("{")
+    for node, edges in graph_list.items():
+        # Format edges compactly
+        edges_str = ", ".join([f"('{adj_node}', {weight})" for adj_node, weight in edges])
+        print(f"    '{node}': [{edges_str}],")
+    print("}")
+
+    
+# Note the nodes can be string , int, float, etc. as long as they are hashable
+# * adding nodes to the graph
+add_node("A")
+add_node("B")
+add_node("C")
+add_node("D")
+add_node("E")
+# add_node("A") # test adding a node that already exists will print a message and do nothing
+
+# * adding edges to the graph 
+add_edge_undirected("A", "B") # note thta since its undirected node A gets B and node B gets A in the adjacency list
+add_edge_undirected("A", "C", 5) # undirected edge with weight 
+add_edge_undirected("A", "D") 
+add_edge_undirected("B", "D")
+add_edge_directed("C", "D") # directed edge
+add_edge_undirected("E", "B")
+add_edge_undirected("E", "D")
+
+# * printing the graph
+print_graph() # prints the graph in the desired format
+
