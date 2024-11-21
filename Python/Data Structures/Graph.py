@@ -149,7 +149,7 @@ Acyclic graphs are useful for modeling scenarios where there is no back-and-fort
 Example: edges = [('A', 'B'), ('B', 'C'), ('C', 'D')] # There is no cycle from A to A.
 """
 
-# ! Repersentation of Graphs
+# ! Repersentation of Graphs NOTE: for us the adjacency lists nodes have there adjacent nodes in the format (node, weight) where this node is adjacent to the node
 # we use this to repersent and store the graph in memory
 """ 
 # * Adjacency Matrix (building a matrix with EX graphs)
@@ -325,7 +325,7 @@ E: [(B, 3), (D, 2)]
 # we can add the node like this: add_node('F'), then in the matrix we add the row and column by adding the node to our nodes list and adding a new row and incresing all the columns by 1 and filling the new position with 0s, for the adjecent list we do: graph['F'] = [] and for the weighted graph we do: graph['F'] = {}, where graph is the graph dictionary
 
 # * Add edge (we check and verify that nodes A and B exist in the graph)
-# when we add a new edge we need to specify 2 nodes
+# when we add a new edge we need to specify 2 nodes and the edge is repersented by a value not a physical line
  
 # in a undirected and unweighted graph we add the edge mention 2 nodes to connect: We first check if the nodes exist if true we add the edge, add_edge(A, B)
 # in the matrix we need to update the matrix by adding the value to the matrix at the intersection of the 2 nodes (since its undirected we have 2 intersections A-B and B-A): matrix[A][B] = 1, matrix[B][A] = 1 where A and B are the nodes we want to connect
@@ -339,7 +339,7 @@ E: [(B, 3), (D, 2)]
 # in the matrix we need to update the matrix by adding the value to the matrix at the intersection of the 2 nodes (since its undirected we have 2 intersections A-B and B-A): matrix[A][B] = weight, matrix[B][A] = weight where A and B are the nodes we want to connect and the weight is the value we want to assign to the edge
 # in the adjacency list we do: graph[A] = { B: weight } and graph[B] = { A: weight } where A and B are the nodes we want to connect (undirected so we do both)
 
-# ! Graph Operations Using Adjacency Matrix
+# ! Creating Graph Using Adjacency Matrix
 # python code using info above to implement the insertion operations
 # * Creating a Graph as a martrix 
 # we will implement the graph here
@@ -359,7 +359,7 @@ Adjacency Matrix in matrix form:
  D [1, 1, 0, 0, 1],
  E [0, 1, 0, 1, 0]
 ]
-Nodes list: ['A', 'B', 'C', 'D', 'E'] # index 0-4 repersents the node A-E respectively
+Nodes list: ['A', 'B', 'C', 'D', 'E'] # index 0-4 repersents the node A-E respectively meaning at [0][1] we have A(col)->B(row)
 """
 # * creating the graph
 nodes = []
@@ -458,7 +458,7 @@ add_edge_undirected("A", "R") # test adding an edge between nodes that dont exis
 # if we had to nodes the graph would be empty if we had no egdes the graph would have rows and columns for the nodes but all values would be 0
 print_graph() # print the graph matrix
 
-# ! Graph Operations Using Adjacency List
+# ! Creating Graph Using Adjacency List (we use tuples to store each nodes adjacent nodes and there weights but can also use a nested dictionary to store the adjacent nodes and their weights)
 # Creating a graph using adjacency list
 # EX graph to implement using adjacency list
 """ 
@@ -470,11 +470,13 @@ print_graph() # print the graph matrix
       C ------> D
 
 - creating a list for each nodes adjacent nodes:
-- A: [B, (C, 5), D]
-- B: [A, D, E]
-- C: [A, D]
-- D: [A, B, E]
-- E: [B, D]
+{
+    'A': [('B', 1), ('C', 5), ('D', 1)],
+    'B': [('A', 1), ('D', 1), ('E', 1)],
+    'C': [('A', 5), ('D', 1)],
+    'D': [('A', 1), ('B', 1), ('E', 1)],
+    'E': [('B', 1), ('D', 1)],
+}
 """
 # we will use dictionary to store the adjacency list where the key is the node and the value is the list of adjacent nodes
 # in a weighted graph we will use a tuple to store the adjacent node and the weight of the edge
@@ -547,3 +549,213 @@ add_edge_undirected("E", "D")
 # * printing the graph 
 print_graph() # prints the graph in the desired format
 
+# ! Delete a node from a graph
+# Deleting a node will delete that node from the graph and delete all edges connecting to that node NOTE: the edges direction dose not matter 
+# EX from graph (undirectded and unweighted graph):
+""" 
+         A      D
+       /   \   /
+      /     \ /
+     B ----- C
+     
+- Adjacency Matrix: 
+Nodes: [A, B, C, D]
+
+    A  B  C  D    
+A [[0  1  1  1], 
+B  [1  0  1  0],
+C  [1  1  0  1],
+D  [0  0  1  0]]
+  
+- Adjacency list:
+{ 
+A: [(B, 1), (C, 1)]
+B: [(A, 1), (C, 1)]
+C: [(A, 1), (B, 1), (D, 1)] 
+D: [(C, 1)]
+}
+
+# EX: lets delete C by calling delete_node(C)
+1)
+# we call our function for deleting where we input c as the argument
+
+2)
+# For the matrix we need to delete every node at the index of C in every row(subarray) this deletes the column for the row we delete the whole subarray at index of C
+# for the list we need to delete the nested list with key C, but since all other keys (nodes) will have another key value pair(dictinary) with key as node and value as weight or a tuple with (Node, weight).
+# for the nested tuples we serch it i.e we serch the nodes adjacent nodes and find the key of C which is alwasy the first index in this tuple inside nested list, and simply delete it, since the values of that key C are the weights of the edges connecting to C we remove all the egdes by deleting Key C
+# For the nested dictionary each node has a nested dictionary with keys and values, we serch all nodes in this adjectent nodes dictionary and find the key of C and delete it 
+# in both cases for the list and matrix we delete the node and in doing so all the edges connecting to that node are deleted
+
+Done)
+# after deleting C from the graph:
+         A      D
+       /       
+      /       
+     B
+# note how now teh graph is disconected
+- Adjacency Matrix: 
+Nodes: [A, B, D]
+
+    A  B  D    
+A [[0  1  1], 
+B  [1  0  0],
+D  [0  0  0]]
+  
+- Adjacency list:
+{ 
+A: [(B, 1)],
+B: [(A, 1)]
+D: []
+} 
+"""
+
+# ! Delete an edge from a graph
+# This is not the same as deleting a node from the graph we can delete an edge and still have the nodes in the graph
+# deleting the edge will just delete the value of the weight of that edge from the matrix and list by deleting we set the value to 0
+# EX:
+""" 
+graph:
+           4
+      A -------> B
+      | \       | \ 
+      |    \    |  E
+      |      \  | /
+      C---------D
+Adjacency Matrix in matrix form:
+[   A  B  C  D  E
+ A [0, 4, 1, 1, 0],
+ B [0, 0, 0, 1, 1],
+ C [1, 0, 0, 1, 0],
+ D [1, 1, 1, 0, 1],
+ E [0, 1, 0, 1, 0]
+]
+Nodes list: ['A', 'B', 'C', 'D', 'E'] # index 0-4 repersents the node A-E respectively meaning at [0][1] we have A(col)->B(row)
+
+Adjacency List
+{
+     A: [(B, 4), (C, 1), (D, 1)],  
+     B: [(A, 0), (D, 1), (E, 1)],
+     C: [(A, 5), (D, 1)]
+     D: [(A, 1), (B, 1), (E, 1)],
+     E: [(B, 1), (D, 1)]
+}
+
+# NOTE: The direction of the edge does not matter for deleting an edge EX: if the graph was C-D only D-C would be 0 by deting the edge C-D would be 0 but D-C would still be 0 so its like deleting a empty value.
+# also the weight of the edge dose not matter as after deleting the edge the weight will be 0 in the matrix and list
+# SO, Deleted edge between two nodes = 0, in graph and list, # for directed or undirected graph the deletion is the same as we delete the egde regardless of the direction
+
+1) lets delete a edge from the graph by calling the delete_edge_(C, D) # where C and D are two nodes and the edge direction does not matter 
+# we will delete the edge between C and D by setting the value of the edge to 0 in the matrix and list but we need to find the two nodes first
+# in the matrix we will delete the value at the row of C and the column of D and vice versa, so we say: matrix[C][D] = 0 and matrix[D][C] = 0
+# if the edge in the matrix is directed say C-D then matric[D][C] = 0 and setting it to 0 has no affect so we can group the two types of edges together
+# in the list we will delete the value of the edge between C and D by removing the key D from the list of C and removing the key C from the list of D
+# because list holds only adjacent nodes after deleting the edge C-D or D-C (dose not matter) 
+# the value of D in adjacent list of C will be 0 and the value of C in adjacent list of D will be 0
+# once again like the matrix we can ignore if the edge is directed or undirected if its directed from C-D then the node is in C's list, we remove it and from D's list C was never there so we dont need to remove it
+# so basically in list we find key C in graph and serch key C find adjacent node D and remove it and then find key D in graph and search key D find adjacent node C and remove it
+# by remove it i mean remove the whole tuple or remove the whole key form the adjacent nodes list for both keys C and D, NOTE: since theres no edge between C and D none of these 2 are adjacent to each other hence why we can remove them from the list
+
+# After deleting the edge:
+graph:
+           4
+      A ------> B
+      | \       | \
+      |    \    |  E
+      |      \  | /
+      C         D
+Adjacency Matrix in matrix form:
+[   A  B  C  D  E
+ A [0, 4, 1, 1, 0],
+ B [0, 0, 0, 1, 4],
+ C [5, 0, 0, 0, 0],
+ D [1, 1, 0, 0, 1],
+ E [0, 1, 0, 1, 0]
+]
+Nodes list: ['A', 'B', 'C', 'D', 'E'] # index 0-4 repersents the node A-E respectively meaning at [0][1] we have A(col)->B(row)
+
+Adjacency List
+{
+     A: [(B, 4), (C, 1), (D, 1)],  
+     B: [(A, 0), (D, 1), (E, 1)],
+     C: [(A, 5)],
+     D: [(A, 1), (B, 1), (E, 1)],
+     E: [(B, 1), (D, 1)]
+}
+"""
+# * All methods below are for weighted / unweighted / directed / undirected graphs graphs
+# * Creting a method to Delete a node for Adjacency Matrix
+# NOTE: for this example i will define the methods fand graph and wont define extra functions 
+nodes = [] # to hold the nodes of the graph
+graph_matrix = [] # matrix to hold the graph
+node_count = 0 # the number of nodes in the graph
+def delete_node(node):
+  global node_count # to use node_count inside the function as we are modifying it # NOTE: for list types we need to use global
+  if node not in nodes:
+    print(f"Node: {node} does not exist in the graph")
+    return
+  else:
+    indexofcolumn = nodes.index(node) # get the index of the node in the nodes list this = the index of the node column/row in the matrix where the node is we delete every element in all column at this index and the row at this index
+    nodes.remove(node) # remove the node from the nodes list (which holds all the nodes in the graph) 
+    node_count -= 1 # decrease the number of nodes in the graph by 1
+    graph_matrix.pop(indexofcolumn) # delete the row of the node from the matrix NOTE the graphs column index = its row index see the graph matrix above for reference
+    for column in graph_matrix:
+      column.pop(indexofcolumn) # delete the index of the node from every column in the matrix all elements of node in the column will be deleted
+      # NOTE: no shifting of columns is required because pop and remove adjust the list for us so theres no gaps in the matrix
+# delete_node("C") # ex
+
+# build a matric graph using the code above then call the delete_node function to delete a node the results of this are in the doc string above
+# * Creating a method to Delete a edge for Adjacency Matrix
+def delete_edge(node1, node2): # takes in two nodes once again the direction of the edge does not matter
+  if node1 not in nodes or node2 not in nodes: # if either of the nodes do not exist in the graph
+    print(f"One or both nodes: {node1}, {node2} do not exist in the graph")
+    return # we are done
+  else: # if both nodes exist in the graph
+    indexnode1 = nodes.index(node1) # get the index of the first node in the nodes list 
+    indexnode2 = nodes.index(node2) # get the index of the second node in the nodes list
+    graph_matrix[indexnode1][indexnode2] = 0 # set the value at the intersection of the two nodes to 0 wher the column is the first node and the row is the second node
+    graph_matrix[indexnode2][indexnode1] = 0 # set the value at the intersection of the two nodes to 0 wher the column is the second node and the row is the first node
+    # NOTE: this is the same is saying node1's col and node2's row = 0 and node2's col and node1's row = 0 which deletes both edges node1->node2 and node2->node1 
+    # if its directional one of the above lines wall be 0 anyway and its like saying 0 = 0 so its ok
+    
+# delete_edge("C", "D") # ex
+
+# * Creating a method to Delete a node for Adjacency List (by cheking if the node exits we can safely delete it) adjecency nodes must be in format (adjacent node, weight) !!!
+# note again the fomat of the adjacency nodes in the adjacency list of every node is (adjacent node, weight)
+graph_list = {} # dictionary to store the adjacency list
+
+def delete_node(node):
+  if node not in graph_list:
+    print(f"Node: {node} does not exist in the graph")
+    return
+  else:
+    # here we have to go through every node to find if node in graph is adjacent to the node we are deleting
+    graph_list.pop(node) # remove the node from the graph list this will delete the whole key (node) and all its values (adjacent nodes) from the dictionary
+    for key in graph_list: # iterate over the keys in the graph list the keys are all the nodes in the graph
+      current_node = graph_list[key] # current node is the value of the key (node) in the graph list that we are looking at
+      for adjacent_node in current_node: # iterate over the adjacent nodes of the current node 
+        if adjacent_node[0] == node: # if the adjacent node is the node we are deleting
+          current_node.remove(adjacent_node) # remove the adjacent node from the current node's adjacent nodes list this removes the whole tuple (adjacent node, weight) from the list deleting the node and its edges as the egde is the weight
+        
+# delete_node("C") # ex
+
+# * Creating a method to Delete a edge for Adjacency List (by cheking if the node exits we can safely delete it)
+def delete_edge(node1, node2):
+  if node1 not in graph_list or node2 not in graph_list:
+    print(f"One or both nodes: {node1}, {node2} do not exist in the graph")
+    return
+  else:
+    # here we can break once we find the adjacent node in the node we are looking as we are deleting the edge between node 1 and 2 node 2 can only be adjacent to node 1 and node 1 can only be adjacent to node 2 and only once
+        # Remove the tuple for node2 from node1's adjacency list
+    for adjacent_node in graph_list[node1]: # iterate over the adjacent nodes of node1
+        if adjacent_node[0] == node2: # if the adjacent nodes first element is node2
+            graph_list[node1].remove(adjacent_node) # remove the edge between node1 and node2 from node1's adjacency list by removing the tuple (node2, weight)
+            break  # Exit the loop once node 2 is found and is deleted from node1's adjacency list
+
+    # Remove the tuple for node1 from node2's adjacency list
+    for adjacent_node in graph_list[node2]: # iterate over the adjacent nodes of node2
+        if adjacent_node[0] == node1: # if the adjacent nodes first element is node1
+            graph_list[node2].remove(adjacent_node) # remove the edge between node1 and node2 from node2's adjacency list by removing the tuple
+            break  # Exit the loop once the edge is removed
+
+
+    
