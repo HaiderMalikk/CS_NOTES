@@ -1,5 +1,6 @@
 # ! Graphs 
 
+# ! Simple Graph (each pair of nodes can have at most 1 edge connecting them)
 # Graph is a non -linear data structure consisting of nodes or vertices connected by edges. nodes and vertices are the same thing
 # a edge can only connect 2 nodes its a stright line between 2 nodes
 # NOTE: a tree is a type of graph. but not all graphs are trees. a tree is a graph with no cycles.
@@ -462,7 +463,7 @@ print_graph() # print the graph matrix
 # Creating a graph using adjacency list
 # EX graph to implement using adjacency list
 """ 
-# graph (undirected and unweighted graph):
+# graph (undirected and weighted graph/unweighted):
       A ------- B
       | \       | \
     5 |    \    |  E
@@ -739,11 +740,14 @@ def delete_node(node):
 # delete_node("C") # ex
 
 # * Creating a method to Delete a edge for Adjacency List (by cheking if the node exits we can safely delete it)
+# * note as mentioned before we assume that the adjacency nodes are in format (adjacent node, weight) this is not the case for undirected graphs for that you need to change this func
+# * for unweighted graphs make the change: insted of treting adjacent nodes as a tuple and checking its first index treat it as a element so if adjacent node = node2 then remove it as the adjacent node is a element with default value of 1 
 def delete_edge(node1, node2):
   if node1 not in graph_list or node2 not in graph_list:
     print(f"One or both nodes: {node1}, {node2} do not exist in the graph")
     return
   else:
+    # * note make change for the unweighted graph if you like its mentioned right above the declaration of this function
     # here we can break once we find the adjacent node in the node we are looking as we are deleting the edge between node 1 and 2 node 2 can only be adjacent to node 1 and node 1 can only be adjacent to node 2 and only once
         # Remove the tuple for node2 from node1's adjacency list
     for adjacent_node in graph_list[node1]: # iterate over the adjacent nodes of node1
@@ -757,5 +761,80 @@ def delete_edge(node1, node2):
             graph_list[node2].remove(adjacent_node) # remove the edge between node1 and node2 from node2's adjacency list by removing the tuple
             break  # Exit the loop once the edge is removed
 
+# ! Multi Edge Graph (each pair of nodes can have multiple edges between them)
 
-    
+# ! ADJACENCY MATRIX for  Unweighted directed/undirected Multi Edge Graph 
+"""     _______
+       /       \
+      A ------- B
+     /| \       | \
+    | |    \    |  E
+    | |      \  | /
+    ->C ------> D
+
+Here A-B has 2 edges, And A-C has 2 edges but C-A has 1 edge.
+it can have even more connections
+
+# in a simple graph the matrix is filled with weights where the weight of a edge between node i and j is at position (i, j) in the matrix
+
+what we can do with milti edge unweighted graphs is we can store the number of edges between each pair of nodes at position (i, j) in the matrix insted of the weight of a single edge 
+this means in this ex A-B's intersection in the matrix has the value of 2 because there are 2 edges between A and B 
+NOTE: we can do this in a unweighted graph only because the value is 1 or 0 so by replaceing that with the number of edges we can still get the info of the weights which is 1 or 0
+# mening here A-B has 2 edges both edges have weight 1 because this is an unweighted graph if it was 0 thats no edge etc etc
+
+if the graph is directed we only count the number of edges from node i to node j so we only count the edges for node i that are coming from node i to node j
+EX: for A-C we have 2 edges one is directed from A-C and C-A and the other is directed only from A-C this makes A-C have 2 edges but C-A has 1 edge
+
+EX: (note this dose not conatin the weights of the edges between each pair but rather the number of edges between each pair of nodes)
+[   A  B  C  D  E
+ A [0, 2, 2, 1, 0],
+ B [2, 0, 0, 1, 1],
+ C [1, 0, 0, 1, 0],
+ D [1, 1, 0, 0, 1],
+ E [0, 1, 0, 1, 0]
+]
+
+# Chnage in the functions 
+- for add node nothing changes
+- for add edge insted of storing the weight 1 for the edge we insted store the number of edges between the pair of nodes
+  to do this we simply locate the intersection of the pair of nodes in the matrix and add 1 to its current value
+  if its undirected we add to both the nodes intersections i.e A-B and B-A if directed we only add to A-B
+  NOTE: you can alos add a counter to keep track of the number of edges for the pair of nodes
+- for delete node its the same as the function finds all edges connected to the node and this includes if theres more that one edge between the pair of nodes
+  as we delete the whole row and column of the matrix we delete all traces of the node including the edges connected to it
+- for delete edge we need to do the opposite of add edge we need to locate the intersection of the pair of nodes in the matrix and subtract 1 from its current value
+  BUT if its 0 we cant subtract 1 because we cant have a negative number of edges between a pair of nodes so dont do anything if its 0
+"""
+
+# ! ADJACENCY LIST for weighted or unweighted directed/undirected Multi Edge Graph
+"""     _______
+       /       \
+      A ------- B
+     /| \       | \
+   2| |    \    |  E
+    | |      \  | /
+    ->C ------> D
+
+- creating a list for each nodes adjacent nodes:
+{
+    'A': [('B', 1), ('C', 1), ('D', 1), ('B', 1), ('C', 2)],
+    'B': [('A', 1), ('D', 1), ('E', 1), ('A', 1)],
+    'C': [('A', 1), ('D', 1)],
+    'D': [('A', 1), ('B', 1), ('E', 1)],
+    'E': [('B', 1), ('D', 1)],
+}
+
+# for all possible grahps:
+in the adjacency list we can simple add the node to the list again if it has multiple edges between the pair of nodes in the EX A's adjacent nodes list contains B twice because it has 2 edges between A-B
+The adjacency list caries the node and the weight of the edge between the pair of nodes so we can choose the weight to represent the number of edges between the pair of nodes
+in our EX A-C has 2 edges one is directed from A-C with weight 1 and the other is directed from C-A with weight 2 so store C a second time with weight 2
+
+# Chnage in the functions
+- for add node nothing changes we add the node to the list again
+- for add edge nothing changes but to avoid the first occurance to get the weight we must differ the nodes i.e B, B1, B2, B3 etc to give each nodea unique name or we can use its address in memory
+- for delete node we change the list by removing all edges connected to the node in our method we return after deleting as it was for single edge but here we need to find all edges connected to the node and delete them
+- for delete edge nothing changes it deletes the first edge between the pair of nodes that was added
+
+"""
+
+# ! ADJACENCY MATRIX for weighted directed/undirected Multi Edge Graph
