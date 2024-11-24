@@ -104,3 +104,31 @@ In low-level languages, the language is close to the computer's hardware.
 This means that the language is designed to be efficient and fast, but it may be difficult to use
 and understand.
 EX: assembly, c, c++
+
+* Order of variables and Alignment in memory
+=============================================
+### Overview 
+the order of variables can effect the alignment of variables in memory this can make them more or less efficient.
+by adding padding to the varibles we waste memory trying to align the variables to the next word boundary.
+by the order i mean whats order of decloration, this is best demostrated with a EX:
+### Bad alignment 
+struct MyStuct{
+    char myChar; // 1 byte
+    int myInt; // 4 bytes
+}
+here we must add 3 bytes of padding after char to align it with the next var because of the ofset 
+the memory is stored in increments here 4bytes and there theres nothing after the first byte of char so we must add padding
+so that we store int at the correct place (4bytes after char) and hence we must add padding after char to do so 
+now each variable has 4 bytes to itself in 4byte incremetns meaning each var takes up 4 bytes in memory 
+amd hence we can move up by 4byte ofsets to get to the next var.
+so this might look like:
+mychar = 1 byte
+padding = 3byte
+myint = 4 byte
+### good alignment
+struct MyStuct{
+    int myInt; // 4 bytes
+    char myChar; // 1 byte
+}
+in this case the char is available right after the integer because the integer is 4 bytes and the char is 1 byte so the char is right after
+no padding is needed the code is faster and more efficient.
