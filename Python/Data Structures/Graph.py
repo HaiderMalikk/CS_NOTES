@@ -313,7 +313,7 @@ E: [(B, 3), (D, 2)]
 
 # ! Implementing Graphs in Python
 
-# ! Insertion Operations (Adding Nodes and Edges to the Graph -> Theory)
+# ! Insertion Operations (Adding Nodes and Edges to the Graph)
 # used to insert a new node or edge into the graph
 
 # * Add node / vertex (no edge just the node)
@@ -549,6 +549,8 @@ add_edge_undirected("E", "D")
 
 # * printing the graph 
 print_graph() # prints the graph in the desired format
+
+# ! Deletion operations
 
 # ! Delete a node from a graph
 # Deleting a node will delete that node from the graph and delete all edges connecting to that node NOTE: the edges direction dose not matter 
@@ -837,4 +839,42 @@ in our EX A-C has 2 edges one is directed from A-C with weight 1 and the other i
 
 """
 
-# ! ADJACENCY MATRIX for weighted directed/undirected Multi Edge Graph
+# ! ADJACENCY MATRIX for weighted directed/undirected Multi Edge Graph Dose not exist
+# you cant repersent a multi edge graph in a matrix as the multiple weights would exceed the capacity of the matrix
+# this is ok with unweighted graphs as each weight is 1 if there is 3 connections from A to B then A-B has 3 edges each of weight 1
+# but in a weighted graph one connection from A to B could be weight 2 or 3 in that case we cant store that weight info in one cell of the matrix
+
+# ! Treversal operations
+# Traversal means visiting all the nodes in the graph in a specific order, we can print these nodes compare them etc.
+
+# ! Depth First Search (DFS) 
+# 1) Start at the start node (all nodes all equal so you can start at any node) 
+# 2) visit one adjacent nodes of the current node that has not been visited (at first the current node will be the start node, and you can visit any adjacent node as at the start you have not visited any nodes)
+# 3) if a unvisited adjacent node to current node exists repeat step 2 if not goto step 4
+# 4) if no unvisited adjacent nodes to current node exist backtrack to the last visited node and repeat step 2 (now the last visited node is the current node) NOTE: you only backtrack one node at a time
+# 5) once you backtrack to the start node you are done and you have visited all the nodes in the graph.
+# NOTE we can only move to a adjecent node if it has the correct direction see EX2
+
+# * How to choose a adjacent node in DFS implementation: See implimentation of DFS below
+
+""" 
+EX:
+           
+      A -------- B
+      | \       | \ 
+      |    \    |  E
+      |      \  | /
+      C---------D
+NOTE: you would not print the node at the backtrack as you already printed it in the previous step only print at step 2 here even when we backtrack to starting node we dont print it
+Output from DFS: A, B, E, D, C
+
+      A -------- B
+      ^ \       | \ 
+      |    \    |  E
+      |      \  | 
+      C---------D
+NOTE: you would not print the node at the backtrack as you already printed it in the previous step only print at step 2
+NOTE: at the start i cannot choose A-C as C is not a adjecent node to A but if i started at C i could choose A-C as A is a adjecent node to C
+output from DFS: A, B, E, ->backtrack-> D, C
+"""
+
