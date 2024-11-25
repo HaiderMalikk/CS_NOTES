@@ -460,6 +460,7 @@ add_edge_undirected("A", "R") # test adding an edge between nodes that dont exis
 print_graph() # print the graph matrix
 
 # ! Creating Graph Using Adjacency List (we use tuples to store each nodes adjacent nodes and there weights but can also use a nested dictionary to store the adjacent nodes and their weights)
+# * NOTE for the remander of this code we will always have a tuples to store the adjacent nodes and their weights even if the graph is unweighted then we store the weight as 1 we do this to reuse the code for both weighted and unweighted graphs
 # Creating a graph using adjacency list
 # EX graph to implement using adjacency list
 """ 
@@ -688,8 +689,8 @@ Adjacency List
 # * All methods below are for weighted / unweighted / directed / undirected graphs graphs
 # * Creting a method to Delete a node for Adjacency Matrix
 # NOTE: for this example i will define the methods fand graph and wont define extra functions 
-nodes = [] # to hold the nodes of the graph
-graph_matrix = [] # matrix to hold the graph
+nodes = ["A", "B"] # to hold the nodes of the graph
+graph_matrix = [[1,0], [0,1]] # matrix to hold the graph EX
 node_count = 0 # the number of nodes in the graph
 def delete_node(node):
   global node_count # to use node_count inside the function as we are modifying it # NOTE: for list types we need to use global
@@ -724,7 +725,7 @@ def delete_edge(node1, node2): # takes in two nodes once again the direction of 
 
 # * Creating a method to Delete a node for Adjacency List (by cheking if the node exits we can safely delete it) adjecency nodes must be in format (adjacent node, weight) !!!
 # note again the fomat of the adjacency nodes in the adjacency list of every node is (adjacent node, weight)
-graph_list = {} # dictionary to store the adjacency list
+graph_list = {"A": [("B", 4), ("C", 1), ("D", 1)], "B": [("A", 0), ("D", 1), ("E", 1)]} # dictionary to store the adjacency list
 
 def delete_node(node):
   if node not in graph_list:
@@ -865,6 +866,11 @@ EX:
       |    \    |  E
       |      \  | /
       C---------D
+1) start at A
+2) visit B as its adjacent to A
+3) visit E as its adjacent to B
+4) visit D as its adjacent to E
+5) visit C as its adjacent to D
 NOTE: you would not print the node at the backtrack as you already printed it in the previous step only print at step 2 here even when we backtrack to starting node we dont print it
 Output from DFS: A, B, E, D, C
 
@@ -873,8 +879,186 @@ Output from DFS: A, B, E, D, C
       |    \    |  E
       |      \  | 
       C---------D
+1) start at A
+2) visit B as its adjacent to A we cannot goto C as C is not a adjecent node to A
+3) visit E as its adjacent to B
+4) E has no unvisited adjacent nodes so backtrack to B
+5) B has D as a unvisited adjacent node so goto D
+6) visit D as its adjacent to B
+7) visit C as its adjacent to D
 NOTE: you would not print the node at the backtrack as you already printed it in the previous step only print at step 2
 NOTE: at the start i cannot choose A-C as C is not a adjecent node to A but if i started at C i could choose A-C as A is a adjecent node to C
 output from DFS: A, B, E, ->backtrack-> D, C
 """
 
+# ! Breadth First Search (BFS)
+# 1) Start at the start node (all nodes are equal, so you can start at any node).
+# 2) Visit the start node and add all its adjacent nodes to a list (these adjacent nodes are now at level 1 relative to the start node).
+# 3) From the list of adjacent nodes, visit each node in the order they were added, one by one, and for each node, add its unvisited adjacent nodes to the list (these new nodes are now at the next level relative to the start).
+# 4) Repeat step 3 for all nodes in the list until no nodes remain.
+# 5) Once the list is empty, you have visited all the nodes in the graph.
+# NOTE: BFS explores all nodes at the current level before moving to the next level, ensuring a level-order traversal.
+
+""" 
+EX:
+
+Graph:
+           
+      A -------- B
+      | \       | \ 
+      |    \    |  E
+      |      \  | /
+      C---------D
+
+Traversal Process (starting from A):
+1) Start at A, visit A, and add its adjacent nodes (B, C, D) to the list.
+2) Move to the first node in the list (B), visit it, and add its unvisited adjacent node (E) to the list.
+3) Move to the next node in the list (C), visit it. (No new nodes to add, as all adjacent nodes are already in the list or visited.)
+4) Move to the next node in the list (D), visit it. (No new nodes to add.)
+5) Move to the next node in the list (E), visit it. (No new nodes to add.)
+6) The list is now empty, and BFS traversal is complete.
+
+Output from BFS (starting at A): A, B, C, D, E
+
+      A -------- B
+      | \       | \ 
+      |    \    |  E
+      |      \  | 
+      C---------D
+
+NOTE: BFS explores nodes level by level. First, all nodes directly connected to the start node (level 1) are visited, followed by nodes at the next level (level 2), and so on.
+"""
+
+
+# ! Implimentation of DFS in python
+
+# ! Implimentation of DFS using a iterative stack 
+""" 
+Algorithim:
+1) push the start node to the stack (initial current node)
+2) pop the current node and check if that node has been visied by checking if it is in the visited list if not visit it and add it to the visited list (in the begining the start node will be pushed then poped and since it wont be in the visited list we visit it)
+3) push all unvisited adjacent nodes of the current node to the stack the order does not matter now with this new stack repeat step 2
+4) if there are no unvisited adjacent nodes to the current node repeat step 2
+5) if in step 2 we cannot pop meaning the stack is empty we are done and we have visited all the nodes in the graph
+# NOTE: our visited list will be a set as its more efficient that a list and avoids any checking for duplicates giving cleaner code
+# NOTE: the order of traversal may slightly differ depending on the node we start at
+"""
+graph = {"A": ["B", "C"], "B": ["A", "D"],}
+def DFS(node, graph): # take in starting node and graph
+  if node not in graph: # if the starting node is not in the graph return this only checks for user input of start node
+    print("Start Node not in graph")
+    return
+  visited = set() # create a set to store the visited nodes
+  stack = [] # create a stack to store the nodes to visit
+  stack.append(node) # add the start node to the stack
+  while stack: # while the stack is not empty
+    current = stack.pop() # pop the current node and store it so we can check if it is in the visited list
+    if current not in visited: # if the current node is not in the visited list
+      print(current) # print the current node (visit it)
+      visited.add(current) # add the current node to the visited list
+      for adjacent_node in graph[current]: # for each adjacent node of the current node
+        stack.append(adjacent_node) # add the adjacent node to the stack we dont check if they are unvisited as that will be checked by the conditional 'if current not in visited'
+# EX : DFS("A", graph) # start at node A
+
+# ! Implimentation of DFS using recursion and stack concept (function stack)
+# * using adjacency list (created prevoiusly)
+
+visited = set() # more efficient than visited list
+graph = {"A": ["B", "C", "D"], "B": ["A", "D", "E"], "C": ["A", "D"]} # adjacency list EX
+# recusive function so we declare the set outside the function  so for all recorsive function calls we can use the same set
+def DFS_recursive(node, visited, graph): # node is the start node, visited is the visited list, graph is the adjacency list
+  if node not in graph: # if the starting node is not in the graph return this only checks for user input of start node 
+    # after the first iteration this will never run because the node we call DFS is in the graph matrix hence it always exists in graph
+    print("Start Node not in graph")
+    return
+  if node not in visited: # if this node is not visited visit it 
+    print(node) # print the node (visit it) we can also do whatever with the node store it print it etc
+    visited.add(node) # add the node to the visited set using add function
+    # to get adjacent nodes of the current node (node) we get the values of key "node" in the graph
+    for Adjacent_node in graph[node]: # for each adjecent node of node = the values of key "node" in the graph
+      DFS_recursive(Adjacent_node[0], visited, graph) # call the function recursively on the adjecent node NOTE that the value of the node is in the first index of the adjacent node tuple
+      # in the last line we choose visit the first adjacent node of the start node and call DFS on that node 
+      # remember we can visit any adjacent node that is unvisited here this loop only runs if the current node is unvisited 
+      
+      # NOTE: this is related to stack as each new function call on 'node' is like adding that node to the stack 
+      # each time we call DFS on node we add that node to the stack as a function call and once we finish with that function call
+      # meaning we reach a node with no adjacent nodes we pop that node's function call from the stack and return to the previous function call
+# EX: DFS("A", visited, graph) # function call
+
+# ! Implementation of BFS in Python
+
+# ! Implementation of BFS using a queue (iterative approach)
+"""
+Algorithm:
+1) Add the start node to the queue (this will be the first node we process).
+2) Dequeue the current node from the queue and check if it has been visited. 
+   If not, visit it and add it to the visited set.
+3) Enqueue all unvisited adjacent nodes of the current node into the queue.
+4) Repeat steps 2–3 until the queue is empty.
+5) If the queue is empty, the traversal is complete, and all reachable nodes have been visited.
+# NOTE: The BFS traversal uses a queue to explore all neighbors of the current node 
+  before moving to the next level (i.e., it works level by level).
+# NOTE: Our visited list is implemented as a set for efficiency. A list could also be used, 
+  but a set is faster for checking membership and avoids duplicates automatically.
+# NOTE: The order of traversal will depend on the graph structure and the order in which adjacent nodes are added to the queue.
+"""
+graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"],
+}
+
+def BFS(node, graph):  # takes the starting node and the graph as input
+    if node not in graph:  # check if the starting node exists in the graph
+        print("Start Node not in graph")
+        return
+    visited = set()  # create a set to store visited nodes
+    queue = []  # create a queue to process nodes
+    queue.append(node)  # add the starting node to the queue
+    while queue:  # while the queue is not empty
+        current = queue.pop(0)  # dequeue the front node
+        if current not in visited:  # check if it is unvisited
+            print(current)  # visit the node (print it)
+            visited.add(current)  # mark the node as visited
+            for adjacent_node in graph[current]:  # for each adjacent node of the current node
+                if adjacent_node not in visited:  # check if it is unvisited
+                    queue.append(adjacent_node)  # enqueue the adjacent node
+# EX: BFS("A", graph)  # start traversal from node "A"
+
+# ! Implementation of BFS using recursion (queue-like behavior with function stack)
+# * Using adjacency list (created previously)
+
+visited = set()  # visited set for recursive implementation
+graph = {
+    "A": ["B", "C", "D"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "D"],
+}  # adjacency list example
+
+# Recursive function
+def BFS_recursive(queue, visited, graph):
+    if not queue:  # base case: if the queue is empty, stop recursion
+        return
+    current = queue.pop(0)  # dequeue the first node
+    if current not in visited:  # if the current node is unvisited
+        print(current)  # visit the node
+        visited.add(current)  # mark it as visited
+        for adjacent_node in graph[current]:  # enqueue all unvisited adjacent nodes
+            if adjacent_node not in visited:
+                queue.append(adjacent_node)
+    BFS_recursive(queue, visited, graph)  # recursively process the next node in the queue
+
+# EX: BFS_recursive(["A"], visited, graph)  # start traversal with queue containing the start node
+
+"""
+Key Differences Between BFS and DFS:
+1) BFS explores all neighbors of the current node (level by level) before moving to the next level. 
+   DFS explores as far as possible along each branch before backtracking.
+2) BFS uses a queue, while DFS uses a stack (explicitly or through recursion).
+3) BFS is better for finding the shortest path in unweighted graphs because it guarantees 
+   the shortest distance to a node when the first time it is visited.
+4) BFS may use more memory than DFS because it stores all nodes at the current level in the queue.
+"""
