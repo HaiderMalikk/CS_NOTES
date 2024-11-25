@@ -943,7 +943,7 @@ Algorithim:
 # NOTE: our visited list will be a set as its more efficient that a list and avoids any checking for duplicates giving cleaner code
 # NOTE: the order of traversal may slightly differ depending on the node we start at
 """
-graph = {"A": ["B", "C"], "B": ["A", "D"],}
+graph = {"A": ["B", "C"], "B": ["A", "D"],} # adjacency list EX weights are not included in this example but they must be there
 def DFS(node, graph): # take in starting node and graph
   if node not in graph: # if the starting node is not in the graph return this only checks for user input of start node
     print("Start Node not in graph")
@@ -964,7 +964,7 @@ def DFS(node, graph): # take in starting node and graph
 # * using adjacency list (created prevoiusly)
 
 visited = set() # more efficient than visited list
-graph = {"A": ["B", "C", "D"], "B": ["A", "D", "E"], "C": ["A", "D"]} # adjacency list EX
+graph = {"A": ["B", "C", "D"], "B": ["A", "D", "E"], "C": ["A", "D"]} # adjacency list EX #  weights are not included in this example but they must be there
 # recusive function so we declare the set outside the function  so for all recorsive function calls we can use the same set
 def DFS_recursive(node, visited, graph): # node is the start node, visited is the visited list, graph is the adjacency list
   if node not in graph: # if the starting node is not in the graph return this only checks for user input of start node 
@@ -1002,7 +1002,7 @@ Algorithm:
   but a set is faster for checking membership and avoids duplicates automatically.
 # NOTE: The order of traversal will depend on the graph structure and the order in which adjacent nodes are added to the queue.
 """
-graph = {
+graph = { # adjacency list EX weights are not included in this example but they must be there
     "A": ["B", "C"],
     "B": ["A", "D", "E"],
     "C": ["A", "F"],
@@ -1032,7 +1032,7 @@ def BFS(node, graph):  # takes the starting node and the graph as input
 # * Using adjacency list (created previously)
 
 visited = set()  # visited set for recursive implementation
-graph = {
+graph = { # adjacency list EX weights are not included in this example but they must be there
     "A": ["B", "C", "D"],
     "B": ["A", "D", "E"],
     "C": ["A", "D"],
