@@ -97,21 +97,3 @@ class Graph:
                     
         self.BFS_recursive(queue, visited)
         
-mygraph = Graph()
-mygraph.add_node("A")
-mygraph.add_node("B")
-mygraph.add_node("C")
-mygraph.add_node("D")
-mygraph.add_node("E")
-mygraph.add_node("F")
-
-mygraph.add_edge_undirected("A", "B")
-mygraph.add_edge_undirected("A", "C")
-mygraph.add_edge_undirected("B", "D")
-mygraph.add_edge_undirected("C", "E")
-mygraph.add_edge_undirected("D", "E")
-mygraph.add_edge_undirected("E", "F")
-
-mygraph.print_graph()
-mygraph.DFS()
-mygraph.BFS()
