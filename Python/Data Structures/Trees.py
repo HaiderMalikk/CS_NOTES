@@ -63,7 +63,6 @@ Tree Types Overview:
    - Definition: A tree in which each node has at most two children, referred to as the left child and the right child.
    - Characteristics: 
      - Each node can have 0, 1, or 2 children.
-     - The height of a balanced binary tree is minimal for a given number of nodes.
      - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf).
      - In a complete binary tree, all levels of the tree except the last level are completely filled (meaning must have 2 child nodes). Last level can be either completely filled or filled left to right meaning that if the last level has 2 child nodes they must be on the left most node of the previous level. if we have one node it must be a left node to the left most node of the previous level. This left most node must be filled first before moving to the right
      - In a Perfect binary tree, all the nodes except for leaf nodes have 2 children and all the leaf nodes are at the same level.
@@ -520,6 +519,92 @@ root.inorder()  # prints 5 10 15 20 100 None (note its in lowest to highest orde
 # Post order traversal
 root.postorder() # prints 5 15 100 20 10 None 
 
+# * DFS (Depth First Search) and BFS (Breadth First Search
+class BST:
+    def __init__(self, data):
+        self.key = data
+        self.leftchild = None
+        self.rightchild = None
+
+    def insert(self, data):
+        if self.key is None:
+            self.key = data
+        elif self.key == data:
+            return  # If the node already exists, we don't insert it.
+        elif self.key > data:
+            if self.leftchild:
+                self.leftchild.insert(data)
+            else:
+                self.leftchild = BST(data)
+        else:
+            if self.rightchild:
+                self.rightchild.insert(data)
+            else:
+                self.rightchild = BST(data)
+
+    def bfs(self):
+        """
+        Performs a breadth-first search (BFS) on the binary tree and prints each node in level order.
+        BFS uses a queue to explore all nodes level by level.
+        """
+        # Start with the root node in the queue
+        queue = [self]
+        while queue:
+            # Pop the first node in the queue (level-order traversal)
+            current = queue.pop(0)
+            print(current.key, end=" ")  # Print the current node's key
+            # If the current node has a left child, add it to the queue
+            if current.leftchild:
+                queue.append(current.leftchild)
+            # If the current node has a right child, add it to the queue
+            if current.rightchild:
+                queue.append(current.rightchild)
+
+    def dfs(self):
+        """
+        Performs a depth-first search (DFS) on the binary tree and prints each node.
+        DFS explores as far down as possible along each branch before backtracking.
+        This DFS implementation uses in-order traversal, meaning it visits the left child, 
+        then the current node, and then the right child. it will goto the leftmost node and then go right and then back to root
+        """
+        # Traverse the left subtree first
+        if self.leftchild:
+            self.leftchild.dfs()
+        # Print the current node's key
+        print(self.key, end=" ")
+        # Traverse the right subtree
+        if self.rightchild:
+            self.rightchild.dfs()
+
+
+# Example of usage:
+""" 
+    10
+   /  \
+  5    20
+      /  \
+     15  100
+"""
+# Create a binary search tree
+root = BST(10)
+root.insert(5)
+root.insert(20)
+root.insert(15)
+root.insert(100)
+
+print("Breadth-First Search (BFS):")
+root.bfs()  # Expected Output: 10 5 20 15 100 (level-order)
+
+print("Depth-First Search (DFS):")
+root.dfs()  # Expected Output: 5 10 15 20 100 (in-order)
+
+# DFS vs inorder
+""" 
+DFS (Depth-First Search) is a general traversal strategy that explores as deeply as possible along each branch before backtracking, 
+while **in-order traversal** is a specific type of DFS used in binary trees. In-order traversal visits nodes in a left-root-right order, 
+making it particularly useful for Binary Search Trees (BSTs) to retrieve nodes in sorted order. While DFS refers to the overall approach, 
+in-order is a specific implementation of DFS focused on a particular sequence of node visits in binary trees.
+"""
 
 # ! Deleting a node from a tree including root node, or if root has 1,2 children, see counter for deleting leaf root node
 """ 

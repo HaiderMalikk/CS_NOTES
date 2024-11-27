@@ -1157,3 +1157,29 @@ how to impliment steps:
 
 - NOTE: flow control in a way so that step 1 is done before step 3 and excute step 2 only if step 1 passes (see algorithm)
 """
+
+# ! Spanning Tree
+""" 
+A spanning tree of a graph is a subgraph that includes all the vertices of the original graph, without any cycles, 
+and with the minimum number of edges required to connect all the vertices. In other words, it is a tree that "spans" the entire graph, 
+covering all the vertices while ensuring there are no loops.
+
+Key points about a spanning tree:
+
+It has exactly V - 1 edges, where V is the number of vertices in the graph.
+It is a connected subgraph, meaning there is a path between every pair of vertices.
+It does not contain any cycles.
+If the graph is weighted, there are algorithms like Kruskal's and Prim's algorithms to find a minimum spanning tree (MST), 
+which is a spanning tree that minimizes the sum of edge weights.
+
+EX:
+A -- B
+|    |
+C -- D
+
+The spanning tree is for this graph:
+A -- B
+|
+C
+This tree connects all the nodes (A, B, C, D) with 3 edges, and no cycles are present.
+"""
