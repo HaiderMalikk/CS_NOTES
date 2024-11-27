@@ -200,6 +200,40 @@ for i in range(1, 6):
 
 # the same applies to while loops
 
+# using list function 
+# we can pass a list or nonlist to the list function and it will iterate over each item in the list 
+# we use the list function and not the list name all the time becuase
+# 1) passing a list into the list function makes a copy of the list for us to iterate over 
+   # this means any changes made to the array will not effect the iteration  
+   # If you remove an element, the remaining elements shift, but the iterator's index doesn't adjust, leading to skipped or misprocessed elements.
+# 2) we can pass a non list into the list function and it will make a list out of it
+# EX1
+test_list = [1, 2, 3, 4, 5]
+for element in list(test_list):  # Make a copy of the list for safe iteration
+    test_list.remove(element)   # Modify the original list
+    print(f"Removed {element}")
+    # even through the list size has decreased the iterator still goes over each element by alwasy going to the next element not the next index
+    # if we did not use list the loop would skip over indexes that have already been removed from the original list as it tracks the index not the element
+    # after deletion a new element might be at that index where a deleted element used to be and it would just skip over it as it would go to the next index disregarding that the list size has decreased
+""" 
+with list(test_list):
+removes 1, 2, 3, 4, 5 
+at the first iteration the loop points to 1
+it removes 1
+the loop now points to 2
+and so on pointing to the next element in the list
+
+with elements in test_list:
+at first iteration the loop points to the first index which is 1
+it removes 1
+the loop now points to the second index which is 3 note our list is now [2, 3, 4, 5]
+it dose not take into account that the list size has decreased and 2 is where 1 used to be
+"""
+
+# EX 2
+my_tuple = (1, 2, 3)
+my_list = list(my_tuple)  # [1, 2, 3] - Convert the tuple to a list
+
 
 ## Functions
 
@@ -232,15 +266,37 @@ def add(a, b=0): # b is a default parameter if nothing is entered for be it will
 result1 = add(3, 4)  # Positional arguments, result1 = 7
 result2 = add(5)     # Default argument, result2 = 5, b = 0 so 5+0=0
 
-# ex3
-def add(a, b):
-    return a + b # return can be used to return something "like print" can retuen true or flase
+# * NOTE for default parameters 
+# the default parameter are only evaluated when the function is called not when the function is defined
+# this means different function calls will share the same default parameter value which is not always what you want
+# EX with a default parameter shared with all function calls
+def append_to_list(element, list=[]):
+    list.append(element)
+    return list
 
-result = add(3, 4)  # result = 7
+list1 = append_to_list(1)
+print(list1) # [1]
+list2 = append_to_list(2)
+print(list2) # [1, 2]
+# list one ans 2 are different lists but because they share the same default parameter 'list = []' this means both lists are the same
+# since they both share the default parameter list = [] one lists change is reflected in the other and vice versa
 
-## random random 
-import random    
-print(random.randint(1,5)) # (start, end)
+# To fix this issue you set the default parameter to None then create a new list when the function is called using the fact that the list is None when the function is called
+def append_to_list(element, list=None):
+    if list is None:
+        list = [] # Create a new list if list is None for every function call a new list is created
+    list.append(element)   
+    return list 
+list1 = append_to_list(1)
+print(list1) # [1]  
+list2 = append_to_list(2)
+print(list2) # [2] # now list1 and list2 are different lists
+
+# ex3 assigning a variable to the result of a function
+def negate(a, b):
+    return -a, -b # this function returns 2 values
+
+a, b = negate(1, 2) # this is called unpacking and here we assign the values returned by the function to the variables a and b respectively
 
 # eecs 
 """hello"""
@@ -761,6 +817,7 @@ else:
 my_list = [1, 2, 3, 4, 5] # ! do not name any list 'list' as it is a python keyword
 print(max(my_list), min(my_list)) # Output: 5 1
 
+# filtering,sotring and finding elements with lambda function
 # Labda function for key explained (see lambda function dection for what lambda is)
 # EX NUM 3: => lambda x: x**2 the lambda var here 'x' repersents every element in the iterable, this var is on the LSH
 # this means we can modify 'x' on the RHS to then change the element passed in, in EX 3 we say x**2 so every element in the list will be squared 
@@ -810,6 +867,12 @@ items = [(1, 2), (3, 1), (5, 0)]
 items.sort(key=lambda x: x[1])  # Sort by the second element in each tuple
 print(items)  # Output: [(5, 0), (3, 1), (1, 2)]
 
+# using the list function to use map 
+numbers = [1, 2, 3, 4, 5]
+squares = list(map(lambda x: x ** 2, numbers))
+print(squares)  # Output: [1, 4, 9, 16, 25]
+
+
 # # list comprihention
 # arr = [[1, 2, 3], [1, 3, 2], [3, 2, 1]]
 
@@ -829,19 +892,24 @@ print(items)  # Output: [(5, 0), (3, 1), (1, 2)]
 # list comprehention ( a way to make a list with loops and conditions inside these help build the list)
 # syntax general: new_list = [expression for item in iterable if condition]
 # EX 
-squares = [x ** 2 for x in range(10)]
+squares = [x ** 2 for x in range(10)] # fill the list squares with x where x **2 and the values of x are range(10) = 0 to 9
 print(squares)  # Output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 # EX
 fruits = ['apple', 'banana', 'cherry']
 upper_fruits = [fruit.upper() for fruit in fruits]
 print(upper_fruits)  # Output: ['APPLE', 'BANANA', 'CHERRY']
 # EX
-coordinates = [(x, y) for x in range(3) for y in range(3)]
+coordinates = [(x, y) for x in range(3) for y in range(3)] # for y is nested in for x
 print(coordinates)  # Output: [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
 # EX flat lists
 nested_list = [[1, 2], [3, 4], [5, 6]]
 flat_list = [num for sublist in nested_list for num in sublist]
 print(flat_list)  # Output: [1, 2, 3, 4, 5, 6]
+# Ex with conditions
+numbers = [1, 2, 3, 4, 5]
+even_numbers = [num for num in numbers if num % 2 == 0] # the num is the current element in the list and its only added to the new list if it is even
+print(even_numbers)  # Output: [2, 4]
+
 
 ## dictionary
 # You can create a dictionary by enclosing a comma-separated list of key-value pairs within curly braces {}.
@@ -961,8 +1029,9 @@ except CustomError as e:
 They are defined using curly braces {} or the set() function, 
 and they automatically remove duplicate values. """
 my_set = {1, 2, 3, 4} # using dictionaries and {}
-my_set = set([1, 2, 3, 4]) # using the set() function
+my_set = set([1, 2, 3, 4]) # using the set() function my_set is now a set and will remove duplicates if they are added
 my_set.add(5) # add 5 to the set
+my_set.add(1) # add 1 to the set, but it will be ignored because 1 is already in the set
 my_set.remove(3)  # Raises KeyError if element is not found
 my_set.discard(3)  # Does not raise an error if the element is not found
 # checking set
@@ -1075,9 +1144,30 @@ print(all(empty_list))  # True, because there are no elements, so the condition 
 
 # ! zip function in python
 # The zip() function takes iterables, aggregates them in a tuple, and returns it.
+# if the twi list are of different length then the shorter list will be padded with None
 # syntax: zip(*iterables)
 # EX
 names = ["Alice", "Bob", "Charlie"]
 ages = [25, 30, 35]
 zip_result = zip(names, ages)
 print(list(zip_result))  # [('Alice', 25), ('Bob', 30), ('Charlie', 35)]
+
+# Walrus operator
+# The walrus operator := is a new assignment operator isnted of checking if a variable is defined or not then assign it a value
+# we instead use walrus operator to check if a variable is defined or not and assign it a value all using the same operator ":="
+# EX not using walrus operator
+primary = "Albert"
+backup = ""
+if primary:
+    user = primary
+elif backup:
+    user = backup
+else:
+    user = None
+    
+# using walrus operator
+if user := primary or backup: # user gets the value of primary if it is truthy, otherwise it gets the value of backup if it is truthy if both are falsy then user is None
+    print(f"User logged in: {user}")
+else:
+    print("No user logged in")
+

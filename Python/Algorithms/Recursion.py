@@ -11,6 +11,7 @@ NOTE: there is always a base case that stops the recursion to avoid infinite loo
 * How it works
 recurtion works by a function calling itself inits own definition. The function will keep calling itself until it reaches a base case, 
 definded in that function. once it reches the base case the function calls backtrack one by one going back to the last call and so on until we reach the first call.
+at each recursive call the input to the function i.e the problem must be smaller then the previous call to reach the base case.
 
 * Function call stack
 when a new recurtion call is made it is added to the call stack and when the function returns the call is removed from the call stack.
@@ -125,3 +126,19 @@ Move 1 disk from B to A.
 Move 2 nd disk from B to C.
 Move 1 disk from A to C.
 """
+
+# * fibonacci series
+""" 
+# given n, return the nth number in the fibonacci series
+the fibonacci series is a sequence of numbers where each number is the sum of the two preceding numbers.
+fib series: 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ... we can see any nth term is the sum of the two preceding terms n-1 and n-2
+"""
+
+def fibonacci(n):
+    if n == 1 or n == 2:
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+# test
+fibonacci(10) # output: 55
+# NOTE: fib(n-1) is called before fib(n-2) in every recursive call because fib(n-1) is being called before fib(n-2) once fib(n-1) returns the result to its caller then the caller calls fib(n-2) to be added.

@@ -65,7 +65,7 @@
 - A Strongly Connected Graph (SCG) is a graph where there is a path from any node to any other node for all nodes.
 - A Weakly Connected Graph (WCG) is a graph where there is not a path from every node to every other node meaning you cannot get from node 'x' to node 'y' and vice versa for a certain pair of nodes.
 - a SCG or WGC has to be connected as connectivity dose not apply to disconnected graphs. 
-- if a graph is undirected then its a SCG.
+- if a graph is undirected then its a SCG. or we just say its connected.
 - A directed graph is strongly connected (SCG) if there is a directed path from every node to every other node.
 - If a directed graph does not have such two-way paths for all node pairs but becomes strongly connected when edge directions are ignored, it is weakly connected (WCG).
 - EX1 is a SCG beacuse there is a path from any node to any other node. (its a undirected graph)
@@ -725,7 +725,7 @@ def delete_edge(node1, node2): # takes in two nodes once again the direction of 
 
 # * Creating a method to Delete a node for Adjacency List (by cheking if the node exits we can safely delete it) adjecency nodes must be in format (adjacent node, weight) !!!
 # note again the fomat of the adjacency nodes in the adjacency list of every node is (adjacent node, weight)
-graph_list = {"A": [("B", 4), ("C", 1), ("D", 1)], "B": [("A", 0), ("D", 1), ("E", 1)]} # dictionary to store the adjacency list
+graph_list = {"A": [("B", 4), ("C", 1), ("D", 1)], "B": [("A", 1), ("D", 1), ("E", 1)]} # dictionary to store the adjacency list
 
 def delete_node(node):
   if node not in graph_list:
@@ -943,7 +943,7 @@ Algorithim:
 # NOTE: our visited list will be a set as its more efficient that a list and avoids any checking for duplicates giving cleaner code
 # NOTE: the order of traversal may slightly differ depending on the node we start at
 """
-graph = {"A": ["B", "C"], "B": ["A", "D"],} # adjacency list EX weights are not included in this example but they must be there
+graph_list = {"A": [("B", 4), ("C", 1), ("D", 1)], "B": [("A", 1), ("D", 1), ("E", 1)]} # dictionary to store the adjacency list
 def DFS(start_node, graph): # take in starting node and graph
   if start_node not in graph: # if the starting node is not in the graph return this only checks for user input of start node
     print("Start Node not in graph")
@@ -964,7 +964,7 @@ def DFS(start_node, graph): # take in starting node and graph
 # * using adjacency list (created prevoiusly)
 
 visited = set() # more efficient than visited list
-graph = {"A": ["B", "C", "D"], "B": ["A", "D", "E"], "C": ["A", "D"]} # adjacency list EX #  weights are not included in this example but they must be there
+graph_list = {"A": [("B", 4), ("C", 1), ("D", 1)], "B": [("A", 1), ("D", 1), ("E", 1)]} # dictionary to store the adjacency list
 # recusive function so we declare the set outside the function  so for all recorsive function calls we can use the same set
 def DFS_recursive(start_node, visited, graph): # node is the start node, visited is the visited list, graph is the adjacency list
   if start_node not in graph: # if the starting node is not in the graph return this only checks for user input of start node 
@@ -1002,14 +1002,7 @@ Algorithm:
   but a set is faster for checking membership and avoids duplicates automatically.
 # NOTE: The order of traversal will depend on the graph structure and the order in which adjacent nodes are added to the queue.
 """
-graph = { # adjacency list EX weights are not included in this example but they must be there
-    "A": ["B", "C"],
-    "B": ["A", "D", "E"],
-    "C": ["A", "F"],
-    "D": ["B"],
-    "E": ["B", "F"],
-    "F": ["C", "E"],
-}
+graph_list = {"A": [("B", 4), ("C", 1), ("D", 1)], "B": [("A", 1), ("D", 1), ("E", 1)]} # dictionary to store the adjacency list
 
 def BFS(start_node, graph):  # takes the starting node and the graph as input
     if start_node not in graph:  # check if the starting node exists in the graph
@@ -1032,11 +1025,7 @@ def BFS(start_node, graph):  # takes the starting node and the graph as input
 # * Using adjacency list (created previously)
 
 visited = set()  # visited set for recursive implementation
-graph = { # adjacency list EX weights are not included in this example but they must be there
-    "A": ["B", "C", "D"],
-    "B": ["A", "D", "E"],
-    "C": ["A", "D"],
-}  # adjacency list example
+graph_list = {"A": [("B", 4), ("C", 1), ("D", 1)], "B": [("A", 1), ("D", 1), ("E", 1)]} # dictionary to store the adjacency list
 
 # Recursive function no start node is passed as it is assumed to be the first node in the graph
 # we can even use this approch in the prevoius implementation of BFS and DFS by specifying the start node in the function call as graph[0] or any other node by index
@@ -1062,4 +1051,109 @@ Key Differences Between BFS and DFS:
 3) BFS is better for finding the shortest path in unweighted graphs because it guarantees 
    the shortest distance to a node when the first time it is visited.
 4) BFS may use more memory than DFS because it stores all nodes at the current level in the queue.
+"""
+
+# ! Checking if a graph is connected or Disconnected using DFS
+# reminder: a disconnected graph is a graph where there is no path between any two nodes and a connected graph is a graph where there is a path between any two nodes
+""" 
+# idea:
+a dfs algorithm stops once it has visited all nodes reachable from the start node this means if a part of the graph is disconnected
+then it is unreachable from the start node using DFS as the final node wont have any adjacent nodes it can visit
+it will always backtrack to the start node where we will finish the DFS but the other diconnected part of the graph will not be visited
+
+# implementation:
+so all we have to do is compare the nodes visited by DFS with the total number of nodes in the graph if they are equal then the graph is connected
+otherwise it is disconnected
+to check this in python we get the result from the DFS's visited set which holds all the nodes the algorithm has visited
+then compare the length of the result with the total number of nodes in the graph we get this total number from the keys of the graph dictionary
+where the total number of keys in the adjacency list is the total number of nodes in the graph
+
+Alternative: loop over all items in the graph at each item see if its in the visited set of DFS serch you just did, this is more complex.
+"""
+# * assume that we called a DFS search on the graph, and visited is the set of nodes that were visited which is avalible outside the function (just like the ex for DFS see ex)
+def is_connected(graph, visited): # takes in graph and a set of visited nodes which is for DFS search
+    # Pick the first node in the graph NOTE: since dictionary is unordered we cant use index 0 of graph and must use next(iter(graph))
+    start_node = next(iter(graph)) 
+    DFS_recursive(start_node, visited, graph) # perform DFS from the start node while using the visited set and graph we passed in
+
+    return len(visited) == len(graph) # return True if all nodes were visited, False otherwise
+  
+# EX: f
+# graph_list = {"A": [("B", 4), ("C", 1), ("D", 1)], "B": [("A", 0), ("D", 1), ("E", 1)]} # dictionary to store the adjacency list
+# visited = set()  # visited set for recursive implementation
+# is_connected(graph_list, visited) # uses graph_list as the graph and visited as the visited set
+# output: True
+
+""" 
+Ex graph disconnected:
+      A        B
+      |        | \ 
+      |        |  E
+      |        | 
+      C        D
+if i start at A or C DFS will only visit A and C not the other disconnected part of the graph
+if i start at B, D or E i will visit B,D,E but not A and C which is the disconnected part of the graph
+"""
+
+# ! how to traverse a disconnected graph using DFS
+""" 
+From the last EX graph in checking if disconnected we know that we will only visit the nodes in the part of the graph we start at
+and the disconnected part of the graph will not be visited
+
+so we can say:
+to visit all the nodes in a disconnected graph we need to call DFS on nodes in the disconnected part of the graph
+this means we call DFS more than once starting at different nodes such that we call DFS on every part of the graph
+in the EX above we can all DFS on A or C and then B, D, E or vise versa.
+
+But how to know that we have visited all nodes in the graph and that there are some nodes that are not visited by DFS
+approch:
+1) loop over the elements of the graph 
+2) if the current element is not in the visited set call DFS on it after this the visit set will have all the nodes in the graph visited by that DFS call
+3) we repete step 2 for the next element and so on until we have visited all the nodes in the graph
+
+this works beacuse we are checking if every node in the graph has been visited by DFS if it hasent we call DFS on it and add its node to the visited set
+by doing so we visit that node and all node connected to it meaning its part of the graph is now visited
+when we are looping and find a node in the graph that is not in the visited set we call DFS on it and add it to the visited set
+once we finish the loop we know that we have visited all the nodes in the graph because we checked if every node in the graph has been visited and if not we called DFS visiting that node
+"""
+
+def traverse_graph_disconnected(graph, visited): # takes in graph and a set of visited nodes which is for DFS search
+  for node in list(graph): # loop over all nodes in the graph we use list(graph) to convert the dictionary keys to a list so we can loop over it
+    if node not in visited: # if the current node is not in the visited set
+      print("next disconnected part of graph:")
+      DFS_recursive(node, visited, graph) # call DFS on the current node and add DFS will add all nodes in the graph visited by DFS to the visited set
+# EX:
+# graph_list = { "A": [("B", 4), ("C", 1)],  # Component 1
+#   "B": [("A", 4)], "C": [("A", 1)], "D": [("E", 1)],  # Component 2 (Disconnected)
+#   "E": [("D", 1)] }
+# visited = set()  # visited set for recursive implementation
+# traverse_graph_disconnected(graph_list, visited) # uses graph_list as the graph and visited as the visited set
+# output: 
+"""
+Next disconnected part of graph:
+A
+B
+C
+Next disconnected part of graph:
+D
+E 
+"""
+
+# ! How to check if directed graph is weekly connected or Strongly connected using DFS
+# weekly connected: all nodes can be reached from any other node in the graph
+# strongly connected: all nodes can reach each other from any other node in the graph
+""" 
+algorithm:
+1) call DFS on graph if all nodes are in visited set then goto step 2 as there is a possiblity its strongly connected, else the graph is weekly connected
+2) Reverse the direction of all the edges in the graph
+3) call DFS again if all nodes are in visited set then the graph is strongly connected else the graph is weekly connected
+
+idea for SCG: if there is a path from start node to every other node then there is a path from every other node to start node
+
+how to impliment steps:
+1) just like before we call DFS on graph and cehck if its length is equal to the number of nodes in the graph in visited set
+2) to reverse the graph, in the add node and add edge method add the node like before but reverse the edge direction in a copy graph so after graph[n1].append((n2, weight)) we say graph2[n2].append(n1, weight)
+3) call DFS again but on the copy graph witch add edges in the reverse direction, and we call DFS on the copy graph if all nodes are in visited set i.e the length of visited set is equal to the number of nodes in the graph 
+
+- NOTE: flow control in a way so that step 1 is done before step 3 and excute step 2 only if step 1 passes (see algorithm)
 """
