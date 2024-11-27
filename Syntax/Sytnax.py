@@ -889,7 +889,7 @@ print(squares)  # Output: [1, 4, 9, 16, 25]
 
 # print(new_arr)
 
-# list comprehention ( a way to make a list with loops and conditions inside these help build the list)
+# ! list comprehention ( a way to make a list with loops and conditions inside these help build the list)
 # syntax general: new_list = [expression for item in iterable if condition]
 # EX 
 squares = [x ** 2 for x in range(10)] # fill the list squares with x where x **2 and the values of x are range(10) = 0 to 9
@@ -910,8 +910,39 @@ numbers = [1, 2, 3, 4, 5]
 even_numbers = [num for num in numbers if num % 2 == 0] # the num is the current element in the list and its only added to the new list if it is even
 print(even_numbers)  # Output: [2, 4]
 
+# ! list splicing List slicing in Python allows you to extract portions of a list or sequence using a specific syntax:
+# syntax general: list[start:stop:step]
+""" 
+start: The index to start slicing from (inclusive). Default is 0.
+stop: The index to stop slicing (exclusive). Default is the end of the list.
+step: The step size or stride between indices. Default is 1.
+"""
+# EX:
+my_list = [0, 1, 2, 3, 4, 5]
+sub_list = my_list[1:4]  # Extract elements at indices 1, 2, 3
+print(sub_list)  # Output: [1, 2, 3]
+# EX
+my_list = [0, 1, 2, 3, 4, 5]
+sub_list = my_list[0:6:2]  # Extract every 2nd element
+print(sub_list)  # Output: [0, 2, 4]
+# EX:
+my_list = [0, 1, 2, 3, 4, 5]
+reversed_list = my_list[::-1]  # Reverse the list
+print(reversed_list)  # Output: [5, 4, 3, 2, 1, 0]
+# EX
+my_list = [0, 1, 2, 3, 4, 5]
+print(my_list[:3])  # Output: [0, 1, 2] (elements from start to index 2)
+print(my_list[3:])  # Output: [3, 4, 5] (elements from index 3 to end)
+#  EX
+my_list = [0, 1, 2, 3, 4, 5]
+sub_list = my_list[-4:-1]  # Extract elements from -4 to -2
+print(sub_list)  # Output: [2, 3, 4]
+# EX:
+my_list = [0, 1, 2, 3, 4, 5]
+copy_list = my_list[:]  # Copy the entire list
+print(copy_list)  # Output: [0, 1, 2, 3, 4, 5]
 
-## dictionary
+## ! dictionary
 # You can create a dictionary by enclosing a comma-separated list of key-value pairs within curly braces {}.
 #  Each key is unique and maps to a corresponding value. Keys and values can be of various data types.  
 # Creating a dictionary
@@ -1069,6 +1100,23 @@ a, b = 1, 2
 def get_coordinates():
     return 10, 20
 x, y = get_coordinates() # x = 10 and y = 20
+
+
+# ! list unpacking
+# You can unpack a list into multiple variables you can use the * operator to make that variable a list 
+# EX
+a, b, c = [1, 2, 3]
+print(a, b, c)  # Output: 1 2 3
+# EX
+my_list = [1, 2, 3]
+a, b, c = my_list
+print(a, b, c)  # Output: 1 2 3
+# EX
+my_list = [1, 2, 3]
+a, *b, c = my_list
+print(a, b, c)  # Output: 1 [2] 3
+# EX
+
 
 # ! global keyword in python
 # a global variable is a variable that is defined outside of a function or a class and can be accessed from anywhere in the program
