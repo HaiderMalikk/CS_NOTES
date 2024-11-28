@@ -234,6 +234,11 @@ it dose not take into account that the list size has decreased and 2 is where 1 
 my_tuple = (1, 2, 3)
 my_list = list(my_tuple)  # [1, 2, 3] - Convert the tuple to a list
 
+# * way to make a not iterable like int into a list 
+arr1 = [1, 2, 3]
+arr2 = [5, 6,]
+fill = 4
+arr3 = arr1 + [fill] * + arr2 # this will make an array [1, 2, 3, 4, 5, 6] we have to cast the int into a list using brackets to add it to other lists
 
 ## Functions
 
@@ -1116,7 +1121,7 @@ my_list = [1, 2, 3]
 a, *b, c = my_list
 print(a, b, c)  # Output: 1 [2] 3
 # EX
-
+    
 
 # ! global keyword in python
 # a global variable is a variable that is defined outside of a function or a class and can be accessed from anywhere in the program
