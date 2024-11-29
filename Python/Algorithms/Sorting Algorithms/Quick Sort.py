@@ -63,6 +63,7 @@ Now combine all sorted subarrays:
 
 Final Sorted Array: [1, 1, 2, 3, 6, 8, 10]
 
+NOTE: to sort is decending order we can do: right + pivot + left
 """
 ## ! QUICK SORT
 def QuickSort(array): # takes in an array to sort 
@@ -85,10 +86,11 @@ array = [3, 6, 8, 10, 1, 2, 1] # initial array
 arr_sorted = QuickSort(array) # call the quicksort function on the array
 print(arr_sorted) # print the sorted array = [1, 1, 2, 3, 6, 8, 10]
 
+# ! Time Complexity
 # time complexity avg: O(n log(n)) 
 # time complexity worst: O(n^2) # when divided into a bad partition with too many elements on one side
 # time complexity best: O(n log(n)) # when divided into a good partition with roughly equal elements on each side
-
+# ! Space Complexity
 # space complexity avg: O(log(n))
 # space complexity worst: O(n) # when the recursion depth is n 
 # space complexity best: O(log(n))
