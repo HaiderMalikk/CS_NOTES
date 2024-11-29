@@ -155,9 +155,17 @@ word = "Python"
 for letter in word:
     print(letter)
 
-# using for loop with range range just creates a list of num from 0 if no start given till the number given "5 here"
-for i in range(5): # will only go till 4 as index stops one short of num given in range 
+# the range () function is used to create a sequence of numbers to iterate over. range(5) means loop 5 times
+# but since i starts at 0 going 5 times means 0,1,2,3,4 which is what we want as arrays are 0 indexed meaning looping 5 times 
+# over a array of length 5 is = looping over its indexes 0,1,2,3,4 thats still looping 5 times 
+# in this ex we print the numbers from 0 to 4
+for i in range(5):
     print(i)
+# EX array, here length is 5 so it will loop over 5 times but as i starts at 0 going 5 times means we print arr at index i at i = 0,1,2,3,4 (still 5 iterations, range(5))
+numbers = [1, 2, 3, 4, 5]
+for i in range(len(numbers)):
+    print(numbers[i])
+
 
 # iterating over a dictionarys keys or items 
 person = {"name": "Alice", "age": 30}
