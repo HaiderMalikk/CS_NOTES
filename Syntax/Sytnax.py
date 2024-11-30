@@ -888,7 +888,7 @@ squares = list(map(lambda x: x ** 2, numbers))
 print(squares)  # Output: [1, 4, 9, 16, 25]
 
 # other functions to use with list
-# * index: used to get the index of a specific element in the list, format listname.index(element)
+# * index: used to get the index of a specific element in the list, format listname.index(element), RETURNS FIRST OCCURENCE OF VALUE
 # * count: used to count the number of occurrences of a specific element in the list , format listname.count(element)
 # * insert: used to insert a specific element at a specific index in the list , format listname.insert(index, element)
 # * remove: used to remove the first occurrence of a specific element in the list , format listname.remove(element)
