@@ -967,8 +967,8 @@ reversed_list = my_list[::-1]  # Reverse the list
 print(reversed_list)  # Output: [5, 4, 3, 2, 1, 0]
 # EX
 my_list = [0, 1, 2, 3, 4, 5]
-print(my_list[:3])  # Output: [0, 1, 2] (elements from start to index 2)
-print(my_list[3:])  # Output: [3, 4, 5] (elements from index 3 to end)
+print(my_list[:3])  # Output: [0, 1, 2] (elements from start to index 2 here the index 3 is not included)
+print(my_list[3:])  # Output: [3, 4, 5] (elements from index 3 to end here the index 3 is included)
 #  EX
 my_list = [0, 1, 2, 3, 4, 5]
 sub_list = my_list[-4:-1]  # Extract elements from -4 to -2
