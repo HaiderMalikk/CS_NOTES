@@ -159,6 +159,7 @@ for letter in word:
 # but since i starts at 0 going 5 times means 0,1,2,3,4 which is what we want as arrays are 0 indexed meaning looping 5 times 
 # over a array of length 5 is = looping over its indexes 0,1,2,3,4 thats still looping 5 times 
 # in this ex we print the numbers from 0 to 4
+# so in short we loop over the array 5 times but the value of i is 0,1,2,3,4 as we start at 0
 for i in range(5):
     print(i)
 # EX array, here length is 5 so it will loop over 5 times but as i starts at 0 going 5 times means we print arr at index i at i = 0,1,2,3,4 (still 5 iterations, range(5))

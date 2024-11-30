@@ -2,7 +2,7 @@
 """ 
 What is Bubble Sort?
 Bubble Sort is a simple sorting algorithm that repeatedly compares adjacent elements and swaps them if they are in the wrong order.
-It "bubbles" the largest (or smallest) element to its correct position in each pass.
+It "bubbles" the largest (or smallest) element to its correct position in each pass. pass = one iteration over the entire list
 
 Steps:
 Start from the first element.
@@ -75,6 +75,7 @@ def bubble_sort(arr):
     # Loop through the entire array n times, the max possible number of passes is n-1 for length n array but we need to loop n times to make up for the second loops range
     # in the second loop we go upto n-i which at least has to be 1 in the last pass as the smallest array we can compare is 2 elements 0,1 
     # since the i starts at 0 and the len = n at 1 this means we actually only loop over from 1 to n times which is the same as 0 to n-1 times
+    # so in short the end of the range here n, is exclusive meaning we go upto n-1 and n is exluded because range starts from 0 not 1
     for i in range(n): 
         swapped = False # Track if a swap is made, used to break out of the loop by checking if no swap is made
         # this loop starts from 0 but goes until n-i-1 element, n-i ensures we ignore the last element after each pass (outer loop)
