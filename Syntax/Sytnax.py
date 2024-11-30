@@ -167,6 +167,17 @@ numbers = [1, 2, 3, 4, 5]
 for i in range(len(numbers)):
     print(numbers[i])
 
+# * why use range:
+""" 
+in a normal for loop: for i in [1, 2, 3, 4, 5]: print(i)
+i at each iteration is the element so if we wanted the index of the element i we would need to track it our self with a counter 
+# dont use index function as that returns the first occurance of the element
+insted we can use range() function, for i in range(5): print(i)
+i at each iteration is the index of the element as it starts at 0 and goes to 4 (5 is not included as we start at 0)
+now the loop goes over 5 times = len of array, and since 5 is discluded we get 0,1,2,3,4 which is the indexes of the array
+so now we can get the index of any element in the array with i and teh value at i using numbers[i].
+"""
+
 
 # iterating over a dictionarys keys or items 
 person = {"name": "Alice", "age": 30}
