@@ -855,7 +855,8 @@ print(max_square)  # Output: 9
 # Filter even numbers
 numbers = [1, 2, 3, 4, 5, 6]
 even_numbers = filter(lambda x: x % 2 == 0, numbers)
-print(even_numbers)  # Output: [2, 4, 6]
+print(list(even_numbers))  # Output: [2, 4, 6], used list function to convert it to a list
+# NOTE: filter returns a filter object you must convert it to a list or other iterable to see the results, here i used list function to convert it to a list
 
 # NOTE: if you pass a matrix into a max or min function it will add up all the elements in teh subarray and return the max or min of those sums
 
@@ -886,6 +887,16 @@ numbers = [1, 2, 3, 4, 5]
 squares = list(map(lambda x: x ** 2, numbers))
 print(squares)  # Output: [1, 4, 9, 16, 25]
 
+# other functions to use with list
+# * index: used to get the index of a specific element in the list, format listname.index(element)
+# * count: used to count the number of occurrences of a specific element in the list , format listname.count(element)
+# * insert: used to insert a specific element at a specific index in the list , format listname.insert(index, element)
+# * remove: used to remove the first occurrence of a specific element in the list , format listname.remove(element)
+# * pop: used to remove and return the element at a specific index in the list , format listname.pop(index)
+# * reverse: used to reverse the order of the elements in the list , format listname.reverse
+# * append: used to add a specific element to the end of the list , format listname.append(element)
+# * extend: used to add multiple elements to the end of the list , format listname.extend(iterable
+# * clear: used to remove all elements from the list , format listname.clear()
 
 # # list comprihention
 # arr = [[1, 2, 3], [1, 3, 2], [3, 2, 1]]
