@@ -143,6 +143,23 @@ def fibonacci(n):
 fibonacci(10) # output: 55
 # NOTE: fib(n-1) is called before fib(n-2) in every recursive call because fib(n-1) is being called before fib(n-2) once fib(n-1) returns the result to its caller then the caller calls fib(n-2) to be added.
 
+# * note for recurtion in classes
+# Just like we use slf.var to access class variables in methods when calling a function in a class we use self.function_name
+# palindrome
+""" 
+here we check if the first and last characters of the string are the same and if they are we call the function recursively on the substring 
+from second character to second to last character of the string once we reach a length of 1 or 0 we return true
+"""
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        s = ''.join(c for c in s if c.isalpha() or c.isdigit()).lower() # remove non-alphanumeric characters and lowercase all characters
+
+        if len(s) == 0 or len(s) == 1:
+            return True
+        
+        return s[0] == s[-1] and self.isPalindrome(s[1:len(s)-1]) # self.isPalindrome is the recursive call we must use self
+        
+
 # ! tail recursion
 """ 
 In tail recursion, the recursive call is the last operation in the function. This means that no further computation is required after the recursive call returns.

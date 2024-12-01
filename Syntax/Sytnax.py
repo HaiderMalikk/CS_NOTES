@@ -374,6 +374,10 @@ print(obj.greet())  # Output: Hello, world!
 str1 = 'Hello, World!'
 str2 = "Python is awesome!"
 
+# * a string is a list of characters so we can access them like a list
+print(str1[0])  # Output: H
+print(str1[7])  # Output: W
+
 full_string = f"{str1} {str2}" # or full_string = str1 + " " + str2
 print(full_string)  # Output: "Hello, World! Python is awesome!"
     
@@ -440,6 +444,29 @@ print(new_string)  # Output: "Hello, Python!"
 original_string = "This is a test. This test is important."
 new_string = original_string.replace("test", "example")
 print(new_string)  # Output: "This is a example. This example is important."
+
+# Substrings
+# since strings are list of characters, you can use slicing to make substrings
+# syntax str[start:stop:step] # same as lists
+text = "Hello, World!"
+
+# Extract a substring
+print(text[0:5])  # Output: "Hello" (characters from index 0 to 4)
+# Omit the start index
+print(text[:5])  # Output: "Hello" (from the beginning to index 4)
+# Omit the stop index
+print(text[7:])  # Output: "World!" (from index 7 to the end)
+# Extract the last characters
+print(text[-6:])  # Output: "World!" (last 6 characters)
+# Extract a single character
+print(text[1])  # Output: "e" (character at index 1)
+
+text = "abcdefghi"
+print(text[::3])  # Output: "adg"
+text = "abcdefghi"
+print(text[::-2])  # Output: "igeca", negative step for reversing and skipping every 2nd character
+text = "abcdefghi"
+print(text[1::2])  # Output: "bdfh" starts at index 1, and takes every 2nd character the end defaults to the end of the string
 
 # reverse a array python 
 
@@ -871,7 +898,7 @@ print(list(even_numbers))  # Output: [2, 4, 6], used list function to convert it
 
 # NOTE: if you pass a matrix into a max or min function it will add up all the elements in teh subarray and return the max or min of those sums
 
-# Using filter on string:
+# * Using filter on string:
 s = "Hello World!"
 s = (filter(str.isalpha, s)) # remove all non alpha characters from s
 print(list(s)) # Output: ['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']
@@ -883,6 +910,11 @@ s = "Hello World!"
 s = "".join((filter(str.isalpha, s))) # remove all non alpha characters from s
 print(s) # Output: "HelloWorld"
 
+# * using list comprehension inside a filter/ inside a tuple
+s = "A man, a plan, a canal: Panama" # say we want to remove only all the non alpha characters and make it lower case, deleting the spaces, we still keep the numbers
+# here we loop over the string and if the character is alpha or digit we add it to the new string s
+# then this new filtered string is lowercased using .lower and we use .join to join each character in the string by a empty space
+s = ''.join(c for c in s if c.isalpha() or c.isdigit()).lower()
 
 # ! sorted vs sort and using keys with sort (key is just a argument that is passed into the function stating how to do the task i.e based on length square etc of the iteams in the list insted of there original order or value)
 # sort is used to sort a list in place (i.e it changes the list) and returns None
