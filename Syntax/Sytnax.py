@@ -871,6 +871,19 @@ print(list(even_numbers))  # Output: [2, 4, 6], used list function to convert it
 
 # NOTE: if you pass a matrix into a max or min function it will add up all the elements in teh subarray and return the max or min of those sums
 
+# Using filter on string:
+s = "Hello World!"
+s = (filter(str.isalpha, s)) # remove all non alpha characters from s
+print(list(s)) # Output: ['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']
+# * we can see that we still need to convert s to a list to see the results as filter returns a filter object and a cast to str(s) wont work
+
+# * to solve this use .join to joing the individual elements(characters) in the string so that the filter function returns a string
+# * NOTE: the .joinh joins each character in the string by some string and so we cant preserve the original string's spaces
+s = "Hello World!"
+s = "".join((filter(str.isalpha, s))) # remove all non alpha characters from s
+print(s) # Output: "HelloWorld"
+
+
 # ! sorted vs sort and using keys with sort (key is just a argument that is passed into the function stating how to do the task i.e based on length square etc of the iteams in the list insted of there original order or value)
 # sort is used to sort a list in place (i.e it changes the list) and returns None
 numbers = [3, 1, 4, 1, 5]
