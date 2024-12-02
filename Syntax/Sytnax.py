@@ -130,6 +130,7 @@ while count <= 5: # loop will run until this statement is false
     break # this will break the while loop scince the while loop only had 1 chance to run and then broke the loop will only print 1
     # Increment the count by 1 in each iteration
     # once count is 6 the loop breaks scince the loop breaks it cannot run so 6 will not be printed 
+    
 
 #! for loops !!
 #In Python, a for loop is a control structure that is used to iterate over a sequence 
@@ -206,6 +207,19 @@ for i in range(1, 6):
 # Output:
 # 1
 # 2
+
+# nested loop with break
+# in a nested loop using break will only break the loop that the break is in
+# lets brek the inner loop using break
+matrix = [[1,2,3],[4,5,6]]
+for i in matrix:
+    for j in i:
+        if j == 2:
+            break
+        print(j)
+# output: 1,4,5,6
+# Explanation: after 1 j = 2 and we break out the inner loop only, the outer loop continues to the next iteration for the second row of the matrix.
+# and the inner loop for the second row prints 4,5,6
 
 for i in range(1, 6):
     if i == 3:
