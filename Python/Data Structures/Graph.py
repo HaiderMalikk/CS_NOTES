@@ -1183,3 +1183,402 @@ A -- B
 C
 This tree connects all the nodes (A, B, C, D) with 3 edges, and no cycles are present.
 """
+
+# !  Shortest Path Algorithms
+
+# ! Bellman-Ford Algorithm
+""" 
+Bellman-Ford Algorithm
+The Bellman-Ford algorithm is used to find the shortest path from a single source node to all other nodes in a weighted graph, including graphs with negative weight edges. However, it does not work well if the graph contains negative weight cycles (cycles whose total weight is negative).
+
+Key Features:
+
+Can handle negative weights.
+Slower than Dijkstra's algorithm (O(V * E) time complexity, where V is the number of vertices and E is the number of edges).
+Detects negative weight cycles in the graph.
+Works by relaxing all edges V - 1 times, where V is the number of vertices.
+Steps of the Algorithm:
+
+Initialize:
+Set the distance to the source node as 0 and all other node distances to infinity (inf).
+Relax all edges:
+For each edge in the graph, if the current distance to the destination node is greater than the distance to the source node plus the weight of the edge, update the distance.
+Repeat this process for all edges V - 1 times.
+Check for negative weight cycles:
+After V - 1 iterations, perform one more iteration through all edges. If any distance can be updated, it means there is a negative weight cycle.
+Time Complexity: O(V * E)
+
+ bellman_ford method:
+
+Step 1: We initialize the distances dictionary to hold the shortest distance from the source node to all other nodes. Initially, the source nodes distance is set to 0, and all other nodes are set to infinity (float('inf')).
+Step 2: We perform V-1 iterations (where V is the number of vertices). In each iteration, we go through every edge and try to relax it, i.e., update the distance of the destination node if a shorter path is found through the current edge.
+Step 3: After V-1 iterations, we check for negative weight cycles. If any edge can still be relaxed, it means there is a negative cycle in the graph.
+
+bellman_ford method:
+
+Step 1: We initialize the distances dictionary to hold the shortest distance from the source node to all other nodes. Initially, the source nodes distance is set to 0, and all other nodes are set to infinity (float('inf')).
+Step 2: We perform V-1 iterations (where V is the number of vertices). In each iteration, we go through every edge and try to relax it, i.e., update the distance of the destination node if a shorter path is found through the current edge.
+Step 3: After V-1 iterations, we check for negative weight cycles. If any edge can still be relaxed, it means there is a negative cycle in the graph.
+
+EX:
+1 -> 2 (1)
+1 -> 3 (4)
+2 -> 3 (3)
+2 -> 4 (2)
+3 -> 4 (1)
+
+We start from node 1. Initially, all distances are set to infinity except for node 1 which is set to 0.
+We relax the edges and update the distances for each node.
+After V-1 iterations (which is 3 in this case), we check if there are still any relaxable edges to detect negative weight cycles. In this example, there is no negative cycle.
+
+Shortest distances from node 1:
+Node 1: 0
+Node 2: 1
+Node 3: 4
+Node 4: 3
+
+This output shows the shortest distance from node 1 to all other nodes. For example, the shortest path from node 1 to node 3 is via node 2 with a total distance of 2.
+"""
+
+# Code for Bellman-Ford Algorithm (add other methods for graph like dlete node if you want):
+# Dictionary to store the adjacency list of the graph
+graph_list = {}
+
+# Adding a node to the graph
+def add_node(node):
+    if node in graph_list:  # Check if the node already exists
+        print(f"Node {node} already exists in the graph")
+        return
+    else:
+        graph_list[node] = []  # Add the node with an empty list for its edges
+
+# Adding an undirected edge to the graph
+def add_edge_undirected(node1, node2, weight=1):
+    if node1 not in graph_list or node2 not in graph_list:
+        print(f"Node {node1} or {node2} does not exist in the graph")
+        return
+    else:
+        graph_list[node1].append((node2, weight))  # Add an edge from node1 to node2
+        graph_list[node2].append((node1, weight))  # Add an edge from node2 to node1 (undirected)
+
+# Bellman-Ford Algorithm
+def bellman_ford(start):
+    """
+    Function to find the shortest distances from a given start node to all other nodes in a graph using the Bellman-Ford algorithm.
+    
+    Arguments: 
+    start (int): The start node from which the shortest distances are calculated.
+    
+    Returns:
+    A dictionary with the shortest distances from the start node to all other nodes.
+    """
+    # Step 1: Initialize distances
+    distances = {node: float('inf') for node in graph_list}  # Start with all distances as infinity
+    distances[start] = 0  # Distance to the source node is 0
+
+    # Step 2: Relax all edges V-1 times (where V is the number of vertices)
+    for _ in range(len(graph_list) - 1):  # Perform relaxation for V-1 times
+        for node in graph_list:
+            for neighbor, weight in graph_list[node]:
+                if distances[node] + weight < distances[neighbor]:  # Relax the edge if a shorter path is found
+                    distances[neighbor] = distances[node] + weight
+
+    # Step 3: Check for negative-weight cycles
+    for node in graph_list:
+        for neighbor, weight in graph_list[node]:
+            if distances[node] + weight < distances[neighbor]:  # Negative cycle detected
+                print("Graph contains a negative-weight cycle!")
+                return None  # Return None if a negative-weight cycle is found
+
+    return distances  # Return the shortest distances from the start node to all other nodes
+
+# Example usage:
+# Create the graph and add nodes
+add_node(1)
+add_node(2)
+add_node(3)
+add_node(4)
+
+# Add edges (directed or undirected)
+add_edge_undirected(1, 2, 1)
+add_edge_undirected(1, 3, 4)
+add_edge_undirected(2, 3, 3)
+add_edge_undirected(2, 4, 2)
+add_edge_undirected(3, 4, 1)
+
+# Graph:
+""" 
+   1
+1 -- 2
+|   /|
+|4 /3|2
+|/   |
+3 -- 4
+  1
+"""
+
+# Apply Bellman-Ford starting from node 1
+distances = bellman_ford(1)
+
+if distances:
+    print("\nShortest distances from node 1:")
+    for node, dist in distances.items():
+        print(f"Node {node}: {dist}")
+
+
+# ! Dijkstra's Algorithm
+""" 
+Dijkstra's Algorithm:
+Dijkstra's algorithm is a greedy algorithm that finds the shortest path from a source node to all other nodes in a weighted graph
+(where all edge weights are non-negative). It works by iteratively selecting the node with the smallest known distance, 
+updating the distances of its neighbors, and repeating the process.
+
+Explanation:
+Graph Setup: Nodes and edges are added to the graph using add_node and add_edge_undirected functions. The graph is represented as an adjacency list, where each node is a key, and its neighbors are stored in a list of tuples (neighbor, weight).
+Dijkstra's Algorithm:
+Initialization: The distances dictionary is initialized with all distances set to infinity (float('inf')), except for the source node, which has a distance of 0.
+Priority Queue: A priority queue (pq) is used to store nodes and their current shortest distance. This ensures that we always process the node with the smallest known distance next.
+Relaxation: For each node, the algorithm checks its neighbors. If a shorter path to a neighbor is found, the distance is updated, and the neighbor is added to the queue.
+Termination: The algorithm terminates when all nodes are processed.
+Output: After running the algorithm, it prints the shortest distances from the source node to all other nodes.
+
+
+EX:
+1 -> 2 (1)
+1 -> 3 (4)
+2 -> 3 (3)
+2 -> 4 (2)
+3 -> 4 (1)
+
+Shortest paths from node 1:
+Node 1: 0
+Node 2: 1
+Node 3: 4
+Node 4: 3
+"""
+# Code for Dijkstra's Algorithm 
+import heapq  # heapq is used to implement a priority queue
+
+# Dictionary to store the adjacency list
+graph_list = {}
+
+def add_node(node):
+    if node in graph_list:
+        print(f"Node {node} already exists in the graph.")
+        return
+    else:
+        graph_list[node] = []
+
+def add_edge_undirected(node1, node2, weight=1):
+    if node1 not in graph_list or node2 not in graph_list:
+        print(f"Node {node1} or {node2} does not exist in the graph.")
+        return
+    else:
+        graph_list[node1].append((node2, weight))
+        graph_list[node2].append((node1, weight))
+
+def dijkstra(source):
+    # Step 1: Initialize distances and priority queue
+    distances = {node: float('inf') for node in graph_list}  # set all distances to infinity initially
+    distances[source] = 0  # distance from source to itself is 0
+    pq = [(0, source)]  # priority queue to store (distance, node)
+
+    while pq:
+        current_distance, current_node = heapq.heappop(pq)  # Get the node with the smallest distance
+
+        # Step 2: If the current node's distance is greater than the known shortest distance, skip it
+        if current_distance > distances[current_node]:
+            continue
+
+        # Step 3: Update the distances of the neighbors
+        for neighbor, weight in graph_list[current_node]:
+            distance = current_distance + weight  # calculate the new distance to the neighbor
+
+            # Step 4: If the new distance is smaller, update the distance and add the neighbor to the queue
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(pq, (distance, neighbor))
+
+    return distances
+
+# Create the graph and add nodes
+add_node(1)
+add_node(2)
+add_node(3)
+add_node(4)
+
+# Add edges (undirected and weighted)
+add_edge_undirected(1, 2, 1)
+add_edge_undirected(1, 3, 4)
+add_edge_undirected(2, 3, 3)
+add_edge_undirected(2, 4, 2)
+add_edge_undirected(3, 4, 1)
+
+# Graph:
+""" 
+   1
+1 -- 2
+|   /|
+|4 /3|2
+|/   |
+3 -- 4
+  1
+"""
+
+# Run Dijkstra's algorithm from node 1
+shortest_paths = dijkstra(1)
+
+# Output the shortest paths
+print("\nShortest paths from node 1:")
+for node, dist in shortest_paths.items():
+    print(f"Node {node}: {dist}")
+
+# ! A* Algorithm
+""" 
+The A (A-star)* algorithm is a popular pathfinding and graph traversal algorithm, used extensively in many applications, 
+such as GPS navigation and game development. It combines the advantages of both Dijkstra's Algorithm and Greedy Best-First Search.
+
+Dijkstras Algorithm: Guarantees the shortest path by exploring all possible paths.
+Greedy Best-First Search: Prioritizes nodes based on a heuristic function, exploring paths that are likely to lead to the destination faster.
+The A* algorithm uses a heuristic function (h(n)) to estimate the cost from the current node to the goal. The total cost to reach a node n is given by:
+
+f(n)=g(n)+h(n)
+Where:
+g(n) is the cost from the start node to n (same as in Dijkstra's).
+h(n) is the estimated cost from n to the goal (heuristic).
+The A* algorithm aims to expand the node with the smallest value of f(n).
+
+Here's how you can implement the A* algorithm using the graph setup from the file
+
+Explanation:
+Graph Setup: The graph is set up using the same add_node and add_edge_undirected functions as before. We represent the graph as an adjacency list where each node points to its neighbors with the associated edge weight.
+A Algorithm*:
+Priority Queue: The open list is a priority queue (min-heap) that stores nodes to be explored, sorted by their total cost (f(n) = g(n) + h(n)).
+g(n): The actual cost from the start node to the current node.
+h(n): The heuristic function that estimates the cost from the current node to the goal.
+Path Reconstruction: When the goal node is reached, we reconstruct the path by backtracking from the goal to the start node using the came_from dictionary.
+Heuristic Function: A simple heuristic is used in this example, where we manually assign heuristic values (just an estimation of the distance to the goal).
+Example Graph: The graph contains nodes 1, 2, 3, and 4, with weighted undirected edges between them.
+
+Ex output:
+Path: [1, 2, 4]
+Total Cost: 3
+
+Explanation of Output:
+Path: The shortest path found by the A* algorithm from node 1 to node 4 is [1, 2, 4].
+Total Cost: The total cost to reach node 4 from node 1 is 3.
+Notes:
+The heuristic function is critical in guiding the search in A*. In this case, the heuristic is simple (just an estimate of the distance to the goal), but in real applications, you can define more sophisticated heuristics.
+A* guarantees an optimal solution if the heuristic function is admissible (i.e., it never overestimates the true cost to reach the goal).
+"""
+import heapq  # Used for implementing the priority queue
+
+# Dictionary to store the adjacency list of the graph
+graph_list = {}
+
+def add_node(node):
+    if node in graph_list:
+        print(f"Node {node} already exists in the graph.")
+        return
+    else:
+        graph_list[node] = []
+
+def add_edge_undirected(node1, node2, weight=1):
+    if node1 not in graph_list or node2 not in graph_list:
+        print(f"Node {node1} or {node2} does not exist in the graph.")
+        return
+    else:
+        graph_list[node1].append((node2, weight))
+        graph_list[node2].append((node1, weight))
+
+def a_star(start, goal, heuristic):
+    """
+    Implements the A* (A-star) algorithm to find the shortest path between start and goal nodes.
+    
+    Args:
+    start (int): The starting node for the pathfinding.
+    goal (int): The goal node.
+    heuristic (dict): A dictionary that contains the heuristic values for each node (estimated cost to the goal).
+    
+    Returns:
+    tuple: The shortest path and its cost.
+    """
+    # Priority queue (min-heap) to store nodes to be processed with their f(n) value
+    open_list = []
+    heapq.heappush(open_list, (0 + heuristic[start], start))  # (f(n), node)
+    
+    # To track the cost from start to each node (g(n))
+    g_costs = {node: float('inf') for node in graph_list}
+    g_costs[start] = 0  # Starting node has zero cost
+    
+    # To track the best path
+    came_from = {}
+    
+    while open_list:
+        _, current_node = heapq.heappop(open_list)  # Get the node with the lowest f(n)
+        
+        if current_node == goal:
+            # Reconstruct the path
+            path = []
+            while current_node in came_from:
+                path.append(current_node)
+                current_node = came_from[current_node]
+            path.append(start)
+            path.reverse()
+            return path, g_costs[goal]
+        
+        # Explore neighbors
+        for neighbor, weight in graph_list[current_node]:
+            tentative_g_cost = g_costs[current_node] + weight
+            
+            if tentative_g_cost < g_costs[neighbor]:
+                came_from[neighbor] = current_node
+                g_costs[neighbor] = tentative_g_cost
+                f_cost = tentative_g_cost + heuristic[neighbor]  # f(n) = g(n) + h(n)
+                heapq.heappush(open_list, (f_cost, neighbor))
+    
+    return None, float('inf')  # If no path is found
+
+# Create the graph and add nodes
+add_node(1)
+add_node(2)
+add_node(3)
+add_node(4)
+
+# Add edges (undirected and weighted)
+add_edge_undirected(1, 2, 1)
+add_edge_undirected(1, 3, 4)
+add_edge_undirected(2, 3, 3)
+add_edge_undirected(2, 4, 2)
+add_edge_undirected(3, 4, 1)
+
+# Graph:
+""" 
+   1
+1 -- 2
+|   /|
+|4 /3|2
+|/   |
+3 -- 4
+  1
+"""
+
+# Heuristic function for A* (Manhattan distance or simple straight-line estimate)
+# For simplicity, let's assume a simple heuristic function
+# Example: The heuristic values here are just an estimation of the distance to the goal node (node 4)
+heuristic = {
+    1: 4,  # Estimated distance from node 1 to goal (node 4)
+    2: 3,  # Estimated distance from node 2 to goal (node 4)
+    3: 2,  # Estimated distance from node 3 to goal (node 4)
+    4: 0   # Goal node, heuristic is 0
+}
+
+# Run A* algorithm to find the shortest path from node 1 to node 4
+path, cost = a_star(1, 4, heuristic)
+
+# Output the result
+if path:
+    print(f"Path: {path}")
+    print(f"Total Cost: {cost}")
+else:
+    print("No path found.")
