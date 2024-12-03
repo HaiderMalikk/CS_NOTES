@@ -469,6 +469,32 @@ function is wrapped by calling wrapper_function(original_function), and the wrap
 When the wrapped function is called, it executes the additional code defined in the wrapper function.
 """
 
+# EX 2
+## higher order functions
+# Python supports advanced features like function decorators and higher-order functions, 
+# which allow you to modify orextend the behavior of functions python
+def my_decorator(func):
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func()
+        print("Something is happening after the function is called.")
+    return wrapper
+# @mydeecorator my_decorator is a function that takes another function func as its argument. 
+# Inside my_decorator, there's an inner function called wrapper. wrapper is defined inside my_decorator and 
+# serves as a wrapper function that surrounds the execution of func. It performs some actions before and after calling func.
+# @my_decorator is a decorator syntax in Python. When you decorate a function with @my_decorator, 
+# it means that you are applying the my_decorator function to the decorated function.
+#  In your example, you decorate the say_hello function with @my_decorator.
+# When you call say_hello(), you are actually calling the wrapper function that my_decorator returned.
+#  This is how decorators work in Python. The decorated function (say_hello) is replaced by the wrapper function, 
+# which adds functionality around the original function.
+@my_decorator
+def say_hello(): # this is func()
+    print("Hello!")
+
+say_hello() # calling function (this one has no parameters)
+
+
 # ! public, protected, private
 # In Python, attributes and methods can be public, protected, or private. 
 # Public attributes and methods can be accessed directly,

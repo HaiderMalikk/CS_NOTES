@@ -2,8 +2,14 @@
 ## - topic 
 # - note(commment)
 
+# operators
 # "=" is to assign, "==" is to check, != is dose not equal
-# any var class function is public by default to make it protected use "_" to make it private use "__" before the name EX "__name"
+# + do addition, - do subtraction, * do multiplication, / do division
+# % do modulus ie remainder of division, // do floor division ie quotient of division EX: 5//2 = 2 as 5/2 = 2.5 but 5//2 = 2 so it rounds down to 2
+# ** do exponentiation ie 2**3 = 8
+# +=, -=, *=, /= do addition, subtraction, multiplication, division and assign in one step
+# %=, //= do modulus and floor division and assign in one step 
+# **= do exponentiation and assign in one step
 
 ## nested if statements 
 # or you can make many variables in one line by using the comma "," EX: a,b,c = 1,2,3
@@ -72,12 +78,18 @@ elif x2 < 10: # and elif runs only if 'if' before is false
 else: # only runs if 'if' and 'elif' are false
     print("x2 is equal to 10")
 
-## if and
+## and ,or ,not 
 x3 = 5
 y3 = 7
 
-if x3 == 5 and y3 == 7:
-    print("Both conditions are true")
+if x3 == 5 and y3 == 7: # true
+    print("Both conditions are true") 
+
+if x3 == 5 or y3 == 6: # true
+    print("At least one condition is true")
+    
+if not x3 == 5: # false 
+    print("x3 is not equal to 5")
     
 # using return to end a function's 
 # insted of using if , elif, and else to decide what to do next, you can use return to end a function's execution and return a value
@@ -107,9 +119,69 @@ def switch_case(case_value):
 value = 2
 switch_case(value)
 
+# ! Priority of operators 
+""" 
+In Python, logical operators or, and, and not have specific precedence (priority) when evaluating expressions. Here's their order of precedence:
+
+not (highest priority)
+and (middle priority)
+or (lowest priority)
+"""
+# EX:
+x = True
+y = False
+z = True
+
+# Expression to evaluate
+result = not x or y and z
+print(result)
+""" 
+Step-by-Step Evaluation
+Evaluate not first:
+not x → not True → False
+Now the expression becomes:
+
+False or y and z
+Evaluate and next:
+y and z → False and True → False
+Now the expression becomes:
+
+False or False
+Evaluate or last:
+False or False → False
+Output: False
+"""
+# * to explicitly specify priority use () to enclose the expression you want to evaluate first
+# EX:
+result = (not x) or (y and z)
+print(result)  # Output: False
+""" 
+Experimenting with Different Orders
+To see how precedence affects the outcome, modify the expression using parentheses:
+
+Change the grouping:
+result = not (x or y) and z
+print(result)
+Step-by-step evaluation:
+Evaluate (x or y) → True or False → True
+Evaluate not (x or y) → not True → False
+Evaluate False and z → False and True → False
+Output:
+
+False
+"""
+# !  Priority of mathematical operators and logical operators:
+# 1. Parentheses ()
+# 2. Exponentiation **
+# 3. Multiplication and Division (*/%)
+# 4. Addition and Subtraction (+/-)
+# 5. Comparison operators (==, !=, <, >, <=, >=)
+# 6. Logical operators (and, or, not)
+
 # ! shorthand if else like ternary operator
 # syntax:
 # value_if_true if condition else value_if_false
+# you can also return these values in a function using this notation
 # EX:
 is_even = True if 4 % 2 == 0 else False
 print(is_even)  # Output: True
@@ -144,7 +216,7 @@ while count <= 5: # loop will run until this statement is false
 # After executing the code block for each element in the sequence, the loop continues with the next element, 
 # and so on, until all elements in the sequence have been processed.
 #ex
-for i in [4,8]: print(i)
+for i in [4,8]: print(i) # prints 4 and 8
 
 # iterating over a list
 fruits = ["apple", "banana", "cherry"]
@@ -167,6 +239,15 @@ for i in range(5):
 numbers = [1, 2, 3, 4, 5]
 for i in range(len(numbers)):
     print(numbers[i])
+
+for num in range(1, 6):
+    print(num)
+# output: 1 2 3 4 5 # 1 in include 6 not included this is just how range works
+
+# range with steo to skip
+for i in range(0, 10, 2):
+    print(i)
+# output: 0 2 4 6 8 # here 10 is not included so we get 0,2,4,6,8
 
 # * why use range:
 """ 
@@ -360,32 +441,6 @@ a, b = negate(1, 2) # this is called unpacking and here we assign the values ret
 square = lambda x: x ** 2
 result = square(5)  # result = 25
 
-## higher order functions
-# Python supports advanced features like function decorators and higher-order functions, 
-# which allow you to modify orextend the behavior of functions python
-def my_decorator(func):
-    def wrapper():
-        print("Something is happening before the function is called.")
-        func()
-        print("Something is happening after the function is called.")
-    return wrapper
-# @mydeecorator my_decorator is a function that takes another function func as its argument. 
-# Inside my_decorator, there's an inner function called wrapper. wrapper is defined inside my_decorator and 
-# serves as a wrapper function that surrounds the execution of func. It performs some actions before and after calling func.
-# @my_decorator is a decorator syntax in Python. When you decorate a function with @my_decorator, 
-# it means that you are applying the my_decorator function to the decorated function.
-#  In your example, you decorate the say_hello function with @my_decorator.
-# When you call say_hello(), you are actually calling the wrapper function that my_decorator returned.
-#  This is how decorators work in Python. The decorated function (say_hello) is replaced by the wrapper function, 
-# which adds functionality around the original function.
-@my_decorator
-def say_hello(): # this is func()
-    print("Hello!")
-
-say_hello() # calling function (this one has no parameters)
-
-
-
 # python classes
 # classes are templates for creating objects
 # class name is PascalCase
@@ -396,6 +451,8 @@ class MyClass:
 # Creating an instance of MyClass
 obj = MyClass()
 print(obj.greet())  # Output: Hello, world!
+
+# ! Strings
 
 ## String methods 
 # In Python, strings are sequences of characters enclosed in either single (') or double (") quotes """ makes a docstring 
@@ -473,7 +530,7 @@ original_string = "This is a test. This test is important."
 new_string = original_string.replace("test", "example")
 print(new_string)  # Output: "This is a example. This example is important."
 
-# Substrings
+# Substrings and string splicing
 # since strings are list of characters, you can use slicing to make substrings
 # syntax str[start:stop:step] # same as lists
 text = "Hello, World!"
@@ -736,6 +793,18 @@ print(my_list.index(1)) # returns position of 1 in mylist
 ## Array Iteration:
 # You can iterate through the elements of an array using loops or NumPy-specific functions like np.nditer. 
 
+# Adding to arrays using += operator
+myarray = [1, 2, 3]
+myarray += [4, 5, 6]
+print(myarray) # Output: [1, 2, 3, 4, 5, 6]
+
+# array reference: a variable assigned to an array contains a reference to the array not the array itself
+myarray = [1, 2, 3]
+myarray_ref = myarray
+myarray_ref[0] = 99
+myarray.append(4)
+print(myarray) # Output: [99, 2, 3, 4] # see how the original array changed as both variables reference the same array of 'myarray'
+
 ### here add serching arrays ###########
 ## serching 1d arrays 
 my_list = [1, 2, 3, 4, 5]
@@ -969,7 +1038,36 @@ print(items)  # Output: [(5, 0), (3, 1), (1, 2)]
 # using the list function to use map 
 numbers = [1, 2, 3, 4, 5]
 squares = list(map(lambda x: x ** 2, numbers))
-print(squares)  # Output: [1, 4, 9, 16, 25]
+print(squares)  # Output: [1, 4, 9, 16, 25] # each 'x' in the lambda function is mapped to the corresponding element in the 'numbers' list
+
+# ! using if else in a list comprehension, lambda function and map
+# * since the filter function returns a filter object always cast it into a list using list(filter)
+# EX1
+data = [1, 2, 3, 4, 5]
+# this line says map each element in the data list with the new elements created by the lambda function
+# the labda function says for each element in the data list if the element is even then return the element raised to the power of 2
+# else the element is odd so then return the element raised to the power of 3
+result = list(map(lambda x: x ** 2 if x % 2 == 0 else x ** 3, data)) 
+print(result)  # Output: [1, 64, 27, , 125]
+
+# EX2
+data = [1, 2, 3, 4, 5, 6, 7, 8]
+# this line maps each element in the filterd data list with the element squared, 
+# the filterd data list is the data list but only the elements that are even are kept
+# in this ex we pass in a list with no reference i.e we dont create a variable for the filterd data list we simply pass the list to map
+result = list(map(lambda x:x**2, filter(lambda x:x%2==0, data)))
+print(result)  # Output: [4, 16, 36, 64]
+
+# EX3
+data = [1, 2, None, 4, 5, None, 7] 
+# in this ex we filter out all None types from teh data list
+result =  list(filter(lambda x: x is not None, data)) or 'x != None'
+print(result)  # Output: [1, 2, 4, 5, 7]
+
+# Ex using tuples
+data = (1, 2 ,3)
+result = list(map(lambda x: x**2, data))
+print(result)  # Output: [1, 4, 9]
 
 # other functions to use with list
 # * index: used to get the index of a specific element in the list, format listname.index(element), RETURNS FIRST OCCURENCE OF VALUE
@@ -981,6 +1079,20 @@ print(squares)  # Output: [1, 4, 9, 16, 25]
 # * append: used to add a specific element to the end of the list , format listname.append(element)
 # * extend: used to add multiple elements to the end of the list , format listname.extend(iterable
 # * clear: used to remove all elements from the list , format listname.clear()
+
+# lambda function equvalent using simple flow control
+# EX:
+data = [1, 2, 3, 4, 5]
+result = []
+for x in data:
+    if x % 2 == 0:
+        result.append(x ** 2)
+    else:
+        result.append(x ** 3)
+print(result) # Output: [1, 4, 27, 64, 125]
+# using lambda function equvalent
+result = list(map(lambda x: x ** 2 if x % 2 == 0 else x ** 3, data))
+print(result) # Output: [1, 4, 27, 16, 125]
 
 # # list comprihention
 # arr = [[1, 2, 3], [1, 3, 2], [3, 2, 1]]
@@ -1001,10 +1113,12 @@ print(squares)  # Output: [1, 4, 9, 16, 25]
 # ! list comprehention ( a way to make a list with loops and conditions inside these help build the list)
 # syntax general: new_list = [expression for item in iterable if condition]
 # EX 
-squares = [x ** 2 for x in range(10)] # fill the list squares with x where x **2 and the values of x are range(10) = 0 to 9
+# this line says add x**2 to the new list squares for each x in the range of 10
+squares = [x ** 2 for x in range(10)] 
 print(squares)  # Output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 # EX
 fruits = ['apple', 'banana', 'cherry']
+# thi line says add fruit.upper() to the new list upper_fruits for each fruit in the fruits list
 upper_fruits = [fruit.upper() for fruit in fruits]
 print(upper_fruits)  # Output: ['APPLE', 'BANANA', 'CHERRY']
 # EX
@@ -1016,14 +1130,35 @@ flat_list = [num for sublist in nested_list for num in sublist]
 print(flat_list)  # Output: [1, 2, 3, 4, 5, 6]
 # Ex with conditions
 numbers = [1, 2, 3, 4, 5]
+# this line says add the variabme num to the list if the element num in the numbers list is even
+# we loop through the list with num as the element at each iteration and if num is even we add it to the list
+# but note we are creating the variable to add as 'num' this is what is added to the list we are creating
+# we specify what num will be using the for loop where we assign this 'num' variable to each element in the list
 even_numbers = [num for num in numbers if num % 2 == 0] # the num is the current element in the list and its only added to the new list if it is even
 print(even_numbers)  # Output: [2, 4]
+# Ex with if else
+numbers = [1, 2, 3, 4, 5]
+# this line says add num**2 to the new list squares if num is even, otherwise add num**3 to the new list cubes
+even_or_cube = [num ** 2 if num % 2 == 0 else num ** 3 for num in numbers]
+print(even_or_cube)  # Output: [1, 4, 27, 16, 125]
+
+# list comprihention equvalent using simple flow control is the same as filter function
+# EX
+data = [1, 2, 3, 4, 5]
+result = []
+for x in data:
+    if x % 2 == 0:
+        result.append(x)
+print(result) # Output: [2, 4]
+# using list comprihention
+result = [x for x in data if x % 2 == 0]
+print(result) # Output: [2, 4]
 
 # ! list splicing List slicing in Python allows you to extract portions of a list or sequence using a specific syntax:
 # syntax general: list[start:stop:step]
 """ 
-start: The index to start slicing from (inclusive). Default is 0.
-stop: The index to stop slicing (exclusive). Default is the end of the list.
+start: The index to start slicing from (inclusive i.e it is included). Default is 0.
+stop: The index to stop slicing (exclusive ie it is not included we go upto one less than this index). Default is the end of the list.
 step: The step size or stride between indices. Default is 1.
 """
 # EX:
@@ -1050,6 +1185,83 @@ print(sub_list)  # Output: [2, 3, 4]
 my_list = [0, 1, 2, 3, 4, 5]
 copy_list = my_list[:]  # Copy the entire list
 print(copy_list)  # Output: [0, 1, 2, 3, 4, 5]
+
+# list splicing equvalent using simple flow control 
+# note for skiping elements you need to use a while loop that way you can increase the index in any iteration and in any ammount
+# EX
+data = [1,2,3,4,5]
+new_data = []
+# we loop over from index 2 until last index of data at len(data)- 1 which is excluded in range function
+for num in range(2, len(data)):
+    new_data.append(data[num]) # we append to the new data the element from data as the index = num
+    # or new_data += [data[num]]
+    
+print(new_data) # output = [3,4,5]
+
+new_data = data[2:]
+print(new_data) # ouput [3,4,5]
+
+# ! tuple unpacking (a way to delare and assign multiple variables at once)
+# syntax general a, b, c = (1, 2, 3)
+# * NOTE that the variables and arguments must be in the same order and the number of variables must match the number of arguments (a, b) = (1, 2, 3) is not allowed
+# EX
+coordinates = (10, 20)
+x, y = coordinates
+print(x)  # Output: 10
+print(y)  # Output: 20
+# EX 
+data = ("Alice", 25, "Engineer")
+name, age, profession = data
+print(name)       # Output: Alice
+print(age)        # Output: 25
+print(profession) # Output: Engineer
+# EX with negating the variables
+data = ("Bob", 30, "Designer", "New York")
+name, _, profession, _ = data # here we use _ to negate the variable that is to be in that position here thats 30 and "New York"
+print(name)       # Output: Bob
+print(profession) # Output: Designer
+# EX lists
+employees = [("John", 28), ("Jane", 32), ("Doe", 25)]
+for name, age in employees:
+    print(f"{name} is {age} years old.")
+
+# We can also reassign multiple variables at once
+a, b = 1, 2
+# we can also use this to map a result of a function to multiple variables
+def get_coordinates():
+    return 10, 20
+x, y = get_coordinates() # x = 10 and y = 20
+
+
+# ! list unpacking
+# You can unpack a list into multiple variables you can use the * operator to make that variable a list 
+# EX
+a, b, c = [1, 2, 3]
+print(a, b, c)  # Output: 1 2 3
+# EX
+my_list = [1, 2, 3]
+a, b, c = my_list
+print(a, b, c)  # Output: 1 2 3
+# EX
+my_list = [1, 2, 3]
+a, *b, c = my_list
+print(a, b, c)  # Output: 1 [2] 3
+# EX
+
+# ! sets in python 
+""" In Python, sets are unordered collections of unique elements. 
+They are defined using curly braces {} or the set() function, 
+and they automatically remove duplicate values. """
+my_set = {1, 2, 3, 4} # using dictionaries and {}
+my_set = set([1, 2, 3, 4]) # using the set() function my_set is now a set and will remove duplicates if they are added
+my_set.add(5) # add 5 to the set
+my_set.add(1) # add 1 to the set, but it will be ignored because 1 is already in the set
+my_set.remove(3)  # Raises KeyError if element is not found
+my_set.discard(3)  # Does not raise an error if the element is not found
+# checking set
+if 2 in my_set:
+    print("2 is in the set")
+# * NOTE you can also compare sets iterate over them and do unions intersection etc etc
 
 ## ! dictionary
 # You can create a dictionary by enclosing a comma-separated list of key-value pairs within curly braces {}.
@@ -1164,69 +1376,6 @@ except CustomError as e:
     print(e)  # Output: This is a custom error
 
 
-# sets in python 
-""" In Python, sets are unordered collections of unique elements. 
-They are defined using curly braces {} or the set() function, 
-and they automatically remove duplicate values. """
-my_set = {1, 2, 3, 4} # using dictionaries and {}
-my_set = set([1, 2, 3, 4]) # using the set() function my_set is now a set and will remove duplicates if they are added
-my_set.add(5) # add 5 to the set
-my_set.add(1) # add 1 to the set, but it will be ignored because 1 is already in the set
-my_set.remove(3)  # Raises KeyError if element is not found
-my_set.discard(3)  # Does not raise an error if the element is not found
-# checking set
-if 2 in my_set:
-    print("2 is in the set")
-# ! NOTE you can also compare sets iterate over them and do unions intersection etc etc
-
-# tuple unpacking (a way to delare and assign multiple variables at once)
-# syntax general a, b, c = (1, 2, 3)
-# ! NOTE that the variables and arguments must be in the same order and the number of variables must match the number of arguments (a, b) = (1, 2, 3) is not allowed
-# EX
-coordinates = (10, 20)
-x, y = coordinates
-print(x)  # Output: 10
-print(y)  # Output: 20
-# EX 
-data = ("Alice", 25, "Engineer")
-name, age, profession = data
-print(name)       # Output: Alice
-print(age)        # Output: 25
-print(profession) # Output: Engineer
-# EX with negating the variables
-data = ("Bob", 30, "Designer", "New York")
-name, _, profession, _ = data # here we use _ to negate the variable that is to be in that position here thats 30 and "New York"
-print(name)       # Output: Bob
-print(profession) # Output: Designer
-# EX lists
-employees = [("John", 28), ("Jane", 32), ("Doe", 25)]
-for name, age in employees:
-    print(f"{name} is {age} years old.")
-
-# We can also reassign multiple variables at once
-a, b = 1, 2
-# we can also use this to map a result of a function to multiple variables
-def get_coordinates():
-    return 10, 20
-x, y = get_coordinates() # x = 10 and y = 20
-
-
-# ! list unpacking
-# You can unpack a list into multiple variables you can use the * operator to make that variable a list 
-# EX
-a, b, c = [1, 2, 3]
-print(a, b, c)  # Output: 1 2 3
-# EX
-my_list = [1, 2, 3]
-a, b, c = my_list
-print(a, b, c)  # Output: 1 2 3
-# EX
-my_list = [1, 2, 3]
-a, *b, c = my_list
-print(a, b, c)  # Output: 1 [2] 3
-# EX
-    
-
 # ! global keyword in python
 # a global variable is a variable that is defined outside of a function or a class and can be accessed from anywhere in the program
 # but what is we want to modify this global variable from a function?
@@ -1282,6 +1431,11 @@ numbers = [1, 2, 3, 4]
 is_any_even = any(num % 2 == 0 for num in numbers)
 print(is_any_even)  # True, because 2 and 4 are even
 
+# using list comprehension
+numbers = [1, 2, 3, 4]
+is_any_even = any(e for e in numbers if e % 2 == 0)
+print(is_any_even) # True, because 2 and 4 are even
+
 empty_list = []
 print(any(empty_list))  # False, because there are no truthy elements in an empty list
 
@@ -1309,9 +1463,10 @@ ages = [25, 30, 35]
 zip_result = zip(names, ages)
 print(list(zip_result))  # [('Alice', 25), ('Bob', 30), ('Charlie', 35)]
 
-# Walrus operator
+# ! Walrus operator
 # The walrus operator := is a new assignment operator isnted of checking if a variable is defined or not then assign it a value
 # we instead use walrus operator to check if a variable is defined or not and assign it a value all using the same operator ":="
+# YOU MUST USE THE WALRUS OPERATOR WITHIN A CONDITIONAL STATEMENT, YOU CANNOT ASSIGN IT TO A VARIABLE
 # EX not using walrus operator
 primary = "Albert"
 backup = ""
@@ -1322,9 +1477,39 @@ elif backup:
 else:
     user = None
     
-# using walrus operator
+# * using walrus operator
 if user := primary or backup: # user gets the value of primary if it is truthy, otherwise it gets the value of backup if it is truthy if both are falsy then user is None
     print(f"User logged in: {user}")
 else:
     print("No user logged in")
+    
+# * multi varible assignment using walrus operator
+# here since we had two varible it was true 'primary or if primary was false then 'backup' if backup was false then 'None'
+# but we can have multiple variable assignment using walrus operator it will pick the first truthy value if none are truthy then it will be None
+# NOTE this value we are talking about is not always simple variable it can be a combination of multiple variables connected using logical operators
+# EX
+primary = ""
+backup = ""
+extra = "extra"
+
+# here the and is evaluated first its false so we have: false or false or True where teh true is the extra variable and so extra is assigned to user
+if user := primary or extra and backup or extra: # user = extra
+    print(f"User logged in: {user}")
+else:
+    print("No user logged in")
+
+# * using == in walrus operator
+# remember that walrus operator checks for truthiness not equality but == checks for equality
+# what this means is that var == number is a check for equality so it returns true or false
+# this means the walrus operator can evaluate var == number as true or false and then assign it to a variable else assign it to None
+# EX (no need for brackets and == is evaluated first before logical operators)
+height = 160
+age = 19
+
+# height == 100 and age == 19 is false, height == 160 and age == 19 is true so allowed is true
+if allowed := height == 100 and age == 19 or height == 160 and age == 19: 
+    print("allowed")
+else:
+    print("Not allowed")
+
 
