@@ -196,9 +196,10 @@ for i in range(3):  # Outer loop
     for j in range(2):  # Inner loop
         print(f"Outer loop index: {i}, Inner loop index: {j}") # in a printf everything must be in "" a var must be in {}
 
-# break vs continue for loops and while loops
+# break vs continue vs pass for loops and while loops
 # In Python, break and continue are control flow statements used to alter the flow of loops (for and while). 
 # EX:
+# break breaks out of the loop and continues to the code after the loop
 for i in range(1, 6):
     if i == 3:
         break  # Exit the loop when i equals 3
@@ -221,6 +222,7 @@ for i in matrix:
 # Explanation: after 1 j = 2 and we break out the inner loop only, the outer loop continues to the next iteration for the second row of the matrix.
 # and the inner loop for the second row prints 4,5,6
 
+# continue will skip the current iteration and continue to the next iteration of the loop
 for i in range(1, 6):
     if i == 3:
         continue  # Skip the current iteration when i equals 3
@@ -233,6 +235,18 @@ for i in range(1, 6):
 # 5
 
 # the same applies to while loops
+
+# pass will do nothing and continue to the next line of code
+# * pass can be used anywhere and is not limited to loops
+def my_function():
+    pass # Do nothing and continue to the next line of code
+    # this line will be executed
+    if True:
+        pass # Do nothing and continue to the next line of code
+    # this line will be executed after the pass in the if statement
+
+my_function() # nothing will happen as we pass before any code is executed
+
 
 # using list function 
 # we can pass a list or nonlist to the list function and it will iterate over each item in the list 
