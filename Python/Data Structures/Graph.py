@@ -1582,3 +1582,40 @@ if path:
     print(f"Total Cost: {cost}")
 else:
     print("No path found.")
+
+
+# ! Graph Time Complexity: O(E , V) 
+""" 
+graph time complexity is O(E , V) where E is the number of edges and V is the number of vertices in the graph.
+The time complexity of graph algorithms depends on the representation of the graph (adjacency list vs adjacency matrix) and the specific algorithm being applied
+"""
+"""
+Comparison Summary of Graph Algorithms:
+
+| **Algorithm**             | **Adjacency List**     | **Adjacency Matrix**     |
+|---------------------------|------------------------|--------------------------|
+| **BFS/DFS**               | O(V + E)               | O(V^2)                   |
+| **Dijkstra's**            | O((V + E) * log V)     | O(V^2)                   |
+| **Bellman-Ford**          | O(V * E)               | O(V^3)                   |
+| **A***                    | O((V + E) * log V)     | O(V^2)                   |
+| **Prim's**                | O((V + E) * log V)     | O(V^2)                   |
+| **Kruskal's**             | O(E * log E)           | O(E * log E)             |
+
+Key Points:
+1. **Sparse Graphs** (E << V^2):
+   - Adjacency list is more efficient in terms of both storage and time.
+   - Algorithms like BFS, DFS, and Dijkstra work efficiently with O(V + E).
+
+2. **Dense Graphs** (E ≈ V^2):
+   - Adjacency matrix is simpler and sometimes faster for specific algorithms like Prims.
+   - However, it requires O(V^2) storage.
+
+3. **Negative Weights**:
+   - Dijkstras algorithm fails with negative weights.
+   - Use Bellman-Ford for graphs with negative edge weights.
+
+4. **Heuristic Usage**:
+   - A* incorporates a heuristic for directed exploration, making it faster than Dijkstras in certain cases if the heuristic is good.
+
+This summary highlights the time complexity trade-offs of various graph algorithms based on the graph representation and specific requirements.
+"""
