@@ -604,6 +604,10 @@ DFS (Depth-First Search) is a general traversal strategy that explores as deeply
 while **in-order traversal** is a specific type of DFS used in binary trees. In-order traversal visits nodes in a left-root-right order, 
 making it particularly useful for Binary Search Trees (BSTs) to retrieve nodes in sorted order. While DFS refers to the overall approach, 
 in-order is a specific implementation of DFS focused on a particular sequence of node visits in binary trees.
+
+so in short: DFS goes as deep as possible and can be used in any tree, in-order traversal is a specific DFS used in BSTs
+used to retrieve nodes in sorted order, inorder also goes as deep as possible because of the way a BST is structured
+since inorder finds the smallest node first it has to go as deep as possible to find the smallest node.
 """
 
 # ! Deleting a node from a tree including root node, or if root has 1,2 children, see counter for deleting leaf root node
