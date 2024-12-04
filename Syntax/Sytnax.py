@@ -1154,6 +1154,16 @@ print(result) # Output: [2, 4]
 result = [x for x in data if x % 2 == 0]
 print(result) # Output: [2, 4]
 
+# using range to use list comprihention
+# using range is useful when you want to word with the index instead of the value
+# EX
+fruits = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig']
+# here we add to the list fruits at index i fruits[i] where i is in range of the length of the list so 0 to 5
+# and if i is even then only we add list[i] to the new list basket, this way we use the index i to access the elements in the list
+# instead of the value beaing accessed using something like i for i in list, also note we use list[i] not just i as i is a number (index)
+basket = [fruits[i] for i in range(len(fruits)) if i % 2 == 0] 
+print(basket)
+
 # ! list splicing List slicing in Python allows you to extract portions of a list or sequence using a specific syntax:
 # syntax general: list[start:stop:step]
 """ 
