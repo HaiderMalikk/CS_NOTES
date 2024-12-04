@@ -367,7 +367,7 @@ my_list = list(my_tuple)  # [1, 2, 3] - Convert the tuple to a list
 arr1 = [1, 2, 3]
 arr2 = [5, 6,]
 fill = 4
-arr3 = arr1 + [fill] * + arr2 # this will make an array [1, 2, 3, 4, 5, 6] we have to cast the int into a list using brackets to add it to other lists
+arr3 = arr1 + [fill] + arr2 # this will make an array [1, 2, 3, 4, 5, 6] we have to cast the int into a list using brackets to add it to other lists
 
 ## Functions
 
@@ -1330,6 +1330,21 @@ if value is not None:
 else:
     print(f"{key_to_find} not found in the dictionary.")
 
+# * you can make a dictionary with empty values and insert values later
+my_dict = {"name": "", "age": 0, "city": ""}
+my_dict["name"] = "Alice"
+my_dict["age"] = 30
+my_dict["city"] = "New York"
+# inserting new key value pair
+my_dict["country"]="USA"
+print(my_dict) # Output: {'name': 'Alice', 'age': 30, 'city': 'New York', 'country': 'USA'}
+# * updating values
+my_dict.update({"country": "Canada"})
+print(my_dict) # Output: {'name': 'Alice', 'age': 30, 'city': 'New York', 'country': 'Canada'}
+my_dict.pop("country") # removing a key value pair by specifying the key
+my_dict.clear() # removing all key value pairs
+print(my_dict) # Output: {}
+# NOTE you cant just add a key, EX: my_dict["A"] is not valid you can set it equal to a value or set a empty value
 
 # Try catch 
 try:
@@ -1511,5 +1526,4 @@ if allowed := height == 100 and age == 19 or height == 160 and age == 19:
     print("allowed")
 else:
     print("Not allowed")
-
 
