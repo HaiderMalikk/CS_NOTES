@@ -1235,6 +1235,8 @@ employees = [("John", 28), ("Jane", 32), ("Doe", 25)]
 for name, age in employees:
     print(f"{name} is {age} years old.")
 
+# ! Declaring multiple variables at once
+# this includes all types of variables
 # We can also reassign multiple variables at once
 a, b = 1, 2
 # we can also use this to map a result of a function to multiple variables
@@ -1242,6 +1244,12 @@ def get_coordinates():
     return 10, 20
 x, y = get_coordinates() # x = 10 and y = 20
 
+# ! Swapping multiple variables in place
+mylist = [1, 2]
+# swaping the two elements in place with not temporal variables
+mylist[0], mylist[1] = mylist[1], mylist[0]
+print(mylist) # output [2,1]
+# with temp this would be temp = mylist[0], mylist[0] = mylist[1], mylist[1] = temp. since list[0] is changed we must save its value in temp to get it later 
 
 # ! list unpacking
 # You can unpack a list into multiple variables you can use the * operator to make that variable a list 
@@ -1257,6 +1265,7 @@ my_list = [1, 2, 3]
 a, *b, c = my_list
 print(a, b, c)  # Output: 1 [2] 3
 # EX
+
 
 # ! sets in python 
 """ In Python, sets are unordered collections of unique elements. 
