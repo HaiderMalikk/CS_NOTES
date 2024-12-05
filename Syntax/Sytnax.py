@@ -51,21 +51,6 @@ else: ## this else stament runs if the if the if statement connected to it is fa
 # else:
     # Code to execute when none of the conditions are True
 
-# as case and switch 
-#def switch_case(case_value):
-#    if case_value == 1:
-#        print("This is case 1")
-#    elif case_value == 2:
-#        print("This is case 2")
-#    elif case_value == 3:
-#        print("This is case 3")
-#    else:
-#        print("This is the default case")
-
-# Example usage:
-#value = 2
-#switch_case(value)
-
 # In this example, we first check if x is greater than 10. If that condition is false, it proceeds to the elif clause
 # and checks if x is less than 10. If both conditions are false, it falls back to the else clause.
 # You can use multiple elif clauses to handle different cases or conditions in a structured way, 
@@ -90,34 +75,7 @@ if x3 == 5 or y3 == 6: # true
     
 if not x3 == 5: # false 
     print("x3 is not equal to 5")
-    
-# using return to end a function's 
-# insted of using if , elif, and else to decide what to do next, you can use return to end a function's execution and return a value
-# EX with if else here we check if either a or b is 1, if so we return 1, if not we return the result of a * b
-def multiply(a, b):
-    if a == 1:
-        return b # once this runs nothing should run not even the a*b as we have our result we can return it
-    elif b == 1:
-        return a
-    else:
-        return a * b
 
-# using a mock swich case system
-def switch_case(case_value):
-    if case_value == 1: #
-        print("This is case 1")
-    elif case_value == 2:
-        print("This is case 2")
-    elif case_value == 3:
-        print("This is case 3")
-    else:
-        print("This is the default case")
-
-# Example usage:
-# sourcery skip: use-itertools-product
-# sourcery skip: remove-dict-keys
-value = 2
-switch_case(value)
 
 # ! Priority of operators 
 """ 
@@ -228,7 +186,7 @@ word = "Python"
 for letter in word:
     print(letter)
 
-# the range () function is used to create a sequence of numbers to iterate over. range(5) means loop 5 times
+# ! the range () function is used to create a sequence of numbers to iterate over. range(5) means loop 5 times
 # but since i starts at 0 going 5 times means 0,1,2,3,4 which is what we want as arrays are 0 indexed meaning looping 5 times 
 # over a array of length 5 is = looping over its indexes 0,1,2,3,4 thats still looping 5 times 
 # in this ex we print the numbers from 0 to 4
@@ -261,7 +219,7 @@ so now we can get the index of any element in the array with i and teh value at 
 """
 
 
-# iterating over a dictionarys keys or items 
+# ! Nested for loops
 person = {"name": "Alice", "age": 30}
 for key in person.keys():
     print(key)
@@ -277,7 +235,7 @@ for i in range(3):  # Outer loop
     for j in range(2):  # Inner loop
         print(f"Outer loop index: {i}, Inner loop index: {j}") # in a printf everything must be in "" a var must be in {}
 
-# break vs continue vs pass for loops and while loops
+# ! break vs continue vs pass for loops and while loops
 # In Python, break and continue are control flow statements used to alter the flow of loops (for and while). 
 # EX:
 # break breaks out of the loop and continues to the code after the loop
@@ -315,7 +273,8 @@ for i in range(1, 6):
 # 4
 # 5
 
-# the same applies to while loops
+# * the same applies to while loops
+# * you can only use break and continue in a loop
 
 # pass will do nothing and continue to the next line of code
 # * pass can be used anywhere and is not limited to loops
@@ -329,47 +288,7 @@ def my_function():
 my_function() # nothing will happen as we pass before any code is executed
 
 
-# using list function 
-# we can pass a list or nonlist to the list function and it will iterate over each item in the list 
-# we use the list function and not the list name all the time becuase
-# 1) passing a list into the list function makes a copy of the list for us to iterate over 
-   # this means any changes made to the array will not effect the iteration  
-   # If you remove an element, the remaining elements shift, but the iterator's index doesn't adjust, leading to skipped or misprocessed elements.
-# 2) we can pass a non list into the list function and it will make a list out of it
-# EX1
-test_list = [1, 2, 3, 4, 5]
-for element in list(test_list):  # Make a copy of the list for safe iteration
-    test_list.remove(element)   # Modify the original list
-    print(f"Removed {element}")
-    # even through the list size has decreased the iterator still goes over each element by alwasy going to the next element not the next index
-    # if we did not use list the loop would skip over indexes that have already been removed from the original list as it tracks the index not the element
-    # after deletion a new element might be at that index where a deleted element used to be and it would just skip over it as it would go to the next index disregarding that the list size has decreased
-""" 
-with list(test_list):
-removes 1, 2, 3, 4, 5 
-at the first iteration the loop points to 1
-it removes 1
-the loop now points to 2
-and so on pointing to the next element in the list
-
-with elements in test_list:
-at first iteration the loop points to the first index which is 1
-it removes 1
-the loop now points to the second index which is 3 note our list is now [2, 3, 4, 5]
-it dose not take into account that the list size has decreased and 2 is where 1 used to be
-"""
-
-# EX 2
-my_tuple = (1, 2, 3)
-my_list = list(my_tuple)  # [1, 2, 3] - Convert the tuple to a list
-
-# * way to make a not iterable like int into a list 
-arr1 = [1, 2, 3]
-arr2 = [5, 6,]
-fill = 4
-arr3 = arr1 + [fill] + arr2 # this will make an array [1, 2, 3, 4, 5, 6] we have to cast the int into a list using brackets to add it to other lists
-
-## Functions
+##  !Functions
 
 # you can define a function in Python using the def keyword, followed by the function name and a pair of parentheses. 
 # Any parameters (input values) the function requires are listed inside the parentheses. 
@@ -390,6 +309,7 @@ def greet(name):
 ## Function call
 greet("Alice") # function name (argument) argument meaning value or var "parenthisis"
 
+# ! default parameters
 # ex2 with a parameter and a optinal parameter. parameter 2 is defined and is 0 by default but can be changed if wanted
 def add(a, b=0): # b is a default parameter if nothing is entered for be it will = 0
     """
@@ -426,22 +346,14 @@ print(list1) # [1]
 list2 = append_to_list(2)
 print(list2) # [2] # now list1 and list2 are different lists
 
-# ex3 assigning a variable to the result of a function
-def negate(a, b):
-    return -a, -b # this function returns 2 values
 
-a, b = negate(1, 2) # this is called unpacking and here we assign the values returned by the function to the variables a and b respectively
-
-# eecs 
-"""hello"""
-
-## lambda function (anonymous function)
+## ! lambda function (anonymous function)
 # how to create a lambda function in python 
 # lambda are simple functions 
 square = lambda x: x ** 2
 result = square(5)  # result = 25
 
-# python classes
+# ! python classes
 # classes are templates for creating objects
 # class name is PascalCase
 class MyClass:
@@ -966,7 +878,64 @@ else:
 my_list = [1, 2, 3, 4, 5] # ! do not name any list 'list' as it is a python keyword
 print(max(my_list), min(my_list)) # Output: 5 1
 
-# filtering,sotring and finding elements with lambda function
+# ! Mutable and immutable types
+# Mutable types: list, dict, set, bytearray. You can change them in place meaning you dont need to create a new variable to store a modification done to the original variable, any change you make will be reflected in the original variable every where after you modified it
+# Immutable types: int, float, str, tuple, bool, you cant change them in place, you need to create a new variable to store a modification done to the original variable
+# EX:
+my_list = [3, 5, 7, 9, 11]
+my_list[0] = 2
+my_list.sort() # this sorts the list in place meaning my_list is sorted and and after this line my_list will be sorted
+print(my_list) # Output: [2, 5, 7, 9, 11], the modifaction to the 0th index and the sort was reflected in the original list
+# this means if we want to keep the original list intact we need to make a copy of it and assign it to a new variable
+# EX:
+my_string = "    Hello    "
+my_string.strip() # this wont change the original string because it is immutable, but since we dont assign this result to a new variable it dose nothing
+print(my_string) # Output: "    Hello    ", the original string is still the same
+my_string = my_string.strip() # this will change the original string because we assigned the result to a new variable. *** it can be the same variable or a new variable if we want to keep the original string intact
+print(my_string) # Output: "Hello", the original string is now changed
+
+# ! using the list function for safe iteration and for casting to list
+# we can pass a list or nonlist to the list function and it will iterate over each item in the list 
+# we use the list function and not the list name all the time becuase
+# 1) passing a list into the list function makes a copy of the list for us to iterate over 
+   # this means any changes made to the array will not effect the iteration  
+   # If you remove an element, the remaining elements shift, but the iterator's index doesn't adjust, leading to skipped or misprocessed elements.
+# 2) we can pass a non list into the list function and it will make a list out of it
+# EX1
+test_list = [1, 2, 3, 4, 5]
+for element in list(test_list):  # Make a copy of the list for safe iteration
+    test_list.remove(element)   # Modify the original list
+    print(f"Removed {element}")
+    # even through the list size has decreased the iterator still goes over each element by alwasy going to the next element not the next index
+    # if we did not use list the loop would skip over indexes that have already been removed from the original list as it tracks the index not the element
+    # after deletion a new element might be at that index where a deleted element used to be and it would just skip over it as it would go to the next index disregarding that the list size has decreased
+""" 
+with list(test_list):
+removes 1, 2, 3, 4, 5 
+at the first iteration the loop points to 1
+it removes 1
+the loop now points to 2
+and so on pointing to the next element in the list
+
+with elements in test_list:
+at first iteration the loop points to the first index which is 1
+it removes 1
+the loop now points to the second index which is 3 note our list is now [2, 3, 4, 5]
+it dose not take into account that the list size has decreased and 2 is where 1 used to be
+"""
+
+# EX 2 converting a int into a list
+my_tuple = (1, 2, 3)
+my_list = list(my_tuple)  # [1, 2, 3] - Convert the tuple to a list
+
+# * way to make a not iterable like int into a list 
+arr1 = [1, 2, 3]
+arr2 = [5, 6]
+fill = 4
+arr3 = arr1 + [fill] + arr2 # this will make an array [1, 2, 3, 4, 5, 6] we have to cast the int into a list using brackets to add it to other lists
+
+
+# ! filtering,sotring and finding elements with lambda function
 # Labda function for key explained (see lambda function dection for what lambda is)
 # EX NUM 3: => lambda x: x**2 the lambda var here 'x' repersents every element in the iterable, this var is on the LSH
 # this means we can modify 'x' on the RHS to then change the element passed in, in EX 3 we say x**2 so every element in the list will be squared 
@@ -1013,7 +982,8 @@ s = "A man, a plan, a canal: Panama" # say we want to remove only all the non al
 # then this new filtered string is lowercased using .lower and we use .join to join each character in the string by a empty space
 s = ''.join(c for c in s if c.isalpha() or c.isdigit()).lower()
 
-# ! sorted vs sort and using keys with sort (key is just a argument that is passed into the function stating how to do the task i.e based on length square etc of the iteams in the list insted of there original order or value)
+# ! sorted vs sort and using keys with sort 
+# (key is just a argument that is passed into the function stating how to do the task i.e based on length square etc of the iteams in the list insted of there original order or value)
 # sort is used to sort a list in place (i.e it changes the list) and returns None
 numbers = [3, 1, 4, 1, 5]
 numbers.sort() # syntax sort(iterable, key=None, reverse=False)
@@ -1234,8 +1204,8 @@ print(profession) # Output: Designer
 employees = [("John", 28), ("Jane", 32), ("Doe", 25)]
 for name, age in employees:
     print(f"{name} is {age} years old.")
-
-# ! Declaring multiple variables at once
+    
+# ! Declaring multiple variables at once without using tuple unpacking
 # this includes all types of variables
 # We can also reassign multiple variables at once
 a, b = 1, 2
@@ -1244,12 +1214,6 @@ def get_coordinates():
     return 10, 20
 x, y = get_coordinates() # x = 10 and y = 20
 
-# ! Swapping multiple variables in place
-mylist = [1, 2]
-# swaping the two elements in place with not temporal variables
-mylist[0], mylist[1] = mylist[1], mylist[0]
-print(mylist) # output [2,1]
-# with temp this would be temp = mylist[0], mylist[0] = mylist[1], mylist[1] = temp. since list[0] is changed we must save its value in temp to get it later 
 
 # ! list unpacking
 # You can unpack a list into multiple variables you can use the * operator to make that variable a list 
@@ -1266,6 +1230,12 @@ a, *b, c = my_list
 print(a, b, c)  # Output: 1 [2] 3
 # EX
 
+# ! Swapping multiple variables in place
+mylist = [1, 2]
+# swaping the two elements in place with not temporal variables
+mylist[0], mylist[1] = mylist[1], mylist[0]
+print(mylist) # output [2,1]
+# with temp this would be temp = mylist[0], mylist[0] = mylist[1], mylist[1] = temp. since list[0] is changed we must save its value in temp to get it later 
 
 # ! sets in python 
 """ In Python, sets are unordered collections of unique elements. 
