@@ -11,8 +11,8 @@
 6. Abstraction
 7. Method Overriding 
 8. Interface 
-9. Wrapper Function (not a consept but usefull in OOP)
-10. ETC
+9. Wrapper Function (not a OOP consept but usefull in OOP)
+10. ETC (Public, Private , Protected, Magic Methods)
 """
 
 # ! Basic syntax
@@ -546,3 +546,7 @@ class MyClass:
 
     def __str__(self):
         return f"MyClass instance with value {self.value}"
+    
+    # Equals magic method
+    def __eq__(self, other):
+        return self.value == other.value 

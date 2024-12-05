@@ -132,3 +132,11 @@ struct MyStuct{
 }
 in this case the char is available right after the integer because the integer is 4 bytes and the char is 1 byte so the char is right after
 no padding is needed the code is faster and more efficient.
+
+* Function vs Property for methods on str,int,list etc
+- A function is denoted with () after its name
+- A property is denoted with no () after its name
+EX
+mystr = "Hello"
+mystr.upper() # this is a function
+mystr.upper   # this is a property
