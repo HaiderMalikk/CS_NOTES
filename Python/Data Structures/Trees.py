@@ -824,6 +824,7 @@ root.min_node() # 5
 root.max_node() # 100
 
 
+
 # ! Implementing Heap Tree in Python (see details on heap tree in tree types notes)
 # EX of heap tree (note both are complete Binary trees):
 # min heap:
@@ -991,4 +992,56 @@ output:
 (2, 'b')
 (3, 'c')
 (4, 'd') = > lowest priority
+"""
+
+# Inverted Binary Tree
+""" 
+In a binary tree at every parent node the smaller value is on the left and the larger value is on the right
+in inverted binary tree the smaller value is on the right and the larger value is on the left
+the operation mirror the tree
+
+BST
+# Input Tree:
+    #       1
+    #      / \
+    #     2   3
+    #    / \
+    #   4   5
+
+Inverted BST 
+# Mirror Tree:
+    #       1
+    #      / \
+    #     3   2
+    #        / \
+    #       5   4
+    
+approach: 
+1) go as left as possible recursively
+2) then go as right as possible recursively
+3) once we reach a leaf node we do step 4 but nothing changes as leaf node has no children
+4) swap the left and right child of the current node (note that since left and right are objects in memory not temp is needed)
+5) keep going back to last node (last function call) as swap its left and right children, do this until root node is reached 
+"""
+# NOTE: i will not show creating and adding to the tree that is coverd before here is jut the methods to mirror the tree 
+# given a class BST: self.key = data, self.leftchild = None, self.rightchild = None and methods to add nodes we add the method as:
+def mirror(root): # root is the root of the tree i.e the first node
+    if root is None: # if the root is none 
+        return None # return none as there is nothing to mirror
+    
+    # go as left as possible recursively then go as right as possible recursively
+    # this is done by calling the mirror method on both the left and right child recursively
+    left = mirror(root.leftchild) # mirror the left child recursively
+    right = mirror(root.rightchild) # mirror the right child recursively
+  
+    # Swap the left and right subtrees of the current node (root)
+    root.leftchild = right
+    root.rightchild = left
+    
+    return root # return the root to the caller of mirror(root) this insures root.left /right for that function call is on the correct node
+
+""" 
+analysis:
+we start at root 1:
+
 """
