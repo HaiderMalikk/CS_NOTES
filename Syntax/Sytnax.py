@@ -1,6 +1,4 @@
 # python basics
-## - topic 
-# - note(commment)
 
 # operators
 # "=" is to assign, "==" is to check, != is dose not equal
@@ -11,6 +9,10 @@
 # %=, //= do modulus and floor division and assign in one step 
 # **= do exponentiation and assign in one step
 # * / vs //. / divides 2 numbers and gives a decimal number, // divides 2 numbers and gives a whole number and it always rounds down
+
+# importing module
+import random as rd # here we import the module random as rd meanong we use rd.random() instead of random.random()
+from random import random as rd # here we use the random library and import the random function as rd
 
 # * F strings
 # f-string is a way to format strings in python
@@ -193,7 +195,7 @@ while count <= 5: # loop will run until this statement is false
 # After executing the code block for each element in the sequence, the loop continues with the next element, 
 # and so on, until all elements in the sequence have been processed.
 #ex
-for i in [4,8]: print(i) # prints 4 and 8
+for i in [4,8]: print(i) # prints 4 and 8, the in keyword is used to iterate over the list in each iteration it selects a value from the list and calls it i, we chose to print the list values by printing i in each iteration
 
 # iterating over a list
 fruits = ["apple", "banana", "cherry"]
@@ -375,13 +377,21 @@ result = square(5)  # result = 25
 # ! python classes
 # classes are templates for creating objects
 # class name is PascalCase
-class MyClass:
-    def greet(self):
-        return "Hello, world!"
+class Person:
+    # constructor method, a constructor is a special method that is called when a new object is created 
+    # it initializes the object and sets its attributes, after the constrcutor we can use those attributes anywhere in the class
+    def __init__(self, name): # self is the object itself, its a reference to the current instance of the class, name is a parameter passed in when creating the object
+        self.name = name # self.name is an attribute of the object, it is equal to the name parameter passed in when creating the object
+        # now we can refer to self.name anywhere in the class and it will hold the value of the name parameter
+    def greet(self): # we must pass in self as the first parameter in any method where we want to refer to the object or its attributes
+        return "Hello, " + self.name # self.name is an attribute of the object = name
 
 # Creating an instance of MyClass
-obj = MyClass()
-print(obj.greet())  # Output: Hello, world!
+myperson = Person("Alice")
+# Accessing attributes and methods
+print(myperson.name)  # Output: Alice
+print(myperson.greet())  # Output: Hello, Alice
+
 
 # ! Strings
 
@@ -1354,7 +1364,7 @@ my_dict.clear() # removing all key value pairs
 print(my_dict) # Output: {}
 # NOTE you cant just add a key, EX: my_dict["A"] is not valid you can set it equal to a value or set a empty value
 
-# Try catch 
+# ! Try catch 
 try:
     # Code that might raise an exception
     result = 10 / 0
@@ -1399,6 +1409,23 @@ except CustomError as e:
     print(e)  # Output: This is a custom error
 
 
+# ! Using assert to check conditions
+def divide(a, b):
+    assert b != 0, "Division by Zero is not allowed"
+    return a / b
+print(divide(10, 2))  # Output: 5.0
+# print(divide(10, 0))  # Raises AssertionError from assert, if assert was not there python would raise an error for us when we do 10/0 in the return statement
+# * uncomment the assert statement to get the error in the console
+
+
+# ! SCOPEA IN PYTHON
+""" 
+Scope Rules Recap:
+Local Scope: Variables declared within a function.
+Enclosing Scope: Variables in the nearest enclosing function (non-global).
+Global Scope: Variables defined at the top level of the script.
+Built-in Scope: Predefined names in Python (e.g., print, len).
+"""
 # ! global keyword in python
 # a global variable is a variable that is defined outside of a function or a class and can be accessed from anywhere in the program
 # but what is we want to modify this global variable from a function?
@@ -1418,8 +1445,28 @@ def modify_global(): # this modifies the global variable
     
 print_global() # this will print 10
 modify_global() # this will modify the global variable and print 20
-
 # NOTE: global x = 20  # This will cause a syntax error you can only modify a global variable stright away follow the syntax
+
+# ! nonlocal keyword in python
+# when a variable is a function but we have a inner function inside that fuction we can use the nonlocal keyword to access the variable in the outer function
+def outer_function():
+    count = 0  # Variable in the enclosing scope
+
+    def inner_function():
+        # HERE i cannot have my own veriable called count and pick betweek the outer count and the inner count.
+        nonlocal count  # Refer to 'count' from the outer_function scope, if this was not here python would raise a NameError saying 'count referenced before assignment'
+        count += 1
+        print("Count:", count)
+
+    inner_function()
+    inner_function()
+
+outer_function() # this will print Count:1 and Count:2 
+# EXPLAINED
+# count is defined in outer_function (the enclosing scope).
+# inner_function uses the nonlocal keyword to modify count.
+# Without nonlocal, count += 1 inside inner_function would create a new local variable count instead of modifying the one in outer_function. 
+
 
 #! is vs == in python
 # is and == are both used to compare values in python but they are used in different ways
@@ -1535,3 +1582,205 @@ if allowed := height == 100 and age == 19 or height == 160 and age == 19:
 else:
     print("Not allowed")
 
+
+# ! del keyword in python
+# The del keyword is used to delete variables, lists, tuples, and dictionaries.
+# EX
+x = 10
+print(x)  # Output: 10
+del x
+# print(x)  # Raises a NameError: name 'x' is not defined
+# EX
+numbers = [1, 2, 3, 4]
+del numbers[1]  # Deletes the item at index 1 (value 2)
+print(numbers)  # Output: [1, 3, 4]
+del numbers
+# print(numbers)  # Raises a NameError: name 'numbers' is not defined
+# EX with list splicing
+numbers = [1, 2, 3, 4, 5]
+del numbers[1:4]  # Deletes items at indices 1 to 3
+print(numbers)    # Output: [1, 5]
+# EX deleting in dictionaries (uses keys)
+person = {"name": "Alice", "age": 25, "city": "New York"}
+del person["age"]
+print(person)  # Output: {'name': 'Alice', 'city': 'New York'}
+# deleting attributes using the del keyword
+class Person:
+    def __init__(self, name): 
+        self.name = name
+
+p = Person("Bob")
+print(p.name)  # Output: Bob
+del p.name
+# print(p.name)  # Raises AttributeError: 'Person' object has no attribute 'name'
+
+# ! with keywords
+# In Python, the with keyword is used to simplify the management of resources like files, 
+# network connections, or locks. The with statement ensures that resources are automatically cleaned up (e.g., closed)
+# when the block of code is done executing, even if an error occurs.
+# EX (commented out as i have no file to work with)
+# with open('example.txt', 'r') as file:
+#     content = file.read()
+#     print(content)
+# # The file is automatically closed after the block
+# Ex with blocks
+class CustomResource:
+    def __enter__(self): # magic method enter is called when the class is instantiated
+        print("Entering the context")
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback): # magic method exit is called when the class is finished
+        print("Exiting the context")
+
+# Using the custom context manager
+with CustomResource():
+    print("Inside the with block")
+# Output:
+# Entering the context
+# Inside the with block
+# Exiting the context
+
+# ! yeild keyword in python
+# When yield is used in a function, that function becomes a generator function.
+# Generators are functions that can be iterated over using a for loop.
+def count_up_to(n):
+    count = 1
+    while count <= n:
+        yield count # yeild returns the current value of count to the loop after the loop finsihes its current iteration the function continues where it left off (at yeild)
+        count += 1
+
+# Using the generator to loop over the function
+# there is no need for a range, numbers will get its value from the function, its upto the function how many times it will loop and what it will return
+for number in count_up_to(3):
+    print(number)
+# Output:
+# 1
+# 2
+# 3
+
+# ! async and await keywords 
+# In Python, async and await are used to define and manage asynchronous code, allowing you to run non-blocking tasks concurrently, USED FOR IO OPERATIONS
+# async is used to define an asynchronous function this is a function that can run in parallel with other functions or be paused and resumed to allow other functions to run
+# await is used to pause and resume an asynchronous function, YOU CANNOT USE AWAIT OUTSIDE OF AN ASYNC FUNCTION
+# EX
+import asyncio
+
+async def task1():
+    print("Task 1 started")
+    await asyncio.sleep(2)
+    print("Task 1 finished")
+
+async def task2():
+    print("Task 2 started")
+    await asyncio.sleep(1)
+    print("Task 2 finished")
+
+async def main():
+    # Run tasks concurrently
+    await asyncio.gather(task1(), task2())
+
+asyncio.run(main())
+# Output:
+# Task 1 started
+# Task 2 started
+# Task 2 finished
+# Task 1 finished
+
+# Explanation: task 1 and task 2 are started concurrently, but since we passed task1() before task2() it will display its result before task2
+# after the first line task1 pauses for 2 seconds while task2 pauses for 1 second 
+# after one second task2 finishes and task1 resumes and finishes one second later, this means task 2 finishes before task 1
+# In the console task 1 started and task 2 started are printed at the same time, 2 seconds later task 2 finished and 1 second later task 1 finished is printed
+
+# ! Threding in python (used for CPU bound tasks)
+# Threading is a way to run multiple tasks concurrently in a single process, allowing you to perform multiple tasks at the same time
+# unlike async and await which is used for IO bound tasks, threading is used for CPU bound tasks
+import threading # import the threading module to use threading
+import time # import the time module
+
+def print_numbers(): # function to print numbers
+    for i in range(5): # loop 5 times
+        print(f"Number: {i}") # print the current number
+        time.sleep(1)  # Simulate work by sleeping for 1 second
+
+# Create two threads that will run the same function
+thread1 = threading.Thread(target=print_numbers) # create a thread that will run the print_numbers function
+thread2 = threading.Thread(target=print_numbers) # create a thread that will run the print_numbers function
+
+# Start the threads
+thread1.start() # start the first thread
+thread2.start() # start the second thread
+
+# Wait for both threads to finish
+thread1.join() # wait for the first thread to finish
+thread2.join() # wait for the second thread to finish
+
+print("Both threads are done!") # print a message when both threads have finished
+# Output:
+# Number: 0
+# Number: 0
+# Number: 1
+# Number: 1
+# Number: 2
+# Number: 2
+# Number: 3
+# Number: 3
+# Number: 4
+# Number: 4
+# Both threads are done!
+
+# Explanation: both threds are started at the same time using .start() both of them call the print numbers function at the same time 
+# inside the print_numbers function they print 0,1,2,3,4 and then they are joined to finish at the same time using .join()
+# in the console Number 0, Number 0 are printed at the same time one second later Number 1, Number 1 are printed at the same time and so on
+
+# * Threding Locks 
+# Threading locks are used to prevent multiple threads from accessing the same resource at the same time
+# this can be useful when you have a shared resource that you want to protect from being accessed by multiple threads at the same time
+# this lock avoids race conditions and deadlocks
+import threading
+import time
+
+# Shared resource
+counter = 0
+
+# Create a lock
+lock = threading.Lock()
+
+def increment():
+    global counter # Declare counter as a global variable to use it inside the function
+    for _ in range(5):
+        with lock:  # Acquire the lock
+            temp = counter  # Get the current value of the counter, optional as we use a lock
+            time.sleep(0.1)  # Simulate some work 
+            counter = temp + 1  # Increment the counter
+            print(f"Counter: {counter}")  # Print the current value of the counter
+        # Release the lock automatically when exiting the with block
+
+# Create two threads that will run the increment function
+thread1 = threading.Thread(target=increment)
+thread2 = threading.Thread(target=increment)
+
+# Start the threads
+thread1.start()
+thread2.start()
+
+# Wait for both threads to finish
+thread1.join()
+thread2.join()
+
+print("Final Counter:", counter) # Print the final value of the counter
+""" 
+Explanation
+Shared Resource: counter is a shared variable that both threads will increment.
+Lock: lock = threading.Lock() creates a lock to ensure only one thread can modify counter at a time.
+Increment Function:
+The with lock: statement ensures that the critical section (code that modifies counter) is executed by only one thread at a time.
+time.sleep(0.1) simulates work, making it more likely to encounter race conditions if the lock is not used.
+Threads: Two threads are created and started to run the increment function.
+Join: thread1.join() and thread2.join() ensure the main thread waits for both to complete before printing the final counter.
+
+Why use temp to store the current value of counter?
+Here temp is optional as we are using a lock to ensure only one thread can modify counter at a time.
+but it demonstrates the importance race conditions where multiple threads are accessing the same resource without any synchronization.
+here we get the current value of counter before incrementing it as during the time we take to increment it, 
+another thread might have already incremented counter changing its value. so we get the current value of counter at the start and work with it during the lock.
+"""
