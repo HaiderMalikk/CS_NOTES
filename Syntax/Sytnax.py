@@ -10,6 +10,25 @@
 # +=, -=, *=, /= do addition, subtraction, multiplication, division and assign in one step
 # %=, //= do modulus and floor division and assign in one step 
 # **= do exponentiation and assign in one step
+# * / vs //. / divides 2 numbers and gives a decimal number, // divides 2 numbers and gives a whole number and it always rounds down
+
+# * F strings
+# f-string is a way to format strings in python
+# f-string is used to insert the value of a variable inside a string
+x = 10
+y = 20
+print(f"the value of x is {x} and the value of y is {y}")
+
+# * formating string using % operator
+# % operator is used to format strings in python here what each one does
+# %s is used to format string, %d is used to format integer, %f is used to format float, %x is used to format hexadecimal, %o is used to format octal
+# a adition number can be added after to specify the number of characters to be printed i.e %5s will print the string with 5 characters, %2f will print the float with 2 decimal places
+x = 10
+y = 20.03003
+# lets print x and y but format y to go up 2 decimal places
+print("the value of x is %d and the value of y is %.2f" % (x, y)) # the % is used after the string to specify the number of characters to be printed we then in brackets add the variables we want to print separated by a comma
+# the x and y much match the position of the %s and %f in the string
+# NOTE: we can use %.xf to extend the number of shrink it by x decimal places
 
 ## nested if statements 
 # or you can make many variables in one line by using the comma "," EX: a,b,c = 1,2,3
@@ -1211,7 +1230,7 @@ for name, age in employees:
 a, b = 1, 2
 # we can also use this to map a result of a function to multiple variables
 def get_coordinates():
-    return 10, 20
+    return 10, 20 # returns (10, 20)
 x, y = get_coordinates() # x = 10 and y = 20
 
 
