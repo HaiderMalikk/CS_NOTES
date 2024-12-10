@@ -330,7 +330,7 @@ class BST:
             
     # * dealing with duplicates
     # 1) we can add the follwing beofre branching: if key == data: return with this we do not add the node to the tree if the key is the same as the data we are trying to
-    # 2) we can add the following at bracanging: if key > > data and key == data. or  if key < data and key == data. this way we add the node to the right or left subtree if the key is the same as the data we are trying to
+    # 2) we can change our branch condition to key <= data or key >= data to include duplicates in our tree with this the duplicates will be added to either the left or right subtree.
           
     # * Summary: 
     # we compare value with data and brach left or right depending on the comparison. after the branch if we have a root node and depending on what subtree we branched to we call the insert method on the left or right child. 
@@ -359,7 +359,7 @@ for node in BSTnodes:
 # root.insert(15) # add 15 to the left subtree of the right subtree of the root
 # root.insert(100) # add 100 to the right subtree of the right subtree of the root
 
-# uncooment to see output
+# uncoment to see output
 # print(root.key) # prints 10
 # print(root.leftchild.key) # prints 5
 # print(root.rightchild.key) # prints 20
