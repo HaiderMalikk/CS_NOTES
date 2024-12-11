@@ -304,14 +304,18 @@ class BST:
         self.leftchild = None
         self.rightchild = None  
       
+    # * Note: since i use if elif else the elif ie the search part only happens if the 'if' fails i.e self.key is not none if i used all 'if' statements they would all run regardless of if the 'if' fails before it to avoid that just add a 'return' after the 'if' statement. HERE I DO BOTH BUT ONLY ONE METHOD IS NEEDED 'if, elif, else' or 'if and return'
+    # * ALSO since we have 2 elifs the second elif only happens if the first elif fails BUT i use a return statemnt to indicate that we break out of the function call and stop the insertion process
     def insert(self, data): # create insertion method with data as input
         if self.key is None: # if root is empty ie key is nune note, key is the value of node. if there is no value meaning no key then there is no root node. EX: say we make BST(None) and call BST.insert(10) since at the moment of calling insert, the key of our BST is None, hence we have no root node. so we assign the BST obejcts key (its value) by using 'self.key' with data of 10. now the BST object has a key of 10 this the root node. 
             self.key = data  # if there is no root node then we assign the nodes key with the value of data. NOTE: we dont create a new node we just check if its null if it is then we assign the key to data. NOTE: this must the root as we cannot have empty nodes in the middle of the tree initially the key can be null and that will become teh root node once we assign it a value. 
             return # we stop the insertion process here as we have created the root node and are done with the insertion
-
-        # if tree not empty check if the node is greater or less than the current node so we know wether to go to the left or right subtree
+        elif self.key == data: # if the key of the root node is equal to the value of the new node then we have a duplicate key and we cannot add it to the tree
+          print("Error: duplicate key") # print an error message
+          return # stop the insertion process here as we cannot add a duplicate key to the tree
+        # if tree not empty and we dont have a duplicate key, check if the node is greater or less than the current node so we know wether to go to the left or right subtree
         # note that key is the value of our root note as we traverse the tree this root changes and we check if its greater or less than the current node recursively.
-        if self.key > data: # goto left subtree as value of new node is less than current node 
+        elif self.key > data: # goto left subtree as value of new node is less than current node 
           # here we must check if the left subtree is empty then we can dd the new node here. if its not emoty after travering some times we will reach the left subtree again and again untill we find a leaf nod at this leaf node the left child will be none and we can add the new node here
           if self.leftchild: # leftchild can be true or false but the condition only runs if its true that means we do have a left child
             # since we have a left child we must take the current node 'leftchild' as our new root node and do a insert again with the same value by calling the insert method on this leftnode (making it our root). 

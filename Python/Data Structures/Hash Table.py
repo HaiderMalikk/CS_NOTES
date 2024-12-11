@@ -60,10 +60,10 @@ items = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple']
 for item in items:
     # Initialize the key if it doesn't exist, setting the starting count to 0
     if item not in counter:
-        counter[item] = 0
+        counter[item] = 0 # this adds the key of the item to the hash table and sets the value to 0
     
     # Increment the count for this item by 1 as it appears in the list
-    counter[item] += 1
+    counter[item] += 1 # this adds 1 to the value of the key which already exists, if it dosent it will add it like above (but we check first that it exists)
 
 print(counter)  # Output: {'apple': 3, 'banana': 2, 'orange': 1}
 

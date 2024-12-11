@@ -1068,6 +1068,31 @@ data = (1, 2 ,3)
 result = list(map(lambda x: x**2, data))
 print(result)  # Output: [1, 4, 9]
 
+# using lamda function with dictionary
+# to use lamda functions to find keys and values we must use built in dict function
+# * NOTE: using dict() to cast filter obj into a dictionary
+# * NOTE: that dict[key] returns the value of the key, we can use this when we are iterating over a dictionary and want to get the value of a key
+# * When working with both keys and values we use .items
+# * .items returns a list of tuples EX:(1, 'a'),(-2, 'b').... hence we must use index 0 or 1 depending on if we want the key or value
+# Ex of finding values of keys greater than 0
+my_dict = {1: 'a', -2: 'b', 3: 'c', 0: 'd', -1: 'e'}
+# Filter to keep only keys greater than 0, # here we add the while tuple to filterdict if the key, item[0] is greater than 0
+filtered_dict = dict(filter(lambda item: item[0] > 0, my_dict.items())) 
+print(filtered_dict) # Output: {1: 'a', 3: 'c'}
+# EX if flipped 
+my_dict = {'a': 3, 'b': -1, 'c': 7, 'd': 0, 'e': -5}
+# Filter to keep only values greater than 0
+filtered_dict = dict(filter(lambda item: item[1] > 0, my_dict.items()))
+print(filtered_dict) # Output: {'a': 3, 'c': 7}
+# Ex finding the key with the minimum value
+# using the dict[key] to directly get the value, as we just need the value and not the key
+my_dict = {'a': 10, 'b': 3, 'c': 7, 'd': 1}
+# Find the key with the minimum value, i use my_dict[k] to only get the value of the key as dict[key] returns the value of the key
+# the min function will iterate over the dictionary and at each iteration k is the current key in the dictionary, we check my_dict[k] to get the value of the key
+# so the min function gets the min based on the value of the key
+min_key = min(my_dict, key=lambda k: my_dict[k])
+print(f"The key with the minimum value is: '{min_key}' with value {my_dict[min_key]}") # Output: The key with the minimum value is: 'd' with value 1
+
 # other functions to use with list
 # * index: used to get the index of a specific element in the list, format listname.index(element), RETURNS FIRST OCCURENCE OF VALUE
 # * count: used to count the number of occurrences of a specific element in the list , format listname.count(element)
