@@ -393,6 +393,18 @@ print(myperson.name)  # Output: Alice
 print(myperson.greet())  # Output: Hello, Alice
 
 
+# ! Type Hinting 
+# python is a dynamicly typed language means that the type of a variable is determined at runtime
+# but we can specify the type of a variable using type hints, Syntax is, var_name: type = value
+pdf_title: str = "Document Title" # var name is pdf_title and its type is str and equals 'Document Title'
+page_count: int = 10
+is_published: bool = True
+
+def print_title(title: str) -> None:
+    print(title)
+
+print_title(pdf_title)
+
 # ! Strings
 
 ## String methods 
