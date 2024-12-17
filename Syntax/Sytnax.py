@@ -1316,6 +1316,9 @@ my_set.discard(3)  # Does not raise an error if the element is not found
 # checking set
 if 2 in my_set:
     print("2 is in the set")
+# using sets to make non duclicate lists (must cast to list)
+unique_elements = list(set([1,1,2,2,3,4,5,5]))
+print(unique_elements) # output [1,2,3,4,5] # no duplicates
 # * NOTE you can also compare sets iterate over them and do unions intersection etc etc
 
 ## ! dictionary
