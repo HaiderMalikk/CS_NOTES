@@ -213,11 +213,11 @@ for letter in word:
 # in this ex we print the numbers from 0 to 4
 # so in short we loop over the array 5 times but the value of i is 0,1,2,3,4 as we start at 0
 for i in range(5):
-    print(i)
+    print(i) 
 # EX array, here length is 5 so it will loop over 5 times but as i starts at 0 going 5 times means we print arr at index i at i = 0,1,2,3,4 (still 5 iterations, range(5))
 numbers = [1, 2, 3, 4, 5]
-for i in range(len(numbers)):
-    print(numbers[i])
+for i in range(len(numbers)): # we loop over len of the array many times starting at 0 ending at len -1 as range is 0 indexed
+    print(numbers[i]) # i at each iteration in a number that corresponds to the index of the array we are looping over
 
 for num in range(1, 6):
     print(num)
@@ -239,15 +239,34 @@ now the loop goes over 5 times = len of array, and since 5 is discluded we get 0
 so now we can get the index of any element in the array with i and teh value at i using numbers[i].
 """
 
+# ! iterating over a iterable like a list or a string
+# since strings are a list of characters we can iterate over them like a list
+# EX:
+word = "Python"
+for letter in word:
+    print(letter)
+# output: P y t h o n (each letter is printed on a new line)
+# EX:
+fruits = ["apple", "banana", "cherry"] # list can hold any type of data
+for fruit in fruits:
+    print(fruit) # here at each iteration fruit is the value of the list at the current index
+
+# ! Enumerate function
+# * if we use range to iterate we have the index but not the value
+# * if we use a iterable like in the above example we have the value but not the index
+# * BUT what if we want both the index and the value, this is where enumerate comes in
+# the format is for index, value in enumerate(iterable, start=0): # start is optional and defaults to 0
+# EX:
+fruits = ["apple", "banana", "cherry"]
+for index, fruit in enumerate(fruits):
+    print(f"Index: {index}, Value: {fruit}")   
+    # output:
+    # Index: 0, Value: apple
+    # Index: 1, Value: banana
+    # Index: 2, Value: cherry
+# the same can be done with strings or any iterable
 
 # ! Nested for loops
-person = {"name": "Alice", "age": 30}
-for key in person.keys():
-    print(key)
-
-for key, value in person.items():
-    print(f"{key}: {value}")
-
 # double nested for loop
 # The outer loop iterates over the values 0, 1, and 2 (specified by range(3)).
 # For each iteration of the outer loop, the inner loop iterates over the values 0 and 1 (specified by range(2)).
