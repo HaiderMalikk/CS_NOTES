@@ -274,6 +274,15 @@ for index, fruit in enumerate(fruits):
 for i in range(3):  # Outer loop
     for j in range(2):  # Inner loop
         print(f"Outer loop index: {i}, Inner loop index: {j}") # in a printf everything must be in "" a var must be in {}
+        
+# ! Unnamed variables
+# * in a for loop we can use the _ variable to ignore the value of the variable
+# EX:
+for _ in range(5):
+    print("Hello")
+# output: Hello Hello Hello Hello Hello
+# the _ replaces a variable like 'i' or 'j' that we dont need, otherwise this vaiable would be created and stored in memory but never used
+# this var would go from 0 to 4 but we simply print hellow and it has nothing to do with the vars value so we use _ to ignore it and just loop 5 times
 
 # ! break vs continue vs pass for loops and while loops
 # In Python, break and continue are control flow statements used to alter the flow of loops (for and while). 
