@@ -45,6 +45,9 @@ if x > y:
         print("x is not greater than 15")
 else: ## this else stament runs if the if the if statement connected to it is false 
     print("x is not greater than y")
+    
+# you can also do this in one line 
+if x > y: print("x is greater than y")
 
 # if "if 1" is false "else 1" runs if "if 1" is true "if 2" can run
 # if "if 2" is true (which remember is only possible if "if 1" ran) "if 3" can run
