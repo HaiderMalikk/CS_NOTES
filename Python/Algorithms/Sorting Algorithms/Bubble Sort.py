@@ -79,7 +79,11 @@ def bubble_sort(arr):
     for i in range(n): 
         swapped = False # Track if a swap is made, used to break out of the loop by checking if no swap is made
         # this loop starts from 0 but goes until n-i-1 element, n-i ensures we ignore the last element after each pass (outer loop)
-        # and -1 is because the last index should be length-1 as lists are 0 indexed n-i is the length of the array and -1 insures that we stay in the array bounds
+        # and -1 is because we initially ingore the last element and go from 0 to the second last element this beacuse we compare j with j+1
+        # so we cover all elements in the array if we went till the end j+1 would be out of bounds
+        # NOTE: ther end index of thr range function is exclusive meaning we go upto one element before the end index 
+        # for ex if we wanted to cover all element we would end the range function at len(arr) and it would go from 0 to len(arr)-1
+        # so here we dont take away -1 for using n which is the length of the array
         for j in range(0, n - i - 1):  # second loop traverses the array from the first element to the n-i-1 element
             if arr[j] > arr[j + 1]: # if the first element is greater than the second element
                 arr[j], arr[j + 1] = arr[j + 1], arr[j] # Swap if the current element is greater than the next (uses tuple unpacking)
