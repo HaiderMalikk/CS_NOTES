@@ -61,7 +61,7 @@ def insertion_sort(arr):
 
         # Move elements of the sorted portion that are greater than 'key' to one position ahead of their current position
         
-        # while the element j is greater than 0 and the elemetn at index j is greater than the key 'the current element we are looking at'
+        # while the index j is greater than 0 meaning we are in the range of the list, and the element at index j is greater than the key 'the current element we are looking at'
         # if this loop runs that means we need to move the element we are looking at 'key' before the element at index j because it is smaller than the element at index j
         while j >= 0 and arr[j] > key:
             # to do this swap we use j+1, since j is i-1 j+1 is i initially and at every iteration it stays the element we are looking at
