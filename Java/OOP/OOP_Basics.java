@@ -2043,10 +2043,10 @@ Example obj = null; // obj does not point to any object
 obj.display();      // This will throw NullPointerException
  */
 // EX
-class Example {
+class derefExample {
     int value;
 
-    Example(int value) {
+    derefExample(int value) {
         this.value = value;
     }
 
@@ -2055,10 +2055,68 @@ class Example {
     }
 }
 
-class Main {
+class derefEXmain {
     public static void main(String[] args) {
-        Example obj = new Example(10); // obj is a reference to an Example object
+        derefExample obj = new derefExample(10); // obj is a reference to an Example object
         obj.display();                // Dereferencing obj to call the display method
         System.out.println(obj.value); // Dereferencing obj to access the value field, output: Value: 10
     }
 }
+
+// ! Call by value vs Call by reference
+
+// * call by value
+// A copy of the actual value is passed to the function.
+// Changes made inside the function do not affect the original variable.
+// new memory location is allocated for the passed argument
+// usally used for primitive data types like int, char, float etc
+// EX
+class callbyvalue {
+    static void change(int x) {
+        x = 10; // changing the value of x
+    }
+    public static void main(String[] args) {
+        int x = 5;
+        System.out.println("Before calling change: " + x); // Output: Before calling change: 5
+        callbyvalue.change(x);
+        System.out.println("After calling change: " + x);  // Output: After calling change: 5
+        // here x is not changed because change function is called by value we pass in x and x's change in the change fucntion
+        // is local and does not affect the original variable
+    }
+}
+
+// * call by reference
+// A reference (memory address) to the original object / variable is passed to the function.
+// Changes made inside the function affect the original object.
+// no new memory location is allocated for the passed argument
+// usally used for object data types like String, ArrayList, etc
+// EX
+class callbyreference {
+    int num;
+
+    callbyreference(int num) {
+        this.num = num;
+    }
+
+    static void modify(callbyreference obj) {
+        obj.num = 20;  // Modifying object attribute will be reflected in the original object obj was passed 
+    }
+    public static void main(String[] args) {
+        callbyreference obj = new callbyreference(10); // num = 10
+        modify(obj); // Passing reference to obj 
+        System.out.println(obj.num);  // Output: 20 (modified)
+    }
+    // here we did not pass in a actual value rather we passed in a reference to the object
+}
+
+// ! NOTE JAVA DOSE NOT HAVE TRUE CALL BY REFERENCE
+// here we do not pass the original address i.e reference to the object but the copy of the reference is passed
+// this still modifies the original object as both are pointing to the same object the original reference and copy of reference both are pointing to the same object
+// so any change in the copy of reference will be reflected in the original reference as well
+
+// * True Call by Reference
+/* 
+ in C you can do this using pointers
+ the pointer is the address of the object not a copy but the actual address
+ in java there is no memory munipliation so we cannot pass the actual address of the object
+ */

@@ -118,6 +118,9 @@ public class Recurtion {
         // this is mucb slower than using two pointers
      */
 
+    // ! Splitarray recursion example
+    // Goal: split an array into two halves such that the sum of the elements in the left half is equal to the sum of the elements in the right half
+    // input : array of integers output: boolean
 
     public static void main(String[] args) {
         System.out.println(fact(5)); // 120

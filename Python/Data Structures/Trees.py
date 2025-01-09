@@ -66,7 +66,7 @@ Tree Types Overview:
      - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf).
      - In a complete binary tree, all levels of the tree except the last level are completely filled (meaning must have 2 child nodes). Last level can be either completely filled or filled left to right meaning that if the last level has 2 child nodes they must be on the left most node of the previous level. if we have one node it must be a left node to the left most node of the previous level. This left most node must be filled first before moving to the right
      - In a Perfect binary tree, all the nodes except for leaf nodes have 2 children and all the leaf nodes are at the same level.
-     - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1. in a Unbalanced binary tree the difference in height between the left and right subtrees of every node is more than 1.
+     - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1. This means at each node the left and right subtrees must be as close to the same height as possible.
      - In a pathalogical binary tree, every parent node has only 1 child node.
      - total number of nodes = num of nodes in left subtree + num of nodes in right subtree + 1. (+1 for the root node)
    - Uses: Commonly used in various applications such as expression trees for evaluating mathematical expressions and heaps for efficient data storage.
@@ -157,35 +157,38 @@ Tree Types Overview:
      
 
 # other trees not covered:
-3. **Balanced Trees**:
+3. **Balanced Binary Search Tree (BBST)**:
+   - Definition: a balanced binary search tree combines the properties of a binary search tree and a balanced binary tree. a BBST is balaned as every node's left and right subtrees differ in height by at most 1. and is a search tree meaning that for every node, all elements in the left subtree are less than the node and all elements in the right subtree are greater than the node.
+
+4. **Balanced Trees**:
    - Definition: Trees that automatically keep their height minimal, such as AVL trees and Red-Black trees.
    - Characteristics:
      - Height balancing ensures efficient operations like search, insert, and delete (O(log n)).
      - AVL trees maintain a strict balance factor, while Red-Black trees use color properties to ensure balance.
    - Uses: Often used in database indexing, memory management systems, and applications requiring frequent insertions and deletions.
 
-4. **N-ary Tree**:
+5. **N-ary Tree**:
    - Definition: A tree in which each node can have at most N children.
    - Characteristics:
      - More flexible than binary trees, allowing multiple children, which can vary from node to node.
      - Useful for representing hierarchical data where a node can have an arbitrary number of children.
    - Uses: Suitable for representing hierarchical structures, such as file systems, organizational charts, and XML/JSON data representation.
 
-5. **Trie (Prefix Tree)**:
+6. **Trie (Prefix Tree)**:
    - Definition: A tree used for storing a dynamic set of strings where the keys are usually strings.
    - Characteristics:
      - Nodes represent prefixes of keys, allowing fast retrieval of strings based on common prefixes.
      - Each edge represents a character, and each path from the root to a leaf node represents a complete string.
    - Uses: Useful in applications like autocomplete features, spell checkers, and IP routing, where fast retrieval based on prefixes is necessary.
 
-6. **Segment Tree**:
+7. **Segment Tree**:
    - Definition: A tree used for storing intervals or segments, allowing efficient querying of overlapping segments.
    - Characteristics:
      - Each node represents a segment, and leaf nodes represent individual elements.
      - Allows querying which segments overlap with a given point efficiently, typically in O(log n) time.
    - Uses: Commonly used in computational geometry for finding range queries, updates, and interval problems, such as calculating the sum of elements over a given range.
 
-7. **B-Tree**:
+8. **B-Tree**:
    - Definition: A self-balancing tree data structure that maintains sorted data and allows searches, sequential access, insertions, and deletions in logarithmic time.
    - Characteristics:
      - Nodes can have multiple children (more than two), and all leaves are at the same level.
