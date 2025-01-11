@@ -1435,6 +1435,20 @@ my_dict.clear() # removing all key value pairs
 print(my_dict) # Output: {}
 # NOTE you cant just add a key, EX: my_dict["A"] is not valid you can set it equal to a value or set a empty value
 
+# For sorting dictionaries by keys or values, you can use the sorted() function in combination with the dict() function to convert the soted obj to a dictionary
+# sort by key
+my_dict = {'b': 2, 'a': 3, 'c': 1}
+sorted_by_keys = dict(sorted(my_dict.items()))
+print(sorted_by_keys)  # Output: {'a': 3, 'b': 2, 'c': 1}
+# sort by value
+sorted_by_values = dict(sorted(my_dict.items(), key=lambda item: item[1]))
+print(sorted_by_values)  # Output: {'c': 1, 'b': 2, 'a': 3}
+# sort in descending order (reverse = true) if in accending order reverse = false or not specified 
+# by key 
+sorted_by_keys_desc = dict(sorted(my_dict.items(), reverse=True))
+# by value
+sorted_by_values_desc = dict(sorted(my_dict.items(), key=lambda item: item[1], reverse=True))
+
 # ! Try catch 
 try:
     # Code that might raise an exception

@@ -120,3 +120,11 @@ print(earning) # prints the total earning from the gems
 map = {'a': 1, 'b': 2, 'c': 3}
 print(map.get('a')) # prints 1
 print(map.get('d')) # prints None
+
+# For sorting dictionaries by keys or values, you can use the sorted() function in combination with the dict() function to convert the soted obj to a dictionary
+# sort by key
+my_dict = {'b': 2, 'a': 3, 'c': 1}
+sorted_by_keys = dict(sorted(my_dict.items()))
+print(sorted_by_keys)  # Output: {'a': 3, 'b': 2, 'c': 1}
+# sort by value
+sorted_by_values = dict(sorted(my_dict.items(), key=lambda item: item[1]))
