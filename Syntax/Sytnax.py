@@ -1161,7 +1161,7 @@ print(result) # Output: [1, 4, 27, 64, 125]
 result = list(map(lambda x: x ** 2 if x % 2 == 0 else x ** 3, data))
 print(result) # Output: [1, 4, 27, 16, 125]
 
-# # list comprihention
+# # list comprihention equvalent using simple flow control instead of lambda function
 # arr = [[1, 2, 3], [1, 3, 2], [3, 2, 1]]
 
 # # Create a new list to store the modified sublists
@@ -1503,7 +1503,7 @@ print(divide(10, 2))  # Output: 5.0
 # * uncomment the assert statement to get the error in the console
 
 
-# ! SCOPEA IN PYTHON
+# ! SCOPE IN PYTHON
 """ 
 Scope Rules Recap:
 Local Scope: Variables declared within a function.
