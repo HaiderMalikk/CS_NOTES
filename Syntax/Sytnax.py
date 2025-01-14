@@ -436,6 +436,21 @@ def print_title(title: str) -> None:
 
 print_title(pdf_title)
 
+# ! Allocation and deallocation of memory
+# Python is a dynamically typed language, which means that the type of a variable is determined at runtime. 
+# This means that the memory used by a variable can change as the program runs, depending on the value of the variable.
+# Python's memory management is handled by the garbage collector, which automatically frees up memory when it is no longer needed.
+# Python uses reference counting to keep track of the number of references to an object. When the reference count drops to zero,
+# the object is deallocated and its memory is freed.
+# BUT we can still manually allocate and deallocate memory 
+# allocate memory
+array = [0] * 100  # Allocates memory for a list of 100 elements with the value 0 as a placeholder so = [0, 0, 0, 100 timee]
+array = [None] * 100  # Allocates memory for a list of 100 elements with the value None as a placeholder closest to C malloc
+# deallocate memory
+del array  # Frees the memory allocated for the list
+# or
+array = None  # Removes the reference to the list, allowing the garbage collector to free the memory
+
 # ! Strings
 
 ## String methods 
