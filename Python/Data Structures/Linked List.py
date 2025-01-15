@@ -52,8 +52,8 @@ head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # n
 #       new_node = node(data) # to avoid puttinh in each conditional 
 #       # check if LL is empty as if it is cant add to end this is your first node so just check if empty
 #       if self.head is None:
-#       # if empty just add node by pointing head to new node this is done in add begin 
-#           new_node.ref =self.head
+#       # if empty just add node by pointing head to new node since there are no nodes in LL we dont need to point new node to the next node as there is no next node after head
+#       # if we did do the same thing as add begin or call the add begin or add start function it wont matter but this is the most efficient way to do it
 #           self.head = new_node
 #       else:
 #       # not empty so now go to end of LL this is done by checking when ref ends ie n = self.head which points to new node so when n.ref or newnodes ref is none there is no next node and end of LL is reached 
@@ -222,7 +222,6 @@ class LinkedList:
     def add_end(self, data):
         new_node = node(data)
         if self.head is None:
-            new_node.ref = self.head
             self.head = new_node
         else:
             n = self.head
