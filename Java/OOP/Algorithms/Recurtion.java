@@ -119,8 +119,42 @@ public class Recurtion {
      */
 
     // ! Splitarray recursion example
-    // Goal: split an array into two halves such that the sum of the elements in the left half is equal to the sum of the elements in the right half
+    // Goal: given a array is it possible to split it into two subarrays such that the sum of the first subarray is equal to the sum of the second subarray
+    // all numbers must be in one of the subarrays
     // input : array of integers output: boolean
+    // for an array with n elements there are 2^n possible subarrays we can make, worst case as we can break once we find a pair of subarrays with equal sum
+    // ex [2,3] can be split into [][2,3], [2][3], [3][2] ,[2,3][] none of these are valid splits return false
+    // ex [1,2,3] can be split into [][1,2,3], [1][2,3], [1,2][3], [1,2,3][] the valid splits are [1,2][3] and [1][2,3] so we return true
+    static boolean splitArray(int[] nums) {
+        return splitArrayHelper(nums, 0, 0, 0); // start at index 0 , sum of both subarrays is 0 i.e empty subarrays
+    }
+    static boolean splitArrayHelper(int[] nums, int from, int sum1, int sum2) {
+        // base case 1 treversed the whole array
+        // then just return if the sum of the two subarrays is equal
+
+        // my idea do this 
+        /* 
+         if (sum1 == sum2) {return true}
+         else {same code}
+         this way we stop when the sums are equal and we dont need to do the recursion until we do all the possible splits
+         this will always stop the recurtion tree one level early than if we used the code below 
+         */
+        if (from == nums.length) {
+            return sum1 == sum2;
+        }
+        else{
+            // two possibliities at index i i.e at each element we can either include it in the first subarray or the second subarray
+            // since one element can only be in one subarray we can only include it in one of the subarrays, 
+            // so call the method itself twice once with the element in the first subarray and once with the element in the second subarray
+            // both should look at the same index i
+            // add the element to the first subarray and move to the next element or add the element to the second subarray and move to the next element
+            // if either of the two calls to the method itself returns true then return true as we found a valid split
+            // you can flip these two calls too
+            return splitArrayHelper(nums, from + 1, sum1 + nums[from], sum2) || splitArrayHelper(nums, from + 1, sum1, sum2 + nums[from]);
+            
+
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println(fact(5)); // 120
@@ -129,6 +163,8 @@ public class Recurtion {
         System.out.println(isPalindrome("racecar")); // true
         System.out.println(allPositive(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})); // true
         System.out.println(isSorted(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})); // true
+        System.out.println(splitArray(new int[]{1, 1, 3})); // false
+        System.out.println(splitArray(new int[]{1, 2, 3, 4})); // true
     }
 
 }
