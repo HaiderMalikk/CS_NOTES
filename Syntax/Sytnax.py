@@ -262,6 +262,34 @@ for letter in word:
 fruits = ["apple", "banana", "cherry"] # list can hold any type of data
 for fruit in fruits:
     print(fruit) # here at each iteration fruit is the value of the list at the current index
+    
+# ! iterating over a dictionary 
+# EX:
+person = {"name": "John", "age": 30, "city": "New York"}
+for key, value in person.items():
+    print(f"{key}: {value}")
+# * can use only key or only value for loop to iterate over the keys or values of the dictionary
+# EX:
+for key in person:  
+    print(key)
+# output: name age city
+# EX:
+for value in person.values():
+    print(value)
+# output: John 30 New York
+# or using index 1 of key value pair
+# EX:
+for key in person:
+    print(key, person[key]) # output: name John age 30 city New York
+
+# ! iterating over a list of tuples
+# EX:
+coordinates = [(1, 2), (3, 4), (5, 6)]
+for x, y in coordinates:
+    print(x, y)
+# using in to check if a tuple is in a list
+if (1, 2) in coordinates:
+    print("1, 2 is in the list")
 
 # ! Enumerate function
 # * if we use range to iterate we have the index but not the value
@@ -789,6 +817,14 @@ print("Popped value:", popped_value)  # Output: Popped value: 4
 # to get indexof a value in 1dlist
 print(my_list.index(1)) # returns position of 1 in mylist
 
+# inseting tuples into a list
+my_list = []
+my_tuple = (1, 2, 3)
+my_list.append(my_tuple)
+# or 
+my_list.append((4, 5, 6))
+print(my_list)  # Output: [(1, 2, 3), (4, 5, 6)]
+
 ## Array Broadcasting:
 # NumPy also supports broadcasting, which allows you to perform operations on arrays of different shapes in certain cases.
 
@@ -813,7 +849,6 @@ myarray_ref[0] = 99
 myarray.append(4)
 print(myarray) # Output: [99, 2, 3, 4] # see how the original array changed as both variables reference the same array of 'myarray'
 
-### here add serching arrays ###########
 ## serching 1d arrays 
 my_list = [1, 2, 3, 4, 5]
 
