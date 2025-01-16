@@ -242,6 +242,15 @@ now the loop goes over 5 times = len of array, and since 5 is discluded we get 0
 so now we can get the index of any element in the array with i and teh value at i using numbers[i].
 """
 
+# Going in reverse order over a list
+# Op1 use reversed:
+rev = list(reversed(range(5))) # reversed returns a reversed iterator so we convert it to a list
+for i in rev:
+    print(i) # Output: 4 3 2 1 0
+# Op2 use range with a negative step:
+for i in range(4, -1, -1): # note start in inclusive (its included) and end is exclusive (its not included we go upto 0 not -1) and step how many numbers to skip between each iteration
+    print(i) # Output: 4 3 2 1 0
+
 # ! iterating over a iterable like a list or a string
 # since strings are a list of characters we can iterate over them like a list
 # EX:
