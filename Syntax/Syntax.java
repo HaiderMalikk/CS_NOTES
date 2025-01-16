@@ -39,7 +39,7 @@ public class Syntax {
 
     // 2. reference data types (stores a memory address like array)
     boolean aBoolean = true;
-    char aChar = 'A';
+    char aChar = 'A'; // ! ANY CHAR NEEDS SINGLE QUOTES 'A' NOT "A" so when you compare a char with char use single quotes
 
     // you can convert data types but only smaller to larger ones ex int to float unless you state it using (data type)
     // ex: int to float

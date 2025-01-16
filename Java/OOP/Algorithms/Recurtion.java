@@ -151,8 +151,6 @@ public class Recurtion {
             // if either of the two calls to the method itself returns true then return true as we found a valid split
             // you can flip these two calls too
             return splitArrayHelper(nums, from + 1, sum1 + nums[from], sum2) || splitArrayHelper(nums, from + 1, sum1, sum2 + nums[from]);
-            
-
         }
     }
 
