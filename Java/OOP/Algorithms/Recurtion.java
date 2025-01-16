@@ -154,6 +154,46 @@ public class Recurtion {
         }
     }
 
+    // possible steps recursion problem
+    // given a height and the maximum number of steps you can take at a time find all the possible ways to reach the top
+    // ex height = 3 and max steps = 2 then the possible ways are [1,1,1], [1,2], [2,1] so the output is 3 all these add up to 3 the height and we can use a step of 1 or 2 to get to the top
+    // sol
+    static int possibleSteps(int height, int maxSteps) {
+        return possibleStepsHelper(height, maxSteps, 0);
+    }
+    static int possibleStepsHelper(int height, int maxSteps, int currSteps) {
+        if (currSteps > height) { // if we overshoot the height then return 0 as there is no way to reach the top
+            return 0; 
+        }
+        if (currSteps == height) { // if we have reached the top then return 1 as we have found a way to reach the top
+            return 1;
+        }
+        int possibleSteps = 0;
+        /* 
+           We iterate through all possible steps (from 1 to maxSteps), recursively trying to reach the top.
+           Each recursive call explores a new path by taking a step of size 'i'. If a valid path is found (reaching height exactly),
+           it returns 1 and contributes to the count.
+
+           Example: possibleSteps(3, 2)
+           
+           Step 0 → Try stepping by 1 → Step 1
+               Step 1 → Try stepping by 1 → Step 2
+                   Step 2 → Try stepping by 1 → Step 3 (Valid path, return 1)
+                   Step 2 → Try stepping by 2 → Step 4 (Invalid, return 0)
+               Step 1 → Try stepping by 2 → Step 3 (Valid path, return 1)
+           
+           Step 0 → Try stepping by 2 → Step 2
+               Step 2 → Try stepping by 1 → Step 3 (Valid path, return 1)
+               Step 2 → Try stepping by 2 → Step 4 (Invalid, return 0)
+
+           Total valid paths: 3 (1+1+1, 1+2, 2+1)
+        */
+        for (int i = 1; i <= maxSteps; i++) { 
+            possibleSteps += possibleStepsHelper(height, maxSteps, currSteps + i); // add th
+        }
+        return possibleSteps;
+    }
+
     public static void main(String[] args) {
         System.out.println(fact(5)); // 120
         System.out.println(factTail(5, 1)); // 120
@@ -163,6 +203,7 @@ public class Recurtion {
         System.out.println(isSorted(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})); // true
         System.out.println(splitArray(new int[]{1, 1, 3})); // false
         System.out.println(splitArray(new int[]{1, 2, 3, 4})); // true
+        System.out.println(possibleSteps(3, 2)); // 3
     }
 
 }
