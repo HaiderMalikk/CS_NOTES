@@ -1,4 +1,5 @@
 * Stack vs Heap
+================================================================================================
 The stack and the heap are two key memory areas used by programs to store data during execution
 - Definition:
 Stack: Used for statically allocated memory (e.g., local variables).
@@ -26,11 +27,20 @@ Stack: int a = 10; (deallocated automatically).
 Heap: int *b = malloc(sizeof(int)); (must be explicitly freed)
 
 * Garbage Collection
+================================================================================================
 Garbage collection (GC) is a process by which a programming language's runtime environment 
 automatically manages memory by reclaiming unused memory, preventing memory leaks, 
 and freeing the developer from manually managing memory allocation and deallocation.
 
+* Primitive vs Reference Types
+================================================================================================
+Primitive types are value types that are stored on the stack (faster), while reference types are stored on the heap (slower)
+- Definition:
+Primitive types: Integers, floats, booleans, etc. Fixed memory size, default can be 0 etc etc cannot be none. 
+Reference types: Objects, arrays, strings, etc. Dynamic memory size, are objects and default is none.
+
 * Pointers
+================================================================================================
 A pointer is a variable that stores the memory address of another variable. 
 Pointers are fundamental in languages like C, C++, and others that give you direct access to memory
 EX:
@@ -134,9 +144,25 @@ in this case the char is available right after the integer because the integer i
 no padding is needed the code is faster and more efficient.
 
 * Function vs Property for methods on str,int,list etc
+======================================================
 - A function is denoted with () after its name
 - A property is denoted with no () after its name
 EX
 mystr = "Hello"
 mystr.upper() # this is a function
 mystr.upper   # this is a property
+
+* In place vs out of place operations
+=====================================
+- In place operations are operations that change the original object
+- Out of place operations are operations that return a new object and leave the original object unchanged
+EX
+mylist = [1,2,3]
+mylist.sort() # in place operation as we dont create a new list and modify the existing one (in place)
+mylist = sorted(mylist) # out of place operation as we create a new list and leave the original one unchanged
+
+* Primitive Operations:
+======================
+- Primitive operations are operations that are simple and can be performed in a single step like variable assignments or indexing array or (simple method) 
+- Non primitive operations are operations that are complex and can be performed in multiple steps like sorting or searching or (complex method)
+-- The running time of a algorithim can be Calculated by counting the number of primitive operations it performs 

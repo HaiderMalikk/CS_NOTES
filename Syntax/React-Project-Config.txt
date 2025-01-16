@@ -9,6 +9,14 @@ to use vite gsap with existing react project made using 1 or 2
 ‘npm install gsap @gsap/react’
 to start again: ’npm run dev’
 
+NEXT JS (web only)
+1) basic creation
+‘npx create-next-app@latest’
+to run development version: ‘npm run dev’
+Make sure to build to get latest app folder as .next/ folder (main website file)
+to build: ‘npm run build’
+to run this build final version: ‘npm start’
+
 ————————————————————————————————————————————————
 REACT NATIVE (APPS/ web)
 
@@ -60,16 +68,23 @@ NOTE: you can get cocoapods w: “npx pod-install ios” this is auto done when 
 then follow instuctions and download dependencies
 to start: ‘npm start’
 ————————————————————————————————————————————————
-TO STOP: ‘Ctrl+C’ or other commands 
+Express JS (backend)
+1) to create hop into a folder
+- then do: ‘npm init -y’ (to generate the package json file for dependencies)
+- then to make express: ‘npm install express’ (you have package
+- make a server js file 
+- to start do: node filename.js
 
 ————————————————————————————————————————————————
 NOTE: for packages not made localy using to run use: ‘run dev’ if fails use with ‘npm/npx’
 NOTE: if error try ‘npx/npx intall’ to get packages for project
+NOTE: To clear packages do: rm -rf .next node_modules package-lock.json yarn.lock, then npm install (Works for next)
 NOTE: to rebuild app: ‘npx expo prebuild —clean’ then to rebuild do: ’npx expo run:ios’
 NOTE: use expo commands to re run expo apps see section
 NOTE: Make sure you are in path of project folder before running any commands
 NOTE: Leave app running by leaving the terminal it ran in, make new terminal for adding stuff
 NOTE: To rename app (seperate from app name given at creation) Must change all occurances of app name in all json and other relevent folder, note that you must use unix rules for package.json but this wont be you app name that will be changed in other files and must match througout
+NOTE: TO STOP: ‘Ctrl+C’ or other commands 
 ————————————————————————————————————————————————
 TO BUILD (for reactjs)
 1) in next.config.mjs goto const nextConfig and put: output: ‘export’ , typescript: {ignoreBuildErrors: true,} NOTE that the second part is if you get a error in p2

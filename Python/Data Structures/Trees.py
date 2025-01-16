@@ -39,7 +39,7 @@ Tree Properties:
 
 - **Height**: The height of a tree is the length of the longest path from the root to a leaf. The height of a tree is measured in edges (or nodes, depending on definition). NOTE: the height starts at 0 so here the height is 3, at height 0 we have root at height 3 we have great grandchild 1.
 
-- **Depth**: The depth of a node is the length of the path from the root to that node. The root node has a depth of 0, its children have a depth of 1, and so on. NOTE: the depth starts at 0 and the depth of the tree (max depth) is the length of the longest path from the root to a leaf, so the max depth of this tree is 3 (from root to GGC1) = to the number of edges in that path = height of the tree
+- **Depth/Level**: The depth of a node is the length of the path from the root to that node. The root node has a depth of 0, its children have a depth of 1, and so on. NOTE: the depth starts at 0 and the depth of the tree (max depth) is the length of the longest path from the root to a leaf, so the max depth of this tree is 3 (from root to GGC1) = to the number of edges in that path = height of the tree
 
 - **Degree of a node**: The degree of a node is the number of children it has. For example, the degree of `[Child 1]` is 2 (it has two children: `[Grandchild 1]` and `[Grandchild 2]`), while the degree of `[Child 2]` is 1 (it has one child: `[Child 3]`). 
 

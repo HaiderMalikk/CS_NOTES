@@ -1,4 +1,4 @@
-package Java.OOP.Algorithms;
+package Java.Algorithms;
 
 public class Recurtion {
     // function static so it can be called in static method main
