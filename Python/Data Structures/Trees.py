@@ -218,7 +218,7 @@ Tree Types Overview:
 # A repesentation of a BST in memory:
 # NOTE: the ref is a random number repeseting the address of the object in memory for the sake of simplicity this address would give us the object so then we could access the data and the children
                          ____________
-                        |  ref: 5100 |
+                        |  ref: 5000 |
                         |  value: 10 |
                         |------------|
                         | Left: 5100 |
