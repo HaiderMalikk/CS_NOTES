@@ -1,7 +1,7 @@
 // ! React JS is a JavaScript library used for building user interfaces, particularly single-page applications.
 // ! JSX is a syntax extension that allows you to write HTML-like code inside JavaScript. It looks like HTML but has the full power of JavaScript. !
 
-// ! THIS IS ONLY EXAMPLES OF DYNTAX THE REAL PROSIBLITIES OF CREATING THINGS ARE ENDLESS
+// ! THIS IS ONLY EXAMPLES OF SYNTAX THE REAL PROSIBLITIES OF CREATING THINGS ARE ENDLESS
 
 // * JSX
 const element = <h1>Hello, world!</h1>; // this is JSX syntax here this code makes a h1 tag with text Hello, world!

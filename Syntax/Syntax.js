@@ -62,6 +62,10 @@ iwant = "this is waht i want"
 nowant = "this is what i dont want"
 // format is (condition) ? (if true) : (if false)
 iwant != nowant ? console.log("iwant is not nowant") : console.log("iwant is nowant");
+// alternate format using ??
+var1 = null;
+var2 = 88;
+console.log(var1 ?? var2); // if x DNE then return y
 
 // * arrow functions 
 // format is function name = (arg1, arg2) => {return arg1 + arg2}   // can also specify return type and function type
@@ -111,19 +115,24 @@ while (j < 10) {
     j++;
 }
 
-// for of loop
+// for of loop the 'of' is used to iterate over the values of an iterable object
 let fruits = ["apple", "banana", "cherry"];
 for (let fruit of fruits) {
     console.log(fruit);
 }
-
-// for in loop
-let personloop = {name: "John", age: 30};
-for (let key in personloop) {
-    console.log(key + ": " + personloop[key]);
+// for in loop loops over the index of an iterable object
+for (let fruitindex in fruits) {
+    console.log(fruitindex); // 0, 1, 2
+    console.log(fruits[fruitindex]); // apple, banana, cherry
 }
 
-// do while loop
+// for in loop, a for 'of' loops cannot be used to iterate over objects as obj[0] DNE we must use the key not the index
+let personloop = {name: "John", age: 30};
+for (let key in personloop) {
+    console.log(key + ": " + personloop[key]); // ex key = name, personloop[key] = personloop["name"] = John
+}
+
+// do while loop lets the loop run once before checking the condition
 let k = 0;
 do {
     console.log(k);
@@ -146,7 +155,8 @@ const newset = {first: x,  second: y, third: z} // frist = x, second = y, third 
 const {x: first, x: second, x: third} = newset; // first = x, second = x, third = x // here x is assigned to = first
 
 // string formatting use "  `` "
-const constString = `this is x: $ {constString}`;
+const xval = 10;
+const constString = `this is x: ${xval}`;
 console.log(constString);
 
 // * objects in JS (same as java for most part exept syntax most OOP is same like getters setters etc)
@@ -163,5 +173,26 @@ class Person{
 }
 
 // creating objs here const is not needed but is good practice
-const person = new Person();
-console.log(person.greet());
+const personex = new Person();
+console.log(personex.greet());
+
+// optional parameters use '?' after the parameter name
+// if we are accessing a property of an object that DNE it will return undefined so if we say obj1.name and obj 1 DNE it will return undefined
+// this is better beacuse if obj1.name DNE it will throw an error when we try to accsess its property name
+// ex of optional parameters
+let location = {
+    street: "123 main st",
+    city: "NYC",
+    country: "USA",
+    position: {
+        lat: 40.7128,
+        lng: -74.0060
+    }
+}
+
+// Ex1
+console.log(location.position?.lat); // if position DNE it will return undefined and wont give error for trying to get lat of something that DNE
+// Ex2 using a prop that DNE
+console.log(location.positionFormatted?.lat); // positionFormatted DNE so it will return undefined
+// error checking with ??
+console.log(location.positionFormatted ?? "LocationFormatted DNE"); // if positionFormatted DNE then return "Location DNE"
