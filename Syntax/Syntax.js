@@ -20,6 +20,7 @@ console.log(myName + constant);
 // some stuff is arr = [...arr] to make a copy of array etc use 0-> len-1
 
 // * functions
+// using function keyword
 function funcname(arg1){
     console.log("passed "+arg1+" in function");
     // or return;
@@ -29,6 +30,7 @@ funcname(1);
 // * conditionals if will run always no matter if a privious if was true else if will run if previous if was false and else runs if all fails
 // * and and or is same as java
 // here we use a arrow function to return a value
+// const function
 const processNumber = (num) => {
     if (num === 10) {
       console.log("num is 10");
@@ -46,6 +48,60 @@ const processNumber = (num) => {
 const result = processNumber(11);
 console.log("Returned value:", result);
   
+
+// * arrow functions, used to create functions in a more concise way than normal functions
+// format is function name = (arg1, arg2) => {return 'code'}   // can also specify return type and function type
+add = (a, b) => {return a + b}
+console.log(add(1, 2));
+// ex with calling function from a function using arrow function 
+// here we pass in no parameters and call the add function in the function code meaning it will add 2 and 2 always
+funcname2 = () => {
+  return add(2, 2)
+}
+console.log(funcname2());
+
+// * Function keyword vs const,let,var function vs arrow function
+// with function keyword you can call the function from another function before it is defined
+// this function cannot be changed later in the same scope, but if we have the same function defined in another scope like inside another function it can be changed
+myFunction();  // Works even before the function is defined
+function myFunction() {
+  console.log("Hello!");
+  //console.log(this); // `this` depends on how it's called 
+}
+// const function same as function keyword but its a const so it cannot be changed or called before its defined
+// myFunction2(); //cannot call the function from another function before it is defined myFunction2();
+const myFunction2 = function() {
+  console.log("This is a regular function assigned to a constant!");
+};
+myFunction2(); 
+// with const ARROW function you cannot call the function from another function before it is defined
+// myFunction3();  // Error: myFunction is not defined
+const myFunction3 = () => {
+  console.log("Hello!");
+  // console.log(this);  // `this` refers to the surrounding lexical scope
+};
+// Using Functions in Objects
+// Ex using Funtions in objects to show effect of this keyword
+const obj1 = {
+  name: "Test Object",
+  // cannot be const
+  arrowFunc: () => {
+    console.log(this.name); // Inherited `this` (e.g., global `this`)
+  },
+  // cannot be const
+  regularFunc: function () {
+    console.log(this.name); // `this` refers to `obj`
+  }
+};
+obj1.arrowFunc();  // Undefined or global value
+obj1.regularFunc(); // "Test Object"
+// let vs var vs const for functions
+/* 
+const function is constant and cannot be changed later
+let function is not constant and can be changed later
+var function is not constant and can be changed later but can cause issues with scope so use let instead
+*/
+
 
 // * switch case (always cehcks equality and type ie ===)
 switch (num) {
@@ -72,17 +128,6 @@ iwant != nowant ? console.log("iwant is not nowant") : console.log("iwant is now
 var1 = null;
 var2 = 88;
 console.log(var1 ?? var2); // if x DNE then return y
-
-// * arrow functions, used to create functions in a more concise way than normal functions
-// format is function name = (arg1, arg2) => {return 'code'}   // can also specify return type and function type
-add = (a, b) => {return a + b}
-console.log(add(1, 2));
-// ex with calling function from a function using arrow function 
-// here we pass in no parameters and call the add function in the function code meaning it will add 2 and 2 always
-funcname2 = () => {
-    return add(2, 2)
-}
-console.log(funcname2());
 
 // * equality operators
 // '=' just assigns '==' checks equality only '===' checks equality and type
@@ -114,7 +159,7 @@ let Objarray  = [
     {name: "Jane", age: 25, loves: {Work: "No", Sleep:"yes"}},
 ];
 
-// loops*
+// * loops*
 // for loop
 for (let i = 0; i < 10; i++) {
     console.log(i);
@@ -171,13 +216,14 @@ const xval = 10;
 const constString = `this is x: ${xval}`;
 console.log(constString);
 
-// * objects in JS (same as java for most part exept syntax most OOP is same like getters setters etc)
+// * objects in JS 
 class Person{
     // here the constructer is not a function but an object in JS so we cannot create it using class name
     constructor() {
         this.name = "John";
         this.age = 30;
     }
+    // NO IDENTIFIER NAME like const or function
     greet() {
         return "Hello, my name is " + this.name + " and I am " + this.age + " years old.";
     }
@@ -188,7 +234,7 @@ class Person{
 const personex = new Person();
 console.log(personex.greet());
 
-// optional parameters use '?' after the parameter name
+// * ptional parameters use '?' after the parameter name
 // if we are accessing a property of an object that DNE it will return undefined so if we say obj1.name and obj 1 DNE it will return undefined
 // this is better beacuse if obj1.name DNE it will throw an error when we try to accsess its property name
 // ex of optional parameters
@@ -210,7 +256,7 @@ console.log(location.positionFormatted?.lat); // positionFormatted DNE so it wil
 console.log(location.positionFormatted ?? "LocationFormatted DNE"); // if positionFormatted DNE then return "Location DNE"
 
 
-// Async, Await, Promises
+// * Async, Await, Promises
 // a async function is a function that returns a promise
 // a promise is an object that represents the eventual completion or failure of an asynchronous operation
 // await is used to wait for a promise i.e a async function to resolve 
@@ -276,3 +322,56 @@ const fetchAllData = async () => {
   
 fetchAllData();
 
+// common js functions
+/* 
+console.log() // Outputs data to the console
+alert() // Displays an alert dialog box
+prompt() // Displays a prompt dialog box for user input
+confirm() // Displays a confirmation dialog box
+parseInt() // Parses a string and returns an integer
+parseFloat() // Parses a string and returns a floating-point number
+isNaN() // Checks if a value is NaN (Not-a-Number)
+setTimeout() // Executes a function after a specified delay (in milliseconds)
+setInterval() // Repeatedly executes a function at specified intervals (in milliseconds)
+clearTimeout() // Clears a previously set timeout
+clearInterval() // Clears a previously set interval
+Math.random() // Generates a random number between 0 (inclusive) and 1 (exclusive)
+Math.round() // Rounds a number to the nearest integer
+Math.floor() // Rounds a number down to the nearest integer
+Math.ceil() // Rounds a number up to the nearest integer
+Math.max() // Returns the largest of the given numbers
+Math.min() // Returns the smallest of the given numbers
+Math.pow() // Raises a number to the power of another
+String.prototype.charAt() // Returns the character at a specified index in a string
+String.prototype.includes() // Checks if a string contains a specified substring
+String.prototype.split() // Splits a string into an array of substrings
+Array.prototype.push() // Adds one or more elements to the end of an array
+Array.prototype.pop() // Removes the last element from an array
+Array.prototype.shift() // Removes the first element from an array
+Array.prototype.unshift() // Adds one or more elements to the beginning of an array
+Array.prototype.map() // Creates a new array by applying a function to each element of the array
+Array.prototype.filter() // Creates a new array with elements that pass a test
+Array.prototype.reduce() // Applies a function to reduce all array elements to a single value
+Array.prototype.forEach() // Executes a function on each element of the array
+Array.prototype.sort() // Sorts the elements of an array
+Array.prototype.find() // Finds the first element in the array that satisfies a condition
+Object.keys() // Returns an array of a given object's own enumerable property names
+Object.values() // Returns an array of a given object's own enumerable property values
+Object.entries() // Returns an array of a given object's enumerable string-keyed property [key, value] pairs
+JSON.parse() // Parses a JSON string and returns the corresponding JavaScript object
+JSON.stringify() // Converts a JavaScript object into a JSON string
+encodeURIComponent() // Encodes a URI component by escaping special characters
+decodeURIComponent() // Decodes a URI component
+set() // Creates a new Set (collection of unique values)
+get() // Retrieves a value from a Map or Set
+Promise() // Creates a new promise object for asynchronous operations
+fetch() // Fetches resources asynchronously (e.g., making HTTP requests)
+addEventListener() // Attaches an event listener to an element
+removeEventListener() // Removes an event listener from an element
+localStorage.setItem() // Stores data in localStorage
+localStorage.getItem() // Retrieves data from localStorage
+sessionStorage.setItem() // Stores data in sessionStorage
+sessionStorage.getItem() // Retrieves data from sessionStorage
+document.querySelector() // Selects the first element matching a CSS selector
+document.querySelectorAll() // Selects all elements matching a CSS selector
+*/
