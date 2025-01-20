@@ -9,8 +9,8 @@ console.log("start") // print to console
 // same operators as python/ java
 
 // ! 3 ways to declare a variable can be any of the above
-var myName = "Haider"; // avalible in whole program no scope
-let num = 10; // avalible in scope of block only 
+var myName = "Haider"; // avalible in whole program no scope ,can be initialized later i.e var myName; myName = "Haider";
+let num = 10; // avalible in scope of block only , can be changed later i.e let num; num = 10;
 const constant = "Malik"; // cannot change its constant for arrays you cant cahneg array but can change its elements // block only scope 
 
 // you can add strings in js type DN matter
