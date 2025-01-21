@@ -1507,6 +1507,10 @@ print(sorted_by_values)  # Output: {'c': 1, 'b': 2, 'a': 3}
 sorted_by_keys_desc = dict(sorted(my_dict.items(), reverse=True))
 # by value
 sorted_by_values_desc = dict(sorted(my_dict.items(), key=lambda item: item[1], reverse=True))
+# filter EX, filter out eeryh=thing except the keys that are greater than 1
+filterd_by_keys= {'b': 2, 'a': 3, 'c': 1}
+filterd_by_keys = dict(filter(lambda item: item[1] > 1, filterd_by_keys.items()))
+print(filterd_by_keys) # Output: {'b': 2, 'a': 3}
 
 # ! Try catch 
 try:

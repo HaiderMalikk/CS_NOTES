@@ -13,7 +13,7 @@ LIST OF DATA STRUCTURES:
 # innitaly a head points to nothing. but after adding the first node the head points to the first node and the next node will have the head pointed to it from the prevoius node 
 # a node is nothing but a class that contains the data of current node and a link to next node called refrence so the refrence of the current node points to the next node. The last node points to NONE
 head to ref 1001->(data, ref 1002)->(data, ref 1003)->(data, ref NONE)->NULL # note how the ref of current node points to the next node, the head points to the first node innitally the the second node then third, and the last node points to nothing becuse the ref of the last node is null the head is null and the itaration stops 
-                                                            ^ node 3 ref = 1003
+                                                            ^ node 3 ref = 1003 (tail node)
                                           ^ node 2 ref = 1002   
                         ^ node 1 ref = 1001
               ^ ref first node            
