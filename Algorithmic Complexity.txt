@@ -84,14 +84,21 @@ def example_function(n):
 
     for k in range(n):              # O(n)
         print(k)                    # O(1)
-Total: O(n^2 + n) = O(n^2) (drop lower-order)
-Why: As n grows, the n^2 term dominates, and the effect of the n term becomes less and less noticeable.
+Total: O(n^2 + n) = O(n^2) (drop lower-order) and (dont Consider the constant operations O(1) as they can be Ignored)
+Why: As n grows, the n^2 term dominates, and the effect of the n term becomes less and less noticeable. So in short focus on the highest power 
 
 5. Disregard Constants and Lower-Order Terms
 Ignore constants and smaller terms, as they don't affect scalability.
 5n+3 → O(5n) (drop constant 3)
 n^2+n+10 → O(n^2) (drop constant 10 and linear term n as its growth is dominated by n^2 meaning n is the lower order term. 
                     i.e n gets left behind as n^2 grows so its less and less noticeable to the point where for almost any n n^2 is always much greater than n hence we drop n)
+
+"""
+# EX of approximating Time Complexity:
+EX: 6 + 7n + 2n * log(n) + 3n^2 => 7n + 2n * log(n) + 3n^2 => 7n + 2n + 3n^2 => 3n^2 => {n^3}
+- Explination: (constants are always ignored, then we drop lower-order log terms as they are dominated by higher power n^2 and n, 
+                then we drop the lower-order linear term because is dominated by n^2. Lastly we drop the multiplication constant 3 beacuse n^2 dominates the growth)
+"""
 
 6. Use Standard Algorithm Time Complexities
 Linear Search: O(n)
@@ -117,14 +124,14 @@ Algorithms Time complexity cases
         - EX: one algorithim might be O(n^2) but for a few elements it might be faster than another algorithm that is O(nlogn) for n elements.
         so if you have a few elements you can use the first algorithm but if you have a lot of elements you should use the second one. rendering both algorithms useful for different cases.
 
-- Relative efficiency vs Absolute efficiency
+- Relative efficiency vs Absolute efficiency 
 - Absolute efficiency: The time complexity of an algorithm in terms of the number of resorces it takes like time in Seconds ms, mins or CPU usage etc. 
                         EX: Algorithm A sorts 1 million elements in 1 second with 18MB used. This method is hardware dependent. so its not a good way to compare algorithms.
 - Relative efficiency: The time complexity of an algorithms based on their growth rate (Big-O complexity) rather than exact execution time. 
                         EX: Algorithm A sorts in O(n log n) time. This method is hardware independent. so its a good way to compare algorithms.
                         
--- The running time of a algorithim can be Calculated by counting the number of primitive operations it performs (see CS terminology for what that is)
-
+-- NOTE: The running time of a algorithim can be Calculated by counting the number of primitive operations it performs (see CS terminology for what that is)
+-- NOTE: Algorithims do not always have perfect time complexities it can be linear and still be O(7n-2) beacuse we drop lower-order terms so => O(n).
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 * Space Complexity (memory):
