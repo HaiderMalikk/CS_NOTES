@@ -1,9 +1,10 @@
 #! Hash table in python
-#! not the same as hash map, also known as key value pairs
-#! IDEA: create a dictionary then assign each key(like the id) to a value(value of the key)
+#!  hash map, also known as key value pairs, not same as hash table
+#! uses a dictionary then assign each key(like the id) to a value(value of the key)
+#! keys must be unique, values can be the same
 
 # ! EX 1 creating and adding values
-# Creating an empty hash table (dictionary)
+# Creating an empty hash map (dictionary)
 hash_table = {}
 
 # Adding key-value pairs
@@ -132,3 +133,44 @@ sorted_by_values = dict(sorted(my_dict.items(), key=lambda item: item[1]))
 filterd_by_keys= {'b': 2, 'a': 3, 'c': 1}
 filterd_by_keys = dict(filter(lambda item: item[1] > 1, filterd_by_keys.items()))
 print(filterd_by_keys)
+
+## !! HASH MAP VS HASH TABLE
+"""
+Comparison Between Python's `dict` (HashMap) and Thread-Safe Dictionary (Hashtable):
+
+1. Thread Safety:
+   - Python dict (HashMap): Not thread-safe.
+   - Thread-safe dict (Hashtable): Thread-safe with locks.
+
+2. Null Keys/Values:
+   - Python dict (HashMap): Supports None as keys/values.
+   - Thread-safe dict (Hashtable): Supports None with proper handling.
+
+3. Performance:
+   - Python dict (HashMap): High for single-threaded apps.
+   - Thread-safe dict (Hashtable): Slower due to synchronization.
+
+4. Built-in Support:
+   - Python dict (HashMap): Yes, built-in (dict).
+   - Thread-safe dict (Hashtable): No, requires manual implementation.
+"""
+
+from threading import Lock
+
+class ThreadSafeDict:
+    def __init__(self):
+        self.dict = {}
+        self.lock = Lock()
+
+    def set(self, key, value):
+        with self.lock:
+            self.dict[key] = value
+
+    def get(self, key):
+        with self.lock:
+            return self.dict.get(key)
+
+# Usage
+ts_dict = ThreadSafeDict()
+ts_dict.set("key1", "value1")
+print(ts_dict.get("key1"))  # Output: value1
