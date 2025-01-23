@@ -90,7 +90,7 @@ for letter in text:
 
 print(letter_count)  # Output: {'h': 1, 'e': 1, 'l': 3, 'o': 2, 'w': 1, 'r': 1, 'd': 1}
 
-# ! EX (just keys no values) finding vowels in a string array
+# ! EX (just keys no values) finding vowels in a string array, this is a dictionary with no values but we can assign values to the keys if we want
 # Creating a hash table to store vowels
 vowels = {'a', 'e', 'i', 'o', 'u'}
 vowelscounter = 0
@@ -115,14 +115,20 @@ for gem in ['ruby', 'emerald', 'diamond', "dirt"]:
 
 print(earning) # prints the total earning from the gems
 
-# using pythons get() funcrtion to safly get the value of a key from a dictionary without throwing an error if the key is not found
+# ! using pythons get() funcrtion to safly get the value of a key from a dictionary without throwing an error if the key is not found
 # usally we say x = map[value]  but what is value DNE, use get() to get its value and then we can modify map[value] knowing it exists
 # EX;
 map = {'a': 1, 'b': 2, 'c': 3}
 print(map.get('a')) # prints 1
 print(map.get('d')) # prints None
 
-# For sorting dictionaries by keys or values, you can use the sorted() function in combination with the dict() function to convert the soted obj to a dictionary
+#! assigning arrays to keys
+# Creating a hash table to store lists of items
+items = {'fruits': ['apple', 'banana', 'orange'], 'vegetables': ['carrot', 'spinach', 'broccoli']}
+# print the fruits
+print(items['fruits']) # prints ['apple', 'banana', 'orange']
+
+# ! For sorting dictionaries by keys or values, you can use the sorted() function in combination with the dict() function to convert the soted obj to a dictionary
 # sort by key
 my_dict = {'b': 2, 'a': 3, 'c': 1}
 sorted_by_keys = dict(sorted(my_dict.items()))

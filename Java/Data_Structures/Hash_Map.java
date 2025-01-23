@@ -34,16 +34,20 @@
 // Hash Map:
 package Java.Data_Structures;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Hash_Map {
     public static void main(String[] args) {
-        // Create a HashMap syntax: HashMap<KeyType, ValueType> mapname = new HashMap<>();
+        // * Create a HashMap syntax: HashMap<KeyType, ValueType> mapname = new HashMap<>();
         HashMap<Integer, String> map = new HashMap<>();
 
         // Insert key-value pairs using the put() method
         map.put(1, "Apple");
         map.put(2, "Banana");
         map.put(3, "Cherry");
+
+        // print the map
+        System.out.println(map); // Output: {1=Apple, 2=Banana, 3=Cherry}
 
         // Retrieve a value by key using the get() method using the key
         System.out.println("Value for key 2: " + map.get(2)); // Output: Banana
@@ -58,5 +62,35 @@ public class Hash_Map {
         for (Integer key : map.keySet()) {
             System.out.println("Key: " + key + ", Value: " + map.get(key)); // use get method to get the value of the key
         }
+
+        // * assigning an list to a hash maps keys as a value using the ArrayList
+        // Creating a HashMap with String keys and ArrayList values
+        HashMap<String, ArrayList<Integer>> maplist = new HashMap<>();
+        
+        // Adding an ArrayList for key "A"
+        // array list is a better data structure than arrays as it is dynamic and can grow or shrink in size
+        // its also has many methods built in for manipulating the list
+        // array list syntax: ArrayList<DataType> listname = new ArrayList<>();
+        ArrayList<Integer> listA = new ArrayList<>();
+        listA.add(1);
+        listA.add(2);
+        listA.add(3);
+        maplist.put("A", listA); //listA = [1, 2, 3]
+        
+        // Adding an ArrayList for key "B"
+        ArrayList<Integer> listB = new ArrayList<>();
+        listB.add(4);
+        listB.add(5);
+        maplist.put("B", listB);
+
+        // Adding more values to the list of key "A"
+        maplist.get("A").add(4);
+        
+        // Output the map
+        System.out.println(maplist);  // Output: {A=[1, 2, 3, 4], B=[4, 5]}
+        
+        // Access values in the list for key "A"
+        ArrayList<Integer> retrievedList = maplist.get("A");
+        System.out.println("Values for key 'A': " + retrievedList); // Output: Values for key 'A': [1, 2, 3, 4]
     }
 }
