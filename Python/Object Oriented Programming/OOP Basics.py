@@ -12,7 +12,7 @@
 7. Method Overriding 
 8. Interface 
 9. Wrapper Function (not a OOP consept but usefull in OOP)
-10. ETC (Public, Private , Protected, Magic Methods)
+10. ETC (Public, Private , Protected, Magic Methods, using objects as parameters)
 """
 
 # ! Basic syntax
@@ -550,3 +550,27 @@ class MyClass:
     # Equals magic method
     def __eq__(self, other):
         return self.value == other.value 
+    
+# using objects as parameters 
+# usaly we do seft to refer to the object that is calling the method but that is we are outside the class
+# then we can pass the whole object as a parameter
+class userOBJ:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+# making a user obj
+user1 = userOBJ("John", 30)
+class User:
+    def print_user(self, user):
+        print(f"Name: {user.name}, Age: {user.age}")
+# OR drop the class and just use teh method
+def print_user(user):
+    print(f"Name: {user.name}, Age: {user.age}")
+
+# make the user class and then use its print user method to print the user
+# we pass the user object to the print_user method as a parameter
+user = User()
+user.print_user(user1)  # Output: Name: John, Age: 30
+# OR
+print_user(user1)
