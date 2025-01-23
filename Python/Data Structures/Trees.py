@@ -526,7 +526,7 @@ root.inorder()  # prints 5 10 15 20 100 None (note its in lowest to highest orde
 # Post order traversal
 root.postorder() # prints 5 15 100 20 10 None 
 
-# * DFS (Depth First Search) and BFS (Breadth First Search
+# * DFS (Depth First Search) and BFS (Breadth First Search) also known as level order traversal 
 class BST:
     def __init__(self, data):
         self.key = data
@@ -552,7 +552,7 @@ class BST:
     def bfs(self):
         """
         Performs a breadth-first search (BFS) on the binary tree and prints each node in level order.
-        BFS uses a queue to explore all nodes level by level.
+        BFS uses a queue to explore all nodes level by level. hence its also known as level order traversal
         """
         # Start with the root node in the queue
         queue = [self]
