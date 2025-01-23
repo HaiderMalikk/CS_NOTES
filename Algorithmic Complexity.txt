@@ -131,7 +131,8 @@ Algorithms Time complexity cases
                         EX: Algorithm A sorts in O(n log n) time. This method is hardware independent. so its a good way to compare algorithms.
                         
 -- NOTE: The running time of a algorithim can be Calculated by counting the number of primitive operations it performs (see CS terminology for what that is)
--- NOTE: Algorithims do not always have perfect time complexities it can be linear and still be O(7n-2) beacuse we drop lower-order terms so => O(n).
+-- NOTE: Algorithims do not always have perfect time complexities it can be linear and still be 7n-2 but the the big O is a family of functions so 7n-2 = O(n)
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 * Space Complexity (memory):
