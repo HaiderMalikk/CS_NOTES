@@ -10,6 +10,7 @@
 console.log('Hello World!'); // SAME AS JS!
 
 // * Declaring variables with type annotations (these cant be cahnged ie a number cant be cahnged to a string later on)
+// NOTE: IF THE TYPE IS NOT DECLARED IT WILL BE INFERRED BY THE VALUE SO DONT NEED TO DECLARE IT EX: let age = 30;
 let isDone: boolean = false; // Boolean type
 let decimal: number = 6; // Number type
 let color: string = "blue"; // String type
