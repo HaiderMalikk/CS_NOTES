@@ -32,7 +32,7 @@ print("the value of x is %d and the value of y is %.2f" % (x, y)) # the % is use
 # the x and y much match the position of the %s and %f in the string
 # NOTE: we can use %.xf to extend the number of shrink it by x decimal places
 
-## nested if statements 
+# ! Conditionals (evaluated left to right) and uses (Short-circuit evaluation) EX: in a or statment if the first condition is true the rest of the conditionals will not be evaluated
 # or you can make many variables in one line by using the comma "," EX: a,b,c = 1,2,3
 x = 10
 y = 5
@@ -172,6 +172,17 @@ age = 18
 status = "Adult" if age >= 18 else "Minor"
 print(status)  # Output: Adult
 
+# ! using logical operators in variables assignment
+# you can use logical operators to assign a value to a variable based on if its none 
+# syntax var = value1 logical_operator value2 .... the value of myvar will depend on the logical operator, only and and or can be used
+# the chain of logical operators can go multiple times
+# EX:
+myvar = 10 or None # myvar will be 10 as its true but if it was 0 or false/none it would be none
+myvar = 0 and 2 # myvar is 0 
+myvar = 3 and 0 # my var is 0
+# we can see that the or is srightforward its the truthy value but and is a bit more complex
+# for the and if there is a flase value the var will be that value but if both are true it will be the second value
+# can also be used in a functions return statment see function notes
 
 ## While loops
 
@@ -435,8 +446,28 @@ print(list1) # [1]
 list2 = append_to_list(2)
 print(list2) # [2] # now list1 and list2 are different lists
 
+# ! using logical operators in return statements
+# you can use logical operators to return a value based on if its none
+# * method one use a or operator see (using logical operators in variables assignment) for the and operator and how it works on vaiables
+# the cahin or operators can go multiple times
+def returnThis(value):
+    return value or 'default value' # if value is true it will return value but if value is 0,false,none it will return 'default value'
+print(returnThis(0)) # default value
+print(returnThis(5)) # 5   
 
-## ! lambda function (anonymous function)
+# * method two use a ternary operator see (using logical operators in variables assignment) for the and operator and how it works on vaiables
+# syntax value_if_true if condition else value_if_false
+def returnThis(value):
+    return value if value else 'default value' # if value is true it will return value but if value is 0,false,none it will return 'default value'
+print(returnThis(0)) # default value
+print(returnThis(5)) # 5
+# EX2 this ternary operator can be used to return a value based on a condition and can be more complex
+def returnThis(value):
+    return value if value > 0 and value < 99 else 'default value' # if value is greater than 0 it will return value but if value is 0 or less it will return 'default value'
+print(returnThis(0)) # default value
+print(returnThis(5)) # 5
+
+# ! lambda function (anonymous function)
 # how to create a lambda function in python 
 # lambda are simple functions 
 square = lambda x: x ** 2
