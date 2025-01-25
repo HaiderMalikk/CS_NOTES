@@ -131,7 +131,8 @@ let car: Car = {
 // interfaces can be used to extend other interfaces and can be changed later on to add more properties to the interface
 // types are final and can't be changed but you can use union types and intersection types with them to merge them
 // Creation
-// Using type
+
+// - Using type
 type Cartype = {
   make: string;
   model: string;
@@ -143,7 +144,7 @@ interface Carinterface {
   model: string;
   year: number;
 }
-// declaration merging
+//  - declaration merging
 interface Carx {
   make: string;
 }
@@ -153,21 +154,22 @@ interface Carx {
   model: string;
   year: number;
 }
-
+//using the interface
 const myCar: Carx = {
   make: "Toyota",
   model: "Corolla",
   year: 2021
 };
+
 type CarY = {
   make: string;
 };
-
 // Error: Duplicate identifier
 // type Car = {
   //   model: string;
   // };
-// more shapes 
+
+// - more shapes 
 type Status = "success" | "error" | "loading"; // Union means it can be any of the 3 choices
 type Point = { x: number; y: number } & { z: number }; // Intersection means it must have all 3 properties
 type StringOrNumber = string | number; // Union of primitives means it can be either a string or a number
@@ -175,7 +177,7 @@ type Callback = (value: number) => void; // Function type means it's a function 
 type Tuple = [string, number]; // Tuple type means it's an array with 2 elements, a string and a number
 // interfaces dont have these features
 
-// inheritance
+// - inheritance
 interface Vehicle {
   make: string;
 }
