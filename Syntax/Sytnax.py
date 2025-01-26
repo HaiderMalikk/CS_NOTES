@@ -163,7 +163,7 @@ False
 # ! shorthand if else like ternary operator
 # syntax:
 # value_if_true if condition else value_if_false
-# you can also return these values in a function using this notation
+# you can also return these values in a function using this notation insted of storing them in a variable first
 # EX:
 is_even = True if 4 % 2 == 0 else False
 print(is_even)  # Output: True
