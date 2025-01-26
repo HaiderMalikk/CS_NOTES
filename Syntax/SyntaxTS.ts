@@ -6,6 +6,7 @@
 // ! we can use tsc filename.ts -w to watch for changes in the file ie see errors
 // ! note that you cant rediclare variables from a js file to a ts file meanign if 'name' vaible is in js file in the same folder as the ts file it will give an error
 // ! NOTE after making your js file ts file will give errors as now you have a js file with the same var names as your ts file 
+// * SO THIS CODE IN A EXTENSION OF JS SYNTAX FILE
 
 console.log('Hello World!'); // SAME AS JS!
 
@@ -71,6 +72,10 @@ let currentDirection: Direction = Direction.Up;
 function add(a: number, b: number): number {
     return a + b;
 }
+// arrow function
+const add2 = (a: number, b: number): number => {
+    return a + b;
+};
   
 // * objects (no class)
 // Defining an object with specific properties

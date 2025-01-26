@@ -6,18 +6,41 @@
 console.log("start") // print to console
 
 //  * data types and varibles (any type can be null, bool, Str, symbol(immutable primative), num, obj)
-// same operators as python/ java
+//  * variables (any type can be null, bool, Str, symbol(immutable primative), num, obj) 
+// * operators: +, -, *, /, %, **, ++, --, +=, -=, *=, /=, %=, ==, ===, !=, !==, >, <, >=, <=, &&, ||, !, ?:, ??
 
 // ! 3 ways to declare a variable can be any of the above
 var myName = "Haider"; // avalible in whole program no scope ,can be initialized later i.e var myName; myName = "Haider";
 let num = 10; // avalible in scope of block only , can be changed later i.e let num; num = 10;
 const constant = "Malik"; // cannot change its constant for arrays you cant cahneg array but can change its elements // block only scope 
+state = "New York"; // no keyword is used to declare a variable it is automatically declared as a global variable
 
 // you can add strings in js type DN matter
 console.log(myName + constant);
 
 // * arrays (same as python no type mattercand built ins for various operations)
-// some stuff is arr = [...arr] to make a copy of array etc use 0-> len-1
+// !NOTE: arrays are 0 indexed
+let arr = [1, 2, 3, 4, 5];
+console.log(arr[0]); // 1
+console.log(arr.length); // 5
+console.log(arr[arr.length - 1]); // 5  
+console.log(arr[10]); // undefined  
+// adding to array
+arr.push(6);
+console.log(arr); // [1, 2, 3, 4, 5, 6]
+// removing from array
+arr.pop();
+console.log(arr); // [1, 2, 3, 4, 5]
+// removing from beginning of array
+arr.shift();
+console.log(arr); // [2, 3, 4, 5]
+// adding to beginning of array
+// sorting array
+arr.sort();
+console.log(arr); // [1, 2, 3, 4, 5]
+// reverse array
+arr.reverse();
+console.log(arr); // [5, 4, 3, 2, 1]
 
 // * functions
 // using function keyword
@@ -101,6 +124,32 @@ const function is constant and cannot be changed later
 let function is not constant and can be changed later
 var function is not constant and can be changed later but can cause issues with scope so use let instead
 */
+// assigning functions to constants
+myFunction4 = () => {
+  console.log("Hello!");
+  // console.log(this);  // `this` refers to the surrounding lexical scope
+};
+const myFunction4def = myFunction4();
+myFunction4def; // Hello!
+// we can also assign return values to constants
+const myFunction5 = () => {
+  return "Hello!";
+};
+const myFunction5def = myFunction5(); // const holds return value of function
+console.log(myFunction5def); // Hello!/
+// - returning multiple functions from a function
+const myFunction6 = () => {
+  return {
+    func1: () => {
+      console.log("func1");
+      // can have a return value here as well
+    },
+    func2: () => console.log("func2") // in one line
+  };
+};
+const myFunction6def = myFunction6();
+myFunction6def.func1(); // func1
+myFunction6def.func2(); // func2
 
 
 // * switch case (always cehcks equality and type ie ===)
@@ -206,7 +255,7 @@ const y = set.y;
 const z = set.z;
 
 // new way
-// !NOTE: the order of assignment matters 
+// NOTE: the order of assignment matters 
 const newset = {first: x,  second: y, third: z} // frist = x, second = y, third = z // here first is assigned to = x
 /// NOTE: first dose not have to exist its not the assignment syntax ie assign empty val to some val its the order of the assignment
 const {x: first, x: second, x: third} = newset; // first = x, second = x, third = x // here x is assigned to = first
@@ -215,6 +264,25 @@ const {x: first, x: second, x: third} = newset; // first = x, second = x, third 
 const xval = 10;
 const constString = `this is x: ${xval}`;
 console.log(constString);
+
+// * Error Handling
+/* // try catch block
+try {
+    // code that might throw an error
+    throw new Error("This is an error");
+} catch (error) {
+    // code to handle the error
+} finally {
+    // code to be executed regardless of whether the try block throws an error or not
+}
+*/ 
+// EX
+function divide(a, b) {
+    if (b === 0) {
+        throw new Error("Cannot divide by zero");
+    }
+    return a / b;
+}
 
 // * objects in JS 
 class Person{
@@ -255,6 +323,22 @@ console.log(location.positionFormatted?.lat); // positionFormatted DNE so it wil
 // error checking with ??
 console.log(location.positionFormatted ?? "LocationFormatted DNE"); // if positionFormatted DNE then return "Location DNE"
 
+// * Spread operator
+// The spread operator (...) is used to expand an iterable object into individual elements
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combinedArr = [...arr1, ...arr2]; // this will combine the two arrays into one array but ...arr1 will spred all the elements of arr1 into the new array and so on
+console.log(combinedArr); // [1, 2, 3, 4, 5, 6] each element is a new item
+// this function takes in spred arguments meaning how ever many are given each will be added to the array as a new item
+// so here the spred operater was used to unpack the arguments into an array
+function mySpredFunction(...args) {
+  console.log(args); // prints all arguments as an array
+}
+mySpredFunction(1, 2, 3); // Output: [1, 2, 3]
+// for objects
+const obj = { a: 1, b: 2 };
+const newObj = { ...obj, c: 3 }; // this will add a new key value pair to the object
+console.log(newObj); // Output: { a: 1, b: 2, c: 3 }
 
 // * Async, Await, Promises
 // a async function is a function that returns a promise
