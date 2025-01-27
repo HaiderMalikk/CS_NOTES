@@ -226,9 +226,9 @@ let fruits = ["apple", "banana", "cherry"];
 for (let fruit of fruits) {
     console.log(fruit);
 }
-// for in loop loops over the index of an iterable object
+// for in loop loops over the index of an iterable object as a string
 for (let fruitindex in fruits) {
-    console.log(fruitindex); // 0, 1, 2
+    console.log(fruitindex); // * 0, 1, 2 the index is a string not a number 
     console.log(fruits[fruitindex]); // apple, banana, cherry
 }
 
@@ -237,6 +237,8 @@ let personloop = {name: "John", age: 30};
 for (let key in personloop) {
     console.log(key + ": " + personloop[key]); // ex key = name, personloop[key] = personloop["name"] = John
 }
+
+// *  to cast a string to a number use parseInt() or parseFloat() to convert a string to a number or float
 
 // do while loop lets the loop run once before checking the condition
 let k = 0;
@@ -439,6 +441,7 @@ Array.prototype.reduce() // Applies a function to reduce all array elements to a
 Array.prototype.forEach() // Executes a function on each element of the array
 Array.prototype.sort() // Sorts the elements of an array
 Array.prototype.find() // Finds the first element in the array that satisfies a condition
+Array.prototype.length // Returns the number of elements in an array not a function but a property
 Object.keys() // Returns an array of a given object's own enumerable property names
 Object.values() // Returns an array of a given object's own enumerable property values
 Object.entries() // Returns an array of a given object's enumerable string-keyed property [key, value] pairs

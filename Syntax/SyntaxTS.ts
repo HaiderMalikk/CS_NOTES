@@ -103,8 +103,8 @@ for (const key of Object.keys(car2)) {
 // * ADVANCED TYPES
 // Create a type alias for a complex object type
 type User = {
-    name: string;
-    age: number;
+    name: string; // use ? after name to make it optional
+    age: number; 
 };
   
 let myuser: User = { name: "Bob", age: 30 };
@@ -119,10 +119,11 @@ id = "ABC";
 // Interfaces define the structure of an object
 interface Car {
   make: string;
-  model: string;
+  model?: string; // Optional property
   year: number;
 }
 
+// an object that follows the interface in this object we must have a make and year property but model is optional
 let car: Car = {
   make: "Toyota",
   model: "Corolla",
