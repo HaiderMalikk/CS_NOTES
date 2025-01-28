@@ -1,16 +1,27 @@
 REACT JS (web only)
 
+#### DEPRECIATED ####
 1) basic start
- ‘npx create-react-app’
+ ‘npx create-react-app app-name’
+2) TS start
+‘npx create-react-app app-name --template typescript’
+- to start do npm start
+######################
 
-2) vite + gsap animation start
-‘npm create vite@latest’
-to use vite gsap with existing react project made using 1 or 2
+2) Vite (preferd, use SWC)
+npm create vite@latest my-react-app
+npm install // must install packages yourself
+to run: npm run dev
+for tailwind: https://tailwindcss.com/docs/installation/using-vite
+
+#)gsap animation start
+to use vite gsap with existing react project made using vite
 ‘npm install gsap @gsap/react’
 to start again: ’npm run dev’
 
+————————————————————————————————————————————————
 NEXT JS (web only)
-1) basic creation
+1) basic xreation
 ‘npx create-next-app@latest’
 to run development version: ‘npm run dev’
 Make sure to build to get latest app folder as .next/ folder (main website file)
