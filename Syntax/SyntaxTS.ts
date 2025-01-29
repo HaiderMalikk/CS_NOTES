@@ -44,6 +44,8 @@ if (typeof value === "string") {
   console.log(value.toUpperCase());
 }
 
+// a function that returns a promise has a return type of Promise<T> where T is the type of the resolved value i.e string EX Promise<string>
+
 // * arrays
 // Declaring an array of numbers
 let numbers: number[] = [1, 2, 3, 4];
@@ -76,7 +78,13 @@ function add(a: number, b: number): number {
 const add2 = (a: number, b: number): number => {
     return a + b;
 };
-  
+
+// optional parameters ? after the parameter name makes it optional, if a value is given to a agrument it will be used if nothin is given when calling the function
+function greetuser(name?: string, age = 10): void {
+    console.log(`Hello, ${name || "Guest"}`);
+    console.log(`You are ${age} years old`);
+}
+
 // * objects (no class)
 // Defining an object with specific properties
 let person: { name: string; age: number } = {
@@ -255,6 +263,4 @@ interface Box<T> {
   
 let stringBox: Box<string> = { contents: "A book" };
 let numberBox: Box<number> = { contents: 100 };
-  
-
   

@@ -18,6 +18,9 @@ state = "New York"; // no keyword is used to declare a variable it is automatica
 // you can add strings in js type DN matter
 console.log(myName + constant);
 
+// vars in strings in `` use ${var} to place a var in a string
+console.log(`My name is ${myName} ${constant}`); // with this everything in `` is a string mening its not the same as "s" + obj  
+
 // * arrays (same as python no type mattercand built ins for various operations)
 // !NOTE: arrays are 0 indexed
 let arr = [1, 2, 3, 4, 5];
@@ -42,6 +45,28 @@ console.log(arr); // [1, 2, 3, 4, 5]
 arr.reverse();
 console.log(arr); // [5, 4, 3, 2, 1]
 
+
+// * conditionals if will run always no matter if a privious if was true else if will run if previous if was false and else runs if all fails
+// * and and or is same as java
+// here we use a arrow function to return a value
+// const function
+const processNumber = (num) => {
+  if (num === 10) {
+    console.log("num is 10");
+  } else if (num > 10 || (num < 10 && num !== 10)) {
+    console.log("num is greater than 10");
+    let str = "or";
+    let number = 1;
+    return number || str; // Returns `number` if it exists; otherwise, `str`
+  } else {
+    console.log("num is less than 10");
+  }
+};
+
+// Example 
+const result = processNumber(11);
+console.log("Returned value:", result);
+
 // * functions
 // using function keyword
 function funcname(arg1){
@@ -50,27 +75,13 @@ function funcname(arg1){
 }
 funcname(1); 
 
-// * conditionals if will run always no matter if a privious if was true else if will run if previous if was false and else runs if all fails
-// * and and or is same as java
-// here we use a arrow function to return a value
-// const function
-const processNumber = (num) => {
-    if (num === 10) {
-      console.log("num is 10");
-    } else if (num > 10 || (num < 10 && num !== 10)) {
-      console.log("num is greater than 10");
-      let str = "or";
-      let number = 1;
-      return number || str; // Returns `number` if it exists; otherwise, `str`
-    } else {
-      console.log("num is less than 10");
-    }
-};
-  
-// Example 
-const result = processNumber(11);
-console.log("Returned value:", result);
-  
+// * optional parameters
+function funcname2(arg1, arg2 = 2){
+    console.log("passed "+arg1+" in function");
+    console.log("passed "+arg2+" in function");
+    // or return;
+}
+funcname2(1);
 
 // * arrow functions, used to create functions in a more concise way than normal functions
 // format is function name = (arg1, arg2) => {return 'code'}   // can also specify return type and function type
@@ -245,9 +256,7 @@ let k = 0;
 do {
     console.log(k);
     k++;
-    } while (k < 10);
-
-// * try catch (is teh same as in python try{try this} catch{if try fails do this}) 
+    } while (k < 10); 
 
 // * destructuring assignments ie making new variables from existing ones
 // old way
@@ -268,16 +277,21 @@ const constString = `this is x: ${xval}`;
 console.log(constString);
 
 // * Error Handling
-/* // try catch block
-try {
-    // code that might throw an error
-    throw new Error("This is an error");
-} catch (error) {
-    // code to handle the error
-} finally {
-    // code to be executed regardless of whether the try block throws an error or not
+const errfunc = () => {
+  try {
+      // code that might throw an error
+      throw new Error("This is an error"); // at any point in the code we can throw an error to the catch block
+  } catch (error) {
+      // code to handle the error we got here by 
+      // either 1) there was a JS error or a failed promise in the try block or a error was thrown using Error() in the try block
+      console.log("error was" +error) // error is the error object that was thrown from the try block using the Error class
+  } finally {
+      // code to be executed regardless of whether the try block throws an error or not
+      console.log("err fin")
+  }
 }
-*/ 
+errfunc()
+
 // EX
 function divide(a, b) {
     if (b === 0) {
@@ -367,6 +381,9 @@ const fetchData = () => {
 };
   
 // Using the Promise use .then to handle resolve and .catch to handle reject from the data
+/* 
+!! DO NOT ADD ';' AFTER THE FUNCTION CALL OR .THEN() ETC UNTIL THE END AS WE ARE NOT STOPPING THE FUNCTION CALL
+ */
 fetchData()
     .then((data) => console.log(data)) // Handles resolve
     .catch((error) => console.error(error)); // Handles reject
@@ -375,7 +392,7 @@ fetchData()
 const getData = async () => {
     try {
       const data = await fetchData(); // Waits for the Promise to resolve
-      console.log(data);
+      console.log(data); // prints the resolved data
     } catch (error) {
       console.error(error); // Handles rejection
     }
