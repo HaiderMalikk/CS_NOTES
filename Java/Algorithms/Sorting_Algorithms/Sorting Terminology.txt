@@ -1,0 +1,11 @@
+*** There are 4 ways to sort a iterable 
+1) Decresing/Decending: Meaning Highest to lowerst i.e n >= n+1 for some n meaning duplicates are allowed. EX: [4,4,3,2,2,1]
+2) Increasing/Ascending: Meaning Lowest to highest i.e n <= n+1 for some n meaning ducplicates are allowed. EX: [1,1,2,3,4]
+3) Non-Acending: is the same manner of sorting as (1) Decresing/decending BUT no duplicates allowed the next next element will always be Decresing, n > n+1 for all n. EX: [2,1,-1]
+4) Non-Decending: is the same manner of sortung as (2) Increasing/Acending BUT no duplicates are allowed the next element will always be Increasing, n < n+1 for all n. EX: [1,2,4]
+### NOTE: FOR (1) and (2) POSIBLITIES THE ARRAY CAN BE CONSTANT I.E NO INCRESE OR DECRESE JUST A FLAT VALUE
+
+*** How do do them?
+Sorting algorithims by convention are usally demonstrated in a Increasing manner 
+But you could change any sorting algorithim to be acending or decending depending of the application, or even disclude duplicates if you wish
+But to change it depends algorithim to algorithim BUT you can always reverse the final array and or use a set to reverse and or remove duplicates appropriatly 

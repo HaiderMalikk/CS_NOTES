@@ -2120,3 +2120,49 @@ class callbyreference {
  the pointer is the address of the object not a copy but the actual address
  in java there is no memory munipliation so we cannot pass the actual address of the object
  */
+
+// ! Generics in Java
+/* 
+  What is Generics in Java?
+ Generics in Programming Languages and Java allow you to create classes, interfaces, 
+ and methods that can operate on different types while ensuring type safety at compile time.
+
+ Why Use Generics?
+Type Safety – Prevents ClassCastException by ensuring type compatibility at compile time.
+Code Reusability – The same code can work with multiple data types without duplication.
+Eliminates Casting – No need for explicit casting when retrieving values.
+Improved Performance – Avoids boxing/unboxing overhead in collections.
+
+How to use:
+Generics introduce type parameters in <>, which act as placeholders for actual types.
+ */
+
+ // EX
+class Box<T> {  // T is a type parameter it can be any variable name but T is convention
+    private T value; // create a variable of type T this will be your type for this class's object
+
+    // Constructor to initialize the type variable i.e we are defining the type for this class's object
+    public void set(T value) {
+        this.value = value;
+    }
+
+    // Method to get the value of the class
+    public T get() {
+        return value;
+    }
+}
+// Ex using generics
+class GenericExample {
+    public static void main(String[] args) {
+        Box<Integer> intBox = new Box<>();
+        intBox.set(10);
+        System.out.println(intBox.get()); // 10
+
+        Box<String> strBox = new Box<>();
+        strBox.set("Hello");
+        System.out.println(strBox.get()); // Hello
+        
+        // Cannot do
+        // intBox.set("Hello"); // error as the type is integer
+    }
+}

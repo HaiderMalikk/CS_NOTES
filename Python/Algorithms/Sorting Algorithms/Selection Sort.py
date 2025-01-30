@@ -11,9 +11,10 @@ Find the smallest (or largest, depending on the order) element in the unsorted p
 Swap it with the first element in the unsorted portion.
 Move the boundary between sorted and unsorted portions one element forward. now the unsorted portion is one element smaller.
 
-NOTE: since we only replace one element in each pass, we must complete n-1 passes where n is the number of elements in the list.
+NOTE: since we only replace one element in each pass, we must complete n-1 passes where n is the number of elements in the list starting from 0. or len(arr) - 2
       we dont do a pass on the last element as it is already in its correct position, in the last pass we would have 2 elements left,
-      and after that sort the last element would of course be in its correct position.
+      and after that sort the last element would of course be in its correct position. as in each pass we aleays find the smallest element
+      in the last pass the last element is the only element left so it was the largest element in the array and should not be swapped with anything.
 
 # Step by Step Explanation
 Initial Array: [64, 34, 25, 12, 22, 11, 90]
@@ -21,8 +22,11 @@ Initial Array: [64, 34, 25, 12, 22, 11, 90]
 First Pass (i = 0):
 Find the smallest element in the unsorted portion [64, 34, 25, 12, 22, 11, 90].
 Smallest element is 11 (at index 5).
-Swap 11 with the first element 64.
+Swap 11 with the first element 64 i.e insert 11 at the beginning of the sorted portion = i = 0 (in this case).
 Array after pass: [11, 34, 25, 12, 22, 64, 90].
+Move the boundary between sorted and unsorted portions one element forward 
+i.e now the unsorted portion is one element smaller and the sorted portion is one element bigger 
+meaning the current index i = i+1 where i is the index i will be where we start the next pass from and where we insert the smallest element found in the unsorted portion to.
 
 Second Pass (i = 1):
 Find the smallest element in the unsorted portion [34, 25, 12, 22, 64, 90].
@@ -54,26 +58,26 @@ Array remains: [11, 12, 22, 25, 34, 64 , 90].
 
 # array sorted as total passes complete
 now the loop will end and the array is sorted.
+
+NOTE: there is no break statement in the loop we must go until the end of the array to make sure all elements are sorted even if no new min index is found
+      This is beacuse we select each element in the unsorted portion and compare it with all the elements in the unsorted portion hence we must go through all elements
 """
 
 # ! code
 def selection_sort(arr): # define function
     n = len(arr) # get the length of the array and store in n
-    # loop through the array n-1 times (complete n-2 number of passes as n-1 is exclusive)
-    # remember that range functions end number is exclusive meaning we go upto n-1 because we start at 0
+    # loop through the array n-1 times (complete n-2 number of passes as n-1 is exclusive in range function) meaning we loop through the entire array except the last element
     # but we actually want to go upto n-2 times because at the last pass the last element is already in its correct position (see notes above)
     # so we use the same logic as before to conclude that range(n-1) only goes up to n-2 and still starts at 0 (range function default starts at 0)
     for i in range(n - 1): 
-        # Assume the current element is the smallest
-        # this allows us to skip the first element in the unsorted portion
-        # if we do find a smaller element in the unsorted portion we will update this but for now we assume the current element is the smallest
+        # Assume the current element is the smallest when we start the pass then loop through the unsorted portion to find the smallest element
+        # this allows us to skip checking the first element in the unsorted portion because we assume its the smallest if we find a smaller number min index is updated to that index
+        # this will be the index we will swap the smallest element with as its the beginning of the unsorted portion
         min_index = i
         # loop through the unsorted portion to find the smallest element
         # we start at i+1 because we skip the first element in the unsorted portion
-        # this is because we assume the current element at i, is the smallest so no need to check it
-        # we go upto n because we want to check all the elements in the unsorted portion rememeber that range function end number is exclusive
-        # meaning we go upto n-1, note in the outer loop we only do passes n-1 times but we still need to check all the elements including the last element in the unsorted portion
-        # its just that the last element would be in its correct position in the last pass hence we the outer loop only does n-1 number of passes
+        # this is because we assume the current element at i, is the smallest so no need to check it if we find a smaller element we update the min_index
+        # we go upto n because we want to check all the elements in the unsorted portion rememeber that range function end number is exclusive so we go upto len(arr) - 1 which is correct as arrays start from 0
         for j in range(i + 1, n): 
             # Find the actual smallest element in the unsorted portion by comparing each element with the current smallest element
             if arr[j] < arr[min_index]:
@@ -82,7 +86,10 @@ def selection_sort(arr): # define function
                 min_index = j
         # after looping over the unsorted portion and finding the smallest element:
         # Swap the found minimum element with the first element in the unsorted portion
-        arr[i], arr[min_index] = arr[min_index], arr[i]
+        # only swap is the min_index is not the same as the current index i meaning we did not find the smallest element in the unsorted portion compared to the current element i
+        # this is beacuse we assume the current element is the smallest when we start the pass so to avoid a redundant swap we only swap if the min_index is different from i
+        if min_index != i:
+            arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr # return the sorted array after all passes complete (outer loop completes)
 
 # Example Usage
