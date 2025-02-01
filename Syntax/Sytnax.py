@@ -9,6 +9,10 @@
 # %=, //= do modulus and floor division and assign in one step 
 # **= do exponentiation and assign in one step
 # * / vs //. / divides 2 numbers and gives a decimal number, // divides 2 numbers and gives a whole number and it always rounds down
+# Keywords
+# and, or, not, pass, break, continue, def, del, elif, else, except, exec, finally, for, global, if, import, in, is, lambda, nonlocal, not, or, pass, raise, return, try, while, with, yield 
+
+print("Hello, World!") # print is a function that prints the string in the parentheses to the console
 
 # importing module
 import random as rd # here we import the module random as rd meanong we use rd.random() instead of random.random()
@@ -196,6 +200,20 @@ while count <= 5: # loop will run until this statement is false
     # Increment the count by 1 in each iteration
     # once count is 6 the loop breaks scince the loop breaks it cannot run so 6 will not be printed 
     
+# ! Multiple Conditions in a conditional Statement
+# DO NOT DO if n > a and b and c: # this will not work as expected as by default a,b,c are true so the statement will always be true
+# this wont check if n > b and n> b hence we must do
+# EX (correct)
+pwd = "password"
+if pwd == "password" or pwd == "12345" or pwd == "qwerty": # this will check if the password is equal to all of these values
+    print("Password is weak")
+else:
+    print("Password is strong")
+# Alternatively we can do
+if pwd in ["password", "12345", "qwerty"]: # this will check if the password is equal to any of these values
+    print("Password is weak")
+else:
+    print("Password is strong")
 
 #! for loops !!
 #In Python, a for loop is a control structure that is used to iterate over a sequence 
@@ -306,7 +324,7 @@ if (1, 2) in coordinates:
 # * if we use range to iterate we have the index but not the value
 # * if we use a iterable like in the above example we have the value but not the index
 # * BUT what if we want both the index and the value, this is where enumerate comes in
-# the format is for index, value in enumerate(iterable, start=0): # start is optional and defaults to 0
+# the format is for index, value in enumerate(iterable, start=0): # start is optional and it defaults to 0 but indicates the starting index
 # EX:
 fruits = ["apple", "banana", "cherry"]
 for index, fruit in enumerate(fruits):
@@ -515,7 +533,7 @@ print_title(pdf_title)
 array = [0] * 100  # Allocates memory for a list of 100 elements with the value 0 as a placeholder so = [0, 0, 0, 100 timee]
 array = [None] * 100  # Allocates memory for a list of 100 elements with the value None as a placeholder closest to C malloc
 # deallocate memory
-del array  # Frees the memory allocated for the list
+del array  # Frees the memory allocated for the list, talked more about in del keyword
 # or
 array = None  # Removes the reference to the list, allowing the garbage collector to free the memory
 
@@ -620,17 +638,8 @@ print(text[::-2])  # Output: "igeca", negative step for reversing and skipping e
 text = "abcdefghi"
 print(text[1::2])  # Output: "bdfh" starts at index 1, and takes every 2nd character the end defaults to the end of the string
 
-# reverse a array python 
-
-# ! -------------------- arrays, lists and dictinarys --------------------->
-
-print("hello world")
-# start of journy
-
-## - subtopic 
-# - note
-
-# arrays using arrays 
+# ! arrays 
+# using arrays 
 from array import array
 #You can create an array by specifying its type code and initializing it with elements. 
 # The type code determines the data type of the elements in the array. Here are some common type codes:
@@ -1040,6 +1049,34 @@ else:
 my_list = [1, 2, 3, 4, 5] # ! do not name any list 'list' as it is a python keyword
 print(max(my_list), min(my_list)) # Output: 5 1
 
+# Common list methods
+# * index: used to get the index of a specific element in the list, format listname.index(element), RETURNS FIRST OCCURENCE OF VALUE
+# * count: used to count the number of occurrences of a specific element in the list , format listname.count(element)
+# * insert: used to insert a specific element at a specific index in the list , format listname.insert(index, element)
+# * remove: used to remove the first occurrence of a specific element in the list , format listname.remove(element)
+# * pop: used to remove and return the element at a specific index in the list , format listname.pop(index)
+# * reverse: used to reverse the order of the elements in the list , format listname.reverse
+# * append: used to add a specific element to the end of the list , format listname.append(element)
+# * extend: used to add multiple elements to the end of the list , format listname.extend(iterable
+# * clear: used to remove all elements from the list , format listname.clear()
+# * sort: used to sort the elements in the list , format listname.sort(key=None, reverse=False)
+# * sum: used to get the sum of all elements in the list , format sum(listname, start=0) where start is the initial value of the sum
+# * min: used to get the minimum value in the list , format min(listname, key=None) where key is a function to use to compare elements
+# * max: used to get the maximum value in the list , format max(listname, key=None) where key is a function to use to compare elements
+# * len: used to get the number of elements in the list , format len(listname)
+# * all: used to check if all elements in the list are true , format all(listname)
+# * any: used to check if any element in the list is true , format any(listname)
+# * filter: used to filter elements in the list based on a function , format filter(function, listname)
+# * map: used to apply a function to each element in the list , format map(function, listname)
+# * reduce: used to apply a function to each element in the list and return a single value , format reduce(function, listname)
+# * zip: used to combine elements from multiple lists into tuples , format zip(list1, list2, ...)
+# * enumerate: used to get the index and element of each element in the list , format enumerate(listname)
+# * sorted: used to sort the elements in the list and return a new list , format sorted(listname, key=None, reverse=False)
+# * list: used to convert an iterable to a list , format list(iterable)
+# * tuple: used to convert an iterable to a tuple , format tuple(iterable)
+# * set: used to convert an iterable to a set , format set(iterable)
+# * dict: used to convert an iterable of tuples to a dictionary , format dict(iterable)
+
 # ! Mutable and immutable types
 # Mutable types: list, dict, set, bytearray. You can change them in place meaning you dont need to create a new variable to store a modification done to the original variable, any change you make will be reflected in the original variable every where after you modified it
 # Immutable types: int, float, str, tuple, bool, you cant change them in place, you need to create a new variable to store a modification done to the original variable
@@ -1226,17 +1263,6 @@ my_dict = {'a': 10, 'b': 3, 'c': 7, 'd': 1}
 min_key = min(my_dict, key=lambda k: my_dict[k])
 print(f"The key with the minimum value is: '{min_key}' with value {my_dict[min_key]}") # Output: The key with the minimum value is: 'd' with value 1
 
-# other functions to use with list
-# * index: used to get the index of a specific element in the list, format listname.index(element), RETURNS FIRST OCCURENCE OF VALUE
-# * count: used to count the number of occurrences of a specific element in the list , format listname.count(element)
-# * insert: used to insert a specific element at a specific index in the list , format listname.insert(index, element)
-# * remove: used to remove the first occurrence of a specific element in the list , format listname.remove(element)
-# * pop: used to remove and return the element at a specific index in the list , format listname.pop(index)
-# * reverse: used to reverse the order of the elements in the list , format listname.reverse
-# * append: used to add a specific element to the end of the list , format listname.append(element)
-# * extend: used to add multiple elements to the end of the list , format listname.extend(iterable
-# * clear: used to remove all elements from the list , format listname.clear()
-
 # lambda function equvalent using simple flow control
 # EX:
 data = [1, 2, 3, 4, 5]
@@ -1372,13 +1398,13 @@ print(new_data) # ouput [3,4,5]
 # syntax general a, b, c = (1, 2, 3)
 # * NOTE that the variables and arguments must be in the same order and the number of variables must match the number of arguments (a, b) = (1, 2, 3) is not allowed
 # EX
-coordinates = (10, 20)
-x, y = coordinates
+coordinates = (10, 20) # packing
+x, y = coordinates # unpacking
 print(x)  # Output: 10
 print(y)  # Output: 20
 # EX 
 data = ("Alice", 25, "Engineer")
-name, age, profession = data
+name, age, profession = data # unpacking
 print(name)       # Output: Alice
 print(age)        # Output: 25
 print(profession) # Output: Engineer
@@ -1391,6 +1417,13 @@ print(profession) # Output: Designer
 employees = [("John", 28), ("Jane", 32), ("Doe", 25)]
 for name, age in employees:
     print(f"{name} is {age} years old.")
+# * In place swapping using tuple unpacking syntax
+# EX
+a = 10
+b = 20
+a, b = b, a
+print(a)  # Output: 20
+print(b)  # Output: 10
     
 # ! Declaring multiple variables at once without using tuple unpacking
 # this includes all types of variables
@@ -1405,11 +1438,11 @@ x, y = get_coordinates() # x = 10 and y = 20
 # ! list unpacking
 # You can unpack a list into multiple variables you can use the * operator to make that variable a list 
 # EX
-a, b, c = [1, 2, 3]
+a, b, c = [1, 2, 3] # a = 1, b = 2, c = 3
 print(a, b, c)  # Output: 1 2 3
 # EX
 my_list = [1, 2, 3]
-a, b, c = my_list
+a, b, c = my_list # unpacking
 print(a, b, c)  # Output: 1 2 3
 # EX
 my_list = [1, 2, 3]
