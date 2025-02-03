@@ -372,6 +372,11 @@ const fetchData = () => {
       setTimeout(() => {
         const success = true;
         if (success) {
+          // we can also throw an error here using the reject function but we can also use the Error class to throw an error
+          if (success === false) {
+            throw new Error("unsuccessful"); // this will throw an error to and the catch block or .catch will catch it and print the error = "unsuccessful"
+          }
+          // Resolve the promise with a success message
           resolve("Data fetched successfully!");
         } else {
           reject("Error fetching data.");
@@ -392,9 +397,14 @@ fetchData()
 const getData = async () => {
     try {
       const data = await fetchData(); // Waits for the Promise to resolve
-      console.log(data); // prints the resolved data
+      console.log(data); // prints the resolved data = "Data fetched successfully!"
+      if (data === "") {
+        throw new Error("Data is empty");
+      }
     } catch (error) {
-      console.error(error); // Handles rejection
+      // Handles rejection i.e any Error if data is empty this will print the error which is the parameter passed to the Error class
+      // But by default the error is the reject value passed to the reject function = "Error fetching data."
+      console.error(error); 
     }
 };
   
