@@ -1,0 +1,195 @@
+NOTE: any command wrapped in <> dose not include <> i.e man <command name> in your terminal is man echo, the <> are not needed
+
+--------------------
+1. git init
+--------------------
+Purpose: Initializes a new Git repository.
+Explanation: This command creates a new Git repository in the current directory.
+Example:
+  git init
+
+Usage: Run this in a project directory to start using Git.
+
+--------------------
+2. git clone <repo-url>
+--------------------
+Purpose: Clones an existing repository into a new directory.
+Explanation: Copies an entire repository from a remote server to your local machine.
+Example:
+  git clone https://github.com/username/repository.git
+
+Usage: Clone a remote repository to start working locally.
+
+--------------------
+3. git status
+--------------------
+Purpose: Shows the current status of the repository.
+Explanation: Displays the state of the working directory and staging area, including any changes, untracked files, or files that are staged for commit.
+Example:
+  git status
+
+Usage: Use this command frequently to check what's happening in your repo.
+
+--------------------
+4. git add <file>
+--------------------
+Purpose: Stages a file to be committed.
+Explanation: Adds changes in the specified file(s) to the staging area. This means the file is ready to be included in the next commit.
+Example:
+  git add index.html
+  git add .  # to stage all changed files
+
+Usage: Always use `git add` before committing changes.
+
+--------------------
+5. git commit -m "<message>"
+--------------------
+Purpose: Commits staged changes to the repository.
+Explanation: Records the changes you've staged with a message describing the changes.
+Example:
+  git commit -m "Added new feature"
+  
+Usage: Use descriptive commit messages for clarity.
+
+--------------------
+6. git pull
+--------------------
+Purpose: Fetches and merges changes from the remote repository.
+Explanation: Updates your local repository with changes from the remote (origin).
+Example:
+  git pull origin main
+
+Usage: Use `git pull` to sync your local repo with the remote.
+
+NOTE: you can only pull from one other branch into you current branch 
+ex: you git pull and get all the code from main then you make a branch and do git pull branch2 thats ok but git pull branch3 will not work
+because the two other branches are seperate and have not been merged so unless you state how to converge those branches you can only oull from one other branch
+
+--------------------
+7. git push
+--------------------
+Purpose: Pushes committed changes to the remote repository.
+Explanation: Sends your local commits to the remote repository.
+Example:
+  git push origin main
+
+Usage: Push changes after committing to share them with others.
+
+--------------------
+8. git branch
+--------------------
+Purpose: Lists, creates, or deletes branches.
+Explanation: Shows a list of branches in your repo or creates a new branch.
+Example:
+  git branch  # List branches
+  git branch new-feature  # Create a new branch
+
+Usage: Use branches to work on different features without affecting the main codebase.
+
+- deleting branches:
+# for local branches:
+if branch is merged: git branch -d <branch-name>
+if not merged of commited: git branch -D feature/new-feature
+# for remote branches
+git push origin --delete <branch-name>
+
+--------------------
+9. git checkout <branch>
+--------------------
+Purpose: Switches to a different branch.
+Explanation: Changes your working directory to the state of the specified branch.
+Example:
+  git checkout new-feature
+
+Usage: Switch branches before working on different tasks.
+
+--------------------
+10. git merge <branch>
+--------------------
+Purpose: Merges a branch into the current branch.
+Explanation: Incorporates changes from another branch into your current branch.
+Example:
+  git merge new-feature
+
+Usage: Merge your feature branch into the main branch when ready.
+NOTE: at any time you want to cancle the merge do: git merge --abort
+
+--------------------
+11. git log
+--------------------
+Purpose: Shows the commit history.
+Explanation: Displays a list of all the commits in the current branch with details like author, date, and commit message.
+Example:
+  git log
+
+Usage: Use `git log` to review the commit history.
+
+--------------------
+12. git reset <file>
+--------------------
+Purpose: Unstages a file from the staging area.
+Explanation: Removes a file from the staging area (without modifying the actual file).
+Example:
+  git reset index.html
+
+Usage: Use `git reset` to unstage files before committing.
+
+--------------------
+13. git rm <file>
+--------------------
+Purpose: Removes a file from the repository.
+Explanation: Deletes a file from both the working directory and the staging area.
+Example:
+  git rm old-file.txt
+
+Usage: Use `git rm` to remove files from your repository.
+
+- To delete remote files/ folders, i.e you have alredy commited: 
+    - file: git rm --cached file_path
+    - folder: git rm --cached -r node_modules/
+
+--------------------
+14. git diff
+--------------------
+Purpose: Shows changes between commits, commit and working directory, etc.
+Explanation: Displays the differences between various Git states.
+Example:
+  git diff
+
+Usage: Use `git diff` to see changes that are not yet staged for commit.
+
+--------------------
+15. git remote -v
+--------------------
+Purpose: Shows remote repository URLs.
+Explanation: Lists the remote repositories connected to your local repo.
+Example:
+  git remote -v
+
+Usage: Use this to check which remote repository your local repo is connected to.
+
+--------------------
+16. git ignore
+-------------------
+- To ignore files or folders, i.e to stop tracking files or folders:
+make a file called .gitignore
+then place the file or folder names into the file to ignore it 
+files: filename
+folder: /foldername/ (will ignore the whole folder at the root level), app/logs/ (will ignore the logs folder inside tge app folder)
+global: /foldername (will ignore the folder everywhere no matter where it is)
+
+- if you add a file.folder after commiting it still exists so 
+
+- To delete remote files/ folders, i.e you have alredy commited: 
+    - file: git rm --cached file_path
+    - folder: git rm --cached -r node_modules/
+
+-- Then place the file or folder name into the git ignotr and it should not traking it 
+
+--------------------
+17. git remote -v
+--------------------
+you can just merge two branches but not always 
+if you code on your branch once you commit it github will tell you this branch is different than the main branch
+here you can open a pull request to have your branchs code merged into main, note you still need to resolve conflicts 
+once done you can delete you branch 

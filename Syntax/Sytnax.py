@@ -509,6 +509,35 @@ myperson = Person("Alice")
 print(myperson.name)  # Output: Alice
 print(myperson.greet())  # Output: Hello, Alice
 
+# ! type casting
+# type casting is the process of converting a value from one type to another
+# you can use the type() function to get the type of a value
+# you can use the isinstance() function to check if a value is of a certain type
+# there are 3 types of type casting in python 
+# 1. explicit type casting
+# 2. implicit type casting
+# 3. type hinting (see section below)
+# ! explicit type casting
+# explicit type casting is when you explicitly convert a value from one type to another meaning you state the type you want the value to be
+# ex
+a = 10
+b = str(a) # b is now a string "10"
+c = float(a) # c is now a float 10.0
+d = int(a) # d is now an int 10
+# implicit type casting
+# implicit type casting is when python automatically converts a value from one type to another meaning you don't have to state the type you want the value to be
+# ex
+a = 10 
+b = 10.0
+c = a + b # c is now 20.0, here we added a int and a float and python automatically converted the int to a float
+
+# using the type() function to get the type of a value
+a = 10
+print(type(a)) # <class 'int'>
+# using the isinstance() function to check if a value is of a certain type
+a = 10
+print(isinstance(a, int)) # True
+print(isinstance(a, float)) # False
 
 # ! Type Hinting 
 # python is a dynamicly typed language means that the type of a variable is determined at runtime
@@ -1995,4 +2024,56 @@ Here temp is optional as we are using a lock to ensure only one thread can modif
 but it demonstrates the importance race conditions where multiple threads are accessing the same resource without any synchronization.
 here we get the current value of counter before incrementing it as during the time we take to increment it, 
 another thread might have already incremented counter changing its value. so we get the current value of counter at the start and work with it during the lock.
+"""
+
+###### ! NON SYNTAX
+
+# ! ENV's in python
+""" 
+# for Python venv
+- install venv using pip install venv (but dont do it try the next step as its included in later versions of python)
+- create a venv using python3 -m venv env_name (my version of python is 3)
+- to activate the venv use source env_name/bin/activate (do this while in the project directory)
+- to delete the venv just delete the env_name folder or use rm -r env_name (do this while in the project directory)
+- NOTE: with vs code you can do cmd + shift + p and type python: then make a env and select the python env from there this creates and activates the env for you, and you can see the list of envs
+        to delete the env just delete the env folder from vs code,
+
+# using conda
+- install conda using pip install conda 
+- create a conda env using conda create --name env_name python=3.8 (my version of python is 3.8 but python version is optional)
+- to activate the conda env use conda activate env_name (do this while in the project directory)
+- to deactivate the conda env use conda deactivate (do this while in the project directory and with the venv activated)
+- to delete the conda env use conda remove --name ENV_NAME --all (the all removes all packages in the env)
+"""
+
+# ! Package Management
+""" 
+# pip (package installer for python)
+- pip install package_name (installs a package)
+- pip install package_name==version (installs a specific version of a package)
+- pip list (lists all installed packages)
+- pip uninstall package_name (uninstalls a package)
+- pip freeze (lists all installed packages)
+- pip install --upgrade package_name (updates a package to the latest version)
+- pip install --upgrade pip (updates pip to the latest version)
+
+# rqeuirements.txt file (a file that lists all the packages that are required for a project)
+EX requirements.txt:
+`
+requests==2.25.1
+beautifulsoup4==4.9.3
+Flask 
+numpy
+etc ....
+`
+- pip install -r requirements.txt (installs all packages listed in the requirements.txt file)
+
+# conda (package manager for python)
+- conda install package_name (installs a package)
+- conda install package_name==version (installs a specific version of a package)
+- conda list (lists all installed packages)
+- conda remove package_name (uninstalls a package)
+- conda install --update package_name (updates a package to the latest version)
+- conda install --update --all (updates all packages to the latest version)
+- for installing the requirements.txt file use conda install -r requirements.txt (installs all packages listed in the requirements.txt file)
 """

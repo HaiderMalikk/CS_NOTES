@@ -437,6 +437,8 @@ ABCs to ensure that classes provide specific methods.
 """
 
 ## ! Wrapper Function: this can be used with other OOp concepts to extend functionality without modifying existing code
+## ! also known as decorator functions
+## ! can also be classes that wrap around other classes
 """
 Wrapper functions, also known as wrapper methods or wrapper classes, are functions or methods that provide an interface for 
 invoking other functions or methods. They "wrap" around existing functionality, allowing you to add additional behavior 
