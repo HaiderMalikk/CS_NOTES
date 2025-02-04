@@ -96,5 +96,7 @@ Worst case: O(n^2) when the array is reverse sorted so we do n-1/2 comparisons a
 ! Space Complexity
 O(1) because we only use a constant amount of space to store the min_index and the temporary swap variables (swap done in place)
 
-* Selection sort is easy to implement, but it's generally slower than other algorithms like quicksort or mergesort for large datasets.
+When is Selection Sort Used?
+Selection sort is easy to implement, but it's generally slower than other algorithms like quicksort or mergesort for large datasets.
+its is good for large datasets beacuse as the array gets larger the operations become cheaper as the unsorted portion gets smaller
 */

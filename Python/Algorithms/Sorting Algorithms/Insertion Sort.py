@@ -95,6 +95,8 @@ print(insertion_sort(arr)) # [5, 6, 11, 12, 13]  # sorted array
 
 """ 
 When is Insertion Sort Used?
-Small Datasets: It is efficient for small-sized arrays.
-Nearly Sorted Data: Performs well when the input array is already or nearly sorted.
+Small Datasets: It is efficient for small-sized arrays. this is beacuse as the array grows we need to make more comparisons and swaps
+                EX: if the array has 100 elements and we are inserting the smallest element it has to make 99 comparisons and swaps
+                comapred to 10 elements where we only need to make 9 comparisons and swaps for the smallest element
+Nearly Sorted Data: Performs well when the input array is already or nearly sorted. beacuse the number of swaps will be less
 """

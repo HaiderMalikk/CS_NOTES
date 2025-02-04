@@ -105,5 +105,7 @@ print("Sorted Array:", sorted_arr) # prints the sorted array [11, 12, 22, 25, 34
 # O(1) because we only use a constant amount of space to store the min_index and the temporary swap variables (swap done in place)
 
 """ 
+When is Selection Sort Used?
 Selection sort is easy to implement, but it's generally slower than other algorithms like quicksort or mergesort for large datasets.
+its is good for large datasets beacuse as the array gets larger the operations become cheaper as the unsorted portion gets smaller
 """
