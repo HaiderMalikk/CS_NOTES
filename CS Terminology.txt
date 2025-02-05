@@ -87,6 +87,7 @@ but since the initial first node obj will be deleted self.head.ref (our new firs
 to self.head.ref originally after deleting the intial frist node which is unreachable there will be one ref to self.head.ref which is from the self.head pointer.
 So in short the self.head is a pointer, after we change it to self.head.ref nothing points to the inital first node that self.head was pointing too, this means that initial first node is deleted 
 by the GC and now the self.head points to the new first node obj, since the initial first node is deleted its reference to the new first node is lost giving the new node only 1 ref self.head 
+QUICK NOTE: all the other nodes in teh LL still have a reference from there prev node so they are all still in memory even through self.head pointer is not pointing too them
 
 * Primitive vs Reference Types
 ================================================================================================
