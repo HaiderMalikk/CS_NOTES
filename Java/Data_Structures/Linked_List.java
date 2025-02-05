@@ -38,6 +38,13 @@ but if you want you can do temp = head, head = head.ref, temp = None; or use pyt
 !!!!!!!!! the head is always the first node and if we dont make the temp variable we will lose the first node in the process, hence 
 !!!!!!!!! Whenever we need to cycle through the LL we use a temp variable like n = self.head so we dont lose the first node
 !!!!!!!!! While the head always points to the first node, the temp variable starts at the head (first node) and points at various nodes in the LL cycleing through the LL
+
+* Linked List Indexing (giving nodes a mock index):
+While Linked lists dont have indexing like arrays we can still access the nth node in the LL by making a index var and 
+when we ad to the LL we increment the index var by 1 and when we delete we decrement the index var by 1 then we can do anything
+using the index add before index add after index delete at index etc for ex for adding we loop and increment a temp index until we meet 
+the user index input then we add the node after tat that index and et for other operations using the index, also we can make the index 0 based or 1 based
+you can use this index for the length of the LL.
 */
 
 package Java.Data_Structures;
