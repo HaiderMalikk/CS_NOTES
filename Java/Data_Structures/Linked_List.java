@@ -12,14 +12,14 @@ Linked lists do well in insertion and deletion. not in indexing and searching. E
 
 * linked lists:
 # A linked list is a data structure that consists of nodes where each node contains data and a reference to the next node in the sequence. 
-# innitaly a head points to nothing. but after adding the first node the head points to the first node and the next node will have the head pointed to it from the prevoius node and so on.
+# innitially a head points to nothing. but after adding the first node the head points to the first node and the next node will have the head pointed to it from the prevoius node and so on.
 # a node is nothing but a class that contains the data of current node and a link to next node called refrence so the refrence of the current node points to the next node. The last node points to NONE, the last node is known as the tail its ref MUST BE NONE.
-# note how the ref of current node points to the next node, the head points to the first node innitally the the second node then third, and the last node points to nothing becuse the ref of the last node is null the head is null and the itaration stops 
+# note how the ref of current node points to the next node, the head points to the first node innitially the the second node then third, and the last node points to nothing becuse the ref of the last node is null the head is null and the itaration stops 
 HEAD     →     [ Data | Ref 1001 ]     →     [ Data | Ref 1002 ]     →     [ Data | Ref 1003 ]     →     [ Data | Ref NONE ]     →     NULL (initial state of a linked list head points to first node)
 ↑(Ref 1000)     ↑ Node 1 (Ref of node 1 = 1000)    ↑ Node 2 (Ref 1001)          ↑ Node 3 (Ref 1002)            ↑ Node 4 (Ref 1003, last node / tail)
 # here the head has a ref of 1000 = the ref of the first node and the first node has a ref of 1001 = the ref of the second node and so on. this is how the the head points to the first node because it has the ref of the first node and the first node has the ref of the second node and so on.
 # this ref in code is called self.head.ref and the data in code is called self.head.data meaning we dont store ref as numbers but point a var to the node which is self.head meaning we can say self.head = Node(n) and the head will point to the node n, under the hood head has a ref i.e a unique address of the node n.
-# NOTE: this si a single linked list meaning the ref of the current node points to the next node and the last node points to nothing
+# NOTE: this is a single linked list meaning the ref of the current node points to the next node and the last node points to nothing
         There are also doubly linked lists where the ref of the current node points to the next node and the previous node points to the current node
         there are also circular linked lists where the ref of the current node points to the next node and the last node points to the first node
         there can also be a circular doubly linked lists, and other variations.
@@ -47,6 +47,7 @@ package Java.Data_Structures;
 // can be reused for other linked lists
 // use generics to make the class reusable for any data type the type T is passed in my the LL class when making a new node obj
 // hence we can only use one type of Nodes defined by the LL class when making the LL obj, see generics notes in oop basics for more
+// In all the LL methods for simplicity i make the node obj the first thing in the method beacuse you want to avoid making the node multiple times fro different cases in the method
 */
 class Node<T> {
         T data; // the data of the node
@@ -73,7 +74,7 @@ class SinglyLinkedList<T> {
     // * NOTE: you can use the add begin method to add to a empty LL no error will be thrown, but this is more efficient, you can even use the add end method as it checks for a empty LL
     */
     public void addEmpty(T data) {
-        if (head != null) return; // if the head is not null then the LL is not empty so we cant add to an empty LL using the method as it dose not preserve the LL, beacuse there should be no nodes in the LL to preserve
+        if (head != null) return; // if the head is not null then the LL is not empty so we cant add to an empty LL using the method as it does not preserve the LL, beacuse there should be no nodes in the LL to preserve
         Node<T> new_node = new Node<>(data); // create a new node of type T
         head = new_node; // now that we have the new_node pointing to the head (the old first node), we can now let the head point to the new node
     }
@@ -91,7 +92,7 @@ class SinglyLinkedList<T> {
 
     // * Add at the end
     /* 
-    // * these steps add the new node to the end of the LL, it dose it by looping until a node has no ref this is the last node in the LL
+    // * these steps add the new node to the end of the LL, it does it by looping until a node has no ref this is the last node in the LL
     // * since this nodes ref points to none we make it point to the new node adding the new node to the end of the LL
     // * why loop until n.ref is null and not n is null, beacuse if n is null then n.ref will throw a null pointer exception
     // * once we reach the last node and we do n=n.ref n=null if we used while (n!=null) then after the loop we have n.ref = new_node
