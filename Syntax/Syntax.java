@@ -83,6 +83,16 @@ public class Syntax {
     // = += -= *= /= %= -> (assign, add, sub, mult, div, div remander) all these do a operation and assign at once
     // ! NOTE a int / int = int but a int / double = double atleaste one must be double for result to be double
 
+    /* 
+     The difference between index++ and ++index lies in the order of operations:
+
+    index++ (post-increment): The current value of index is used in the expression, and then index is incremented by 1.
+    ++index (pre-increment): index is incremented by 1 first, and then the new value of index is used in the expression
+     */
+    int index = 5;
+    int a1 = index++; // a = 5, index = 6
+    int b1 = ++index; // index = 7, b = 7
+
     // if you use two diffrent data types result will be the of the lerger data type
     // ex: int + double = double
 
