@@ -57,6 +57,7 @@ class Car{
     Take the variables we just defined, and get their
     values based on the parameters given to the constructor when the object
     is created.
+    by default a constructor has the same name as the class and should be public
     */
     // constructer gives empty var a value
     /* the args are all method vars and can be used in this method only */
@@ -2154,6 +2155,7 @@ class Box<T> {  // T is a type parameter it can be any variable name but T is co
 // Ex using generics
 class GenericExample {
     public static void main(String[] args) {
+        // list of posible types: Integer, String, Double, Float, etc
         Box<Integer> intBox = new Box<>();
         intBox.set(10);
         System.out.println(intBox.get()); // 10
@@ -2161,6 +2163,12 @@ class GenericExample {
         Box<String> strBox = new Box<>();
         strBox.set("Hello");
         System.out.println(strBox.get()); // Hello
+
+        Box box = new Box(); // No type specified, so it's a raw type NOT RECOMMENDED NOT GENERIC
+        box.set(20); // No type safety at compile time meaning you can pass in a int or a string or any other type, this can cause errors at runtime 
+        System.out.println(box.get()); // 20
+        // THis is not type safe, lets say if we had a method called add that adds two numbers one of the numbers is T num; and the other is passed in 
+        // but if T is not specified then when making the obj we can pass is any type and calling the add method we can pass any type that means we could get a error as both types are not gauranteed to be the same
         
         // Cannot do
         // intBox.set("Hello"); // error as the type is integer

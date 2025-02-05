@@ -199,7 +199,7 @@ but if you want you can do temp = head, head = head.ref, temp = None; or use pyt
 #         if self.head is None: # if list is empty
 #             print("Linked List is empty")
 #         else: # if list not empty
-#             n = self.head # assign a var to head to make calling it easy remember self.head is = to  newnode
+#             n = self.head 
 #             # innitally n, the head will point to the first node from no prevous node
 #             while n is not None: # while "head" the pointer that points to the node is not None
 #                 print(n.data) # print heads data, data from node remember from last fuction self.head"n" is = new_node so print newnode.data
@@ -210,6 +210,11 @@ but if you want you can do temp = head, head = head.ref, temp = None; or use pyt
 #                 # n.data is the second nodes data as n = n.ref of node 1 and ref of node one points to node 2 
 #                 # n.data of (node2) is printed. this prosses reapets untill the head of node points to nothing
 
+""" 
+!!! NOTE: any time i use n = self.head we do this so we do not lose the first node i.e so we dont lost the head of the LL
+!!!!!!!!! the head is always the first node and if we dont make the temp variable we will lose the first node in the process, hence 
+!!!!!!!!! Whenever we need ti cycle through the LL we use a temp variable like n = self.head so we dont lose the first node
+"""
 
 # LL1 = LinkedList() # creating empty linked list 
 # LL1.add_begin(50) # adding number 50 at beginning of list
@@ -228,7 +233,7 @@ class LinkedList:
     def __init__(self):
         self.head = None
         
-    def add_begin(self, data): # add node to start of Linked list
+    def add_begin(self, data):
         new_node = node(data)
         new_node.ref = self.head
         self.head = new_node
@@ -280,7 +285,7 @@ class LinkedList:
             new_node.ref = n.ref
             n.ref = new_node
     
-    def insert_empty(self, data): # alternitive to add begin
+    def insert_empty(self, data): 
         if self.head is None:
             new_node = node(data)
             self.head = new_node
@@ -331,15 +336,15 @@ class LinkedList:
             current = next_node
         self.head = prev
     
-    def display_LL(self): # iterate through Linked list and display nodes
+    def display_LL(self): 
         if self.head is None:
             print("empty LL nothing to display")
         else:
             n = self.head
             while n is not None:
-                print(n.data, end="->") # the end"-" is used to prevent newline after each element and add a arrow
+                print(n.data, end="->") 
                 n = n.ref
-            print("None") # prints None at end of LL
+            print("None") 
         
 myLL = LinkedList() # create the Linked List
 myLL.insert_empty(0) # insert 0 at start this dose not meat 0 will be at start forever
