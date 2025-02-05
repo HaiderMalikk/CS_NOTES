@@ -31,6 +31,62 @@ Heap: int *b = malloc(sizeof(int)); (must be explicitly freed)
 Garbage collection (GC) is a process by which a programming language's runtime environment 
 automatically manages memory by reclaiming unused memory, preventing memory leaks, 
 and freeing the developer from manually managing memory allocation and deallocation.
+and EX of unused memory can be a variable that is None or a obj that has no reference to it (unreachable obj)
+NOTE!: languages like python and java have GC's but language like c, c++ dont have GC's and you must manually manage memory.
+There are 3 main ways GC's free up memory.
+1. Reference Counting (Used in Python)
+How it works:
+Each object has a reference count, which tracks the number of references pointing to it.
+When an object’s reference count drops to zero, it is immediately deallocated.
+EX:
+a = [1,2,3]  
+b = a  # now 'a' has 1 ref, so the system ref count is 2 (a and b)  
+b = None  # 'b' is removed, memory is freed up, and ref count is just 1 for 'a'  
+Pros:Fast and simple
+Cons:Cannot handle circular references (meaning objects pointing to each other will never be freed).
+To FIx circular reference different languages use difference methods
+2. Tracing Garbage Collection (Mark and Sweep - Used in Java, Python as backup GC)
+How it works:
+Instead of tracking reference counts, the system starts from root objects (like global variables and stack frames) and marks all reachable objects.
+Mark phase: Marks all objects that are still accessible.
+Sweep phase: Deletes unmarked (unreachable) objects and reclaims memory.
+EX (non circular i.e simple unreachable objects):
+Node a = new Node(1);
+Node b = new Node(2);
+a.next = b;
+a = null; // 'a' is now unreachable and is deleted as nothing points to it 
+System.gc(); // GC detects 'a' is unreachable and frees its memory  
+The GC sees b still has a reference (from a.next), so it remains in memory (unless also unreachable).
+EX (Circular i.e island of objects):
+a.ref = b;  // a → b
+b.ref = a;  // b → a (circular reference)
+a = null;
+b = null;  // Both objects form an "island" but are unreachable from GC roots i.e they are unreachable from outside the island and are deleted 
+Even though they reference each other, both are unreachable from GC roots (like local variables or global references).
+Pros:Can handle circular references
+Cons:GC runs periodically, which can cause pauses in execution.
+NOTE: Tracing GC can remove island of objects i.e a group of objects that refer to each other but are no longer reachable from anywhere outside the island
+3. Generational Garbage Collection (Used in Java, Python, most modern GCs)
+How it works:
+Objects are divided into Young Generation, Old Generation, and sometimes a Permanent Generation.
+Most objects die young, so the GC runs frequent minor collections in the Young Gen.
+Objects that survive multiple GCs get promoted to the Old Gen, which is collected less frequently.
+EX:
+System.gc(); // Suggests running GC, which will prioritize short-lived objects in Young Gen  
+Pros:Efficient for short-lived objects (fast cleanup)
+Cons:Can cause performance issues if not tuned properly.
+
+EX LL GC:
+when deleting the first node in a Singly LL we do self.head = self.head.ref essentially skiping over the node marking our new first node as self.head.ref and deleting 
+the first node self.head, but the node object still exists until the GC frees it which is dose. Since there is no reference to our initial first node that was
+originaly self.head (i.e our deleted node) this means that node obj can be deleted since it is unreachable, BUT as we saw in the EX above self.head.ref
+i.e our new first node obj stays it is NOT deleted this is beacuse it still has references pointing too it, (1) from self.head pointer which now points to this new node obj 
+and (2) from the deleted node obj, remember that the original self.head (i.e the deleted node obj our initial first node) pointed to the next node self.head.ref (which is now our new first node)
+meaning that the initial frist node still points to the new node via its ref.
+but since the initial first node obj will be deleted self.head.ref (our new first node) will then have only 1 ref to it after the GC's sweep, in the sweep it will see two refs
+to self.head.ref originally after deleting the intial frist node which is unreachable there will be one ref to self.head.ref which is from the self.head pointer.
+So in short the self.head is a pointer, after we change it to self.head.ref nothing points to the inital first node that self.head was pointing too, this means that initial first node is deleted 
+by the GC and now the self.head points to the new first node obj, since the initial first node is deleted its reference to the new first node is lost giving the new node only 1 ref self.head 
 
 * Primitive vs Reference Types
 ================================================================================================

@@ -28,8 +28,10 @@ NOTE: Nodes and garbage collection
 - AS we know if we assign any obj to node EX: arr = None then the garbage collector will delete the obj and free up memory
 For ex in the delete start node when we do head = head.ref the value of head is deleted and free up memory 
 we dont have to first point the start node to node i.e we dont need to say temp = head, head = head.ref, temp = None; this is beacuse
-if we just do head = head.ref no pointer points to the node obj that was head and the node obj is deleted and free up memory beacuse the garbage collector knows that the node obj is not used anymore
-but if you want you can do temp = head, head = head.ref, temp = None; or use pythons del keyword to delete the node obj
+if we just do head = head.ref no pointer points to the node obj (self.head) and the node obj is deleted and we free up its memory beacuse the garbage collector knows that the node obj is not used anymore 
+because self.head now has no refrence to it this means the node we just deleted (self.head) is unreachable and so the garbage collector will delete it, it will delete the value of self.head which is the node obj that self.head points to 
+Also, temp = None wont make a difference because its just another reference to the node obj (self.head) and hence only the temp variable is deleted and not the node obj, thats done by the garbage collector once again.
+but if you want you can do temp = head, head = head.ref, temp = None; or use pythons del keyword to delete the node obj this can help with clarity
 """
 ## LL (THINK OF 'n' AS NODE) also self.head changes within functions but innitally self.head points to first node then the next and so on, meaning head is of type node and hence head.ref = node.ref.
 # class Node: # define node 
