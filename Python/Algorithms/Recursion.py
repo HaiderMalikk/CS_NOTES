@@ -17,7 +17,13 @@ at each recursive call the input to the function i.e the problem must be smaller
 when a new recurtion call is made it is added to the call stack and when the function returns the call is removed from the call stack.
 note that stack follows LIFO (Last In First Out) principle meaning the function that made the call is the first is the last we will return to
 after which the function will do whatever was after the recursive call.
+
+* Cacheing Results
+Recursion can be slow for some problems because it recalculates the same values multiple times. This is beacuse recursion is space and time expensive
+to avoid this we can use memoization which is storing the results of the previous function calls to avoid recalculating them. for Ex if we do fact(20)
+and then do fact(4) we have the result of fact(4) in fact(20) so we can use that result instead of recalculating it.
 """
+
 # ! Recurtion Example
 def factorial(n):
     if n == 0 or n == 1:  # Base case

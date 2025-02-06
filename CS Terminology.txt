@@ -2,8 +2,13 @@
 ================================================================================================
 The stack and the heap are two key memory areas used by programs to store data during execution
 - Definition:
-Stack: Used for statically allocated memory (e.g., local variables).
-Heap: Used for dynamically allocated memory (e.g., objects).
+Stack: Used for statically allocated memory (e.g., local variables or refrences to objs in heap). used by only one thread of execution and follows the LIFO
+       This is used for short liveed variable. The memory is fixed and manages memory automatically
+Heap: Used for dynamically allocated memory (e.g., objects). this part of the memory can grow or shrink in size as the program demands and is available to 
+      the whole program this means more control but can cause bad things in low level languages that dont have Garbage collection. For ex if you accsess memory
+      you are not supposed to or that dose not exist (known as a segmentation fault), if memory that no longer used and you dont free it that 
+      can cause the memory to be unreachable this is called a memory leaks as slowly more and more memory becomes unreachable crashing a program
+      this is why in high lvl languges like python use garbage collectores. NOTE: heap is used for larger more complex objs that span the whole program
 - Management:
 Stack: Managed automatically with LIFO order.
 Heap: Managed manually or via garbage collection.
@@ -25,6 +30,22 @@ Heap: Memory leaks and dangling pointers from poor memory management.
 - Example:
 Stack: int a = 10; (deallocated automatically).
 Heap: int *b = malloc(sizeof(int)); (must be explicitly freed)
+
+
+* Process vs. Thread:
+==========================
+A process is an independent program with its own memory space.
+A thread is a lightweight unit within a process that shares memory with other threads in the same process.
+A thread in programming is the smallest unit of execution within a process. It allows a program to perform multiple tasks concurrently (switch between then very quickly)
+Multithreading:
+Running multiple threads within the same program to improve efficiency.
+Useful for parallel processing, responsive UI, and asynchronous tasks.
+Types of Threads:
+User Threads: Created and managed by the application.
+Kernel Threads: Managed by the operating system.
+Thread Synchronization:
+Since multiple threads share memory, synchronization techniques like locks (mutex), semaphores, and atomic variables are used to prevent race conditions.
+race conditions happen when two or more threds access and modify shared data at the same time, leading to unpredictable or incorrect behavior.
 
 * Garbage Collection
 ================================================================================================
@@ -55,7 +76,8 @@ Node a = new Node(1);
 Node b = new Node(2);
 a.next = b;
 a = null; // 'a' is now unreachable and is deleted as nothing points to it 
-System.gc(); // GC detects 'a' is unreachable and frees its memory  
+(NOTE System.gc calls for a garbage collection but its not garantied the collection of garbage is determined by the JVM ) 
+System.gc(); // GC detects 'a' is unreachable and frees its memory
 The GC sees b still has a reference (from a.next), so it remains in memory (unless also unreachable).
 EX (Circular i.e island of objects):
 a.ref = b;  // a → b
@@ -69,8 +91,11 @@ NOTE: Tracing GC can remove island of objects i.e a group of objects that refer 
 3. Generational Garbage Collection (Used in Java, Python, most modern GCs)
 How it works:
 Objects are divided into Young Generation, Old Generation, and sometimes a Permanent Generation.
-Most objects die young, so the GC runs frequent minor collections in the Young Gen.
-Objects that survive multiple GCs get promoted to the Old Gen, which is collected less frequently.
+Most objects die young, so the GC runs frequent minor collections in the Young Gen, These are faster to collect.
+young objects that survive multiple GCs get promoted to the Old Gen, which is collected less frequently, this is slower to collect
+the Permanent generation contains meta data needed by the JVM to run the program it may have Garbage collections this gen is included in a full Garbage collection
+NOTE: once the young gen fills up a minor GC happens when the old gen filles up a major GC happens (involves all live objects).
+      both the minor and major GC are stop the world events meaning the programs execution must stop for these process to finish
 EX:
 System.gc(); // Suggests running GC, which will prioritize short-lived objects in Young Gen  
 Pros:Efficient for short-lived objects (fast cleanup)
@@ -108,6 +133,8 @@ EX: pointers allow to allocate and free memory at runtime
 int *ptr = (int *)malloc(sizeof(int));  // Allocates memory
 *ptr = 42;
 free(ptr);  // Frees the allocated memory
+// Pointer Arithmatic: Since the pointer holds a address you can jump to different addressed in memory by adding/subtracting from the pointers value
+// this ofset in the pointer to jump to different places in memory is known as pointer Arithmatic and can be used to jump to any index in the array from any other index
 
 * compile time vs runtime
 =============================================
@@ -149,11 +176,11 @@ In programming, languages can be classified into two main categories: compiled a
 difference between these two lies in how the code is executed.
 ### Compiled Languages
 In compiled languages, the code is first compiled into machine code before it is executed.
-This means that the code is converted into a format that the computer's processor can understand.
+This means that the code is converted into a format that the computer's processor can understand before its executed.
 EX: java, c, c++
 ### Interpreted Languages
 In interpreted languages, the code is not compiled into machine code before it is executed.
-Instead, the code is interpreted line by line by an interpreter then this interpreter will convert the code into machine code.
+Instead, the code is interpreted line by line by an interpreter then this interpreter will convert the code into machine code as its executed.
 EX: python, ruby, javascript
 
 *  High -Level vs Low-Level Languages
@@ -223,3 +250,58 @@ mylist = sorted(mylist) # out of place operation as we create a new list and lea
 - Primitive operations are operations that are simple and can be performed in a single step like variable assignments or indexing array or (simple method) 
 - Non primitive operations are operations that are complex and can be performed in multiple steps like sorting or searching or (complex method)
 -- The running time of a algorithim can be Calculated by counting the number of primitive operations it performs 
+
+* Programing Paradimes 
+===========================
+- Programing paradimes are ways of writing code, but they all achive the same result, 
+common ones:
+1. Imperative Programming
+Focuses on how a program should achieve its goal.
+Uses statements that change a program’s state step by step.
+Examples: C, Java, Python (procedural style)
+2. Procedural Programming (Subtype of Imperative)
+Organizes code into reusable procedures/functions.
+Examples: C, Pascal, Python (functional style)
+3. Object-Oriented Programming (OOP)
+Based on objects and classes that encapsulate data and behavior.
+Uses principles like encapsulation, inheritance, and polymorphism.
+Examples: Java, C++, Python (OOP style), Swift
+4. Functional Programming (FP)
+Treats computation as the evaluation of pure functions.
+Avoids mutable state and side effects.
+Examples: Haskell, Lisp, Scala, JavaScript (FP style)
+5. Logic Programming
+Uses declarative logic to express rules and relationships.
+The program derives solutions rather than executing step-by-step instructions.
+Examples: Prolog, Datalog
+6. Declarative Programming
+Focuses on what the program should achieve rather than how.
+Includes paradigms like SQL (for databases) and HTML/CSS (for UI structure).
+7. Event-Driven Programming
+The flow of the program is determined by events (e.g., user input, sensor data).
+Common in UI development, game development, and embedded systems.
+Examples: JavaScript (with event listeners), SwiftUI, Java (Swing, AWT)
+8. Concurrent & Parallel Programming
+Concurrent: Multiple tasks appear to run simultaneously.
+Parallel: Multiple tasks actually run at the same time on different processors.
+Examples: Java (Threads, Executors), Python (multiprocessing, asyncio), Go (goroutines)
+
+Build process
+=============
+- This entire process of taking source code and transforming it into an executable program 
+that can be run on a CPU is generally referred to as the build process or software build process.
+Stages in the Build Process:
+Coding: first you write your code in a language like C
+Compilation: Transforming source code into machine code (object code), using the languges compiler. 
+Linking: Combining object files and libraries into an executable. (resolves function like for ex the printf in C from the standard library)
+Loading: Loading the executable into memory like ram for execution, allocates memory, sets up libraries, passes control to the entry point
+Execution: Running the code on the CPU.
+NOTE: different languages compile in difference ways C compiles directly to machine code (ahead of time) based on your platform 
+      that final machine code is in a .obj or .o file but dose not execute yet thats done by the linker making a exe .out for .exe file, flip wise 
+      javas JVM compilers compile the code to a byte code a step between Language code and machine code, this byte code is platform indipendent
+      this byte code is then converted into machine code using the JIT compiler which dynamically compiles the byte code into machine code 
+      as the program runs converting code only when needed (Just in Time) this JIT machine code is platform specific
+      python is compiled at runtime python code is made into byte code which is then made into machine code this happens dynamically
+      and python is not linked the libraries are resolved at runtime, beacuse python is Dynamicly typed, hence why the machine code is made dynamically
+      the PVM python virtual machine converts the byte code to machine code to be ran on CPU, this process is done line by line 
+      PVM gors line by line into machine code, but python has a JIT compiler which converts the byte code into machine code as we run that part of the code
