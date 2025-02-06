@@ -152,6 +152,14 @@ This is the time when the code is checked for errors and warnings related to log
 EX:
 int arr = {1,2,3}; int x = arr[5]; // this will give a runtime error because the array index is out of bounds.
 int y = (int) (Math.random() * 100);  // Random value generated at runtime
+EXs for errors:
+### Compile time error
+a = b // error b is referenced before assignments this wont even compile 
+b = 10 
+### Runtime Error
+int[] arr = {1, 2, 3};
+int x = arr[5]; // This will give a runtime error because the array index is out of bounds. 
+                // until the code is ran this is not known hence it will compile (as there is no syntax errors etc etc) but not run
 - SUMMARY: the compiler converts the array to machine code and gives x the value of index at 5 is there is no syntax or type error in the code
            the ex runs at compile time not knowing that at arr[5] there is nothing at runtime the value is determined for x where are[5] DNE and error is thown at runtime.
 

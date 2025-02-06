@@ -448,7 +448,7 @@ class MyPerson{
     public String name;
     public MyPerson spouse; // making a peson obj called spouse
     public MyPerson(String name){
-        this.name = name;
+        this.name = name; // here this still refers to current obj so if we do MyPerson jim = new MyPerson("jim") 'this' is jim and so this.name is jim.name = "jim"
     }
 
     public void marry(MyPerson other){

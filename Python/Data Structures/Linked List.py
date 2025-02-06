@@ -1,37 +1,54 @@
-"""
-## linked list documentation(notes)
+""" 
+* linked list documentation(notes)
 
-Linked list vs array: 
+* Linked list vs array: 
 Array: an array is a data structure that stores a collection of elements of the same type in contiguous memory locations meaning that the elements are stored in a linear sequence. each element is at a offset from the start of the array and we must provide the index to access the element (absolute index)
 Linked list: linked list is a data structure that consists of nodes where each node contains data and a reference to the next node in the sequence. each node is a class (obj) and one obj(node) is connected to another obj(node) using a refrence. 
               these collected nodes are linked together to form a sequence, called a linked list meaning we dont provide the index to access the element rather a pointer to the node (reletive index) at any node we dont know the next next node and so on. we must goto the next node to get to the node etc.
 
-Why make a LL:
-Arrays do well in indexing and searching but not in insertion and deletion. EX if i want to goto n/2 index i simply have to do array[n/2]
-Linked lists do well in insertion and deletion. not in indexing and searching. EX: if want to go to n/2 index i have to goto first node and then goto second node and so on until i get to n/2.
+* Why make a LL:
+Arrays do well in indexing and searching but not in insertion and deletion. EX if i want to goto get the last index i simply have to do array[n-1] this is constant time O(1) but if i want to insert at the start i have to shift all the elements to the right which is O(n) time complexity
+Linked lists do well in insertion and deletion. not in indexing and searching. EX: if want to goto get the last index i have to goto the first node and then the next node and so on until i reach the last node which is O(n) time complexity
+but if i want to insert at the start i simply have to point the head to the new node and the new node to the old head which is O(1) time complexity
+- NOTE we can make some o(n) LL algorithms o(1) by using a tail pointer which points to the last node and then we can insert at the end in O(1) time complexity this takes more space but is more efficient, this trade off is known as Trading space for time.
+also know we will have to update this tail pointer every time we add a new node to the end or remove a node from the end etc this is the trade off.
 
+* linked lists:
 # A linked list is a data structure that consists of nodes where each node contains data and a reference to the next node in the sequence. 
-# innitaly a head points to nothing. but after adding the first node the head points to the first node and the next node will have the head pointed to it from the prevoius node and so on.
+# innitially a head points to nothing. but after adding the first node the head points to the first node and the next node will have the head pointed to it from the prevoius node and so on.
 # a node is nothing but a class that contains the data of current node and a link to next node called refrence so the refrence of the current node points to the next node. The last node points to NONE, the last node is known as the tail its ref MUST BE NONE.
-# note how the ref of current node points to the next node, the head points to the first node innitally the the second node then third, and the last node points to nothing becuse the ref of the last node is null the head is null and the itaration stops 
+# note how the ref of current node points to the next node, the head points to the first node innitially the the second node then third, and the last node points to nothing becuse the ref of the last node is null the head is null and the itaration stops 
 HEAD     →     [ Data | Ref 1001 ]     →     [ Data | Ref 1002 ]     →     [ Data | Ref 1003 ]     →     [ Data | Ref NONE ]     →     NULL (initial state of a linked list head points to first node)
 ↑(Ref 1000)     ↑ Node 1 (Ref of node 1 = 1000)    ↑ Node 2 (Ref 1001)          ↑ Node 3 (Ref 1002)            ↑ Node 4 (Ref 1003, last node / tail)
 # here the head has a ref of 1000 = the ref of the first node and the first node has a ref of 1001 = the ref of the second node and so on. this is how the the head points to the first node because it has the ref of the first node and the first node has the ref of the second node and so on.
 # this ref in code is called self.head.ref and the data in code is called self.head.data meaning we dont store ref as numbers but point a var to the node which is self.head meaning we can say self.head = Node(n) and the head will point to the node n, under the hood head has a ref i.e a unique address of the node n.
-# NOTE: this si a single linked list meaning the ref of the current node points to the next node and the last node points to nothing
+# NOTE: this is a single linked list meaning the ref of the current node points to the next node and the last node points to nothing
         There are also doubly linked lists where the ref of the current node points to the next node and the previous node points to the current node
         there are also circular linked lists where the ref of the current node points to the next node and the last node points to the first node
         there can also be a circular doubly linked lists, and other variations.
-"""
-""" 
-NOTE: Nodes and garbage collection
+ 
+* NOTE: Nodes and garbage collection
 - AS we know if we assign any obj to node EX: arr = None then the garbage collector will delete the obj and free up memory
 For ex in the delete start node when we do head = head.ref the value of head is deleted and free up memory 
-we dont have to first point the start node to node i.e we dont need to say temp = head, head = head.ref, temp = None; this is beacuse
-if we just do head = head.ref no pointer points to the node obj (self.head) and the node obj is deleted and we free up its memory beacuse the garbage collector knows that the node obj is not used anymore 
-because self.head now has no refrence to it this means the node we just deleted (self.head) is unreachable and so the garbage collector will delete it, it will delete the value of self.head which is the node obj that self.head points to 
-Also, temp = None wont make a difference because its just another reference to the node obj (self.head) and hence only the temp variable is deleted and not the node obj, thats done by the garbage collector once again.
-but if you want you can do temp = head, head = head.ref, temp = None; or use pythons del keyword to delete the node obj this can help with clarity
+we dont have to first point the start node to none i.e we dont need to say temp = head, head = head.ref, temp = None; this is beacuse
+if we just do head = head.ref no pointer points to the node obj that was head and the node obj is deleted and free up memory beacuse the garbage collector knows that the node obj is not used anymore
+but if you want you can do temp = head, head = head.ref, temp = None; or use pythons del keyword to delete the node obj
+// RECURSIVE TYPES: if a class has a attribute that is the same type as teh class then its a recursive type, here thats the node class as it has ref a type of node class
+// aliasing: when we assign a var to another var and change the value of the first var the value of the second var also changes here n=n.ref changes n and n.ref as n.ref will be ref of new n
+// !NOTE: To delete a LL you can simply do head = None and the GC will delete all the nodes in the LL as they are unreachable and free up memory, (here head is private so make a setter or make it public)
+
+* IMPORTANT:
+!!! NOTE: any time i use temp = self.head like curr = self.head, we do this so we do not lose the first node i.e so we dont lose the head of the LL, temp is any var name its just a temp var
+!!!!!!!!! the head is always the first node and if we dont make the temp variable we will lose the first node in the process, hence 
+!!!!!!!!! Whenever we need to cycle through the LL we use a temp variable like n = self.head so we dont lose the first node
+!!!!!!!!! While the head always points to the first node, the temp variable starts at the head (first node) and points at various nodes in the LL cycling through the LL hence its commonly called 'current'
+
+* Linked List Indexing (giving nodes a mock index):
+While Linked lists dont have indexing like arrays we can still access the nth node in the LL by making a index var and 
+when we add to the LL we increment the index var by 1 and when we delete we decrement the index var by 1 then we can do anything
+using the index add before index add after index delete at index etc for ex for adding we loop and increment a temp index until we meet 
+the user index input then we add the node after tat that index and et for other operations using the index, also we can make the index 0 based or 1 based
+you can use this index for the length of the LL. Also we can mire easily keep track of nodes in the LL by increment in the while loop of displaying the LL, or we can make a new method for that
 """
 ## LL (THINK OF 'n' AS NODE) also self.head changes within functions but innitally self.head points to first node then the next and so on, meaning head is of type node and hence head.ref = node.ref.
 # class Node: # define node 
@@ -210,11 +227,6 @@ but if you want you can do temp = head, head = head.ref, temp = None; or use pyt
 #                 # n.data is the second nodes data as n = n.ref of node 1 and ref of node one points to node 2 
 #                 # n.data of (node2) is printed. this prosses reapets untill the head of node points to nothing
 
-""" 
-!!! NOTE: any time i use n = self.head we do this so we do not lose the first node i.e so we dont lost the head of the LL
-!!!!!!!!! the head is always the first node and if we dont make the temp variable we will lose the first node in the process, hence 
-!!!!!!!!! Whenever we need ti cycle through the LL we use a temp variable like n = self.head so we dont lose the first node
-"""
 
 # LL1 = LinkedList() # creating empty linked list 
 # LL1.add_begin(50) # adding number 50 at beginning of list
