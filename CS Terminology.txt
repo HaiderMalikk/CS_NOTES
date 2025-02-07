@@ -313,3 +313,19 @@ NOTE: different languages compile in difference ways C compiles directly to mach
       and python is not linked the libraries are resolved at runtime, beacuse python is Dynamicly typed, hence why the machine code is made dynamically
       the PVM python virtual machine converts the byte code to machine code to be ran on CPU, this process is done line by line 
       PVM gors line by line into machine code, but python has a JIT compiler which converts the byte code into machine code as we run that part of the code
+
+Order of operations
+====================
+Priority From highest to lowest (direcion of execution)
+( ) Parentheses (L to R )
+++, -- Postincrement (L to R)
+++, -- Preincrement (R to L)
++, - Positive,negative (L to )
+*, /, % Multiplication, division (L to R)
++, - Addition,subtraction (L to R)
+<=, >=, >, < Relational operator (L to R)
+==, != Relational operator (L to R)
+&& Logical AND (L to R)
+|| Logical OR (L to R)
++=, -=, *=, /=, %= Compound assignment (R to L)
+= Assignment (R to L)

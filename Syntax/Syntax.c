@@ -44,6 +44,7 @@ double d = 15.123456789; // Double for higher precision decimal values.
 // ! Format Specifiers
 
 // Format specifiers in C are used to specify how to print different data types:
+printf(a) // This will print the value of a. but not safe
 printf("Integer: %d\n", a);  // %d for integers.
 printf("Float: %f\n", b);    // %f for floats.
 printf("Character: %c\n", c); // %c for characters.
@@ -60,7 +61,8 @@ const int DAYS_IN_WEEK = 7; // 'const' keyword makes this a constant value.
 int sum = 5 + 3;    // Addition
 int diff = 5 - 3;   // Subtraction
 int product = 5 * 3; // Multiplication
-int quotient = 5 / 3; // Division (integer division)
+int quotient = 5 / 3; // Division (integer division rounds down)
+int division = 5.0 / 3.0; // Division (decimal division dose not round down)
 int remainder = 5 % 3; // Modulo (remainder of division)
 
 // ! Augmented Assignment Operators
@@ -71,6 +73,20 @@ x += 5;  // Equivalent to x = x + 5
 x -= 3;  // Equivalent to x = x - 3
 x *= 2;  // Equivalent to x = x * 2
 x /= 2;  // Equivalent to x = x / 2
+// post increment vs pre increment
+int x = 5;
+int y = x++; // y = 5, x = 6
+int z = ++x; // y = 6, x = 7
+// x = 7
+x = --x * 2; // x = 12 its done right to left so the value of x on right side is --x = 6 then * 2 = 12
+// just by it self
+int x = 5;
+x++; // x = 6
+++x; // x = 7
+/* 
+every operation is done left to right except for the assignment operator and pre increment which are done right to left EX: --x, x=1+1, x += x + 1
+in all these examples the left side is done first then the right side is done, in all other cases the right side is done first then the left side EX: x && y is done left to right
+*/
 
 // ! User Input
 
@@ -161,6 +177,20 @@ int multiply(int a, int b) {
 // Ternary operator is a shorthand for if-else:
 int max = (a > b) ? a : b;  // If 'a' is greater than 'b', return 'a', otherwise 'b'.
 
+// ! switch case
+int userInput = 1;
+// switch case is used to check multiple conditions:
+switch (userInput) {
+    case 1:
+        printf("You entered one.\n");
+        break; // must break to avoid fall through i.e the cases after this will be executed as well
+    case 2:
+        printf("You entered two.\n");
+        break;
+    default:
+        printf("You entered something else.\n");
+}
+
 // ! Function Prototypes
 
 // In C, you often declare function prototypes before defining them:
@@ -179,16 +209,27 @@ void greet() {
 
 #include <string.h>  // Needed for string functions.
 
-char str1[20] = "Hello";
+char str1[20] = "Hello"; // strings are just arrays of characters in C each char has a index starting at 0
 char str2[20] = "World";
+char str3[] = "C is awesome!"; // the string is terminated by a null character '\0'
 strcat(str1, str2);  // Concatenates str2 to the end of str1.
 printf("%s\n", str1);  // Output: HelloWorld
+
+// comparing strings
+char str[] = "Hello";
+char str2[] = "Hello";
+// if the strings are equal strcmp will return 0, we Cannot say str == str2 as it will compare the memory address of the strings
+if (strcmp(str, str2) == 0) {
+    printf("The strings are equal.\n");
+}
+// but foe ints we can do == to compare them
 
 // ! For Loops
 
 for (int i = 0; i < 5; i++) {
     printf("%d\n", i);  // Prints numbers 0 to 4.
-}
+} // can do for(;;) to make an infinite loop but use break to exit the loop
+
 
 // ! While Loops
 
@@ -235,9 +276,25 @@ for (int i = 0; i < 5; i++) {
 // Arrays are collections of data of the same type.
 int numbers[] = {1, 2, 3, 4, 5};
 printf("%d\n", numbers[0]);  // Accessing the first element of the array.
-// to make a array with a length of 50
-int numbers[50];
+// to make a array with a length of 50, reinitialize the array
+int numbers[50]; // numbers = [0,0,0 .... 0] 50 times
+int numbers[0] = 5; // numbers = [5,0,0 .... 0] 50 times
 // just like java at the time of making the array you have to define the length or the elements in the array 
+
+// pre processor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
+#define ARRAY_LENGTH 50 // this makes compilation faster insted of using a variable, always at the top of the file and all caps
+int num[ARRAY_LENGTH];
+
+// arr types
+int arr[5]; // this is a array of 5 integers
+arr[0] = 1.1; // this is valid but the value will be truncated to 1 as arr is an array of integers
+
+// post and pre increment
+int i = 0;
+int x = arr[i]++ // x = arr[i] then arr[i] = arr[i] + 1
+int x = ++arr[i]; // arr[i] = arr[i] + 1 then x = arr[i]
+int x = arr[i++]; // x = arr[i] then arr[i] = arr[i] + 1 
+int x = arr[++i] // arr[i] = arr[i] + 1 then x = arr[i]
 
 // ! Print an Array with Loop
 
@@ -287,7 +344,7 @@ int *ptr;
 int var = 10;
 ptr = &var;  // Storing the address of 'var' in 'ptr'.
 
-// Dereferencing: Accessing the value at the memory address.
+// Dereferencing: Accessing the value at the memory address., if you try to get the value from a null pointer it will give you a segmentation fault error
 printf("%d\n", *ptr);  // Prints the value stored at the address 'ptr' holds (10).
 
 // Function to swap two integers using pointers
@@ -370,6 +427,35 @@ int factorial(int n) {
 
 // Using recursion:
 int fact = factorial(5);  // 5! = 120
+
+// ! bit shifting
+// shift right means divide by 2 and shift left means multiply by 2 so 
+// 0100 = 4 and 0100 << 1 = 1000 = 8 and 0100 >> 1 = 0010 = 2
+// you can shift right with both signed and unsigned integers but you can only shift left with unsigned integers if you shoft left with signed integers it gives undefined behavior.
+
+// Bit shifting is the act of moving bits to the left or right.
+int num = 5;  // In binary: 0101
+num <<= 1;  // Shifts the bits to the left by 1: num becomes 1010 (10).
+num >>= 1;  // Shifts the bits to the right by 1: num becomes 0101 (5).
+
+// ! bit masking
+// Bit masking is the act of extracting specific bits from a number.
+int num = 5;  // In binary: 0101
+int mask = 3;  // In binary: 0011
+int maskedNum = num & mask;  // Applies a bitwise AND operation to extract the bits: maskedNum becomes 0011 (3).
+
+// ! bit clearing
+// Bit clearing is the act of clearing specific bits in a number.
+int num = 5;  // In binary: 0101
+int mask = 3;  // In binary: 0011
+int clearedNum = num & ~mask;  // Applies a bitwise AND operation to clear the bits: clearedNum becomes 0100 (4).
+
+// ! bit toggling
+// Bit toggling is the act of toggling specific bits in a number.
+int num = 5;  // In binary: 0101
+int mask = 3;  // In binary: 0011
+int toggledNum = num ^ mask;  // Applies a bitwise XOR operation to toggle the bits: toggledNum becomes 0110 (6).
+
 
 // ! Multi-file Programs
 
