@@ -10,8 +10,8 @@ Linked list: linked list is a data structure that consists of nodes where each n
 Arrays do well in indexing and searching but not in insertion and deletion. EX if i want to goto get the last index i simply have to do array[n-1] this is constant time O(1) but if i want to insert at the start i have to shift all the elements to the right which is O(n) time complexity
 Linked lists do well in insertion and deletion. not in indexing and searching. EX: if want to goto get the last index i have to goto the first node and then the next node and so on until i reach the last node which is O(n) time complexity
 but if i want to insert at the start i simply have to point the head to the new node and the new node to the old head which is O(1) time complexity
-- NOTE we can make some o(n) LL algorithms o(1) by using a tail pointer which points to the last node and then we can insert at the end in O(1) time complexity this takes more space but is more efficient, this trade off is known as Trading space for time.
-also know we will have to update this tail pointer every time we add a new node to the end or remove a node from the end etc this is the trade off.
+- NOTE we can make some O(n) LL algorithms o(1) by using a tail pointer which points to the last node and then we can insert at the end in O(1) time complexity this takes more space but is more efficient, this trade off is known as Trading space for time. 
+lso know we will have to update this tail pointer every time we add a new node to the end or remove a node from the end etc this is the trade off.
 
 * linked lists:
 # A linked list is a data structure that consists of nodes where each node contains data and a reference to the next node in the sequence. 
@@ -29,10 +29,14 @@ HEAD     →     [ Data | Ref 1001 ]     →     [ Data | Ref 1002 ]     →    
  
 * NOTE: Nodes and garbage collection
 - AS we know if we assign any obj to node EX: arr = None then the garbage collector will delete the obj and free up memory
-For ex in the delete start node when we do head = head.ref the value of head is deleted and free up memory 
-we dont have to first point the start node to none i.e we dont need to say temp = head, head = head.ref, temp = None; this is beacuse
-if we just do head = head.ref no pointer points to the node obj that was head and the node obj is deleted and free up memory beacuse the garbage collector knows that the node obj is not used anymore
-but if you want you can do temp = head, head = head.ref, temp = None; or use pythons del keyword to delete the node obj
+For ex in the delete start node when we do head = head.ref the old value (node that was head) is deleted and free up memory but is this always the case?
+what about the LL object as a whole, as we know head = head.ref will delete the first node after this line the reference count of the old head is 0 and the GC will delete it ???
+but the old nodes ref still points to the new head so even though there is no way to access the old head the old head still points to the points to the new head, since the new head 
+has references it is not deleted so dose that mean the old head is not deleted too, NO, while the GC will see the LL as one obj (because there is a still a connection to the new head from the old head)
+the Gc is still smart enough to see that the old head is unreachable and will delete it and free up memory it might happen faster/ make the GC's job easier if we set the old head's ref to Null but it will still happen eventually
+So what im seggesting is you can do the following: temp = head; head = head.ref; temp.ref = Null; and the GC will delete the old head faster but it will still delete it eventually
+you might know that a ref count of 0 means the obj is deleted so why not say temp = none to assign the old head to none to delete it faster ? there is no reson to do temp = null: 
+this only deletes the temp var and not the old head, the old head is deleted by the GC when it sees that it is unreachable which it is after head = head.ref. So temp = null is useless
 // RECURSIVE TYPES: if a class has a attribute that is the same type as teh class then its a recursive type, here thats the node class as it has ref a type of node class
 // aliasing: when we assign a var to another var and change the value of the first var the value of the second var also changes here n=n.ref changes n and n.ref as n.ref will be ref of new n
 // !NOTE: To delete a LL you can simply do head = None and the GC will delete all the nodes in the LL as they are unreachable and free up memory, (here head is private so make a setter or make it public)
@@ -47,316 +51,176 @@ but if you want you can do temp = head, head = head.ref, temp = None; or use pyt
 While Linked lists dont have indexing like arrays we can still access the nth node in the LL by making a index var and 
 when we add to the LL we increment the index var by 1 and when we delete we decrement the index var by 1 then we can do anything
 using the index add before index add after index delete at index etc for ex for adding we loop and increment a temp index until we meet 
-the user index input then we add the node after tat that index and et for other operations using the index, also we can make the index 0 based or 1 based
-you can use this index for the length of the LL. Also we can mire easily keep track of nodes in the LL by increment in the while loop of displaying the LL, or we can make a new method for that
+the user index input then we add the node after that index and etc etc for other operations using the index, also we can make the index 0 based or 1 based
+you can use this index for the length of the LL. Also we can more easily keep track of nodes in the LL by increment in the while loop of displaying the LL, or we can make a new method for that
+
+* Additional LL properties:
+Like memtioned before we can have a tail pointer which points to the last node in the LL, this makes adding to the end of the LL O(1) time complexity 
+but we need to update the tail pointer every time we add a new node to the end or remove a node from the end etc we can also have many additional methods like get head, get tail
+get length etc, and using the indexing mention above have methods like insert in middle where we do length/2 to get the middle index and insert there etc etc BUT these notes i have
+are great because the cover the entire basics of a LL and are simple and easy to understand, all the aditional methods mentioned above are just variations of the methods in these notes
+and can easily be implemented using the concepts and methods in these notes, so i will not be adding them here as they are not needed but you can add them if you want.
 """
-## LL (THINK OF 'n' AS NODE) also self.head changes within functions but innitally self.head points to first node then the next and so on, meaning head is of type node and hence head.ref = node.ref.
-# class Node: # define node 
-#     def __init__(self, data): # node constructer 
-#         self.data = data # data part of node the acc value
-#         self.ref = None # ref value of node empty to start the ref points to the next node but initially we have No next node no no refrence
-#         # value of ref is none as we are just creatinf empty nodes and not linking them yet 
 
-# class LinkedList: # creating linked list to link nodes
-#     def __init__(self): 
-#         self.head = None # the head can be thought of as the arrow pointing at the next node but intially no next node is there hence the "NONE"
-#         # head is start point of list if this is empty list is empty we canuse this to check if list empty
-#     def add_begin(self, data): # new function for adding only takes in data as parameter
-#       new_node = node(data) # creating a new node using the class node
-#       # new node is the first node so its ref is stored in the head
-#       new_node.ref = self.head # this new nodes ref should point to the next node in the list which would be the head of the list, we do this before updating the head 
-#       self.head = new_node # updating the new node to be the head of the list
-#       # what this dose is make a new nodes ref (its next node) equal to the current head or the current first node, now that we can get from this new node to the prevoius first node we can make the head point to this new node
-#       # now we have created a link from new node to first node and from head to new node => head => new node => second node (was first node and in line 2 this node was 'head')
-#
-#       """ # add begin demonstation
-#       let LL = Head -> 1001 -> None
-#       add_begin(LL, 1002)
-#       line 1) new_node = Node(1002)
-#       line 2) new_node.ref = Head = 1001
-#       line 3) Head = 1002
-#       
-#       now LL is:      
-#       LL = 1002 -> 1001 -> None
-#       """
-#
-#     def add_end(self, data):
-#       new_node = node(data) # to avoid puttinh in each conditional 
-#       # check if LL is empty as if it is cant add to end this is your first node so just check if empty
-#       if self.head is None:
-#       # if empty just add node by pointing head to new node since there are no nodes in LL we dont need to point new node to the next node as there is no next node after head
-#       # if we did do the same thing as add begin or call the add begin or add start function it wont matter but this is the most efficient way to do it
-#           self.head = new_node
-#       else:
-#       # not empty so now go to end of LL this is done by checking when ref ends ie n = self.head which points to new node so when n.ref or newnodes ref is none there is no next node and end of LL is reached 
-#           n = self.head
-#           while n.ref is not None:
-#           # treverse the LL but dont print data 
-#               n = n.ref
-#       # now we have reched the end n.ref is none this is the end now as node has no ref hence no next node add new node so the ref of last node points to new node here now n.ref is ref of last node as we have broken out of while loop
-#       n.ref = new_node
-#
-#     
-#     # note: for the while loops you can do while n is or while n.ref is as if n is none n.ref is node and at the end of the list n.ref is null but since n = n.ref n will also be none
-#     def add_afterNode(self, data, x): # in the format (data to add, node to add after give the nodes data)
-#         n = self.head # n can be short for node
-#         if n is None: # check if LL is empty so later on we know for sure node not found unlike aff before this is optional
-#             print("empty LL")
-#             return
-#         while n is not None: # simple check to see if LL empty 
-#             if x == n.data: # if the node we are looking for is equal to current node
-#                 break # stop loop
-#             n = n.ref # if current node is not the node x we are looking for then treverse the LL by updating n to n.ref (current node n's ref points to nect node)
-#         # if either the loop dose not run (no LL exists) or n.ref is not possible ie n.ref DNE as we are at the last node so now n = None while loop stops and as n = None this conditional runs
-#         # but what if we are at the last node ? there is not refrence after that but n = n.ref is not n = None becasue if node x is last node n = n.ref will go from second last node to last node then while loop will run and break after x==n.data 
-#         # note if n = n.ref dose not run then x == n.data is true and since n =self.head is first node x is the first node and loop breaks on first run
-#         if n is None:
-#             print("node not found") #  alredy checked for empty LL so know that node DNE
-#         else: # if there is a node selected basicly ->(newnode links to n.ref the node to be after newnode then the node before newnode is linked from prevoius node to newnode)
-#             new_node = node(data) # create new node usinf node class
-#             #the order done here is first assign the new nodes ref to point to next node (remembering that the next node was originally n.ref as the ref of a node points to next node), the take the ref of the now prevoius node and point it to the new node (our current node is the node we stopped at)
-#             #n.ref is the ref of the node we are adding after so basiclly then take the node x we are adding after and let its reference (node x's refrece) point to the new node
-#             new_node.ref = n.ref  # take newnodes ref and assign it to next node (originally n.ref)
-#             n.ref = new_node # then take the node x we are adding after and let its reference (node x's refrece) point to the new node
-#
-#     # if you want to not use return just wrap the while loop in a else statement 
-#     def add_before_node(self, data, x): # adding before node in form (self, data to add, data of node to add before)
-#         n = self.head
-#         if n is None: # check if LL empty to aviod error for next conditional if you dont n.data DNE and so error
-#             print("empty")
-#             return # if we dont return then the while loop will run 
-#         if n.data == x: # if self.head's data (which is the first node data as head initially points to first node) is the same as our nodes data we are trying to add before that means we are adding a node before the first node and we must treat that as the first node so copy add begin but line 2 is optinal without it you cant add twice more than one node as the prevoius node will be lost but here there is only one node the node we add before first node
-#             new_node = node(data)
-#             new_node.ref = self.head
-#             self.head = new_node
-#             return # we do not want while loop to run after we insert node before first node if we dont n.ref.data will not check the first node and we have alredy added it so it will say node x DNE but x node has been added as first node
-#         # now we are adding at the second node at leaste so there is a node before and after new node
-#         # we checked first node so start at n.ref also
-#         # why is it n.ref and not n unlike after node adding, at end if node is not found and the end n exists and its the last node but n.ref DNE and so n.ref.data DNE and a error comes also after while n.ref stops as the last node has no ref(no next node) n exits but n.ref is node and so we check if n.ref is none to confirm node not found
-#         while n.ref is not None: while we have a next nodes ref 
-#             # n.data checks the current nodes data n.ref is next node so n.ref.data checks the data of the next node after x node
-#             # if we check the data of the node after we can add the node after a given node but that gievn node is the node before the x node (the rest of code follows add_after given node here gievn node is the node before x node)
-#             if n.ref.data == x: 
-#                 break
-#             n = n.ref
-#         if n.ref is None: # here this would check if node is not found or LL is empty but we have checked for empty LL before so this will for sure mean node DNE
-#             print("Node not found")
-#         else: # add after the node before x node
-#             new_node = node(data)
-#             new_node.ref = n.ref
-#             n.ref = new_node
-#
-#     # adds one node to start by assigning it to head only can be used once
-#     def insert_empty(self, data):
-#        if self.head is None:
-#            new_node = node(data)
-#            self.head = new_node
-#        else:
-#            print("LL not empty")
-#
-#     # simply take the self.head that innitially points to first node and change it to the head that points to the second node this way self.head points to self.head.ref or the second node 
-#     # think of this as basically skipping the first node the node is still in memory but we skip over it hence deleting it from our LL
-#     def delete_begin(self):
-#        if self.head is None:
-#            print("LL is empty cannot delete Node")
-#        else:
-#            self.head = self.head.ref
-#
-#     def delete_end(self):
-#        if self.head is None:
-#            print("LL is empty cannot delete Node")
-#        # Note: self.head.ref is second node. if self.head (our first node here) has no refrence than only one node exists and its self.head so we set self.head to none this deletes the first and only node
-#        elif self.head.ref is None: # this deletes if theres one node elif replaces return keyword ensuring only one conditional runs
-#            self.head = None
-#        else: # here i need to look at the next next node and delete the next node once i reach the second last node
-#            # to explain imagine a LL: 1->2->3 innitally n is 1 n.ref.ref is 3 while loop runs n =n.ref where n.ref is 2 
-#            # now n is 2 n.ref is 3 and n.ref.ref is none as 3 has no ref while loop stops and n.ref which is 3 (our last node) is set to None
-#            # so now just like the last method 3 exits in memory but the ref of node 2 that points to 3 is set to empty basiclly deleteing 3 from LL
-#            n = self.head
-#            while n.ref.ref is not None:
-#                n = n.ref
-#            n.ref = None
-#
-#     def delete_by_value(self, x):  # x is node to delete
-#        if self.head is None: # check if empty 
-#            print("LL is empty cannot delete")
-#            return # so we dont check the otehr conditionals
-#        if x == self.head.data: # to delete the first node just do delete_begin 
-#            # if our target x is self.head (our first node) then set self.head to self.head.ref ir the second node this is = to n - n.ref 
-#            # this way we skip over the first node basicly deleting original self.head (first node ) and changing it to first nodes ref (second node)
-#            # if there is no self.head.ref ie no second node then self.head = self.head.ref = none and so LL is empty
-#            self.head = self.head.ref 
-#            return
-#        n = self.head
-#        while n.ref is not None: # we checked the first node so just like add before node we start at second node n.ref where n is first node also at end n.ref is none while n is not none just like add before it solves that error
-#            if x == n.ref.data: # once we find our node break we cant do n.data as we are working with n.ref in loop
-#                break
-#            n = n.ref # if node not found incement node once
-#        if n.ref is None: # by end if n.ref is none ie last node has no ref node DNE
-#           print(f"node '{x}' DNE cannot delete it")
-#        # to delete node we basicly skip over it so n.ref (next node) is now n.ref.ref the next next node if there is no next next node n.ref.ref is none so n.ref = none and n would be last node
-#        # if we want to remove 2; let LL: 1->2->3 at first n is 1, n.ref is not none loop runs, n.ref is 2 x == 2 break loop
-#        # n.ref is 2 so else runs, n.ref which points at 2 is updated to be n.ref.ref which is 3 so LL skips from 1 to 3 basicly deleting 2 form LL
-#        else:
-#            n.ref = n.ref.ref
-#   
-#    # reverse LL
-#    def reverse_LL(self, head):
-#       current = head # new node points to first node 
-#       prev = None # inittily theres no prevoius node to the first node
-#       while current is not None:
-#           new_node = current.ref #  to get our newnode "the node after first node which is current" we use the current nodes refrence witch points us to the next node, after frist iteration current is prev our last moved node now this node stores the refrence to get us to our next node
-#           current.ref = prev # let this selected node be moves to a spot prevous "behind" the current first node, in the second iteration since current was node last moved we move our new mode behind the prevously moved node
-#           prev = current # that node we just moved to prev is now our currrent node becuse we will need its ref later 
-#           current = new_node # that current node is our new node becuse of the first line it pulls currents refrence we have to let our newly moved node ("prev" thats = current) be our new node so we can take its refrence and go to next node
-#       self.head = prev # remember how the head points to the first node to start with, when we are done reversing our last node moved "prev" is now our first node so let the head point to new first node
-#    
-#
-#     def display_LL(self):
-#         if self.head is None: # if list is empty
-#             print("Linked List is empty")
-#         else: # if list not empty
-#             n = self.head 
-#             # innitally n, the head will point to the first node from no prevous node
-#             while n is not None: # while "head" the pointer that points to the node is not None
-#                 print(n.data) # print heads data, data from node remember from last fuction self.head"n" is = new_node so print newnode.data
-#                 n = n.ref # after printing the data of the first head first node n.data n is now equal to the refrance of that node that. # to go to next node, assign head to value of refrence of the current node which points to next node
-#                 # remember self.head"n" is newnode and our node has a data and ref we printed the data so now let the heads "that is = to newnode" ref be head "n" and point to next node
-#                 # n.ref is the refrance of the next node, stored in the first node
-#                 # we just printed the data of, that refrance points to the second node now when the loop runs again
-#                 # n.data is the second nodes data as n = n.ref of node 1 and ref of node one points to node 2 
-#                 # n.data of (node2) is printed. this prosses reapets untill the head of node points to nothing
+# ! Singly Linked List
 
-
-# LL1 = LinkedList() # creating empty linked list 
-# LL1.add_begin(50) # adding number 50 at beginning of list
-# LL1.add_begin(10) # 10 is val of data, ref is 50 new first node is 10
-# LL1.display_LL() # calling method to print list
-
-## LINKED LIST implementation
-# the node 
-class node:
+class Node:
+    """
+    # Node Class
+    # Can be reused anywhere in a Singly Linked List because it only has one reference and one data
+    # In all the LL methods, we create the node first to avoid multiple node creations for different cases
+    """
     def __init__(self, data):
-        self.data = data
-        self.ref = None
-        
-# the linked list
+        self.data = data  # The data of the node
+        self.ref = None  # The reference of the node, which holds the next node in the sequence
+
 class LinkedList:
+    """
+    # Singly Linked List Class
+    # The LL uses nodes, each with a reference to the next node in the sequence.
+    """
     def __init__(self):
-        self.head = None
-        
-    def add_begin(self, data):
-        new_node = node(data)
-        new_node.ref = self.head
-        self.head = new_node
-    
+        self.head = None  # The head of the LL, initially None as the LL is empty
+
+    def add_empty(self, data):
+        """
+        # Add to empty LL
+        # Since the LL is empty, simply point the head to the new node
+        """
+        if self.head is not None:  # If the head is not None, the LL is not empty, so we cannot add using this method
+            return  # Exit the function if the LL is not empty
+        new_node = Node(data)  # Create a new node with the provided data
+        self.head = new_node  # Point the head to the new node (this will be the first and only node)
+
+    def add_start(self, data):
+        """
+        # Add at the start
+        # Create a new node and point its reference to the old first node to keep the LL intact
+        """
+        new_node = Node(data)  # Create a new node with the provided data
+        new_node.ref = self.head  # Point the new node to the current head (first node)
+        self.head = new_node  # Now update the head to the new node, making it the first node
+
     def add_end(self, data):
-        new_node = node(data)
-        if self.head is None:
+        """
+        # Add at the end
+        # Traverse to the last node, then point its reference to the new node
+        """
+        new_node = Node(data)  # Create a new node with the provided data
+        if self.head is None:  # If the LL is empty, make the new node the head
             self.head = new_node
         else:
-            n = self.head
-            while n.ref is not None:
-                n = n.ref
-            n.ref = new_node
-    
-    def add_after_Node(self, data, x):
-        n = self.head
-        if n is None:
-            print("empty LL cannot add")
-            return
-        while n is not None:
-            if x == n.data:
+            current = self.head  # Start from the head of the LL
+            while current.ref is not None:  # Traverse the LL until the last node
+                current = current.ref
+            current.ref = new_node  # Point the last node's reference to the new node
+
+    def add_after(self, data, target):
+        """
+        # Add a node after a specific node
+        # Traverse the LL to find the target node and insert the new node after it
+        """
+        current = self.head  # Start from the head of the LL using a temp var so we dont lose the head
+        while current is not None:  # Traverse the LL until the target node is found
+            if current.data == target:  # If the target node is found
                 break
-            n = n.ref
-        if n is None:
-            print(f"node '{x}' DNE")
-        else:
-            new_node = node(data)
-            new_node.ref = n.ref
-            n.ref = new_node
-            
-    def add_before_node(self, data, x):
-        n = self.head
-        if n is None:
-            print("LL is empty")
+            current = current.ref  # Move to the next node
+        if current is None:  # If the target node was not found, return
             return
-        if n.data == x:
-            new_node = node(data)
-            new_node.ref = self.head
-            self.head = new_node
+        new_node = Node(data)  # Create a new node with the provided data
+        new_node.ref = current.ref  # Point the new node's reference to the next node after the target
+        current.ref = new_node  # Update the target node's reference to point to the new node
+
+    def add_before(self, data, target):
+        """
+        # Add a node before a specific node
+        # Traverse the LL to find the target node and insert the new node before it
+        # Simply put adding before a node is adding after the node before the target node
+        """
+        if self.head is None:  # If the LL is empty, return
             return
-        while n.ref is not None:
-            if n.ref.data == x:
+        if self.head.data == target:  # If the target node is the head, add the new node at the start
+            self.add_start(data)
+            return
+        current = self.head  # Start from the head of the LL using a temp var so we dont lose the head
+        while current.ref is not None:  # Traverse the LL to find the node before the target node
+            if current.ref.data == target:  # If the target node is found
                 break
-            n = n.ref
-        if n.ref is None:
-            print(f"node '{x}' DNE")
-        else:
-            new_node = node(data)
-            new_node.ref = n.ref
-            n.ref = new_node
-    
-    def insert_empty(self, data): 
-        if self.head is None:
-            new_node = node(data)
-            self.head = new_node
-        else:
-            print("LL not empty")
-    
-    def delete_begin(self):
-        if self.head is None:
-            print("LL is empty cannot delete Node")
-        else:
-            self.head = self.head.ref
-    
+            current = current.ref  # Move to the next node
+        if current.ref is None:  # If the target node was not found, return
+            return
+        new_node = Node(data)  # Create a new node with the provided data
+        new_node.ref = current.ref  # Point the new node's reference to the target node
+        current.ref = new_node  # Update the previous node's reference to point to the new node
+
+    def delete_start(self):
+        """
+        # Delete from the start
+        # Skip over the first node by pointing the head to the next node
+        """
+        if self.head is None:  # If the LL is empty, return
+            return
+        self.head = self.head.ref  # Update the head to the next node, effectively removing the first node
+
     def delete_end(self):
-        if self.head is None:
-            print("LL is empty Cannot delete Node")
-        elif self.head.ref is None:
-            self.head = None
-        else:
-            n = self.head
-            while n.ref.ref is not None:
-                n = n.ref
-            n.ref = None
-    
-    def delete_by_value(self, x):
-        if self.head is None:
-            print("LL is empty cannot delete")
+        """
+        # Delete from the end
+        # Traverse until the second last node and set its reference to None
+        """
+        if self.head is None:  # If the LL is empty, return
             return
-        if x == self.head.data:
+        if self.head.ref is None:  # If the LL only has one node, make the head None (empty the LL)
+            self.head = None
+            return
+        current = self.head  # Start from the head of the LL
+        while current.ref.ref is not None:  # Traverse until the second last node
+            current = current.ref
+        current.ref = None  # Remove the last node by setting the second last node's reference to None
+
+    def delete_by_value(self, data):
+        """
+        # Delete a node by its value
+        # Traverse the LL to find the node with the given data and remove it
+        """
+        if self.head is None:  # If the LL is empty, return
+            return
+        if self.head.data == data:  # If the first node contains the target data, update the head
             self.head = self.head.ref
             return
-        n = self.head
-        while n.ref is not None:
-            if x == n.ref.data:
+        current = self.head  # Start from the head of the LL using a temp var so we dont lose the head
+        while current.ref is not None:  # Traverse the LL to find the node with the target data
+            if current.ref.data == data:  # If the node with the target data is found
                 break
-            n = n.ref
-        if n.ref is None:
-           print(f"node '{x}' DNE cannot delete it")
-        else:
-            n.ref = n.ref.ref
-    
-    def Reverse_LL(self):
-        prev = None
-        current = self.head
-        while current is not None:
-            next_node = current.ref
-            current.ref = prev
-            prev = current
-            current = next_node
-        self.head = prev
-    
-    def display_LL(self): 
-        if self.head is None:
-            print("empty LL nothing to display")
-        else:
-            n = self.head
-            while n is not None:
-                print(n.data, end="->") 
-                n = n.ref
-            print("None") 
+            current = current.ref  # Move to the next node
+        if current.ref is None:  # If the node was not found, return
+            return
+        current.ref = current.ref.ref  # Remove the node by skipping over it
+
+    def reverse(self):
+        """
+        # Reverse the linked list
+        # Iteratively reverse the links between nodes
+        """
+        prev = None  # Initialize the previous node to None
+        current = self.head  # Start from the head of the LL using a temp var so we dont lose the head
+        while current is not None:  # Traverse the LL
+            next_node = current.ref  # Save the reference to the next node
+            current.ref = prev  # Reverse the current node's reference to point to the previous node
+            prev = current  # Move the previous node to the current node
+            current = next_node  # Move the current node to the next node
+        self.head = prev  # After the loop, update the head to the last node, making the LL reversed
+
+    def display(self):
+        """
+        # Display the list
+        # Traverse the LL and print each node's data
+        """
+        current = self.head  # Start from the head of the LL using a temp var so we dont lose the head
+        while current is not None:  # Traverse the LL until the end
+            print(current.data, end=' -> ')  # Print the current node's data
+            current = current.ref  # Move to the next node
+        print("None")  # End of the list
+
         
 myLL = LinkedList() # create the Linked List
 myLL.insert_empty(0) # insert 0 at start this dose not meat 0 will be at start forever

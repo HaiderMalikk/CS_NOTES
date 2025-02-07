@@ -29,10 +29,14 @@ HEAD     →     [ Data | Ref 1001 ]     →     [ Data | Ref 1002 ]     →    
  
 * NOTE: Nodes and garbage collection
 - AS we know if we assign any obj to node EX: arr = None then the garbage collector will delete the obj and free up memory
-For ex in the delete start node when we do head = head.ref the value of head is deleted and free up memory 
-we dont have to first point the start node to none i.e we dont need to say temp = head, head = head.ref, temp = None; this is beacuse
-if we just do head = head.ref no pointer points to the node obj that was head and the node obj is deleted and free up memory beacuse the garbage collector knows that the node obj is not used anymore
-but if you want you can do temp = head, head = head.ref, temp = None; or use pythons del keyword to delete the node obj
+For ex in the delete start node when we do head = head.ref the old value (node that was head) is deleted and free up memory but is this always the case?
+what about the LL object as a whole, as we know head = head.ref will delete the first node after this line the reference count of the old head is 0 and the GC will delete it ???
+but the old nodes ref still points to the new head so even though there is no way to access the old head the old head still points to the points to the new head, since the new head 
+has references it is not deleted so dose that mean the old head is not deleted too, NO, while the GC will see the LL as one obj (because there is a still a connection to the new head from the old head)
+the Gc is still smart enough to see that the old head is unreachable and will delete it and free up memory it might happen faster/ make the GC's job easier if we set the old head's ref to Null but it will still happen eventually
+So what im seggesting is you can do the following: temp = head; head = head.ref; temp.ref = Null; and the GC will delete the old head faster but it will still delete it eventually
+you might know that a ref count of 0 means the obj is deleted so why not say temp = none to assign the old head to none to delete it faster ? there is no reson to do temp = null: 
+this only deletes the temp var and not the old head, the old head is deleted by the GC when it sees that it is unreachable which it is after head = head.ref. So temp = null is useless
 // RECURSIVE TYPES: if a class has a attribute that is the same type as teh class then its a recursive type, here thats the node class as it has ref a type of node class
 // aliasing: when we assign a var to another var and change the value of the first var the value of the second var also changes here n=n.ref changes n and n.ref as n.ref will be ref of new n
 // !NOTE: To delete a LL you can simply do head = None and the GC will delete all the nodes in the LL as they are unreachable and free up memory, (here head is private so make a setter or make it public)
@@ -47,8 +51,15 @@ but if you want you can do temp = head, head = head.ref, temp = None; or use pyt
 While Linked lists dont have indexing like arrays we can still access the nth node in the LL by making a index var and 
 when we add to the LL we increment the index var by 1 and when we delete we decrement the index var by 1 then we can do anything
 using the index add before index add after index delete at index etc for ex for adding we loop and increment a temp index until we meet 
-the user index input then we add the node after tat that index and et for other operations using the index, also we can make the index 0 based or 1 based
-you can use this index for the length of the LL. Also we can mire easily keep track of nodes in the LL by increment in the while loop of displaying the LL, or we can make a new method for that
+the user index input then we add the node after that index and etc etc for other operations using the index, also we can make the index 0 based or 1 based
+you can use this index for the length of the LL. Also we can more easily keep track of nodes in the LL by increment in the while loop of displaying the LL, or we can make a new method for that
+
+* Additional LL properties:
+Like memtioned before we can have a tail pointer which points to the last node in the LL, this makes adding to the end of the LL O(1) time complexity 
+but we need to update the tail pointer every time we add a new node to the end or remove a node from the end etc we can also have many additional methods like get head, get tail
+get length etc, and using the indexing mention above have methods like insert in middle where we do length/2 to get the middle index and insert there etc etc BUT these notes i have
+are great because the cover the entire basics of a LL and are simple and easy to understand, all the aditional methods mentioned above are just variations of the methods in these notes
+and can easily be implemented using the concepts and methods in these notes, so i will not be adding them here as they are not needed but you can add them if you want.
 */
 
 package Java.Data_Structures;
