@@ -1,4 +1,4 @@
-# python basics
+# python basics 
 
 # operators
 # "=" is to assign, "==" is to check, != is dose not equal
@@ -15,11 +15,12 @@
 print("Hello, World!") # print is a function that prints the string in the parentheses to the console
 
 # importing module
+import random # import the random module
 import random as rd # here we import the module random as rd meanong we use rd.random() instead of random.random()
-from random import random as rd # here we use the random library and import the random function as rd
+from random import random as rd # here we use the random library and import the random function as rd, thsi is selctive import
 
 # * F strings
-# f-string is a way to format strings in python
+# f-string is a way     to format strings in python
 # f-string is used to insert the value of a variable inside a string
 x = 10
 y = 20
@@ -1855,6 +1856,12 @@ print(p.name)  # Output: Bob
 del p.name
 # print(p.name)  # Raises AttributeError: 'Person' object has no attribute 'name'
 
+# help function in python
+# The help() function is used to display information about a Python object or module.
+# EX
+help(max) # Display information about the max() function
+
+# =================== ADVANCED PYTHON SYNTAX ===================
 # ! with keywords
 # In Python, the with keyword is used to simplify the management of resources like files, 
 # network connections, or locks. The with statement ensures that resources are automatically cleaned up (e.g., closed)
@@ -2026,7 +2033,7 @@ here we get the current value of counter before incrementing it as during the ti
 another thread might have already incremented counter changing its value. so we get the current value of counter at the start and work with it during the lock.
 """
 
-###### ! NON SYNTAX
+# ==================== NON PYTHON SYNTAX ====================
 
 # ! ENV's in python
 """ 
