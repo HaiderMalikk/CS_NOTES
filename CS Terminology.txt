@@ -46,6 +46,8 @@ Kernel Threads: Managed by the operating system.
 Thread Synchronization:
 Since multiple threads share memory, synchronization techniques like locks (mutex), semaphores, and atomic variables are used to prevent race conditions.
 race conditions happen when two or more threds access and modify shared data at the same time, leading to unpredictable or incorrect behavior.
+a atomic lock can be used to ensure that a section of the code is executed by only one thread at a time. Atomic operations are operations done in a single step and cannot be divisible
+Locks are mechanisims that prevent multiple threds for accsessing a shared resource at the same time
 
 * Garbage Collection
 ================================================================================================
@@ -120,6 +122,10 @@ Primitive types are value types that are stored on the stack (faster), while ref
 - Definition:
 Primitive types: Integers, floats, booleans, etc. Fixed memory size, default can be 0 etc etc cannot be none. 
 Reference types: Objects, arrays, strings, etc. Dynamic memory size, are objects and default is none.
+
+* Mutable vs immutable types
+Mutable Types: are types (like types of variables) whose value can be changed. EX: lists, objects.
+Immutable Types: are types (like types of variables) whose value cannot be changed. EX: Strings (modification makes a new string obj).
 
 * Pointers
 ================================================================================================
