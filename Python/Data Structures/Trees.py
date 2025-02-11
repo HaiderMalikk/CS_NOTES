@@ -1047,8 +1047,235 @@ def mirror(root): # root is the root of the tree i.e the first node
     
     return root # return the root to the caller of mirror(root) this insures root.left /right for that function call is on the correct node
 
-""" 
-analysis:
-we start at root 1:
 
+# ! Quad-Trees
+"""
+Quad-Trees:
+A Quad-tree is a tree data structure used to partition a two-dimensional space by recursively subdividing it into four quadrants or regions.
+It is used for spatial indexing and range queries.
+
+Explanation:
+1. The Quad-tree starts with a single root node representing the entire area.
+2. The node is subdivided into four child nodes, each representing a quadrant.
+3. Each node in the tree contains either a point or a small number of points. If a node has more than the maximum allowed points, it is subdivided further.
+4. Quad-trees are useful for handling 2D spatial data like images, maps, and game environments.
+
+Key operations:
+- Insertion: Points are added to the tree, and if a quadrant exceeds capacity, the node is subdivided.
+- Searching: Queries like range searches can be efficiently performed using the tree structure.
+- Deletion: Points can be deleted from the tree, and rebalancing is performed if necessary.
+
+Example:
+Consider a 2D grid divided into 4 quadrants:
+Quadrant 1: (0, 0) to (5, 5)
+Quadrant 2: (5, 0) to (10, 5)
+Quadrant 3: (0, 5) to (5, 10)
+Quadrant 4: (5, 5) to (10, 10)
+
+A Quad-tree can index points in this space and perform range queries for points within specific quadrants.
+"""
+
+# Code: Quad-tree example (simplified)
+class QuadTree:
+    def __init__(self, boundary, capacity=4):
+        self.boundary = boundary  # The rectangular boundary (x_min, y_min, x_max, y_max)
+        self.capacity = capacity
+        self.points = []
+        self.divided = False
+
+    def insert(self, point):
+        if not self._in_boundary(point):
+            return False
+        if len(self.points) < self.capacity:
+            self.points.append(point)
+            return True
+        if not self.divided:
+            self.subdivide()
+        return (self.nw.insert(point) or self.ne.insert(point) or self.sw.insert(point) or self.se.insert(point))
+
+    def _in_boundary(self, point):
+        x, y = point
+        x_min, y_min, x_max, y_max = self.boundary
+        return x_min <= x < x_max and y_min <= y < y_max
+
+    def subdivide(self):
+        x_min, y_min, x_max, y_max = self.boundary
+        mx = (x_min + x_max) / 2
+        my = (y_min + y_max) / 2
+        nw_boundary = (x_min, y_min, mx, my)
+        ne_boundary = (mx, y_min, x_max, my)
+        sw_boundary = (x_min, my, mx, y_max)
+        se_boundary = (mx, my, x_max, y_max)
+        self.nw = QuadTree(nw_boundary, self.capacity)
+        self.ne = QuadTree(ne_boundary, self.capacity)
+        self.sw = QuadTree(sw_boundary, self.capacity)
+        self.se = QuadTree(se_boundary, self.capacity)
+        self.divided = True
+
+# Test the Quad-tree
+qt = QuadTree((0, 0, 10, 10))
+qt.insert((1, 1))
+qt.insert((7, 8))
+qt.insert((3, 4))
+
+"""
+Analysis:
+1) We insert (1, 1). It is within the boundary, so it is added to the root.
+2) We insert (7, 8). It is within the boundary, so it is added to the root.
+3) We insert (3, 4). It is within the boundary, so it is added to the root.
+4) If we insert more points and exceed the capacity, the root will subdivide into four quadrants.
+"""
+
+# ! R-Trees
+"""
+R-Trees:
+An R-Tree is a tree data structure used for indexing multi-dimensional information such as geographical coordinates, rectangles, or polygons.
+It is often used for spatial data and is an efficient method for searching within multidimensional space.
+
+Explanation:
+1. The R-tree is a balanced tree in which each node contains a bounding box that contains all of its child nodes.
+2. The leaf nodes contain the actual data objects (e.g., rectangles, polygons).
+3. The non-leaf nodes store bounding boxes that cover all the child nodes and are used to guide the search.
+4. R-trees allow for efficient spatial queries such as range searches and nearest neighbor searches.
+
+Key operations:
+- Insertion: New elements are inserted into the tree, and if necessary, a split occurs to maintain balance.
+- Searching: The tree can quickly search for objects within a given range.
+- Deletion: A deleted object is removed, and the tree may require rebalancing.
+
+Example:
+Consider the following bounding boxes in 2D space:
+Box1 = (0, 0, 5, 5)
+Box2 = (1, 1, 4, 4)
+Box3 = (3, 3, 6, 6)
+
+The R-tree can index these boxes and perform spatial queries.
+"""
+
+# Code: R-tree example (simplified)
+class RTree:
+    def __init__(self, max_nodes=4):
+        self.max_nodes = max_nodes
+        self.root = []
+
+    def insert(self, box):
+        # Inserting a bounding box into the R-tree
+        if len(self.root) < self.max_nodes:
+            self.root.append(box)
+        else:
+            # Simple logic for inserting and splitting
+            self.root = [self.root, [box]]  # Splitting
+
+    def search(self, query_box):
+        # Searching for a bounding box that intersects with the query_box
+        results = []
+        for box in self.root:
+            if self._intersects(query_box, box):
+                results.append(box)
+        return results
+
+    def _intersects(self, box1, box2):
+        # Check if two boxes intersect
+        return not (box1[2] < box2[0] or box1[0] > box2[2] or box1[3] < box2[1] or box1[1] > box2[3])
+
+# Test the R-tree
+rtree = RTree()
+rtree.insert((0, 0, 5, 5))
+rtree.insert((1, 1, 4, 4))
+rtree.insert((3, 3, 6, 6))
+
+# Searching for bounding boxes intersecting with (2, 2, 4, 4)
+print(rtree.search((2, 2, 4, 4)))
+
+"""
+Analysis:
+1) We insert (0, 0, 5, 5). It is added to the root.
+2) We insert (1, 1, 4, 4). It is added to the root.
+3) We insert (3, 3, 6, 6). It is added to the root.
+4) When searching for (2, 2, 4, 4), it intersects with (0, 0, 5, 5) and (1, 1, 4, 4).
+"""
+
+# ! B-Trees
+"""
+B-Trees:
+A B-tree is a self-balancing tree data structure that maintains sorted data and allows efficient insertion, deletion, and searching in logarithmic time.
+It is commonly used in databases and file systems.
+
+Explanation:
+1. A B-tree is a multi-level index structure. Each node can contain multiple keys and child pointers.
+2. Internal nodes guide the search process, while leaf nodes contain the actual data or references to data.
+3. B-trees are balanced, meaning that the height of the tree is minimized for fast search performance.
+4. The number of keys in each node must follow certain rules (e.g., a minimum and maximum number of keys per node).
+
+Key operations:
+- Insertion: Keys are inserted into the tree while maintaining balance.
+- Searching: The tree allows efficient searching in logarithmic time.
+- Deletion: Keys can be removed while ensuring that the tree remains balanced.
+
+Example:
+Consider a B-tree with a minimum degree of 2, where each node can hold 3 keys and has 4 child pointers. Inserting keys will split nodes when necessary to keep the tree balanced.
+"""
+
+# Code: B-tree example (simplified)
+class BTree:
+    class Node:
+        def __init__(self, leaf=False):
+            self.keys = []
+            self.children = []
+            self.leaf = leaf
+
+    def __init__(self, t=2):
+        self.t = t  # Minimum degree (defines the range for the number of keys)
+        self.root = self.Node(leaf=True)
+
+    def insert(self, key):
+        root = self.root
+        if len(root.keys) == 2 * self.t - 1:
+            s = self.Node()
+            s.children.append(self.root)
+            self._split(s, 0)
+            self.root = s
+        self._insert_non_full(self.root, key)
+
+    def _insert_non_full(self, node, key):
+        i = len(node.keys) - 1
+        if node.leaf:
+            node.keys.append(None)
+            while i >= 0 and key < node.keys[i]:
+                node.keys[i + 1] = node.keys[i]
+                i -= 1
+            node.keys[i + 1] = key
+        else:
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            i += 1
+            if len(node.children[i].keys) == 2 * self.t - 1:
+                self._split(node, i)
+                if key > node.keys[i]:
+                    i += 1
+            self._insert_non_full(node.children[i], key)
+
+    def _split(self, parent, i):
+        node = parent.children[i]
+        new_node = self.Node(leaf=node.leaf)
+        parent.children.insert(i + 1, new_node)
+        parent.keys.insert(i, node.keys[self.t - 1])
+        new_node.keys = node.keys[self.t:]
+        node.keys = node.keys[:self.t - 1]
+        if not node.leaf:
+            new_node.children = node.children[self.t:]
+            node.children = node.children[:self.t]
+
+# Test the B-tree
+btree = BTree(t=2)
+btree.insert(10)
+btree.insert(20)
+btree.insert(5)
+
+"""
+Analysis:
+1) We insert 10. It is added to the root.
+2) We insert 20. It is added to the root.
+3) We insert 5. It is added to the root.
+4) If we insert more keys and exceed the capacity, the root will split, and the tree will rebalance.
 """
