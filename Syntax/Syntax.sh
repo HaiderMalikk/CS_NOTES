@@ -31,6 +31,7 @@ str2="111"
 str3=""
 
 # Compare strings and check if str3 is empty
+# -eq is for strings use == or = for strs
 if [ "$str1" != "$str2" ]
 then
 	echo "str 1 = str2"
@@ -41,12 +42,13 @@ else
 	echo "str1 != str2"
 fi
 
-# Integer comparison examples
+# Integer comparison examples, use -eq or (( int == int )) inside (())
 int1=0
 int2=99
 int3=20
 
 # Check if int1 is 0 and int2 is not 0
+# or do (( int1 == 0 && int2 != 0 ))
 if [[ "$int1" -eq 0 && "$int2" -ne 0 ]]
 then 
 	echo "int1 is 0 and int 2 not 0"
