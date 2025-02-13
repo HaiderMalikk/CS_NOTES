@@ -141,6 +141,7 @@ int *ptr = (int *)malloc(sizeof(int));  // Allocates memory
 free(ptr);  // Frees the allocated memory
 // Pointer Arithmatic: Since the pointer holds a address you can jump to different addressed in memory by adding/subtracting from the pointers value
 // this ofset in the pointer to jump to different places in memory is known as pointer Arithmatic and can be used to jump to any index in the array from any other index
+// Pointer Arithmatic is not recomended it can lead to bad and unexpected behavior  
 
 * compile time vs runtime
 =============================================
@@ -324,8 +325,8 @@ Order of operations
 ====================
 Priority From highest to lowest (direcion of execution)
 ( ) Parentheses (L to R )
-++, -- Postincrement (L to R)
-++, -- Preincrement (R to L)
+++, -- Postincrement (L to R) => the number is incremented after the value is used ex: i=10; print(i++) = 10, print(i) = 11
+++, -- Preincrement (R to L) => the number is incremented before the value is used ex: i=10; print(--i) = 9
 +, - Positive,negative (L to )
 *, /, % Multiplication, division (L to R)
 +, - Addition,subtraction (L to R)
@@ -335,3 +336,27 @@ Priority From highest to lowest (direcion of execution)
 || Logical OR (L to R)
 +=, -=, *=, /=, %= Compound assignment (R to L)
 = Assignment (R to L)
+
+Bit Manipulation
+=============
+- SHIFTING
+Shifting Right: shift the binary bits to the right, this divides the number by 2^n where n is the number of shifts we do to the original binary number
+Ex: 10 in binary = 001010, 001010 >> 2 = 000010 = 2 in decimal
+Shifting Left: shift the binary bits to the left, this multiplies the number by 2^n where n is the number of shifts we do to the original binary number 
+Ex: 10 in binary = 001010, 001010 << 2 = 101000 = 40 in decimal
+NOTE: shifting to the left will make the number larger and shifting to the right will make the number smaller
+NOTE: for signed numbbers (negative numbers) we can shift in both directions but for unsigned numbers (positive numbers) we can only shift to the left, 
+if we shift a unsigned number to the right it leads to undefined behavior 
+NOTE: the most significant bit (MSB) is the leftmost bit in a binary number, if the MSB is 1 the number is negative and if the MSB is 0 the number is positive
+- Logical Operations
+And: if both the bits are a 1 the resulting bit is a 1: EX 0101 & 0011 = 0001
+OR: if one of the bits is a 1 the resulting bit is a 1: EX 0101 || 0011 = 0111 (languages might use the '`' symbol)
+XOR: if the bits are different that the result is a 1: EX 0101 ^ 0011 = 0110
+NOT: invert all bits i.e 0=1 and 1=0: EX !0101 = 1010 (languages might use the '~' symbol)
+
+Naming Conventions
+====================
+Common file/function/var etc... naming conventions
+- Kebab Case: all lower case letters seperated by '-'. EX: kebab-case-example. Used for CSS class naming
+- Camel Case: the first word is lower case and the rest start with a upper case letter with no spaces in between. EX: camelCaseExample. Used for JS vars
+- Pascal Case: all the words start with upper case with no space inbetween. EX: PascalCaseExample. used for TS functions, in JAVA

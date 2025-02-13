@@ -11,7 +11,7 @@ echo "rest of $# inputs but after the $x one: ${@:x}"
 # $@ or $* in new line {} for custom range
 
 # Increment x by 1 using let or arithmetic expansion
-let x=x+1 # or ((x=x+1))
+let x=x+1 # or ((x=x+1)) or x=$((x+1))
 # Print the new value of x
 echo "$x" # output 4
 	

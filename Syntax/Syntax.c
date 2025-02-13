@@ -3,6 +3,12 @@
 // it is staticaly typed meaning you must tell the compiler what type of data you are using ie int x = 5 
 // it is a compiled language meaning it must be compiled before it can be run it is compiled directly to machine code making it fast and efficient
 // C is also strongly typed meaning after you declare a variable as a data type it cannot be changed or preform an invalid operation with it with first converting it to another type
+
+// C is a procedural language meaning it is based on procedures or routines, it is not object oriented like C++ or Java
+// the program is a series of functions that are called in a sequence to preform a task each line is executed one at a time
+// C has no classes the main function is the entry point of the program and all other functions are called from the main function
+// the main function can have 2 arguments argc and argv argc is the number of arguments passed to the program and argv is a array of strings that are the arguments passed to the program
+// so we have int main() or int main(int argc, char *argv[]) NOTE the main function is a int because it returns a integer value 0 for success and any other number for failure
 */
 
 // ! NOTE: this code dose not run it is just an example of syntax !!!!!!
@@ -205,25 +211,6 @@ void greet() {
     printf("Hello, World!\n");
 }
 
-// ! String Functions
-
-#include <string.h>  // Needed for string functions.
-
-char str1[20] = "Hello"; // strings are just arrays of characters in C each char has a index starting at 0
-char str2[20] = "World";
-char str3[] = "C is awesome!"; // the string is terminated by a null character '\0'
-strcat(str1, str2);  // Concatenates str2 to the end of str1.
-printf("%s\n", str1);  // Output: HelloWorld
-
-// comparing strings
-char str[] = "Hello";
-char str2[] = "Hello";
-// if the strings are equal strcmp will return 0, we Cannot say str == str2 as it will compare the memory address of the strings
-if (strcmp(str, str2) == 0) {
-    printf("The strings are equal.\n");
-}
-// but foe ints we can do == to compare them
-
 // ! For Loops
 
 for (int i = 0; i < 5; i++) {
@@ -281,7 +268,7 @@ int numbers[50]; // numbers = [0,0,0 .... 0] 50 times
 int numbers[0] = 5; // numbers = [5,0,0 .... 0] 50 times
 // just like java at the time of making the array you have to define the length or the elements in the array 
 
-// pre processor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
+// * pre processor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
 #define ARRAY_LENGTH 50 // this makes compilation faster insted of using a variable, always at the top of the file and all caps
 int num[ARRAY_LENGTH];
 
@@ -337,15 +324,35 @@ void sortArray(int arr[], int n) {
     }
 }
 
+// ! String Functions
+// Strings in C are arrays of characters.
+#include <string.h>  // Needed for string functions.
+
+char str1[20] = "Hello"; // strings are just arrays of characters in C each char has a index starting at 0
+char str2[20] = "World";
+char str3[] = "C is awesome!"; // the string is terminated by a null character '\0'
+strcat(str1, str2);  // Concatenates str2 to the end of str1.
+printf("%s\n", str1);  // Output: HelloWorld
+
+// comparing strings
+char str[] = "Hello";
+char str2[] = "Hello";
+// if the strings are equal strcmp will return 0, we Cannot say str == str2 as it will compare the memory address of the strings
+if (strcmp(str, str2) == 0) {
+    printf("The strings are equal.\n");
+}
+// but for ints we can do == to compare them
+
 // ! Pointers NOTE: '*' is used to denote a pointer. at runtime we can use *pointername to access the value at that address and &pointername to get the address
 
 // A pointer is a variable that stores the memory address of another variable.
-int *ptr;
-int var = 10;
-ptr = &var;  // Storing the address of 'var' in 'ptr'.
+int *ptr; // Declaring a pointer to an integer using the '*' operator. now a var ptr exits that is ready to store the address of an integer
+int var = 10; // Declaring an integer variable. var holds the value 10
+ptr = &var;  // Storing the address of 'var' in 'ptr' using &var to get the address of var. he address not the value of var. the address looks like 0x7fffbf7b1b4c
 
 // Dereferencing: Accessing the value at the memory address., if you try to get the value from a null pointer it will give you a segmentation fault error
-printf("%d\n", *ptr);  // Prints the value stored at the address 'ptr' holds (10).
+// use *pointername to get the value at that address that the pointer holds
+printf("%d\n", *ptr);  // Prints the value stored at the address 'ptr' holds (10). the ptr holds the address of var so *ptr is the value of var, %d as ptr holds a address to a integer
 
 // Function to swap two integers using pointers
 void swap(int *a, int *b) {
@@ -356,8 +363,9 @@ void swap(int *a, int *b) {
 
 // ! Memory Addresses
 
-// You can access the memory address of a variable using the '&' operator.
+// You can access the memory address of a variable using the '&' operator. addresses have the '%p' format specifier
 printf("Address of var: %p\n", &var);  // Outputs the memory address of 'var'.
+printf("Address stored in ptr: %p\n", ptr);  // Outputs the memory address stored in 'ptr'. no & is needed as ptr is already a address, printing &ptr will give you the same address
 
 // ! Structs
 
@@ -397,6 +405,19 @@ void sayHello() {
 
 void (*funcPtr)() = &sayHello;  // Declaring a function pointer.
 funcPtr();  // Calling the function through the pointer.
+// and array of function pointers can be used to store multiple functions
+
+// ! Pointer Arithmetic
+// an array is a reference type meaning if we have int arr = [20]; arr hold a address to the first element of the array i.e arr is a address not a value
+// so to store the array in a pounter is different from storing a single value in a pointer
+int arr[5] = {1, 2, 3, 4, 5};
+int *ptrArr = arr;  // Storing the address of the first element of the array in a pointer no need for &arr as we said arr is a address
+printf("%d\n", *ptrArr);  // Prints the value at the address stored in 'ptrArr' (1) like we said the address is to the first element of the array
+printf("%d\n", *(ptrArr + 1));  // Prints the value at the next address (2). and so on
+// But arrays elements are all just a offset from the first element i.e if a element is 8bytes then the first element is at 0x00, the second is at 0x08 and so on each 8 bytes apart
+// so we can multiple the base address (the start index) by a multiple to get the address of the element we want in the 8 byte case the 3rd element is at 0x00 + 8*2 = 0x10
+// this is C code is just the address of the array + n where n is the index of the element we want to access
+
 
 // ! Callback Functions
 
