@@ -407,6 +407,17 @@ void (*funcPtr)() = &sayHello;  // Declaring a function pointer.
 funcPtr();  // Calling the function through the pointer.
 // and array of function pointers can be used to store multiple functions
 
+// ! Arrays of Pointers
+// all arrays are references types meaning they store addresses not values, the values are the elements of the arrays
+// but we can also store a list of pointers in a array
+// Array of pointers to strings. here each elements is a pointer to a string not the string itself
+// while we declate the strings the element at index 1 i.e names[1] is a pointer to the string "Bob" meaning its just a address to the first character of the string
+char *names[] = {"Alice", "Bob", "Charlie"};  
+printf "%s\n", names[1]);  // Prints "Bob" beacuse we used the %s format specifier to print a string
+// using pointer arithmetic, we know the address points to the first element and we also know we can add * to a pointer to get its value so:
+printf ("%s\n", *names);  // Prints "Alice" as *names is the value at the address of the first element of the array
+printf ("%s\n", *(names+1));  // Prints "Bob" as *(names+1) is the value at the address of the second element of the array
+
 // ! Pointer Arithmetic
 // an array is a reference type meaning if we have int arr = [20]; arr hold a address to the first element of the array i.e arr is a address not a value
 // so to store the array in a pounter is different from storing a single value in a pointer
