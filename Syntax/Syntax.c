@@ -268,7 +268,7 @@ int numbers[50]; // numbers = [0,0,0 .... 0] 50 times
 int numbers[0] = 5; // numbers = [5,0,0 .... 0] 50 times
 // just like java at the time of making the array you have to define the length or the elements in the array 
 
-// * pre processor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
+// ! pre processor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
 #define ARRAY_LENGTH 50 // this makes compilation faster insted of using a variable, always at the top of the file and all caps
 int num[ARRAY_LENGTH];
 
@@ -379,7 +379,7 @@ struct Student {
 struct Student student1 = {"Alice", 20, 3.9};  // Initializing a struct.
 printf("%s is %d years old.\n", student1.name, student1.age);  // Accessing struct members.
 
-// ! Structs with Pointers
+// ! Structs with Pointers and Memory Allocation
 
 // Structs can be used with pointers to manage memory dynamically.
 struct Student {
@@ -395,6 +395,7 @@ if (ptrStudent != NULL) {
     printf("%s is %d years old.\n", ptrStudent->name, ptrStudent->age);  // Accessing struct members through pointer.
     free(ptrStudent);  // Freeing the allocated memory.
 }
+// * use after free is when you try to access a pointer after you have freed the memory it points to, this will give you a segmentation fault error
 
 // ! Function Pointers
 
