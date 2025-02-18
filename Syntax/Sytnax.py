@@ -711,7 +711,7 @@ matrix = [
 print(matrix[1][0])
 
 
-### arrays [this, is, a, array]
+# ! arrays [this, is, a, array]
 # use numpy library to work with arrays
 import numpy as np
 ## use [] to create and store array elemnts  
@@ -839,11 +839,14 @@ def array(a, b, c):
 result = array(5, 3, 2)
 print(result)
 
-## add arrays gpt 
-
-### lists
+# ! lists
 my_list = [1, 2, 3, 4, 5] # simple list
 mixed_list = [1, "Hello", 3.14, True, ["apple", "banana", "cherry"]] # array can have diffrent typs of elemets 
+
+# you can add lists 
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+combined_list = list1 + list2 # this is still a list its not [1..], [4...] its [1,2,3,4,5,6]
 
 my_list = [1, 2, 3, 4, 5]
 
