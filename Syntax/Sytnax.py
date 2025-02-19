@@ -2066,6 +2066,7 @@ another thread might have already incremented counter changing its value. so we 
 - pip freeze (lists all installed packages)
 - pip install --upgrade package_name (updates a package to the latest version)
 - pip install --upgrade pip (updates pip to the latest version)
+- pip show package_name (displays information about a package, can be used to check if a package is installed)
 
 # rqeuirements.txt file (a file that lists all the packages that are required for a project)
 EX requirements.txt:
