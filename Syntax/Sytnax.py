@@ -1682,6 +1682,7 @@ global_var = 10 # creating a variable outside the function ! NOTE: this valiable
 def print_global(): # this prints the global variable's current value
     # when accessing a global variable inside a function we dont need to use the global keyword
     print(global_var)
+    local_var = 20 * global_var # ok as we are only accessing the global variable
     
 def modify_global(): # this modifies the global variable 
     # to use a global variable in the scope of a function we use the global keyword and mention the variable
@@ -1691,6 +1692,10 @@ def modify_global(): # this modifies the global variable
 print_global() # this will print 10
 modify_global() # this will modify the global variable and print 20
 # NOTE: global x = 20  # This will cause a syntax error you can only modify a global variable stright away follow the syntax
+
+# * global var optimization
+# if your accsessing a global variable in a function python will check the function scope for that var before going to global scope 
+# so assign the global var to a local varable inside the function or pass the global variable as an argument to the function and use it inside the function
 
 # ! nonlocal keyword in python
 # when a variable is a function but we have a inner function inside that fuction we can use the nonlocal keyword to access the variable in the outer function
