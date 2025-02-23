@@ -597,7 +597,7 @@ stripped_str = whitespace_str.strip()  # stripped_str = "Some text with spaces"
 # replaces occurance of substring with another substring
 replaced_str = str1.replace("World", "Python")  # replaced_str = "Hello, Python!"
 
-# splits strings into substrings based on dilimeter
+# splits strings into substrings based on dilimeter i.e " " or ","
 words = str2.split(" ")  # words = ["Python", "is", "awesome!"] here it splits at (" ") "a space"
 
 # combines a list of strings into one string 
@@ -667,6 +667,20 @@ text = "abcdefghi"
 print(text[::-2])  # Output: "igeca", negative step for reversing and skipping every 2nd character
 text = "abcdefghi"
 print(text[1::2])  # Output: "bdfh" starts at index 1, and takes every 2nd character the end defaults to the end of the string
+
+# replacing elements in a string
+# while we can print (str[i]) we cannot assign anything to it unlike a list, so to replace elements we use string slicing
+text = "Hello, World!"
+new_text = text[:6] + "Python" + text[7:]
+print(new_text)  # Output: "Hello, Python!"
+# replaceing the letter o with a, but not using replace as that will replace all o's, replace only the one at index 7
+text = "Hello, World!"
+new_text = text[:7] + "a" + text[8:] # for any index i do str[:i] + 'element to replace at i' + str[i+1:]
+print(new_text)  # Output: "Hello, aorld!"
+# to append a element simply dont start at i+1 and start at i 
+text = "Hello, World!"
+new_text = text[:7] + "A" + text[7:]
+print(new_text)  # Output: "Hello, AWorld!"
 
 # ! arrays 
 # using arrays 
@@ -1237,12 +1251,12 @@ items = [(1, 2), (3, 1), (5, 0)]
 items.sort(key=lambda x: x[1])  # Sort by the second element in each tuple
 print(items)  # Output: [(5, 0), (3, 1), (1, 2)]
 
-# using the list function to use map 
+# ! map function with lambda function
 numbers = [1, 2, 3, 4, 5]
 squares = list(map(lambda x: x ** 2, numbers))
 print(squares)  # Output: [1, 4, 9, 16, 25] # each 'x' in the lambda function is mapped to the corresponding element in the 'numbers' list
 
-# ! using if else in a list comprehension, lambda function and map
+# ! using conditions in a list comprehension, lambda function and map
 # * since the filter function returns a filter object always cast it into a list using list(filter)
 # EX1
 data = [1, 2, 3, 4, 5]
@@ -1326,7 +1340,7 @@ print(result) # Output: [1, 4, 27, 16, 125]
 
 # print(new_arr)
 
-# ! list comprehention ( a way to make a list with loops and conditions inside these help build the list)
+# ! list comprehention ( a way to make a list with loops and conditions inside these help build the list
 # syntax general: new_list = [expression for item in iterable if condition]
 # EX 
 # this line says add x**2 to the new list squares for each x in the range of 10
