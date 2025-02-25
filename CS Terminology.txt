@@ -199,7 +199,7 @@ In interpreted languages, the code is not compiled into machine code before it i
 Instead, the code is interpreted line by line by an interpreter then this interpreter will convert the code into machine code as its executed.
 EX: python, ruby, javascript
 
-*  High -Level vs Low-Level Languages
+*  High-Level vs Low-Level Languages
 =============================================
 ### Overview
 In programming, languages can be classified into two main categories: high-level and low-level. The
@@ -362,8 +362,68 @@ Common file/function/var etc... naming conventions
 - Camel Case: the first word is lower case and the rest start with a upper case letter with no spaces in between. EX: camelCaseExample. Used for JS vars
 - Pascal Case: all the words start with upper case with no space inbetween. EX: PascalCaseExample. used for TS functions, in JAVA
 
-Lists Vs Arrays:
+Lists Vs Arrays
 ================
 Both are data structures that store elements in a squential order hence both are linear data structures.
 - Arrays: a array is a collection of elements, usually of the same type, stored in a contiguous block of memory. The size of the array is fixed when it is created and cannot change dynamically.
 - Lists: A list is an ordered collection of elements, and it typically allows for dynamic resizing. Lists can be implemented in many ways (e.g., linked lists, dynamic arrays), so their behavior can vary, generally provide more flexibility compared to arrays.
+
+Data Stuctures and alogrithims
+===============================
+- Data Structures
+
+Arrays
+Fixed-size, contiguous block of memory.
+Fast access by index.
+
+Linked Lists
+Nodes containing data and pointers to the next (and possibly previous) node.
+Dynamic size, easy insertion/deletion.
+
+Stacks
+LIFO (Last In, First Out) structure.
+Operations: push, pop, peek.
+
+Queues
+FIFO (First In, First Out) structure.
+Operations: enqueue, dequeue, front.
+
+Trees
+Hierarchical structure with nodes.
+Types: Binary Tree, Binary Search Tree, AVL Tree, etc.
+
+Graphs
+Nodes (vertices) connected by edges.
+Types: Directed, Undirected, Weighted, Unweighted.
+
+Hash Tables
+Key-value pairs with fast access.
+
+Linear vs Non-Linear Data structure 
+- in a linear data structure elements are arranged in a squential order. we always know the unique predecessor and succcessor to every element 
+  (exept first and last element) in the Data structure (ex: Array/list, Linked List)
+- in a non linear data structure elements are not in a squential order, each element can be connected to multiple elements 
+  forming a hierarchical structure. (ex: Trees, Graphs)
+
+NOTE: * Abstract Data Type: is a theoretical concept that defines a data structure purely by its behavior (operations) from the user's perspective, 
+        without specifying its implementation. (ex; Stack ADT: Operations include push, pop, etc)
+
+- Algorithms
+
+Sorting Algorithms
+EX: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort.
+
+Searching Algorithms
+EX: Linear Search, Binary Search.
+
+Graph Algorithms
+EX: Depth-First Search (DFS), Breadth-First Search (BFS), Dijkstra's Algorithm, A* Algorithm.
+
+Dynamic Programming
+EX: Solving problems by breaking them down into simpler subproblems.
+
+Greedy Algorithms
+EX: Making the locally optimal choice at each stage.
+
+Divide and Conquer
+EX: Dividing the problem into smaller subproblems, solving them independently, and combining the results.

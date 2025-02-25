@@ -1,5 +1,6 @@
 # ! Trees in python
-# ! a tree is a non linear data structure meaning unlike a list the next element dosent alwasy have to be  or right after another it can be anywhere, there can also he a hierircy to trees
+# ! a tree is a non linear data structure meaning unlike a list the next element dosent alwasy have to be left or right after another it can be anywhere but all the nodes must be connected
+# !there can also he a hierircy to trees
 # ! a tree is a recursive data structure meaning they can be divided into sub trees
 # ! ex of a tree and its properties 
 """

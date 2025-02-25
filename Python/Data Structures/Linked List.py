@@ -60,6 +60,23 @@ but we need to update the tail pointer every time we add a new node to the end o
 get length etc, and using the indexing mention above have methods like insert in middle where we do length/2 to get the middle index and insert there etc etc BUT these notes i have
 are great because the cover the entire basics of a LL and are simple and easy to understand, all the aditional methods mentioned above are just variations of the methods in these notes
 and can easily be implemented using the concepts and methods in these notes, so i will not be adding them here as they are not needed but you can add them if you want.
+
+* Time Complexity of LL operations:
+// * Comparison of operations on different data structures (Array, Singly Linked List, Doubly Linked List)
+*
+* -------------------------------------------------------------------------------------------------------
+* | OPERATION                     | ARRAY       | SINGLY LINKED LIST (SLL)  | DOUBLY LINKED LIST (DLL)  |
+* ------------------------------------------------------------------------------------------------------|
+* | Get size                      | O(1)        | O(1)                      | O(1)                      |
+* | Get first/last element        | O(1)        | O(1) (first), O(n) (last) | O(1)                      |
+* | Get element at index i        | O(1)        | O(n)                      | O(n)                      |
+* | Remove last element           | O(1)        | O(n)                      | O(1)                      |
+* | Add/remove first element      | O(1)        | O(1)                      | O(1)                      |
+* | Add last element              | O(1)        | O(n)                      | O(1)                      |
+* | Add/remove i-th element       | O(n)        | O(n) (without reference)  | O(n) (without reference)  |
+* | Given reference to (i-1)th    | O(1)        | O(1)                      | O(1)                      |
+* ------------------------------------------------------------------------------------------------------|
+
 """
 
 # ! Singly Linked List
