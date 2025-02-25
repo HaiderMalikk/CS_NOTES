@@ -46,6 +46,8 @@ int a = 10;      // An integer.
 float b = 5.75;  // A float for decimals.
 char c = 'Z';    // A character.
 double d = 15.123456789; // Double for higher precision decimal values.
+const int DAYS_IN_WEEK = 7; // Constant value. // * NOTE: constants are only declared once and cannot be changed even if you attempt to redefine them they will retain the original value before the attempt at redefining them
+// * as for changing the vlaue of a const that will cause a compile error
 
 // ! Format Specifiers
 
@@ -429,6 +431,31 @@ printf("%d\n", *(ptrArr + 1));  // Prints the value at the next address (2). and
 // But arrays elements are all just a offset from the first element i.e if a element is 8bytes then the first element is at 0x00, the second is at 0x08 and so on each 8 bytes apart
 // so we can multiple the base address (the start index) by a multiple to get the address of the element we want in the 8 byte case the 3rd element is at 0x00 + 8*2 = 0x10
 // this is C code is just the address of the array + n where n is the index of the element we want to access
+// * more syntax for pointer arithmetic
+char *colors[] = {"red", "green", "blue", "yellow"};
+printf("%s\n", colors[2]);  // Prints "blue".
+printf("%s\n", *(colors + 2));  // Prints "blue". as *(colors) is the address of the first element of the array + 2 is index 2 = "blue"
+print("%s\n", *(colors + 2)[0]); // Prints "b" as *(colors + 2) is the address of the "blue" string and [0] is the first character of the string
+// alternative way
+print("%s\n", (colors + 2)[0]); // equivalent to *(colors + 2) // the [0] is not for the first element of the index 2
+print("%s\n", (colors + 2)[0][0]); // equivalent to *(colors + 2)[0] // the [0] is for the first character of the "blue" string = "b"
+/// or 
+print("%s\n", *(*(colors + 2))); // equivalent to (colors + 2)[0][0] = "b" the inner pointer gets the lement blue and the outer pointer gets the first character of the string as the base address of blue is the address of the first character of the string
+
+print("%s\n", (colors + 2)[2]); // equivalent to *(colors + 2 + 2) = *(colors + 4) = "yellow"
+
+//!  pointers to arrays
+int arr[4] = {5, 10, 15, 20};  // Array of 4 integers
+int (*ptr)[4] = &arr;          // Pointer to an array of 4 integers
+printf("%d %d", (*ptr)[1], ptr[0][3]);  // Accessing elements of the array, (*ptr)[1] is the second element of the array as *ptr gets the values and [1] gets the second element of the array, ptr[0][3] is the fourth element of the array as ptr[0] gets the values and [3] gets the fourth element of the array  
+
+// ! pointers to pointers
+int x = 10;      // x is initialized to 10
+int *p = &x;     // p is a pointer to x, so print(*p) will print 10
+int **q = &p;    // q is a pointer to p (a pointer to a pointer)
+
+**q = 20;        // Dereferencing q twice assigns 20 to x, **q is the address to p, *q is the value of p which is the address of x and **q is the value of x
+printf("%d %d %d", x, *p, **q); // Prints the values of x, *p, and **q
 
 
 // ! Callback Functions
