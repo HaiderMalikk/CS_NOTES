@@ -10,7 +10,7 @@
 # **= do exponentiation and assign in one step
 # * / vs //. / divides 2 numbers and gives a decimal number, // divides 2 numbers and gives a whole number and it always rounds down
 # Keywords
-# and, or, not, pass, break, continue, def, del, elif, else, except, exec, finally, for, global, if, import, in, is, lambda, nonlocal, not, or, pass, raise, return, try, while, with, yield 
+# True False and, or, not, pass, break, continue, def, del, elif, else, except, exec, finally, for, global, if, import, in, is, lambda, nonlocal, not, or, pass, raise, return, try, while, with, yield 
 
 print("Hello, World!") # print is a function that prints the string in the parentheses to the console
 
@@ -105,6 +105,13 @@ if x3 == 5 or y3 == 6: # true
 if not x3 == 5: # false 
     print("x3 is not equal to 5")
 
+# ! NOTE ON LOGICAL OPERATORS
+#  * in python True is 1 and False is 0
+# this is carried over to arithmetic operations like addition, multiplication, etc. (logic arithmetic)
+print(True + True)  # Output: 2
+print(False + False)  # Output: 0
+print(True * False)  # Output: 0
+print(12 * True + False - 2 )  # Output: 10
 
 # ! Priority of operators 
 """ 
@@ -1440,6 +1447,22 @@ print(new_data) # output = [3,4,5]
 
 new_data = data[2:]
 print(new_data) # ouput [3,4,5]
+
+# * 2D list splicing
+matrix = [
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12]
+]
+print (
+matrix[0], # select a row 
+[row[0] for row in matrix], # select a column
+[row[1:3] for row in matrix[0:2]], # select a sub matrix
+matrix[1:3], # sleect a row range 
+[row[1:3] for row in matrix], # select a column range
+matrix[::2], # skip rows step size  (select every other row)
+[row[::2] for row in matrix] # skip columns step size
+)
 
 # ! tuple unpacking (a way to delare and assign multiple variables at once)
 # syntax general a, b, c = (1, 2, 3)

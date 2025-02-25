@@ -361,3 +361,9 @@ Common file/function/var etc... naming conventions
 - Kebab Case: all lower case letters seperated by '-'. EX: kebab-case-example. Used for CSS class naming
 - Camel Case: the first word is lower case and the rest start with a upper case letter with no spaces in between. EX: camelCaseExample. Used for JS vars
 - Pascal Case: all the words start with upper case with no space inbetween. EX: PascalCaseExample. used for TS functions, in JAVA
+
+Lists Vs Arrays:
+================
+Both are data structures that store elements in a squential order hence both are linear data structures.
+- Arrays: a array is a collection of elements, usually of the same type, stored in a contiguous block of memory. The size of the array is fixed when it is created and cannot change dynamically.
+- Lists: A list is an ordered collection of elements, and it typically allows for dynamic resizing. Lists can be implemented in many ways (e.g., linked lists, dynamic arrays), so their behavior can vary, generally provide more flexibility compared to arrays.
