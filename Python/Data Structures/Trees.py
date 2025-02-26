@@ -1,6 +1,6 @@
 # ! Trees in python
 # ! a tree is a non linear data structure meaning unlike a list the next element dosent alwasy have to be left or right after another it can be anywhere but all the nodes must be connected
-# !there can also he a hierircy to trees
+# ! there can also he a hierircy to trees
 # ! a tree is a recursive data structure meaning they can be divided into sub trees
 # ! ex of a tree and its properties 
 """
@@ -8,17 +8,17 @@ A simple representation of a tree data structure.
 
 Example Tree Structure:
 
-             [Root]
-            /      \
-        [Child 1]   [Child 2]
-        /       \            \
+               [Root]
+              /      \
+        [Child 1]    [Child 2]
+        /       \             \
 [Grandchild 1] [Grandchild 2] [Child 3]
     |
 [Great Grandchild 1]
 
 Tree Properties:
 ----------------
-- **Node**: Each individual element of the tree. A node can contain a value and links to other nodes (its children).
+- **Node**: Each individual element of the tree. A node can contain a value and links to other nodes (its children). 
 
 - **Edge**: An edge connects a parent node to a child node. In a tree, each edge represents a link that allows traversal between nodes basicaly a edge connects 2 nodes and is a path between them. NOTW: Number of edges = number of nodes - 1
 
@@ -26,21 +26,25 @@ Tree Properties:
 
 - **Root**: The topmost node of the tree. There is only one root node in a tree. It serves as the entry point for traversal.
 
-- **Leaf**: A node that does not have any children. In the above structure, `[Great Grandchild 2]` and `[Child 3]` are leaf nodes. NOTE: a non leaf node would be a parent node.
+- **Leaf**: A node that does not have any children. In the above structure, `[Great Grandchild 2]` and `[Child 3]` are leaf nodes. NOTE: a non leaf node would be a parent node. also called external nodes, a internal node is a node that is not a leaf node.
 
-- **Children**: The nodes that are directly connected to a given node when moving away from the root. For example, `[Child 1]` and `[Child 2]` are children of `[Root]`. NOTE: a child node can have only 1 parent
+- **Children**: The nodes that are directly connected to a given node when moving away from the root. For example, `[Child 1]` and `[Child 2]` are children of `[Root]`. NOTE: a child node can have only 1 parent 
 
-- **Parent**: The node that has one or more children. For instance, `[Root]` is the parent of `[Child 1]` and `[Child 2]`. NOTE: a parent node can have multiple children
+- **Parent**: The node that has one or more children. For instance, `[Root]` is the parent of `[Child 1]` and `[Child 2]`. NOTE: a parent node can have multiple children. NOTE: each node must only have 1 parent (except root).
 
 - **Sibling**: Nodes that share the same parent. `[Child 1]` and `[Child 2]` are siblings since they share the same parent `[Root]` notice how there on the same level.
 
+- **Ancestor**: A node that lies on the path between the root and a given node. For example, `[Root]` is an ancestor of `[Great Grandchild 1]`. NOTE: the root is the ancestor of all nodes in the tree. for '[great grandchild 1]' the number of ancestors is 4 (root, child 1, grandchild 1, great grandchild 1) this is the ancestor path for '[great grandchild 1]'. this path for every node will be unique.
+
+- **Descendant**: A node that lies on the path between the root and a given node. For example, `[Great Grandchild 1]` is a descendant of `[Root]`. NOTE: all nodes in the tree are descendants of the root. for 'Child 1' the number of descendants is 5 (child 1, grandchild 1, great grandchild 1, grandchild 2, child 3) since there are many descendants we can take multiple paths as we have multiple descendants so the decentant path for 'Child 1' is not unique.
+
 - **Neighbors**: In a graph, a neighbor node is any node that is directly connected by an edge. here child 1 is a  neighbor of root, GC1 and GC2
 
-- **Subtree**: A tree consisting of a node and all its descendants. For example, the subtree rooted at `[Child 1]` includes `[Child 1]` (the subtrees new root), `[Grandchild 1]`, `[Grandchild 2]`, and `[Great Grandchild 1]`. NOTE: for the subtree at child 1 the grandchild 1 would acctualy be a child of child 1 if we were to traverse it. NOTE: every next node will have its own subtree or subtrees on left right etc.
+- **Subtree**: A tree consisting of a node and all its descendants. For example, the subtree rooted at `[Child 1]` includes `[Child 1]` (the subtrees new root), `[Grandchild 1]`, `[Grandchild 2]`, and `[Great Grandchild 1]`. NOTE: for the subtree at child 1 the grandchild 1 would acctualy be a child of child 1 if we were to traverse it. NOTE: every next node will have its own subtree or subtrees on left right etc. The smallest subtree is a leaf node and the largest subtree at the root. The Number of subtrees in a tree is equal to the number of nodes in the tree.
 
-- **Height**: The height of a tree is the length of the longest path from the root to a leaf. The height of a tree is measured in edges (or nodes, depending on definition). NOTE: the height starts at 0 so here the height is 3, at height 0 we have root at height 3 we have great grandchild 1.
+- **Height**: The height of a node in a tree is the number of edges in the longest path from the node to a leaf. For example, the height of `[Root]` is 3 (from root to GGC1). the height of '[Child 1]' is 2 (from child 1 to GC1). Dont confuse with depth
 
-- **Depth/Level**: The depth of a node is the length of the path from the root to that node. The root node has a depth of 0, its children have a depth of 1, and so on. NOTE: the depth starts at 0 and the depth of the tree (max depth) is the length of the longest path from the root to a leaf, so the max depth of this tree is 3 (from root to GGC1) = to the number of edges in that path = height of the tree
+- **Depth/Level**: The depth of a node is the length of the path from the root to that node. The root node has a depth of 0, its children have a depth of 1, and so on. NOTE: the depth starts at 0 and the depth of the tree (max depth) is the length of the longest path from the root to a leaf, so the max depth of this tree is 3 (from root to GGC1) = to the number of edges in that path = depth of the tree, Dont confuse with height
 
 - **Degree of a node**: The degree of a node is the number of children it has. For example, the degree of `[Child 1]` is 2 (it has two children: `[Grandchild 1]` and `[Grandchild 2]`), while the degree of `[Child 2]` is 1 (it has one child: `[Child 3]`). 
 
@@ -195,7 +199,6 @@ Tree Types Overview:
      - Nodes can have multiple children (more than two), and all leaves are at the same level.
      - It is designed to work well on disk and can handle large amounts of data efficiently, minimizing disk reads.
    - Uses: Used in databases and file systems for efficient data retrieval, ensuring that operations remain efficient even with large datasets.
-
 """
 
 # ! IMPLEMENTING TREES IN PYTHON CODE
