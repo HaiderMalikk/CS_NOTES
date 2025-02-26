@@ -28,6 +28,13 @@ Make sure to build to get latest app folder as .next/ folder (main website file)
 to build: ‘npm run build’
 to run this build final version: ‘npm start’
 
+tailwind is included on creation but to format the tailwind classes + Code use Pretier 
+1) npm install -D prettier prettier-plugin-tailwindcss
+2) make a .prettierrrc file and add { “plugins”: [“prettier-plugin-tailwindcss”] } 
+3) run npx prettier --write .
+4) Optional: use .prettierignore file and add files to ignore for formatting
+- this will format just like normal pretter + tailwindcss prettier
+
 ————————————————————————————————————————————————
 REACT NATIVE (APPS/ web)
 
@@ -89,12 +96,14 @@ Express JS (backend)
 ————————————————————————————————————————————————
 NOTE: for packages not made localy using to run use: ‘run dev’ if fails use with ‘npm/npx’
 NOTE: if error try ‘npx/npx intall’ to get packages for project
+NOTE: to delete a package do npm uninstall package-name
 NOTE: To clear packages do: rm -rf .next node_modules package-lock.json yarn.lock, then npm install (Works for next)
 NOTE: to rebuild app: ‘npx expo prebuild —clean’ then to rebuild do: ’npx expo run:ios’
 NOTE: use expo commands to re run expo apps see section
 NOTE: Make sure you are in path of project folder before running any commands
 NOTE: Leave app running by leaving the terminal it ran in, make new terminal for adding stuff
 NOTE: To rename app (seperate from app name given at creation) Must change all occurances of app name in all json and other relevent folder, note that you must use unix rules for package.json but this wont be you app name that will be changed in other files and must match througout
+NOTE: -D is used for dev dependencies like formatters linters etc stuff that is not is production while a npm install like npm install express is a dependency for the whole app hence is shipped with the app, more info in the packagejson
 NOTE: TO STOP: ‘Ctrl+C’ or other commands 
 ————————————————————————————————————————————————
 TO BUILD (for reactjs)
