@@ -270,7 +270,7 @@ int numbers[50]; // numbers = [0,0,0 .... 0] 50 times
 int numbers[0] = 5; // numbers = [5,0,0 .... 0] 50 times
 // just like java at the time of making the array you have to define the length or the elements in the array 
 
-// ! pre processor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
+// ! preprocessor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
 #define ARRAY_LENGTH 50 // this makes compilation faster insted of using a variable, always at the top of the file and all caps
 int num[ARRAY_LENGTH];
 
@@ -381,8 +381,17 @@ struct Student {
 struct Student student1 = {"Alice", 20, 3.9};  // Initializing a struct.
 printf("%s is %d years old.\n", student1.name, student1.age);  // Accessing struct members.
 
-// ! Structs with Pointers and Memory Allocation
+// ! Memory allocation
+// in C memory is allocated using malloc and free is used to free the memory
 
+// * Dynamic Memory Allocation
+// Dynamic memory allocation allows you to allocate memory at runtime.
+int *p = malloc(sizeof(int)); // Allocating memory for an integer using malloc.
+*p = 42;  // Assigning a value to the allocated memory.
+printf("%d\n", *p);  // Accessing the value through the pointer.
+free(p);  // Freeing the allocated memory.
+
+// * Structs with Pointers and Memory Allocation
 // Structs can be used with pointers to manage memory dynamically.
 struct Student {
     char name[50];
@@ -402,12 +411,14 @@ if (ptrStudent != NULL) {
 // ! Function Pointers
 
 // Function pointers allow you to store the address of a function and call it.
-void sayHello() {
-    printf("Hello!\n");
+void sayHello(char *name) {
+    printf("Hello, %s!\n", name);
 }
 
-void (*funcPtr)() = &sayHello;  // Declaring a function pointer.
-funcPtr();  // Calling the function through the pointer.
+void (*funcPtr)(char *);  // Declaring a function pointer. funcPtr is a pointer that points to a function that takes a char pointer as a argument
+funcPtr = sayHello;  // Storing the address of the function in the pointer. this mathces the one char * name
+// NOTE: we can do this in one line as well by: void (*funcPtr)(char *) = sayHello; // no declaration needed
+funcPtr("Alice");  // Calling the function using the pointer.
 // and array of function pointers can be used to store multiple functions
 
 // ! Arrays of Pointers
