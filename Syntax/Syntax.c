@@ -58,7 +58,7 @@ printf("Float: %f\n", b);    // %f for floats.
 printf("Character: %c\n", c); // %c for characters.
 printf("Double: %lf\n", d);  // %lf for double.
 
-// ! Constants
+// ! Constants 
 
 // Constants are variables whose value cannot be changed.
 const int DAYS_IN_WEEK = 7; // 'const' keyword makes this a constant value.

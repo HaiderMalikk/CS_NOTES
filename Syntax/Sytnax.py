@@ -473,9 +473,10 @@ print(list2) # [2] # now list1 and list2 are different lists
 
 # ! delcaing vaiables inside the function call
 # you can declare variables inside the function call and they will be local to the function
-def squareFirst(list):
-    return list[0] ** 2
-print(squareFirst(list = [5, 10])) # we declare and pass the list on the same line (its scope is limited to the function)
+def squareFirst(mylist):
+    return mylist[0] ** 2
+print(squareFirst(mylist = [5, 10])) # we declare and pass the list on the same line (its scope is limited to the function)
+# print(mylist) # NameError: name 'mylist' is not defined
 
 # ! using logical operators in return statements
 # you can use logical operators to return a value based on if its none
@@ -585,6 +586,24 @@ array = None  # Removes the reference to the list, allowing the garbage collecto
 # In Python, strings are sequences of characters enclosed in either single (') or double (") quotes """ makes a docstring 
 str1 = 'Hello, World!'
 str2 = "Python is awesome!"
+
+# Printing strings
+# special characters: \n (newline), \t (tab), \\ (backslash), \' (single quote), \" (double quote)
+# string formatting: %s (string), %d (integer), %f (float) 
+# using special characters
+print("Hello, \nWorld!")  # Output: "Hello," (newline) "World!"
+# to prevent a new line in each new print statement use end = " "
+print("Hello, ", end = "")
+print("World!")  # Output: "Hello, World!"
+# ex of printing string using %s
+print("String: %s" % str1)  # Output: "String: Hello, World!"
+# ex of printing 2 strings using %s
+print("String 1: %s, String 2: %s" % (str1, str2))  # Output: "String 1: Hello, World!, String 2: Python is awesome!", MUST USE BRACKETS
+
+# String Concatenation (string adding)
+str3 = str1 + " " + str2  # str3 = "Hello, World! Python is awesome!"
+# string multiplication
+str4 = str1 * 3  # str4 = "Hello, World!Hello, World!Hello, World!"
 
 # * a string is a list of characters so we can access them like a list
 print(str1[0])  # Output: H
