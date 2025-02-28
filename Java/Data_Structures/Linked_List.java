@@ -74,18 +74,18 @@ and can easily be implemented using the concepts and methods in these notes, so 
 * Time Complexity of LL operations:
 // * Comparison of operations on different data structures (Array, Singly Linked List, Doubly Linked List)
 *
-* -------------------------------------------------------------------------------------------------------
-* | OPERATION                     | ARRAY       | SINGLY LINKED LIST (SLL)  | DOUBLY LINKED LIST (DLL)  |
-* ------------------------------------------------------------------------------------------------------|
-* | Get size                      | O(1)        | O(1)                      | O(1)                      |
-* | Get first/last element        | O(1)        | O(1) (first), O(n) (last) | O(1)                      |
-* | Get element at index i        | O(1)        | O(n)                      | O(n)                      |
-* | Remove last element           | O(1)        | O(n)                      | O(1)                      |
-* | Add/remove first element      | O(1)        | O(1)                      | O(1)                      |
-* | Add last element              | O(1)        | O(n)                      | O(1)                      |
-* | Add/remove i-th element       | O(n)        | O(n) (without reference)  | O(n) (without reference)  |
-* | Given reference to (i-1)th    | O(1)        | O(1)                      | O(1)                      |
-* ------------------------------------------------------------------------------------------------------|
+* -----------------------------------------------------------------------------------------------------------
+* | OPERATION                     | ARRAY       | SINGLY LINKED LIST (SLL)       | DOUBLY LINKED LIST (DLL)  |
+* -----------------------------------------------------------------------------------------------------------|
+* | Get size                      | O(1), len() | O(1) (with counter else O(n))  | O(1)                      |
+* | Get first/last element        | O(1)        | O(1) (first), O(n) (last)      | O(1)                      |
+* | Get element at index i        | O(1)        | O(n)                           | O(n)                      |
+* | Remove last element           | O(1)        | O(n)                           | O(1)                      |
+* | Add/remove first element      | O(n)        | O(1)                           | O(1)                      |
+* | Add last element              | O(1)        | O(1) (with tail else O(n))     | O(1)                      |
+* | Add/remove i-th element       | O(n)        | O(n) (without reference)       | O(n) (without reference)  |
+* | Given reference to (i-1)th    | O(1)        | O(1)                           | O(1)                      |
+* -----------------------------------------------------------------------------------------------------------|
 */
 
 package Java.Data_Structures;
@@ -217,7 +217,7 @@ class SinglyLinkedList<T> {
         while (current.next.next != null) {
             current = current.next; // move to the next node in the LL
         }   
-        current.next = null; // once we break out of the loop we are at the last node, which has no next so we point the next of the current node (last node) to null deleting it from the end
+        current.next = null; // once we break out of the loop curreent.next is the last node so to make current the last node we point the next of the current node (last node) to null deleting it from the end. another way to see it is we set the ref of the current node to null deleting the last node
         tail = current; // point the tail to the current node making it the last node in the LL
         size--; // subtract 1 from the size as we have deleted a node from the LL only happens is LL not empty
     }

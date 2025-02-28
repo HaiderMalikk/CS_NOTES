@@ -445,7 +445,6 @@ def add(a, b=0): # b is a default parameter if nothing is entered for be it will
 
 result1 = add(3, 4)  # Positional arguments, result1 = 7
 result2 = add(5)     # Default argument, result2 = 5, b = 0 so 5+0=0
-
 # * NOTE for default parameters 
 # the default parameter are only evaluated when the function is called not when the function is defined
 # this means different function calls will share the same default parameter value which is not always what you want
@@ -471,6 +470,12 @@ list1 = append_to_list(1)
 print(list1) # [1]  
 list2 = append_to_list(2)
 print(list2) # [2] # now list1 and list2 are different lists
+
+# ! delcaing vaiables inside the function call
+# you can declare variables inside the function call and they will be local to the function
+def squareFirst(list):
+    return list[0] ** 2
+print(squareFirst(list = [5, 10])) # we declare and pass the list on the same line (its scope is limited to the function)
 
 # ! using logical operators in return statements
 # you can use logical operators to return a value based on if its none

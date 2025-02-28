@@ -65,8 +65,9 @@ public class Hash_Map {
 
         // * assigning an list to a hash maps keys as a value using the ArrayList
         // Creating a HashMap with String keys and ArrayList values
-        HashMap<String, ArrayList<Integer>> maplist = new HashMap<>();
+        HashMap<String, ArrayList<Integer>> maplist = new HashMap<>(); 
         
+        // * array list
         // Adding an ArrayList for key "A"
         // array list is a better data structure than arrays as it is dynamic and can grow or shrink in size
         // its also has many methods built in for manipulating the list
@@ -92,5 +93,6 @@ public class Hash_Map {
         // Access values in the list for key "A"
         ArrayList<Integer> retrievedList = maplist.get("A");
         System.out.println("Values for key 'A': " + retrievedList); // Output: Values for key 'A': [1, 2, 3, 4]
+
     }
 }
