@@ -204,9 +204,11 @@ switch (userInput) {
 // In C, you often declare function prototypes before defining them:
 void greet();  // Prototype declaration.
 
+// ! main function is the entry point of the program in C
 int main() {
     greet();  // Calling the function.
-    return 0;
+    return 0; // Return 0 to indicate success.
+    // exit(1) to indicate failure where we exit the program with a non-zero exit code
 }
 
 void greet() {
@@ -457,7 +459,7 @@ print("%s\n", (colors + 2)[2]); // equivalent to *(colors + 2 + 2) = *(colors + 
 
 //!  pointers to arrays
 int arr[4] = {5, 10, 15, 20};  // Array of 4 integers
-int (*ptr)[4] = &arr;          // Pointer to an array of 4 integers
+int (*ptr)[4] = &arr;          // Pointer to an array of 4 integers the size of the pointer must match the size of the array
 printf("%d %d", (*ptr)[1], ptr[0][3]);  // Accessing elements of the array, (*ptr)[1] is the second element of the array as *ptr gets the values and [1] gets the second element of the array, ptr[0][3] is the fourth element of the array as ptr[0] gets the values and [3] gets the fourth element of the array  
 
 // ! pointers to pointers
@@ -527,6 +529,39 @@ int num = 5;  // In binary: 0101
 int mask = 3;  // In binary: 0011
 int toggledNum = num ^ mask;  // Applies a bitwise XOR operation to toggle the bits: toggledNum becomes 0110 (6).
 
+// ! command line arguments
+// Command line arguments are arguments passed to a program when it is executed.
+// it allows users to pass data to the program from the command line.
+// main func version with command line arguments, argc is the number of arguments and argv is the array of arguments
+int main(int argc, char *argv[]) {
+    printf("Number of arguments: %d\n", argc);
+    for (int i = 0; i < argc; i++) {
+        printf("Argument %d: %s\n", i, argv[i]);
+    }
+    return 0;
+}
+
+// ! Preprocessor and compilation
+/* 
+Directives are instructions to the preprocessor that tell it to perform specific actions., they are:
+- #include: Includes a header file.
+- #define: Defines a macro.
+- #ifdef/#ifndef: conditional compilation.
+- #if/#elif/#else/#endif: conditional compilation.
+- #error: Prints an error message.
+- #undef: Undefines a macro.
+*/
+// EX: 
+#include <stdio.h> // include the standard input/output header file
+#define SQUARE(x) ((x) * (x)) // define a macro to calculate the square of a number
+printf("The square of 5 is: %d", SQUARE(5));
+// EX of conditional compilation, to prevent multiple inclusions of the same header file
+#if !defined(MYHEADER_H)
+#define MYHEADER_H
+// header file content
+#endif
+
+// ! -------------------------------------------------------------------------------------------------------------------------------------------------->>
 
 // ! Multi-file Programs
 
@@ -556,14 +591,6 @@ inline int square(int x) {
 
 // Using inline function:
 int sq = square(4);  // sq will be 16.
-
-// ! Bit Manipulation
-
-// Bit manipulation is the act of algorithmically manipulating bits or binary digits.
-int num = 5;  // In binary: 0101
-num |= (1 << 1);  // Set the second bit: num becomes 0111 (7).
-num &= ~(1 << 0);  // Clear the first bit: num becomes 0110 (6).
-num ^= (1 << 2);  // Toggle the third bit: num becomes 0010 (2).
 
 // ! Unions
 
