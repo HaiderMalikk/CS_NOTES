@@ -218,7 +218,7 @@ if pwd == "password" or pwd == "12345" or pwd == "qwerty": # this will check if 
 else:
     print("Password is strong")
 # Alternatively we can do
-if pwd in ["password", "12345", "qwerty"]: # this will check if the password is equal to any of these values
+if pwd in ["password", "12345", "qwerty"]: # this will check if the password is equal to any of these values, idealy you should use a set its faster
     print("Password is weak")
 else:
     print("Password is strong")
@@ -505,6 +505,13 @@ print(returnThis(5)) # 5
 square = lambda x: x ** 2
 result = square(5)  # result = 25
 
+# ! using a dictionary to return multiple values
+# you can use a dictionary to return multiple values from a function
+def get_name_and_age(name, age):
+    return {'name': name, 'age': age}
+person = get_name_and_age('Alice', 30)
+print(person) # {'name': 'Alice', 'age': 30}
+
 # ! python classes
 # classes are templates for creating objects
 # class name is PascalCase
@@ -553,17 +560,25 @@ a = 10
 print(isinstance(a, int)) # True
 print(isinstance(a, float)) # False
 
-# ! Type Hinting 
+# ! Type Hinting (in python3), syntax is var_name: type = value
 # python is a dynamicly typed language means that the type of a variable is determined at runtime
 # but we can specify the type of a variable using type hints, Syntax is, var_name: type = value
 pdf_title: str = "Document Title" # var name is pdf_title and its type is str and equals 'Document Title'
 page_count: int = 10
 is_published: bool = True
+mylist: list[int] = [1, 2, 3]
 
 def print_title(title: str) -> None:
     print(title)
 
 print_title(pdf_title)
+
+# we can also combine data types like we would in c or typescript
+# we can use the | operator to combine data types
+mylist[int | str] = [1, 2, 3, "hello"] # mylist can hold both ints and strings
+def print_title(title: str | int) -> None: # the -> type is used to specify the return type of a function
+    print(title)
+
 
 # ! Allocation and deallocation of memory
 # Python is a dynamically typed language, which means that the type of a variable is determined at runtime. 
@@ -758,10 +773,8 @@ print(matrix[1][0])
 
 # ! arrays [this, is, a, array]
 # use numpy library to work with arrays
-import numpy as np
 ## use [] to create and store array elemnts  
-my_array = np.array([1,2,3,4,5]) #name = np.function([elements])
-my_array_float = np.array([1.1, 2.2, 3.3, 4.4, 5.5], dtype=np.float64) #[array elements], data type (dont have to declare data type)
+my_array = [1,2,3,4,5]
 
 ## now you have created a array to accese its elemets using a index
 # starts at 0, to accese the array end to start use -1, -1 is the last element in a array
@@ -778,8 +791,8 @@ print (my_array)
 # output: [1, 2, 3, 10, 5]
 
 ## Modifing entire arrays
-array1 = np.array([1,2,3,4,5]) 
-array2 = np.array([6,7,8,9,10]) 
+array1 = [1,2,3,4,5]
+array2 = [6,7,8,9,10]
 # a simple operation is to add the two arrays element wise
 # this adds each element in the array (array1[0] + array2[0])
 result = array1 + array2
@@ -787,91 +800,14 @@ print(result)
 # output [7, 9, 11, 13, 15]
 # thier are also other operations ex multiply divide etc...
 
-## finding values in arrays  
-min_value = np.min(my_array)
-print(min_value)
-# output: 1 
-
-max_value = np.max(my_array)
-print(max_value)
-# output: 10 
-
-## sorting arrays using np.sort
-my_array_tosort = [5,3,1,4,2]
-sorted_array = np.sort(my_array_tosort)
-print(sorted_array)
-# output: [12345] # sort smallest to largest
-# to reverse the array use np.flip func
-reversed_array = np.flip(my_array_tosort)
-print(reversed_array)
-# output: [24135]
-# to sort the list in decending order first sort the array then flip it
-decending_array = np.flip(sorted_array)
-print(decending_array)
-# output [54321]
-
-## mean (avg) and median(mid val) of array
-mean_val = np.mean(my_array)
-print(mean_val)
-# output 3.0
-median_val = np.median(my_array)
-print(median_val)
-# output 3.0
-
-## matrix multiplication 2d array
-
-matrix1 = np.array([[1.1, 2.2, 3.3], [4.4, 5.5, 6.6]])
-matrix2 = np.array([[7.7, 8.8,], [9.9, 10.10], [11.11, 12.12]])
-#multiplying 
-result = np.dot(matrix1, matrix2)
-print(result)
-# output:
-# [[66.913 71.896]
-# [161.656 174.262]]
-
+# 2d arrays (matrix) the outer array is the rows and the inner array is the columns
 ## trasposing a matrix to swap its rows and columns 
-matrix = np.array([[1,2,3], [4,5,6]])
-#trasposing the matrix
-trasposed_matrix = np.transpose(matrix)
-print(trasposed_matrix)
-#output:
-# [[1 4]
-# [2 5]
-# [3 6]]
-# element of 2d arrays first element corrisponds to sub array second to the element of subarray
+matrix = [[1,2,3], [4,5,6]]
 print("at matrix subarray 2 elemet 2:", matrix[1][1])
-
-##### other usefull Stuff #####
-arr = np.array([1, 2, 3, 4, 5])
-print(arr.shape)  # Prints (5,) - a 1D array with 5 elements
-print(arr.dtype)  # Prints int64 - data type of elements
-print(arr.size)   # Prints 5 - total number of elements
-print(arr.ndim)   # Prints 1 - number of dimensions (1 for 1D)
-
-# index slicing, arrayname[start index:end index] 
-# this creats a new array same as original exept only has elements 1 to 4 dose not modify original array
-print(arr[1:4])  # Slice from index 1 to 3 (2, 3, 4)
-
-# element addition
-a = np.array([1, 2, 3])
-b = np.array([4, 5, 6])
-result = a + b  # Element-wise addition
-
-## there are so many things you can do with np library
-data = np.array([1, 2, 3, 4, 5])
-print(np.sum(data))  # Sum of all elements
-
-arr = np.array([[1, 2], [3, 4]])
-reshaped_arr = arr.reshape((4, 1)) # this reshapes the format 4 = rows, 1 = column so arr goes from 2x2 -> 4x1
-transposed_arr = arr.T # The T attribute transposes the array, swapping rows and columns. 
-print(reshaped_arr) 
-print(transposed_arr)
-# print(arr) # this is the new "arr" we nammed another array "arr" previously so it updates and this becomes the new arr
 
 # to create a array without typing every single element
 my_array_shortcut = list(range(1, 11)) # prints 1-10 and index starts at 0 so goes 1 number before 11
 print(my_array_shortcut)
-""" comment """
 
 ## ex of func and array
 def array(a, b, c):
@@ -1126,6 +1062,25 @@ else:
 # EX's
 my_list = [1, 2, 3, 4, 5] # ! do not name any list 'list' as it is a python keyword
 print(max(my_list), min(my_list)) # Output: 5 1
+
+# using lists.extend() to add elements from one list to another replaceing a for append loop
+# it can be used when you are doing a for append loop i.e you do a for loop over a array and append each element to a new array
+# without extend
+list1 = [1, 2, 3]
+list2 = [4 ,5 ,6]
+for element in list2:
+    list1.append(element)
+print(list1)  # Output: [1, 2, 3, 4, 5, 6]
+
+# using list.extend() syntax: list1.extend(iterable )
+list1 = [1, 2, 3]
+list2 = [4,5,6]
+list1.extend(list2) # Output: [1, 2, 3, 4, 5, 6]
+
+# We can also add conditionals using list comprehensions
+list1 = [1, 2, 3]
+list2 = [4,5,6]
+list1.extend(element for element in list2 if element > 4) # Output: [1, 2, 3, 5, 6]
 
 # Common list methods
 # * index: used to get the index of a specific element in the list, format listname.index(element), RETURNS FIRST OCCURENCE OF VALUE
@@ -1669,6 +1624,23 @@ sorted_by_values_desc = dict(sorted(my_dict.items(), key=lambda item: item[1], r
 filterd_by_keys= {'b': 2, 'a': 3, 'c': 1}
 filterd_by_keys = dict(filter(lambda item: item[1] > 1, filterd_by_keys.items()))
 print(filterd_by_keys) # Output: {'b': 2, 'a': 3}
+
+# dictionary comprehension
+# like list comprehension but for dictionaries
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+squared_dict = {key: value ** 2 for key, value in my_dict.items()}
+print(squared_dict)  # Output: {'a': 1, 'b': 4, 'c': 9}
+# EX
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+filtered_dict = {key: value for key, value in my_dict.items() if value > 1}
+print(filtered_dict)  # Output: {'b': 2, 'c': 3}
+
+# dictionary splicing, converting a dictionary to a list of tuples so we can slice it
+# EX
+my_dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+# get the first 2 key value pairs
+sub_dict = {key: my_dict[key] for key in list(my_dict)[:2]}
+print(sub_dict)  # Output: {'a': 1, 'b': 2}
 
 # ! Try catch 
 try:
