@@ -2136,6 +2136,12 @@ Improved Performance – Avoids boxing/unboxing overhead in collections.
 
 How to use:
 Generics introduce type parameters in <>, which act as placeholders for actual types.
+
+Generic types with generic arrays 
+Since generics were introduced later in java they dont work with arrays like with arraylist
+you cannot say data = new T[10] as you can with arraylist
+you must use the Array.newInstance() method to create a generic array
+EX: T[] array = (T[]) Array.newInstance(type=this.getClass(), size=n);
  */
 
  // EX

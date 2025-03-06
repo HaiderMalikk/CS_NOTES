@@ -1,8 +1,8 @@
 /* 
 # ! a tree is a non linear data structure meaning unlike a list the next element dosent alwasy have to be left or right after another it can be anywhere but all the nodes must be connected
-# ! there can also he a hierircy to trees
+# ! there can also he a hierircy to trees meaning a node can have a parent and children nodes and a child node can have children nodes and so on.
 # ! a tree is a recursive data structure meaning they can be divided into sub trees
-# ! ex of a tree and its properties 
+# ! in a tree there can only be 1 path between 2 nodes, if there are more than 1 path then its a graph not a tree. this means 2 nodes cannot point to each other in a tree. only from one node to another.
 
 A simple representation of a tree data structure.
 
@@ -42,13 +42,15 @@ Tree Properties:
 
 - **Subtree**: A tree consisting of a node and all its descendants. For example, the subtree rooted at `[Child 1]` includes `[Child 1]` (the subtrees new root), `[Grandchild 1]`, `[Grandchild 2]`, and `[Great Grandchild 1]`. NOTE: for the subtree at child 1 the grandchild 1 would acctualy be a child of child 1 if we were to traverse it. NOTE: every next node will have its own subtree or subtrees on left right etc. The smallest subtree is a leaf node and the largest subtree at the root. The Number of subtrees in a tree is equal to the number of nodes in the tree.
 
-- **Height**: The height of a node in a tree is the number of edges in the longest path from the node to a leaf. For example, the height of `[Root]` is 3 (from root to GGC1). the height of '[Child 1]' is 2 (from child 1 to GC1). Dont confuse with depth
+- **Height**: The height of a node in a tree is the number of edges in the longest path from the node to a leaf (known as the path). For example, the height of `[Root]` is 3 (from root to GGC1). the height of '[Child 1]' is 2 (from child 1 to GC1). Dont confuse with depth. Depth is from the root to the node height is from the node to the leaf node. NOTE: the height of a tree is the height of the root node.
 
-- **Depth/Level**: The depth of a node is the length of the path from the root to that node. The root node has a depth of 0, its children have a depth of 1, and so on. NOTE: the depth starts at 0 and the depth of the tree (max depth) is the length of the longest path from the root to a leaf, so the max depth of this tree is 3 (from root to GGC1) = to the number of edges in that path = depth of the tree, Dont confuse with height
+- **Depth/Level**: The depth of a node is the number of edges from the root to that node (known as the path). The root node has a depth of 0, its children have a depth of 1, and so on. NOTE: the depth starts at 0 and the depth of the tree (max depth) is the length of the longest path from the root to a leaf, so the max depth of this tree is 3 (from root to GGC1) = to the number of edges in that path = depth of the tree, Dont confuse with height. Depth is from the root to the node height is from the node to the leaf NOTE: the depth of a tree is the depth of the leaf node.
 
 - **Degree of a node**: The degree of a node is the number of children it has. For example, the degree of `[Child 1]` is 2 (it has two children: `[Grandchild 1]` and `[Grandchild 2]`), while the degree of `[Child 2]` is 1 (it has one child: `[Child 3]`). 
 
 - **Degree of a tree**: The degree of a tree is the maximum degree of any node in the tree or can be the max number of children that a particular node has. here root and child 1 have a degree of 2 while all others have 1 or 0 this means the degree of the tree is 2.
+
+- **Orderd Tree**: A tree in which the nodes are ordered in a specific way. For example, a binary search tree is an ordered tree where the nodes are ordered in a specific way. our tree is ordered as the root is the first node and the children are ordered in a specific way (left to right) and so on.
 """
 
 # ! Trees can have many types, but only one type of data structure, by type of trees we mean binary trees or n-ary trees etc what makes these trees different is that they have different properties meaning they have different shapes and structure and rules.
@@ -201,8 +203,78 @@ Tree Types Overview:
    - Uses: Used in databases and file systems for efficient data retrieval, ensuring that operations remain efficient even with large datasets.
 */
 
-
 package Java.Data_Structures;
+import java.util.ArrayList;
+
+/* 
+Implementation of Trees in Java: (BST vs General Tree)
+-------------------------------
+- Each tree type will have its own implementation based on the specific properties and rules of that tree.
+- Along with that the node will have its own implementation with its own properties and methods.
+EX: for BST the node has data and left and right nodes. while a general tree node can have data and a list of children nodes.
+EX: a BST's serch node function will check wether the node is found or not and if not will branch to the left or right subtree depeneding on the value of the node.
+  in a general tree the search node function will check if the node is found or not and if not will branch to the children nodes and repeat the process until the node is found or we run out of nodes.
+*/
+
+// General Tree using arraylist
+class TreeNode<T> {
+  private T data;
+  private TreeNode<T> parent; // Changed from T to TreeNode<T>
+  ArrayList<TreeNode<T>> children;
+
+  public TreeNode(T data) {
+    this.data = data;
+    this.parent = null;
+    this.children = new ArrayList<>();
+  }
+
+  public T getData() {
+    return this.data;
+  }
+
+  public TreeNode<T> getParent() { // Changed return type from T to TreeNode<T>
+    return this.parent;
+  }
+
+  public void setData(T data) {
+    this.data = data;
+  }
+  public void addChild(TreeNode<T> child) {
+    this.children.add(child);
+  }
+  public void removechild(TreeNode<T> child) {
+    this.children.remove(child);
+  }
+  
+  public void setParent(TreeNode<T> parent) { // Changed parameter type from T to TreeNode<T>
+    this.parent = parent;
+  }
+
+  public int depth(TreeNode<T> node) {
+    if (node.getParent() == null) {
+      return 0;
+    }
+    else{
+      return 1 + depth(node.getParent());
+    }
+  }
+}
+
+
+
+
 public class Trees {
+  public static void main(String[] args) {
+  // constructing a general tree
+  TreeNode<Integer> root = new TreeNode<>(1);
+  TreeNode<Integer> node2 = new TreeNode<>(2);
+  TreeNode<Integer> node3 = new TreeNode<>(3);
+
+  // connecting the nodes
+  root.addChild(node2); // This will automatically set the parent if you use the modified addChild
+  root.addChild(node3); // This will automatically set the parent if you use the modified addChild
+  node2.setParent(root); // This will automatically set the parent if you use the modified addChild
+  node3.setParent(root); // This will automatically set the parent if you use the modified addChild
+  }
     
 }
