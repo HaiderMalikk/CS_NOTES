@@ -70,12 +70,13 @@ Tree Types Overview:
    - Definition: A tree in which each node has at most two children, referred to as the left child and the right child.
    - Characteristics: 
      - Each node can have 0, 1, or 2 children.
-     - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf).
+     - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf). (a special case of a complete binary tree)
      - In a complete binary tree, all levels of the tree except the last level are completely filled (meaning must have 2 child nodes). Last level can be either completely filled or filled left to right meaning that if the last level has 2 child nodes they must be on the left most node of the previous level. if we have one node it must be a left node to the left most node of the previous level. This left most node must be filled first before moving to the right
      - In a Perfect binary tree, all the nodes except for leaf nodes have 2 children and all the leaf nodes are at the same level.
      - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1. This means at each node the left and right subtrees must be as close to the same height as possible.
      - In a pathalogical binary tree, every parent node has only 1 child node.
      - total number of nodes = num of nodes in left subtree + num of nodes in right subtree + 1. (+1 for the root node)
+     - MATH FORMULAS: min and max # of nodes in a BT: h+1 <= n <= 2^(h+1) - 1 where h is the height of the tree and n is the number of nodes in the tree. max and min Height of a BT: log2(n+1) - 1 <= h <= n-1 where n is the number of nodes in the tree. NOTE: n + or - 1 as we need to account for the root node height starts from 0.
    - Uses: Commonly used in various applications such as expression trees for evaluating mathematical expressions and heaps for efficient data storage.
 
 2. **Binary Search Tree (BST)**:
@@ -126,17 +127,17 @@ Tree Types Overview:
              left of 8 after replacing here the largest value in the left subtree dose satisfies BST if we chose 7 then the left subtree will have value > than parent which is not allowed in BST (NOTE: same logic for right subtree)
 
     - Treversal: To traverse a BST its not linear, we must visit each node once and in a specific order not linear (i.e first second third etc). There are different types of traversal for BST, different alogrithims visit nodes in different orders. here are some: NOTE(for the tree examples assume that the given tree is a BST in that smaller value on left and larger value on right for every node)
-      - 1. Pre order Traversal: (Given a Non Empty BST) Visit the root node, then the left subtree(left child of root), then the right subtree(right child of root). DO THIS RECURSIVELY! meaning the node on left and right subtree will become the new root node 
+      - 1. Pre order Traversal (works on any Tree): (Given a Non Empty BST) Visit the root node, then the left subtree(left child of root), then the right subtree(right child of root). DO THIS RECURSIVELY! meaning the node on left and right subtree will become the new root node 
            and we will do steps 2 and 3 on both left and right nodes over and over Recursilvely until we run out of nodes meaning the node is a leaf node. NOTE: the step 1 is checking the root but here the root is the left or right subtree of the prevoius root. 
            so after printing this root which is on the left or right subtree we will do the same steps on the left node of this left node until  we run out of nodes on the left subtree then we go right and check for left children on this right node until we run out of left children on this right node then we go right on this right node and do the same steps until we have no left children on this right node we repete this until we run out of nodes
            EX: in the first ex tree after first run we will get in this order: (Root, Child1, G1, GG1, G2, C2, C3) at each root we alwasy fully traverse all the left nodes of each left nodes (ie the left subtree) when we run out of left nodes we go right this is our new root and we must first now cehc kif this root has a left serch the left like befrore if it dose then once we run out we go right. and so on until we are done with all the nodes.
-      - 2. In order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first left most node, it will be on left side of root), then the root node (at first is the root of our left most node we just traversed), then the right subtree (at first the node right of the root). DO THIS RECURSIVLY! meaning after going to thr right node we must go to the left most node of this right node and so on until we run out of nodes meaning the node is a leaf node
+      - 2. In order Traversal (works only on BT's): (Given a Non Empty BST) Traverse the left subtree (at first left most node, it will be on left side of root), then the root node (at first is the root of our left most node we just traversed), then the right subtree (at first the node right of the root). DO THIS RECURSIVLY! meaning after going to thr right node we must go to the left most node of this right node and so on until we run out of nodes meaning the node is a leaf node
            EX: in the first ex tree after first run we will get in this order: (GG1, G1, C1, GC2, Root, c2, c3) note how from the left most node we bo back up checking to see if we can go right after finishing the right subtree we go right back where we branched right and move back once more
            once we reach the root of bst we do the. NOTE!: by doing this traversal we will get the values in order smallest to largest
-      - 3. Post order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first the left most node on left side of root), then the right subtree (going to the right most node of this prevoius left node), then the root node (the curretn node it will have no left or right child). DO THIS RECURSIVELY at each node! just like before after this step the new root node will
+      - 3. Post order Traversal (works on any Tree): (Given a Non Empty BST) Traverse the left subtree (at first the left most node on left side of root), then the right subtree (going to the right most node of this prevoius left node), then the root node (the curretn node it will have no left or right child). DO THIS RECURSIVELY at each node! just like before after this step the new root node will
            EX from tree: (GG1, G1, G2, C1, C3, C2, Root) note how we go to left most then backwards until we reach a node with right node and do the same first step of going as left as we can and repeting.
-      - 4. Breadth First Traversal: (Given a Non Empty BST) Traverse each level of the tree from left to right then move onto the next level do this from top to bottom (level 0 to level n). DO THIS RECURSIVELY! EX from tree: 1) root, 2) Child one and child two 3) GC 1 and GC2 and Child 3 and so on. going level by level in each level left to right. NOTE: this is the only traversal that is linear. 
-      - 5. Depth First Traversal: (Given a Non Empty BST) Traverse the tree in a depth first manner. meaning starting a the root visit any neigbour node and keep doing deaper traversing each neighbours neighbours until you reach a node with no unvisited neighbors (leaf), backtrack to the last node with unvisited neighbors. Repeat until all nodes are visited. EX: root, Child, G1, GG1, G2, Child 2, Child3
+      - 4. Breadth First Traversal (works on any Tree): (Given a Non Empty BST) Traverse each level of the tree from left to right then move onto the next level do this from top to bottom (level 0 to level n). DO THIS RECURSIVELY! EX from tree: 1) root, 2) Child one and child two 3) GC 1 and GC2 and Child 3 and so on. going level by level in each level left to right. NOTE: this is the only traversal that is linear. 
+      - 5. Depth First Traversal (works on any Tree): (Given a Non Empty BST) Traverse the tree in a depth first manner. meaning starting a the root visit any neigbour node and keep doing deaper traversing each neighbours neighbours until you reach a node with no unvisited neighbors (leaf), backtrack to the last node with unvisited neighbors. Repeat until all nodes are visited. EX: root, Child, G1, GG1, G2, Child 2, Child3
 
     NOTE!: When i say left node right etc, i mean from the root(first node) we go left until we cant go left anymore meaning no left node exits only then can we move on to the next step in this case we goto node
     node is just the current node (we can print this node etc), after this node we can goto the right of this root (as no more left nodes) and right after this we repeat meaning we check for left nodes again on this right node until no more left nodes then we goto root then right so on
@@ -218,22 +219,30 @@ EX: a BST's serch node function will check wether the node is found or not and i
 
 // General Tree using arraylist
 class TreeNode<T> {
-  private T data;
-  private TreeNode<T> parent; // Changed from T to TreeNode<T>
-  ArrayList<TreeNode<T>> children;
+  // node properties
+  private T data; // node data
+  private TreeNode<T> parent;  // parent node
+  private ArrayList<TreeNode<T>> children; // list of children nodes
+  private int noc; // number of children
 
   public TreeNode(T data) {
     this.data = data;
     this.parent = null;
     this.children = new ArrayList<>();
+    this.noc = 0;
   }
 
+  // setter and getter for node class
   public T getData() {
     return this.data;
   }
 
-  public TreeNode<T> getParent() { // Changed return type from T to TreeNode<T>
+  public TreeNode<T> getParent() { 
     return this.parent;
+  }
+
+  public ArrayList<TreeNode<T>> getChildren() {
+    return this.children;
   }
 
   public void setData(T data) {
@@ -241,21 +250,39 @@ class TreeNode<T> {
   }
   public void addChild(TreeNode<T> child) {
     this.children.add(child);
+    noc++;
   }
   public void removechild(TreeNode<T> child) {
     this.children.remove(child);
   }
   
-  public void setParent(TreeNode<T> parent) { // Changed parameter type from T to TreeNode<T>
+  public void setParent(TreeNode<T> parent) { 
     this.parent = parent;
   }
 
+}
+
+class General_Tree<T> {
   public int depth(TreeNode<T> node) {
-    if (node.getParent() == null) {
+    if (node.getParent() == null) { // once the parent is null the depth will be 0 no more additions to reursive call made end of tree
       return 0;
     }
     else{
-      return 1 + depth(node.getParent());
+      return 1 + depth(node.getParent()); // each time we branch to a parent the depth increases by 1
+    }
+  }
+  public TreeNode<T> searchNode(TreeNode<T> node, T data) {
+    if (node.getData().equals(data)) {
+      return node; // found
+    }
+    else {
+      for (TreeNode<T> child : node.getChildren()) {
+        TreeNode<T> foundNode = searchNode(child, data); // recursion on child node 
+        if (foundNode != null) { // leaf
+          return foundNode;
+        }
+      }
+      return null; // loop ends and not found then return null
     }
   }
 }
@@ -265,16 +292,39 @@ class TreeNode<T> {
 
 public class Trees {
   public static void main(String[] args) {
-  // constructing a general tree
+  // constructing a few general tree nodes
   TreeNode<Integer> root = new TreeNode<>(1);
   TreeNode<Integer> node2 = new TreeNode<>(2);
   TreeNode<Integer> node3 = new TreeNode<>(3);
+  TreeNode<Integer> node4 = new TreeNode<>(4);
 
   // connecting the nodes
-  root.addChild(node2); // This will automatically set the parent if you use the modified addChild
-  root.addChild(node3); // This will automatically set the parent if you use the modified addChild
-  node2.setParent(root); // This will automatically set the parent if you use the modified addChild
-  node3.setParent(root); // This will automatically set the parent if you use the modified addChild
+  root.addChild(node2); // This will not automatically set the parent if you use the modified addChild you do that manually
+  root.addChild(node3);  
+  node2.addChild(node4);
+  node2.setParent(root); 
+  node3.setParent(root); 
+  node4.setParent(node2);
+
+  /* 
+   * tree diagram:
+   * 
+   *   1
+   * /  |
+   * 2  3
+   * |
+   * 4
+   */
+
+  // creating a general tree object
+  General_Tree<Integer> tree = new General_Tree<>(); 
+
+  // getting the depth of the tree by passing in any node
+  int depth = tree.depth(node2);
+  System.out.println("Depth of the tree: " + depth); // Output: Depth of the tree: 1
+
+  // serching node (pass in root to serch the whole tree)
+  TreeNode<Integer> foundNode = tree.searchNode(root, 2);
+  System.out.println("Found node: " + foundNode.getData()); // Output: Found node: 2
   }
-    
 }
