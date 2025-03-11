@@ -259,11 +259,11 @@ Tree Types Overview:
 # here like linked list we can have 2 classes (one for node and one for LL) but here we will have just one class for BST and no class for the node in our BST
 # ! creating the binary search tree
 class BST: # create class
-    # create constructor, constructor makes teh object(in our case the node) our node has 3 properties: key, left child and right child 
+    # create constructor, constructor makes teh object(in our case the node) our node has 3 properties: key, left child and right child, self repersents the object here the current node 
     # but when we create the node we only need to give the key as initially the node has no children and  we can define the variables for them and fill them when we creat the left or right node 
     # now when we create the node object we only need to give the key and the rest will be filled automatically by the otehr methods when we difine the left or right child
     def __init__(self, key): 
-        self.key = key # * Here self represents the current node
+        self.key = key
         self.leftchild = None
         self.rightchild = None
     
@@ -315,8 +315,8 @@ class BST:
     # * ALSO since we have 2 elifs the second elif only happens if the first elif fails BUT i use a return statemnt to indicate that we break out of the function call and stop the insertion process
     def insert(self, data): # create insertion method with data as input
         if self.key is None: # if root is empty ie key is nune note, key is the value of node. if there is no value meaning no key then there is no root node. EX: say we make BST(None) and call BST.insert(10) since at the moment of calling insert, the key of our BST is None, hence we have no root node. so we assign the BST obejcts key (its value) by using 'self.key' with data of 10. now the BST object has a key of 10 this the root node. 
-            self.key = data  # if there is no root node then we assign the nodes key with the value of data. NOTE: we dont create a new node we just check if its null if it is then we assign the key to data. NOTE: this must the root as we cannot have empty nodes in the middle of the tree initially the key can be null and that will become teh root node once we assign it a value. 
-            return # we stop the insertion process here as we have created the root node and are done with the insertion
+          self.key = data  # if there is no root node then we assign the nodes key with the value of data. NOTE: we dont create a new node we just check if its null if it is then we assign the key to data. NOTE: this must the root as we cannot have empty nodes in the middle of the tree initially the key can be null and that will become teh root node once we assign it a value. 
+          return # we stop the insertion process here as we have created the root node and are done with the insertion
         elif self.key == data: # if the key of the root node is equal to the value of the new node then we have a duplicate key and we cannot add it to the tree
           print("Error: duplicate key") # print an error message
           return # stop the insertion process here as we cannot add a duplicate key to the tree
@@ -616,7 +616,7 @@ while **in-order traversal** is a specific type of DFS used in binary trees. In-
 making it particularly useful for Binary Search Trees (BSTs) to retrieve nodes in sorted order. While DFS refers to the overall approach, 
 in-order is a specific implementation of DFS focused on a particular sequence of node visits in binary trees.
 
-so in short: DFS goes as deep as possible and can be used in any tree, in-order traversal is a specific DFS used in BSTs
+so in short: DFS goes as deep as possible and can be used in any tree, in-order traversal is a specific DFS used in BSTs and BT's
 used to retrieve nodes in sorted order, inorder also goes as deep as possible because of the way a BST is structured
 since inorder finds the smallest node first it has to go as deep as possible to find the smallest node.
 """
