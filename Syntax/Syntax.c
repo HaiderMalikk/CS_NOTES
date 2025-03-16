@@ -468,6 +468,28 @@ funcPtr = sayHello;  // Storing the address of the function in the pointer. this
 funcPtr("Alice");  // Calling the function using the pointer.
 // and array of function pointers can be used to store multiple functions
 
+// ! Void Pointers
+// Void pointers are generic pointers that can store the address of any data type.
+void *ptr;  // Declaring a void pointer.
+int x = 10;
+ptr = &x;  // Storing the address of an integer in the void pointer.
+float y = 3.14;
+ptr = &y;  // Storing the address of a float in the void pointer.
+char c = 'A';
+ptr = &c;  // Storing the address of a character in the void pointer.
+
+// ! constant pointers
+// as we saw in the swap example any pointer we pass to a function can have its value changed in the function
+// to avoid this we can use constant pointers which can only access the value at the address but not change it
+int x = 10;
+int y = 20;
+const int *ptr = &x;  // Pointer to a constant integer.
+// *ptr = 20;  // Error: Cannot change the value of a constant pointer.
+int alessthanb(const int *a, const int *b) { // both arguments are constant pointers which means in this function we cannot change the value of the pointers
+    return *a < *b;
+}
+alessthanb(&x, &y); // we pass the address of x and y to the function
+
 // ! Strings Functions
 // Strings in C are arrays of characters.
 #include <string.h>  // Needed for string functions.
