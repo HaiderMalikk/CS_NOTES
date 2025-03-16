@@ -320,7 +320,7 @@ void print(int arr[][3], int rows) {
             printf("%d ", arr[i][j]);
 }
 
-int arr[2][3] = {{1, 2, 3}, {4, 5, 6}};
+int arr[2][3] = {{1, 2, 3}, {4, 5, 6}}; // must specify the size of the inner subarrays its not automatically calculated unlike the size of the arrays
 print(arr, 2); // once again pass the size of array of use sizeof
 
 // ! Memory Addresses
@@ -427,7 +427,7 @@ void print(int *arr, int m, int n) {
             printf("%d ", *((arr + i * n) + j));
 }
 
-int arr[][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+int arr[][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}; // unlike in 1d arrasy the size of the inner subarrays is not automatically calculated you must specify it but like usual the size of the array is calculated by the compiler
 print((int *)arr, 3, 3);  // Pass address of first element * the cast is optional but good practice *
 
 //!  pointers to arrays
