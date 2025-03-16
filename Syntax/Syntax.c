@@ -421,6 +421,16 @@ print("%s\n", *(*(colors + 2))); // equivalent to (colors + 2)[0][0] = "b" the i
 print("%s\n", (colors + 2)[2]); // equivalent to *(colors + 2 + 2) = *(colors + 4) = "yellow"
 
 // ! passing in arrays to functions using pointers
+
+// * 1D
+void print(int *arr, int size) { // alternitive to size: int size = sizeof(arr) / sizeof(arr[0]); only if the array is statically allocated i.e the size is known at compile time
+    for (int i = 0; i < size; i++)
+        printf("%d ", *(arr + i)); // alternative to arr[i]
+}
+
+int arr[] = {1, 2, 3, 4, 5};
+print(arr, 5);
+
 void print(int *arr, int m, int n) {
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
