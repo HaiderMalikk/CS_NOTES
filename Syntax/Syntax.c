@@ -43,7 +43,7 @@ char letter = 'A'; // Declaring a character variable (using single quotes for ch
 // double - Double precision floating-point numbers.
 // char - Character type for storing single characters.
 int a = 10;      // An integer.
-float b = 5.75;  // A float for decimals.
+float b = 5.7599;  // A float for decimals.
 char c = 'Z';    // A character.
 double d = 15.123456789; // Double for higher precision decimal values.
 const int DAYS_IN_WEEK = 7; // Constant value. // * NOTE: constants are only declared once and cannot be changed even if you attempt to redefine them they will retain the original value before the attempt at redefining them
@@ -51,12 +51,15 @@ const int DAYS_IN_WEEK = 7; // Constant value. // * NOTE: constants are only dec
 
 // ! Format Specifiers
 
-// Format specifiers in C are used to specify how to print different data types:
-printf(a) // This will print the value of a. but not safe
+// Format specifiers in C are used to specify how to print different data types you cannot do printf(a) you must use a format specifier
+printf(a) // * This will print the value of a but is not garunteed to work as the compiler may not know how to print the value of a.
 printf("Integer: %d\n", a);  // %d for integers.
 printf("Float: %f\n", b);    // %f for floats.
 printf("Character: %c\n", c); // %c for characters.
 printf("Double: %lf\n", d);  // %lf for double.
+// rounding float example 
+printf("Float: %.2f\n", b);  // %f for floats with 2 decimal places. b = 5.75 so this will print 5.76 as it rounds up
+// this means for printing things liek arrays we need a loop
 
 // ! Constants 
 
@@ -97,21 +100,25 @@ in all these examples the left side is done first then the right side is done, i
 */
 
 // ! User Input
-
-// In C, you can take input using `scanf`:
+// In C, you can take input using `scanf`, for non ref types like int, float, etc. you must pass the address as thats the only way scanf knows where to put the value
+// for ref types like arrays, strings, etc. you do not need to pass the address as the array is already a address
 int userInput;
 printf("Enter a number: ");
 scanf("%d", &userInput);  // Takes an integer input from the user.
+// taking a input for a array
+int arr[5];
+for (int i = 0; i < 5; i++) {
+    printf("Enter a number: ");
+    scanf("%d", &arr[i]); // use & as we are accsessing a int
+}
 
 // ! Math Functions
-
 // The C Standard Library provides math functions.
 #include <math.h>
 double result = sqrt(25);  // sqrt() function to find the square root.
 double power = pow(2, 3);  // pow() function to find powers (2^3).
 
 // ! If Statements
-
 // If statements in C are similar to Java/Python:
 if (userInput > 0) {
     printf("The number is positive.\n");
@@ -264,13 +271,17 @@ for (int i = 0; i < 5; i++) {
 
 // ! Arrays
 
-// Arrays are collections of data of the same type.
-int numbers[] = {1, 2, 3, 4, 5};
+// Arrays are collections of data of the same type. you must either initialize the array with a size or with values
+int numbers[] = {1, 2, 3, 4, 5}; // values defined no more adding values
 printf("%d\n", numbers[0]);  // Accessing the first element of the array.
 // to make a array with a length of 50, reinitialize the array
 int numbers[50]; // numbers = [0,0,0 .... 0] 50 times
 int numbers[0] = 5; // numbers = [5,0,0 .... 0] 50 times
-// just like java at the time of making the array you have to define the length or the elements in the array 
+// you have 50 elements you can add or access to the array
+
+// 2d arrays
+int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+printf("%d\n", matrix[0][1]);  // Accesses the second element of the first row.
 
 // ! preprocessor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
 #define ARRAY_LENGTH 50 // this makes compilation faster insted of using a variable, always at the top of the file and all caps
@@ -328,28 +339,14 @@ void sortArray(int arr[], int n) {
     }
 }
 
-// ! String Functions
-// Strings in C are arrays of characters.
-#include <string.h>  // Needed for string functions.
+// ! Memory Addresses
+// You can access the memory address of a variable using the '&' operator. addresses have the '%p' format specifier
+printf("Address of var: %p\n", &var);  // Outputs the memory address of 'var'.
+printf("Address stored in ptr: %p\n", ptr);  // Outputs the memory address stored in 'ptr'. no & is needed as ptr is already a address, printing &ptr will give you the same address
 
-char str1[20] = "Hello"; // strings are just arrays of characters in C each char has a index starting at 0
-char str2[20] = "World";
-char str3[] = "C is awesome!"; // the string is terminated by a null character '\0'
-strcat(str1, str2);  // Concatenates str2 to the end of str1.
-printf("%s\n", str1);  // Output: HelloWorld
-
-// comparing strings
-char str[] = "Hello";
-char str2[] = "Hello";
-// if the strings are equal strcmp will return 0, we Cannot say str == str2 as it will compare the memory address of the strings
-if (strcmp(str, str2) == 0) {
-    printf("The strings are equal.\n");
-}
-// but for ints we can do == to compare them
 
 // ! Pointers NOTE: '*' is used to denote a pointer. at runtime we can use *pointername to access the value at that address and &pointername to get the address
-
-// A pointer is a variable that stores the memory address of another variable.
+// A pointer is a variable that stores the memory address of another variable. if its a ref type it is the address of the variable if not we use the address operator to get it
 int *ptr; // Declaring a pointer to an integer using the '*' operator. now a var ptr exits that is ready to store the address of an integer
 int var = 10; // Declaring an integer variable. var holds the value 10
 ptr = &var;  // Storing the address of 'var' in 'ptr' using &var to get the address of var. he address not the value of var. the address looks like 0x7fffbf7b1b4c
@@ -365,53 +362,13 @@ void swap(int *a, int *b) {
     *b = temp;     // Assign the value in 'temp' to the location pointed by 'b'
 }
 
-// ! Memory Addresses
+swap(&a, &b); // passing in a and b by reference to the function, Note we pass the address and the function parameter, a pointer stores a address so we pass the address of the variable
 
-// You can access the memory address of a variable using the '&' operator. addresses have the '%p' format specifier
-printf("Address of var: %p\n", &var);  // Outputs the memory address of 'var'.
-printf("Address stored in ptr: %p\n", ptr);  // Outputs the memory address stored in 'ptr'. no & is needed as ptr is already a address, printing &ptr will give you the same address
-
-// ! Structs
-
-// Structs are custom data types that group related variables.
-struct Student {
-    char name[50]; // here name is a char array of size 50
-    int age;
-    float gpa;
-};
-
-struct Student student1 = {"Alice", 20, 3.9};  // Initializing a struct.
-printf("%s is %d years old.\n", student1.name, student1.age);  // Accessing struct members.
-
-// ! Memory allocation
-// in C memory is allocated using malloc and free is used to free the memory
-
-// * Dynamic Memory Allocation
-// Dynamic memory allocation allows you to allocate memory at runtime.
-int *p = malloc(sizeof(int)); // Allocating memory for an integer using malloc.
-*p = 42;  // Assigning a value to the allocated memory.
-printf("%d\n", *p);  // Accessing the value through the pointer.
-free(p);  // Freeing the allocated memory.
-
-// * Structs with Pointers and Memory Allocation
-// Structs can be used with pointers to manage memory dynamically.
-struct Student {
-    char name[50];
-    int age;
-};
-
-struct Student *ptrStudent = (struct Student *)malloc(sizeof(struct Student)); // Dynamically allocate memory for a Student struct.
-
-if (ptrStudent != NULL) {
-    strcpy(ptrStudent->name, "Alice");  // Using the pointer to set the name.
-    ptrStudent->age = 20;                // Using the pointer to set the age.
-    printf("%s is %d years old.\n", ptrStudent->name, ptrStudent->age);  // Accessing struct members through pointer.
-    free(ptrStudent);  // Freeing the allocated memory.
-}
-// * use after free is when you try to access a pointer after you have freed the memory it points to, this will give you a segmentation fault error
+int arr[5] = {1, 2, 3, 4, 5};
+int *ptr = arr;  // Storing the address of the first element of the array in 'ptr'.
+int *ptr2 = &arr[0];  // Storing the address of the first element of the array in 'ptr2' since arr[0] is a int we need to use & to get the address
 
 // ! Function Pointers
-
 // Function pointers allow you to store the address of a function and call it.
 void sayHello(char *name) {
     printf("Hello, %s!\n", name);
@@ -423,16 +380,23 @@ funcPtr = sayHello;  // Storing the address of the function in the pointer. this
 funcPtr("Alice");  // Calling the function using the pointer.
 // and array of function pointers can be used to store multiple functions
 
-// ! Arrays of Pointers
+// ! Arrays of Pointers 
 // all arrays are references types meaning they store addresses not values, the values are the elements of the arrays
 // but we can also store a list of pointers in a array
 // Array of pointers to strings. here each elements is a pointer to a string not the string itself
 // while we declate the strings the element at index 1 i.e names[1] is a pointer to the string "Bob" meaning its just a address to the first character of the string
-char *names[] = {"Alice", "Bob", "Charlie"};  
-printf "%s\n", names[1]);  // Prints "Bob" beacuse we used the %s format specifier to print a string
+// * arrays of strings 
+// char *str stores the address of the first character of the string, and char str[] is a array of chars but since its a array str points to the first character of the string
+// now here we say char *names this means that names points to a str and *names[] means that names points to a array of pointers in this case the pointers are char pointers i.e strings where the pointer just points to teh first character of the strings in the array
+char *names[] = {"Alice", "Bob", "Charlie"}; 
+print("%p\n", names) // prints the array address
+print("%s\n", names[1]);  // Prints "Bob" beacuse we used the %s format specifier to print a string
 // using pointer arithmetic, we know the address points to the first element and we also know we can add * to a pointer to get its value so:
-printf ("%s\n", *names);  // Prints "Alice" as *names is the value at the address of the first element of the array
+printf ("%s\n", *names);  // Prints "Alice" as names gives the first element in the array and doing *names gives the first elements value which is the string "Alice"
 printf ("%s\n", *(names+1));  // Prints "Bob" as *(names+1) is the value at the address of the second element of the array
+printf("%c\n", names[1][0]);  // Prints "B" as names[1] is the address of the "Bob" string and [0] is the first character of the string remember that each element of the array names is a string which itself is a array of characters
+// or 
+printf("%c\n", *(*(names+1))); // Prints "B" as *(names+1) is the address of the "Bob" string and *(*(names+1)) is the value of the first character of the string do *(*(names+1))+n to get the nth character of the string Bob
 
 // ! Pointer Arithmetic
 // an array is a reference type meaning if we have int arr = [20]; arr hold a address to the first element of the array i.e arr is a address not a value
@@ -441,10 +405,21 @@ int arr[5] = {1, 2, 3, 4, 5};
 int *ptrArr = arr;  // Storing the address of the first element of the array in a pointer no need for &arr as we said arr is a address
 printf("%d\n", *ptrArr);  // Prints the value at the address stored in 'ptrArr' (1) like we said the address is to the first element of the array
 printf("%d\n", *(ptrArr + 1));  // Prints the value at the next address (2). and so on
+
+// 2 d arrays 
+int matrix[3][4] = {
+    {1, 2, 3, 4},
+    {5, 6, 7, 8},
+    {9, 10, 11, 12}
+};
+// both of these are the same
+printf("%d", matrix[1][2]);
+printf("%d", *(*(matrix+1)+2)); // the *(matrix+1) selects {5, 6, 7, 8} so let *(matrix+1) = arr = {5, 6, 7, 8} then this is = *(arr+2) = 7 which is like the last example
+
 // But arrays elements are all just a offset from the first element i.e if a element is 8bytes then the first element is at 0x00, the second is at 0x08 and so on each 8 bytes apart
 // so we can multiple the base address (the start index) by a multiple to get the address of the element we want in the 8 byte case the 3rd element is at 0x00 + 8*2 = 0x10
-// this is C code is just the address of the array + n where n is the index of the element we want to access
-// * more syntax for pointer arithmetic
+// this is C code is just the address of the array + n where n is the index of the element we want to access the offset is done by the compiler
+// * more syntax for pointer arithmetic always use parenthesis to avoid errors
 char *colors[] = {"red", "green", "blue", "yellow"};
 printf("%s\n", colors[2]);  // Prints "blue".
 printf("%s\n", *(colors + 2));  // Prints "blue". as *(colors) is the address of the first element of the array + 2 is index 2 = "blue"
@@ -470,9 +445,92 @@ int **q = &p;    // q is a pointer to p (a pointer to a pointer)
 **q = 20;        // Dereferencing q twice assigns 20 to x, **q is the address to p, *q is the value of p which is the address of x and **q is the value of x
 printf("%d %d %d", x, *p, **q); // Prints the values of x, *p, and **q
 
+// ! String Functions
+// Strings in C are arrays of characters.
+#include <string.h>  // Needed for string functions.
+
+// declaring strings using a array of characters
+char word[] = "hello";
+printf("%c", word); // prints the first character of the string since arrays are pointers to the first element of the array
+// to print the whole string use a loop
+print("%s\n", word);
+
+// strings using pointers 
+// since arrays are pointers to the first element we can declare a pointer to a string by declaring a pointer to a char which would be the first character of the string
+char *word2 = "World"; // word2 is a pointer pointing to the first character of the string
+printf("%s", word2); // prints the whole string
+printf("%c", *word2); // prints the first character of the string since dereferencing the pointer gives the value at the address which is the first character of the string
+
+// * see arrays of pointers for how to make arrays of strings
+
+char str1[20] = "Hello"; // strings are just arrays of characters in C each char has a index starting at 0
+char str2[20] = "World";
+char str3[] = "C is awesome!"; // the string is terminated by a null character '\0'
+strcat(str1, str2);  // Concatenates str2 to the end of str1.
+printf("%s\n", str1);  // Output: HelloWorld
+
+// comparing strings
+char str[] = "Hello";
+char str2[] = "Hello";
+// if the strings are equal strcmp will return 0, we Cannot say str == str2 as it will compare the memory address of the strings
+if (strcmp(str, str2) == 0) {
+    printf("The strings are equal.\n");
+}
+// but for ints we can do == to compare them
+
+// ! Structs
+// Structs are custom data types that group related variables.
+struct Student {
+    char name[50]; // here name is a char array of size 50
+    int age;
+    float gpa;
+};
+
+struct Student student1 = {"Alice", 20, 3.9};  // Initializing a struct.
+printf("%s is %d years old.\n", student1.name, student1.age);  // Accessing struct members.
+
+// ! Dynamic Memory Allocation
+
+// ! sizeof operator
+// The sizeof operator returns the size of a variable or data type in bytes.
+// its important to know the size of a data type to avoid buffer overflows
+// sizeof(int) will give you the size of an integer in bytes
+// sizeof(struct student) will give you the size of a struct in bytes
+// getting length of an array
+int arr[] = {1, 2, 3, 4, 5};
+// Getting the length of the array. divide the size of the array by the size of the first element of the array to get the length of the array 
+// note that the first or any element repersents the size of one element of the array in bytes
+// so this length has a total of 5 elements each of which is 4 bytes = 20 bytes. 20/4 = 5 = length of the array
+int size = sizeof(arr) / sizeof(arr[0]); 
+// NOTE this only works if the array is statically allocated i.e the size of the array is known at compile time 
+
+// ! Memory allocation and deallocation
+// in C memory is allocated using malloc and free is used to free the memory
+// * Dynamic Memory Allocation
+// Dynamic memory allocation allows you to allocate memory at runtime.
+int *p = malloc(sizeof(int)); // Allocating memory for an integer using malloc.
+*p = 42;  // Assigning a value to the allocated memory.
+printf("%d\n", *p);  // Accessing the value through the pointer.
+free(p);  // Freeing the allocated memory.
+
+// * Structs with Pointers and Memory Allocation
+// Structs can be used with pointers to manage memory dynamically.
+struct Student {
+    char name[50];
+    int age;
+};
+
+struct Student *ptrStudent = (struct Student *)malloc(sizeof(struct Student)); // Dynamically allocate memory for a Student struct.
+
+if (ptrStudent != NULL) {
+    strcpy(ptrStudent->name, "Alice");  // Using the pointer to set the name.
+    ptrStudent->age = 20;                // Using the pointer to set the age.
+    printf("%s is %d years old.\n", ptrStudent->name, ptrStudent->age);  // Accessing struct members through pointer.
+    free(ptrStudent);  // Freeing the allocated memory.
+}
+// * use after free is when you try to access a pointer after you have freed the memory it points to, this will give you a segmentation fault error
 
 // ! Callback Functions
-
 // A callback function is a function that is passed to another function as an argument.
 void processArray(int *arr, int size, void (*callback)(int)) {
     for (int i = 0; i < size; i++) {
@@ -560,6 +618,7 @@ printf("The square of 5 is: %d", SQUARE(5));
 #define MYHEADER_H
 // header file content
 #endif
+
 
 // ! -------------------------------------------------------------------------------------------------------------------------------------------------->>
 

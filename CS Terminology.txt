@@ -193,11 +193,12 @@ difference between these two lies in how the code is executed.
 ### Compiled Languages
 In compiled languages, the code is first compiled into machine code before it is executed.
 This means that the code is converted into a format that the computer's processor can understand before its executed.
-EX: java, c, c++
+EX: c, c++
 ### Interpreted Languages
 In interpreted languages, the code is not compiled into machine code before it is executed.
 Instead, the code is interpreted line by line by an interpreter then this interpreter will convert the code into machine code as its executed.
 EX: python, ruby, javascript
+NOTE: JAVA has a jit compiler which converts the byte code into machine code as its executed just in time (JIT) this is why java is considered a compiled and interpreted language
 
 *  High-Level vs Low-Level Languages
 =============================================
