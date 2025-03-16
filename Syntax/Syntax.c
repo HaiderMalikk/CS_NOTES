@@ -279,14 +279,6 @@ int numbers[50]; // numbers = [0,0,0 .... 0] 50 times
 int numbers[0] = 5; // numbers = [5,0,0 .... 0] 50 times
 // you have 50 elements you can add or access to the array
 
-// 2d arrays
-int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
-printf("%d\n", matrix[0][1]);  // Accesses the second element of the first row.
-
-// ! preprocessor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
-#define ARRAY_LENGTH 50 // this makes compilation faster insted of using a variable, always at the top of the file and all caps
-int num[ARRAY_LENGTH];
-
 // arr types
 int arr[5]; // this is a array of 5 integers
 arr[0] = 1.1; // this is valid but the value will be truncated to 1 as arr is an array of integers
@@ -298,52 +290,43 @@ int x = ++arr[i]; // arr[i] = arr[i] + 1 then x = arr[i]
 int x = arr[i++]; // x = arr[i] then arr[i] = arr[i] + 1 
 int x = arr[++i] // arr[i] = arr[i] + 1 then x = arr[i]
 
-// ! Print an Array with Loop
+// Print an Array with Loop
 
 for (int i = 0; i < 5; i++) {
     printf("%d ", numbers[i]);
 }
 printf("\n");
 
-// ! 2D Arrays
-
+// * 2D Arrays
 // 2D arrays are arrays of arrays.
 int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
 printf("%d\n", matrix[0][1]);  // Accesses the second element of the first row.
 
-// ! Array of Strings
-
-char names[3][10] = {"Alice", "Bob", "Charlie"};
-printf("%s\n", names[1]);  // Prints "Bob"
-
-// ! Swap Values of Two Variables
-
-// Swapping two values requires a temporary variable.
-int temp = a;
-a = b;
-b = temp;
-
-// ! Sort an Array
-
-#include <stdio.h>
-void sortArray(int arr[], int n) {
-    int temp;
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
+// * passing an array to a function
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
     }
+    printf("\n");
 }
+
+int numbers[] = {1, 2, 3, 4, 5};
+printArray(numbers, 5);  // Passing the array to the function. always pass the size of the array as well or use sizeof 
+
+// passing 2d arrays; we must specify the size of the sub arrays i.e the number of columns or the number of elements in each row
+void print(int arr[][3], int rows) {
+    for (int i = 0; i < rows; i++)
+        for (int j = 0; j < 3; j++)
+            printf("%d ", arr[i][j]);
+}
+
+int arr[2][3] = {{1, 2, 3}, {4, 5, 6}};
+print(arr, 2); // once again pass the size of array of use sizeof
 
 // ! Memory Addresses
 // You can access the memory address of a variable using the '&' operator. addresses have the '%p' format specifier
 printf("Address of var: %p\n", &var);  // Outputs the memory address of 'var'.
 printf("Address stored in ptr: %p\n", ptr);  // Outputs the memory address stored in 'ptr'. no & is needed as ptr is already a address, printing &ptr will give you the same address
-
 
 // ! Pointers NOTE: '*' is used to denote a pointer. at runtime we can use *pointername to access the value at that address and &pointername to get the address
 // A pointer is a variable that stores the memory address of another variable. if its a ref type it is the address of the variable if not we use the address operator to get it
@@ -353,9 +336,9 @@ ptr = &var;  // Storing the address of 'var' in 'ptr' using &var to get the addr
 
 // Dereferencing: Accessing the value at the memory address., if you try to get the value from a null pointer it will give you a segmentation fault error
 // use *pointername to get the value at that address that the pointer holds
-printf("%d\n", *ptr);  // Prints the value stored at the address 'ptr' holds (10). the ptr holds the address of var so *ptr is the value of var, %d as ptr holds a address to a integer
+printf("%d\n", *ptr);  // Prints the value stored at the address 'ptr' holds (10). the ptr holds the address of var so *ptr is the value of var if we printed p it would print the address of var
 
-// Function to swap two integers using pointers
+// ! Passing Pointers to Functions
 void swap(int *a, int *b) {
     int temp = *a; // Store the value pointed by 'a' in 'temp'
     *a = *b;       // Assign the value pointed by 'b' to the location pointed by 'a'
@@ -368,17 +351,22 @@ int arr[5] = {1, 2, 3, 4, 5};
 int *ptr = arr;  // Storing the address of the first element of the array in 'ptr'.
 int *ptr2 = &arr[0];  // Storing the address of the first element of the array in 'ptr2' since arr[0] is a int we need to use & to get the address
 
-// ! Function Pointers
-// Function pointers allow you to store the address of a function and call it.
-void sayHello(char *name) {
-    printf("Hello, %s!\n", name);
-}
+// ! Strings in C
+// *  declaring strings using a array of characters
+char word[] = "hello";
+printf("%c", word); // prints the first character of the string since arrays are pointers to the first element of the array
+// to print the whole string use a loop
+print("%s\n", word);
 
-void (*funcPtr)(char *);  // Declaring a function pointer. funcPtr is a pointer that points to a function that takes a char pointer as a argument
-funcPtr = sayHello;  // Storing the address of the function in the pointer. this mathces the one char * name
-// NOTE: we can do this in one line as well by: void (*funcPtr)(char *) = sayHello; // no declaration needed
-funcPtr("Alice");  // Calling the function using the pointer.
-// and array of function pointers can be used to store multiple functions
+// * strings using pointers 
+// since arrays are pointers to the first element we can declare a pointer to a string by declaring a pointer to a char which would be the first character of the string
+char *word2 = "World"; // word2 is a pointer pointing to the first character of the string
+printf("%s", word2); // prints the whole string
+printf("%c", *word2); // prints the first character of the string since dereferencing the pointer gives the value at the address which is the first character of the string
+
+// * Array of Strings using a 2D array
+char names[3][10] = {"Alice", "Bob", "Charlie"};
+printf("%s\n", names[1]);  // Prints "Bob"
 
 // ! Arrays of Pointers 
 // all arrays are references types meaning they store addresses not values, the values are the elements of the arrays
@@ -432,7 +420,20 @@ print("%s\n", *(*(colors + 2))); // equivalent to (colors + 2)[0][0] = "b" the i
 
 print("%s\n", (colors + 2)[2]); // equivalent to *(colors + 2 + 2) = *(colors + 4) = "yellow"
 
+// ! passing in arrays to functions using pointers
+void print(int *arr, int m, int n) {
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            printf("%d ", *((arr + i * n) + j));
+}
+
+int arr[][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+print((int *)arr, 3, 3);  // Pass address of first element * the cast is optional but good practice *
+
 //!  pointers to arrays
+// if we assign just a pointer to a array its pointing to the first element of the array
+// but if we assign a pointer to a whole array its pointing to the address of the array
+// this is useful when we want to pass an array to a function as a pointer since we pass the address of the array and the function can access the elements of the array
 int arr[4] = {5, 10, 15, 20};  // Array of 4 integers
 int (*ptr)[4] = &arr;          // Pointer to an array of 4 integers the size of the pointer must match the size of the array
 printf("%d %d", (*ptr)[1], ptr[0][3]);  // Accessing elements of the array, (*ptr)[1] is the second element of the array as *ptr gets the values and [1] gets the second element of the array, ptr[0][3] is the fourth element of the array as ptr[0] gets the values and [3] gets the fourth element of the array  
@@ -440,28 +441,26 @@ printf("%d %d", (*ptr)[1], ptr[0][3]);  // Accessing elements of the array, (*pt
 // ! pointers to pointers
 int x = 10;      // x is initialized to 10
 int *p = &x;     // p is a pointer to x, so print(*p) will print 10
-int **q = &p;    // q is a pointer to p (a pointer to a pointer)
+int **q = &p;    // q is a pointer to p (a pointer to a pointer) we use &p to get the address of p as doing **q = p will give a type error
 
 **q = 20;        // Dereferencing q twice assigns 20 to x, **q is the address to p, *q is the value of p which is the address of x and **q is the value of x
 printf("%d %d %d", x, *p, **q); // Prints the values of x, *p, and **q
 
-// ! String Functions
+// ! Function Pointers
+// Function pointers allow you to store the address of a function and call it.
+void sayHello(char *name) {
+    printf("Hello, %s!\n", name);
+}
+
+void (*funcPtr)(char *);  // Declaring a function pointer. funcPtr is a pointer that points to a function that takes a char pointer as a argument
+funcPtr = sayHello;  // Storing the address of the function in the pointer. this mathces the one char * name
+// NOTE: we can do this in one line as well by: void (*funcPtr)(char *) = sayHello; // no declaration needed
+funcPtr("Alice");  // Calling the function using the pointer.
+// and array of function pointers can be used to store multiple functions
+
+// ! Strings Functions
 // Strings in C are arrays of characters.
 #include <string.h>  // Needed for string functions.
-
-// declaring strings using a array of characters
-char word[] = "hello";
-printf("%c", word); // prints the first character of the string since arrays are pointers to the first element of the array
-// to print the whole string use a loop
-print("%s\n", word);
-
-// strings using pointers 
-// since arrays are pointers to the first element we can declare a pointer to a string by declaring a pointer to a char which would be the first character of the string
-char *word2 = "World"; // word2 is a pointer pointing to the first character of the string
-printf("%s", word2); // prints the whole string
-printf("%c", *word2); // prints the first character of the string since dereferencing the pointer gives the value at the address which is the first character of the string
-
-// * see arrays of pointers for how to make arrays of strings
 
 char str1[20] = "Hello"; // strings are just arrays of characters in C each char has a index starting at 0
 char str2[20] = "World";
@@ -618,6 +617,10 @@ printf("The square of 5 is: %d", SQUARE(5));
 #define MYHEADER_H
 // header file content
 #endif
+
+// * preprocessor to define the length of the array, even before compiling where ARRAY_LENGTH appears it will be replaced with 50
+#define ARRAY_LENGTH 50 // this makes compilation faster insted of using a variable, always at the top of the file and all caps
+int num[ARRAY_LENGTH];
 
 
 // ! -------------------------------------------------------------------------------------------------------------------------------------------------->>
