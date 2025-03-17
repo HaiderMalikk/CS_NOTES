@@ -539,19 +539,52 @@ int size = sizeof(arr) / sizeof(arr[0]);
 // in C memory is allocated using malloc and free is used to free the memory
 // * Dynamic Memory Allocation
 // Dynamic memory allocation allows you to allocate memory at runtime.
-int *p = malloc(sizeof(int)); // Allocating memory for an integer using malloc.
-*p = 42;  // Assigning a value to the allocated memory.
+// * Malloc (allocate memory but does not initialize it)
+// p is a int pointer to a memory location that is the size of a int so p can hold one int
+int *p = malloc(sizeof(int)); // Allocating memory for an integer using malloc. optionally you can cast it to a int pointer like int *p = (int *)malloc(sizeof(int)); this is a common practice
+*p = 42;  // Assigning a value to the allocated memory. use *p to access the value
 printf("%d\n", *p);  // Accessing the value through the pointer.
-free(p);  // Freeing the allocated memory.
+// * Free (deallocate memory) sets it back to default
+free(p);  // Freeing the allocated memory. now we can reuse p for anoehr number 
+// free(p) // double free causes a error 
 
-// * Structs with Pointers and Memory Allocation
+// * calloc (allocate memory and initialize it to 0)
+int *p = calloc(5, sizeof(int)); // Allocating memory for 5 integers and initializing them to 0 using calloc. again you can cast it to a int pointer like int *p = (int *)calloc(5, sizeof(int));
+// loop 5 times to assign 5 values or read 5 values
+for (int i = 0; i < 5; i++) {
+    printf("%d ", p[i]);  // Accessing the allocated memory. at index i we can use array indexing to access the values as p is a pointer to a array of integers
+}
+*p[0] = 42;  // Assigning a value to the first element of the allocated memory.
+printf("%d\n", *p[0]);  // Accessing the value through the pointer.
+free(p);  // Freeing the allocated memory. this initializes the memory to 0 and then we can use it
+
+// * realloc (reallocate memory) changes the size of the allocated memory from default to a new size
+int *p = malloc(5 * sizeof(int)); // Allocating memory for 5 integers.
+// p first had 5 integers now it has 10 integers note we reassign using the address hence we dont dereference the pointer. you can also use a different pointer to store the new memory location
+p = realloc(p, 10 * sizeof(int)); // Reallocating the memory to 10 integers. again you can cast it to a int pointer like int *p = (int *)realloc(p, 10 * sizeof(int));
+
+
+// ! Structs
 // Structs can be used with pointers to manage memory dynamically.
+// * creating and accessing to a struct with values
 struct Student {
     char name[50];
     int age;
 };
+struct Student s = {"Alice", 20}; // Initializing a struct. with a name and age
+printf("%s is %d years old", s.name, s.age); // Accessing struct members using dot notation
 
-struct Student *ptrStudent = (struct Student *)malloc(sizeof(struct Student)); // Dynamically allocate memory for a Student struct.
+// * passing fetures to sturucts
+// in these 2 exs we replace the age with 30 from its original value if it has no prev value then it will be set to 30
+void modify(struct student s) { s.age = 30; } // by value 
+void modify(struct student *s) { s->age = 30; } // by reference
+// usage
+struct Student s = {"Alice", 20};
+modify(s);
+modify(&s);
+
+// * Structs with Pointers and Memory Allocation
+struct Student *ptrStudent = (struct Student *)malloc(sizeof(struct Student)); // Dynamically allocate memory for a Student struct. the cast is optional but good practice
 
 if (ptrStudent != NULL) {
     strcpy(ptrStudent->name, "Alice");  // Using the pointer to set the name.
