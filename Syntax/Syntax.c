@@ -352,13 +352,13 @@ int *ptr = arr;  // Storing the address of the first element of the array in 'pt
 int *ptr2 = &arr[0];  // Storing the address of the first element of the array in 'ptr2' since arr[0] is a int we need to use & to get the address
 
 // ! Strings in C
-// *  declaring strings using a array of characters
+// *  declaring strings using a array of characters (this means the length must be known at compile time or the string must be initialized)
 char word[] = "hello";
 printf("%c", word); // prints the first character of the string since arrays are pointers to the first element of the array
 // to print the whole string use a loop
 print("%s\n", word);
 
-// * strings using pointers 
+// * strings using pointers (can initilize it and change it later)
 // since arrays are pointers to the first element we can declare a pointer to a string by declaring a pointer to a char which would be the first character of the string
 char *word2 = "World"; // word2 is a pointer pointing to the first character of the string
 printf("%s", word2); // prints the whole string
@@ -431,6 +431,7 @@ void print(int *arr, int size) { // alternitive to size: int size = sizeof(arr) 
 int arr[] = {1, 2, 3, 4, 5};
 print(arr, 5);
 
+// * 2d
 void print(int *arr, int m, int n) {
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
@@ -438,7 +439,8 @@ void print(int *arr, int m, int n) {
 }
 
 int arr[][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}; // unlike in 1d arrasy the size of the inner subarrays is not automatically calculated you must specify it but like usual the size of the array is calculated by the compiler
-print((int *)arr, 3, 3);  // Pass address of first element * the cast is optional but good practice *
+print((int *)arr, 3, 3);  // Pass address of first element * the cast makes the array lose its 2d structure meaning its now a 1d array
+// alternative way if we use arr[i][j] instead of *(arr + i * n) + j see arrays section
 
 //!  pointers to arrays
 // if we assign just a pointer to a array its pointing to the first element of the array
@@ -508,6 +510,13 @@ if (strcmp(str, str2) == 0) {
     printf("The strings are equal.\n");
 }
 // but for ints we can do == to compare them
+
+// length of a string
+int len = strlen(str);  // Returns the length of the string.
+
+// serching chars in a string
+char *ptr = strchr(str, 'l');  // Searches for the first occurrence of 'l' in the string and returns a pointer to it.
+// if you want the index of the char = (ptr - str) as the pointer is a address number dont worry about the adderrss is just a number. p + 1 takes you to the next elements address in the string ao do *p+1 to get the value 
 
 // ! Structs
 // Structs are custom data types that group related variables.
