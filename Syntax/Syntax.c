@@ -43,11 +43,16 @@ char letter = 'A'; // Declaring a character variable (using single quotes for ch
 // double - Double precision floating-point numbers.
 // char - Character type for storing single characters.
 int a = 10;      // An integer.
-float b = 5.7599;  // A float for decimals.
+float b = 5.7599;  // A float for decimals. optional to use f or F at the end of the number
 char c = 'Z';    // A character.
 double d = 15.123456789; // Double for higher precision decimal values.
+long e = 1000000; // Long for larger integers.
 const int DAYS_IN_WEEK = 7; // Constant value. // * NOTE: constants are only declared once and cannot be changed even if you attempt to redefine them they will retain the original value before the attempt at redefining them
 // * as for changing the vlaue of a const that will cause a compile error
+
+// multiple variable declaration
+int a, b, c; // Declaring multiple variables of the same type.
+int a = 5, b = 10, c = 15; // Declaring and initializing multiple variables of the same type.
 
 // ! Format Specifiers
 
@@ -440,7 +445,7 @@ void print(int *arr, int m, int n) {
 
 int arr[][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}; // unlike in 1d arrasy the size of the inner subarrays is not automatically calculated you must specify it but like usual the size of the array is calculated by the compiler
 print((int *)arr, 3, 3);  // Pass address of first element * the cast makes the array lose its 2d structure meaning its now a 1d array
-// alternative way if we use arr[i][j] instead of *(arr + i * n) + j see arrays section
+// alternative way if we use arr[i][j] instead of *(arr + i * n) + j BUT if we do that we must use the 2d structure of the array meaning we cannot cast the array to a 1d array
 
 //!  pointers to arrays
 // if we assign just a pointer to a array its pointing to the first element of the array
@@ -480,6 +485,14 @@ ptr = &y;  // Storing the address of a float in the void pointer.
 char c = 'A';
 ptr = &c;  // Storing the address of a character in the void pointer.
 
+// for void pointers you must cast the pointer to the type you want to access, 
+// this is because the void pointer is a generic pointer that can store any type of pointer
+// example
+int x = 10;
+void *ptr = &x;
+// printf("%d\n", *ptr);  // Error: Cannot dereference a void pointer.
+printf("%d\n", *(int *)ptr);  // Correct: Cast the void pointer to an integer pointer which is the type it points to and dereference it.
+
 // ! constant pointers
 // as we saw in the swap example any pointer we pass to a function can have its value changed in the function
 // to avoid this we can use constant pointers which can only access the value at the address but not change it
@@ -517,17 +530,6 @@ int len = strlen(str);  // Returns the length of the string.
 // serching chars in a string
 char *ptr = strchr(str, 'l');  // Searches for the first occurrence of 'l' in the string and returns a pointer to it.
 // if you want the index of the char = (ptr - str) as the pointer is a address number dont worry about the adderrss is just a number. p + 1 takes you to the next elements address in the string ao do *p+1 to get the value 
-
-// ! Structs
-// Structs are custom data types that group related variables.
-struct Student {
-    char name[50]; // here name is a char array of size 50
-    int age;
-    float gpa;
-};
-
-struct Student student1 = {"Alice", 20, 3.9};  // Initializing a struct.
-printf("%s is %d years old.\n", student1.name, student1.age);  // Accessing struct members.
 
 // ! Dynamic Memory Allocation
 
@@ -572,6 +574,61 @@ int *p = malloc(5 * sizeof(int)); // Allocating memory for 5 integers.
 // p first had 5 integers now it has 10 integers note we reassign using the address hence we dont dereference the pointer. you can also use a different pointer to store the new memory location
 p = realloc(p, 10 * sizeof(int)); // Reallocating the memory to 10 integers. again you can cast it to a int pointer like int *p = (int *)realloc(p, 10 * sizeof(int));
 
+// mem alocation example using a 2d array 
+int make_and_print__and_delete_2d_array() {
+    // a 2d arrays is a array of arrays or a array of pointers where the pointers point to a array of integers
+    int rows = 3, cols = 4;
+
+    // Allocate memory for a 2D array (array of pointers) here we allocate memory for the rows only 
+    // what we do here is basically make a array and for each element of the array assign it the space of a int pointer 
+    // this way insted of the elements holding a value like a 1d array the elements hold a address to a int pointer which in out case we want to be another array
+    // the ammount of memory we allocate is the number of rows or the number of subarrays = the numbrer of int pointers out 2d arrays holds as its elements 
+    int **array = (int **)malloc(rows * sizeof(int *)); // the casts are optional but good practice, The sizeof(int*) is the size of a int pointer != sizeof(int) as the int pointer holds a address to a int and the int holds a value
+    // and alternitie way of making this 2d array is int array[rows][cols]; or int *array[rows]; for a array of pointers to integers all 3 ways are valid
+
+    // Allocate memory for each row
+    // here we loop through the array and we assign each row (the inner subarrays) to a array of integers 
+    // malloc returns a int * but since arrays are pointers to the first element of the array we can assign the address of the first element to the array
+    // i.e int *i = array; is the same as int *i = &array[0] as the array is a pointer to the first element of the array both are valid and show why this loop works
+    for (int i = 0; i < rows; i++) {
+        array[i] = (int *)malloc(cols * sizeof(int)); // the cast is optional
+    }
+
+    // Initialize the 2D array with values, assign each element of the array to a value
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            array[i][j] = i + j;  // Assign random values to the array. alternatively you can use *(*(array + i) + j) = i + j;
+        }
+    }
+
+    // Print the 2D array
+    printf("2D Array:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d ", array[i][j]); // alternatively you can use printf("%d ", *(*(array + i) + j));
+        }
+        printf("\n");
+    }
+
+    // * NOTE (passing in 2d arrays as args when alocating memory)
+    // if the matrix is delclared like matrix[2][3] it will be a 2d array of integers and we can pass in the arr as a arg and the func agr is func(int arr[][3])
+    // but with malloc its a pointer no a 2d integer array so we must pass in the array as a pointer to a pointer to a integer i.e func(int **arr)
+    // EX
+    // func(int **arr) { printf("%d %d %d\n", arr[0][0], arr[0][1], arr[0][2]) } // this notation isvalid along with func(int (*arr)[3]) and pointer arithmatic as long as we dont cast the array
+    // func(array); // no cast
+
+    // Free the allocated memory
+    // when we free the memory if we just free the whole array the memory of the subarrays will not be freed because they are not inside of the arrays memory block 
+    // the subarrays exist somwhere and the array just holds the pointers to them so if we dont free the subarrays we will have a memory leak meaning the 
+    // subarrays exists somwehere in memory still but we lost the only ref's which were the pointers in the array so now they are lost in memory (NOTE c has no garbage collection)
+    for (int i = 0; i < rows; i++) {
+        free(array[i]); // Free each row which is a subarray = pointer to an array this is like freeing a 1d array
+    }
+    free(array); // Free the array of pointers which is a 2d array since the inside arrays are freed we can now free the array of pointers and all the memory is freed
+
+    return 0;
+}
+
 
 // ! Structs
 // Structs can be used with pointers to manage memory dynamically.
@@ -583,7 +640,8 @@ struct Student {
 struct Student s = {"Alice", 20}; // Initializing a struct. with a name and age
 printf("%s is %d years old", s.name, s.age); // Accessing struct members using dot notation
 
-// * passing fetures to sturucts
+// * passing fetures to sturucts 
+// * (note structs require a pointer to the struct to be passed in so use the address of the struct) also you must cast the pointer to the struct to the struct type
 // in these 2 exs we replace the age with 30 from its original value if it has no prev value then it will be set to 30
 void modify(struct student s) { s.age = 30; } // by value 
 void modify(struct student *s) { s->age = 30; } // by reference
