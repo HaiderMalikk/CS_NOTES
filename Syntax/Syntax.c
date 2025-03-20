@@ -661,6 +661,13 @@ if (ptrStudent != NULL) {
 }
 // * use after free is when you try to access a pointer after you have freed the memory it points to, this will give you a segmentation fault error
 
+// * Structs with instance variables
+struct Student {
+    char name[50];
+    int age;
+} s; // Declaring a struct variable 's' of type Student. this means we create a struct with a name and age called 's' without having to initialize it
+s.age = 20;        // Setting the age using the instance variable.
+
 // ! Callback Functions
 // A callback function is a function that is passed to another function as an argument.
 void processArray(int *arr, int size, void (*callback)(int)) {
