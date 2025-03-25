@@ -2082,6 +2082,7 @@ another thread might have already incremented counter changing its value. so we 
 - install venv using pip install venv (but dont do it try the next step as its included in later versions of python)
 - create a venv using python3 -m venv env_name (my version of python is 3)
 - to activate the venv use source env_name/bin/activate (do this while in the project directory)
+- to deactivate while active in a venv use deactivate
 - to delete the venv just delete the env_name folder or use rm -r env_name (do this while in the project directory)
 - NOTE: with vs code you can do cmd + shift + p and type python: then make a env and select the python env from there this creates and activates the env for you, and you can see the list of envs
         to delete the env just delete the env folder from vs code,
@@ -2092,6 +2093,9 @@ another thread might have already incremented counter changing its value. so we 
 - to activate the conda env use conda activate env_name (do this while in the project directory)
 - to deactivate the conda env use conda deactivate (do this while in the project directory and with the venv activated)
 - to delete the conda env use conda remove --name ENV_NAME --all (the all removes all packages in the env)
+
+*** IF YOU ACCIDENTALY INTALL A PACKAGE IN BASE VERSION USE 'pip freeze | xargs pip uninstall -y' to delete all packages except the default ones to reset env
+
 """
 
 # ! Package Management
@@ -2116,6 +2120,7 @@ numpy
 etc ....
 `
 - pip install -r requirements.txt (installs all packages listed in the requirements.txt file)
+- to make a requirements.txt file use pip freeze > requirements.txt
 
 # conda (package manager for python)
 - conda install package_name (installs a package)

@@ -217,52 +217,124 @@ EX: a BST's serch node function will check wether the node is found or not and i
   in a general tree the search node function will check if the node is found or not and if not will branch to the children nodes and repeat the process until the node is found or we run out of nodes.
 */
 
-// General Tree using arraylist
-class TreeNode<T> {
-  // node properties
-  private T data; // node data
-  private TreeNode<T> parent;  // parent node
-  private ArrayList<TreeNode<T>> children; // list of children nodes
-  private int noc; // number of children
-
-  public TreeNode(T data) {
-    this.data = data;
-    this.parent = null;
-    this.children = new ArrayList<>();
-    this.noc = 0;
-  }
-
-  // setter and getter for node class
-  public T getData() {
-    return this.data;
-  }
-
-  public TreeNode<T> getParent() { 
-    return this.parent;
-  }
-
-  public ArrayList<TreeNode<T>> getChildren() {
-    return this.children;
-  }
-
-  public void setData(T data) {
-    this.data = data;
-  }
-  public void addChild(TreeNode<T> child) {
-    this.children.add(child);
-    noc++;
-  }
-  public void removechild(TreeNode<T> child) {
-    this.children.remove(child);
-  }
-  
-  public void setParent(TreeNode<T> parent) { 
-    this.parent = parent;
-  }
-
+// SLL to store the list of child notes for each node
+class SLLNode<E> {
+	private E element;
+	private SLLNode<E> next;
+	
+	public SLLNode(E e, SLLNode<E> n) { 
+		element = e; 
+		next = n; 
+	}
+	
+	public E getElement() { 
+		return element; 
+	}
+	
+	public SLLNode<E> getNext() { 
+		return next; 
+	}
+	
+	public void setNext(SLLNode<E> n) { 
+		next = n; 
+	}
+	
+	public void setElement(E e) { 
+		element = e; 
+	}
 }
 
+// General Tree using arraylist
+class TreeNode<E> {
+	private E element; /* data object */
+	private TreeNode<E> parent; /* unique parent node */
+	private SLLNode<TreeNode<E>> headOfChildList; /* head of list of child nodes */
+	private SLLNode<TreeNode<E>> tailOfChildList; /* tail of list of child nodes */
+
+	public TreeNode(E element) {
+		this.element = element;
+		this.parent = null;
+		this.headOfChildList = null;
+		this.tailOfChildList = null;
+	}
+
+	public E getElement() {
+		return this.element;
+	}
+
+	public void setElement(E element) {
+		this.element = element;
+	}
+
+	public TreeNode<E> getParent() {
+		return this.parent;
+	}
+
+	public void setParent(TreeNode<E> parent) {
+		this.parent = parent;
+	}
+
+	public SLLNode<TreeNode<E>> getChildren() {
+		SLLNode<TreeNode<E>> result = null;
+		SLLNode<TreeNode<E>> currentResult = null;
+		SLLNode<TreeNode<E>> currentChild = headOfChildList;
+		while (currentChild != null) {
+			SLLNode<TreeNode<E>> n = new SLLNode<>(currentChild.getElement(), null);
+			if(result == null) {
+				result = n;
+				currentResult = result;
+			}
+			else {
+				currentResult.setNext(n);
+				currentResult = currentResult.getNext();
+			}
+			currentChild = currentChild.getNext();
+		}
+		return result;
+	} 
+
+	public void addChild(TreeNode<E> child) {
+		SLLNode<TreeNode<E>> n = new SLLNode<>(child, null);
+		if(headOfChildList == null) {
+			headOfChildList = n;
+			tailOfChildList = headOfChildList;
+		}
+		else {
+			tailOfChildList.setNext(n);
+			tailOfChildList = tailOfChildList.getNext();
+		}
+	}
+}
+
+// general tree methods
 class General_Tree<T> {
+  public int count(TreeNode<T> node) {
+    SLLNode<TreeNode<T>> children = node.getChildren();
+      /* Children a a child list of nodes
+		 * childList 							returns a SLLNode<TreeNode<String>> (what children is)
+		 * childList.getElement() 				returns a TreeNode<String> (what we need first)
+		 * childList.getElement().getElement() 	returns a String (what we need second to get the value of the node)
+		 */
+    int count = 1;
+    while (children != null) {
+      count += count(children.getElement());
+      children = children.getNext();
+    }
+    return count;
+  }
+  public void printTree(TreeNode<T> node) {
+    SLLNode<TreeNode<T>> children = node.getChildren();
+    /* Children a a child list of nodes
+     * childList 							returns a SLLNode<TreeNode<String>> (what children is)
+     * childList.getElement() 				returns a TreeNode<String> (what we need first)
+     * childList.getElement().getElement() 	returns a String (what we need second to get the value of the node)
+     */
+    System.out.print(node.getElement() + " -> ");
+    while (children != null) {
+      printTree(children.getElement());
+      children = children.getNext();
+    }
+  }
   public int depth(TreeNode<T> node) {
     if (node.getParent() == null) { // once the parent is null the depth will be 0 no more additions to reursive call made end of tree
       return 0;
@@ -271,24 +343,26 @@ class General_Tree<T> {
       return 1 + depth(node.getParent()); // each time we branch to a parent the depth increases by 1
     }
   }
-  public TreeNode<T> searchNode(TreeNode<T> node, T data) {
-    if (node.getData().equals(data)) {
-      return node; // found
+  public TreeNode<T> searchNode(TreeNode<T> node, T value) {
+    if (node.getElement() == value) { // since we passed in a tree node in the recursive call using getelement once gives the value, == or .equals can be used
+      return node; 
     }
-    else {
-      for (TreeNode<T> child : node.getChildren()) {
-        TreeNode<T> foundNode = searchNode(child, data); // recursion on child node 
-        if (foundNode != null) { // leaf
-          return foundNode;
-        }
+    SLLNode<TreeNode<T>> children = node.getChildren();
+    /* Children a a child list of nodes
+		 * childList 							returns a SLLNode<TreeNode<String>> (what children is)
+		 * childList.getElement() 				returns a TreeNode<String> (what we need first)
+		 * childList.getElement().getElement() 	returns a String (what we need second to get the value of the node)
+		 */
+    while (children != null) {
+      TreeNode<T> result = searchNode(children.getElement(), value); // pass in a tree node using getelement once 
+      if (result != null) {
+        return result;
       }
-      return null; // loop ends and not found then return null
+      children = children.getNext();
     }
+    return null;
   }
 }
-
-
-
 
 public class Trees {
   public static void main(String[] args) {
@@ -302,7 +376,7 @@ public class Trees {
   root.addChild(node2); // This will not automatically set the parent if you use the modified addChild you do that manually
   root.addChild(node3);  
   node2.addChild(node4);
-  node2.setParent(root); 
+  node2.setParent(root); // settting the parents for each childs so we can move around the tree
   node3.setParent(root); 
   node4.setParent(node2);
 
@@ -325,6 +399,9 @@ public class Trees {
 
   // serching node (pass in root to serch the whole tree)
   TreeNode<Integer> foundNode = tree.searchNode(root, 2);
-  System.out.println("Found node: " + foundNode.getData()); // Output: Found node: 2
+  System.out.println("Found node: " + foundNode.getElement()); // Output: Found node: 2
+
+  // printing the tree
+  tree.printTree(root); // Output: 1 -> 2 -> 4 -> 3 -> 
   }
 }
