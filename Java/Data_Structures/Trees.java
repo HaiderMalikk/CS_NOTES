@@ -304,7 +304,7 @@ class TreeNode<E> {
 			tailOfChildList = tailOfChildList.getNext();
 		}
 	}
-}
+} 
 
 // general tree methods
 class General_Tree<T> {
@@ -343,6 +343,43 @@ class General_Tree<T> {
       return 1 + depth(node.getParent()); // each time we branch to a parent the depth increases by 1
     }
   }
+  public int height(TreeNode<T> node) {
+    SLLNode<TreeNode<T>> children = node.getChildren();
+    /* Children a a child list of nodes
+     * childList 							returns a SLLNode<TreeNode<String>> (what children is)
+     * childList.getElement() 				returns a TreeNode<String> (what we need first)
+     * childList.getElement().getElement() 	returns a String (what we need second to get the value of the node)
+     */
+    int height = 0;
+    while (children != null) {
+      height = Math.max(height, 1 + height(children.getElement())); // each time we branch to a child the height increases by 1 the max function will return the max height of the tree
+      children = children.getNext();
+    }
+    return height;
+  }
+  public int getdecent(TreeNode<T> node) {
+    SLLNode<TreeNode<T>> children = node.getChildren();
+    /* Children a a child list of nodes
+     * childList 							returns a SLLNode<TreeNode<String>> (what children is)
+     * childList.getElement() 				returns a TreeNode<String> (what we need first)
+     * childList.getElement().getElement() 	returns a String (what we need second to get the value of the node)
+     */
+    int decent = 0;
+    while (children != null) {
+      decent += 1 + getdecent(children.getElement()); // each time we branch to a child the decent increases by 1
+      children = children.getNext();
+    }
+    return decent;
+  }
+  public void getansestors(TreeNode<T> node) {
+    if (node.getParent() == null) { // once the parent is null we are at the root and have no more ansestors
+      return;
+    }
+    else {
+      System.out.print(node.getParent().getElement() + " "); // print the ansestor
+      getansestors(node.getParent()); // branch to the parent node
+    }
+  }
   public TreeNode<T> searchNode(TreeNode<T> node, T value) {
     if (node.getElement() == value) { // since we passed in a tree node in the recursive call using getelement once gives the value, == or .equals can be used
       return node; 
@@ -361,6 +398,37 @@ class General_Tree<T> {
       children = children.getNext();
     }
     return null;
+  }
+
+  // traversals 
+  // preorder (root, left, right)
+  public void preOrder(TreeNode<T> node) {
+    System.out.print(node.getElement() + " ");
+    SLLNode<TreeNode<T>> children = node.getChildren();
+    /* Children a a child list of nodes
+     * childList 							returns a SLLNode<TreeNode<String>> (what children is)
+     * childList.getElement() 				returns a TreeNode<String> (what we need first)
+     * childList.getElement().getElement() 	returns a String (what we need second to get the value of the node)
+     */
+    while (children != null) {
+      preOrder(children.getElement());
+      children = children.getNext();
+    }
+  }
+
+  // postorder (left, right, root)
+  public void postOrder(TreeNode<T> node) {
+    SLLNode<TreeNode<T>> children = node.getChildren();
+    /* Children a a child list of nodes
+     * childList 							returns a SLLNode<TreeNode<String>> (what children is)
+     * childList.getElement() 				returns a TreeNode<String> (what we need first)
+     * childList.getElement().getElement() 	returns a String (what we need second to get the value of the node)
+     */
+    while (children != null) {
+      postOrder(children.getElement());
+      children = children.getNext();
+    }
+    System.out.print(node.getElement() + " ");
   }
 }
 
