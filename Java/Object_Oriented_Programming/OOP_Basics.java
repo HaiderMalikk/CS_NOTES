@@ -2180,3 +2180,37 @@ class GenericExample {
         // intBox.set("Hello"); // error as the type is integer
     }
 }
+
+// multiple generics EX, here T and U are both type parameters
+class Pair<T, U> {
+    private T first;
+    private U second;
+
+    public Pair(T first, U second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public T getFirst() {
+        return first;
+    }
+
+    public U getSecond() {
+        return second;
+    }
+}
+
+class GenericExample2 {
+    public static void main(String[] args) {
+        Pair<Integer, String> pair = new Pair<>(1, "One");
+        System.out.println(pair.getFirst());  // 1
+        System.out.println(pair.getSecond()); // One
+    }
+}
+
+// nested generics
+// since T is a type it hav also be a type parameter meaning we can have something like Pair<T, Pair<U, V>> where T, U, and V are all type parameters
+// we can also have something like SLL<Tree<T>> where T is a type parameter and Tree<T> is a type parameter as well for SLL 
+/* 
+ * SEE THE TREES CLASS FRO THOSE EXAMPLES 
+ */

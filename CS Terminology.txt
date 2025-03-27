@@ -184,6 +184,10 @@ EX: in java we say int x = 5; here x is of type int and we can't asign a string 
 In weakly typed languages, the data type of a variable is determined at runtime.
 This means that we do not need to declare the data type of a variable before using it and its type will automaticly be determined when we assign a value to it.
 # EX: in python we say x = 5; here x is of type int but we can also say x = "hello, here x is a Dynamic type it can be changed at runtime.
+# Arrays and static laguages:
+- in java for ex arrays have a fixed size the space is reserved for the array and cannot be changed and it can only hold the same data type as data types also have there own size 
+- in python arrays are dynamic meaning they can be changed and hold many data types, in python arrays are initilized with more space then needed and when it runs out it has to copy the array over but this gives us a dynamic array
+- in c for ex arrays are also static but you can use malloc to resize the space you declare for a array 
 
 * Compiled vs Interpreted Languages
 =============================================
@@ -376,6 +380,11 @@ Data Stuctures and alogrithims
 Arrays
 Fixed-size, contiguous block of memory.
 Fast access by index.
+- Elements are stored sequentially with each taking up the same amount of space
+- Access formula: address = base_address + (index * element_size)
+- Example: For an array of integers where each int is 4 bytes:
+  - A 64-byte array can store 64/4 = 16 integers
+  - To access arr[5], the computer calculates: base_address + (5 * 4)
 
 Linked Lists
 Nodes containing data and pointers to the next (and possibly previous) node.
@@ -413,6 +422,16 @@ NOTE: * Abstract Data Type: is a theoretical concept that defines a data structu
 
 Sorting Algorithms
 EX: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort.
+*** There are 4 ways to sort a iterable 
+1) Decresing/Decending: Meaning Highest to lowerst i.e n >= n+1 for some n meaning duplicates are allowed. EX: [4,4,3,2,2,1]
+2) Increasing/Ascending: Meaning Lowest to highest i.e n <= n+1 for some n meaning ducplicates are allowed. EX: [1,1,2,3,4]
+3) Non-Acending: is the same manner of sorting as (1) Decresing/decending BUT no duplicates allowed the next next element will always be Decresing, n > n+1 for all n. EX: [2,1,-1]
+4) Non-Decending: is the same manner of sortung as (2) Increasing/Acending BUT no duplicates are allowed the next element will always be Increasing, n < n+1 for all n. EX: [1,2,4]
+### NOTE: FOR (1) and (2) POSIBLITIES THE ARRAY CAN BE CONSTANT I.E NO INCRESE OR DECRESE JUST A FLAT VALUE
+*** How to do them?
+Sorting algorithims by convention are usally demonstrated in a Increasing manner 
+But you could change any sorting algorithim to be acending or decending depending of the application, or even disclude duplicates if you wish
+But to change it depends algorithim to algorithim BUT you can always reverse the final array and or use a set to reverse and or remove duplicates appropriatly 
 
 Searching Algorithms
 EX: Linear Search, Binary Search.

@@ -352,7 +352,12 @@ for i in range(3):  # Outer loop
     for j in range(2):  # Inner loop
         print(f"Outer loop index: {i}, Inner loop index: {j}") # in a printf everything must be in "" a var must be in {}
         
-# ! Unnamed variables
+# ! Unnammed variables
+# if we dont need a variable we can use _ no make it an unnamed variable (anonymous variable)
+# ex 1
+list = [1, 2, 3]
+a, _, c = list # map a and c to the first and last elements of the list
+
 # * in a for loop we can use the _ variable to ignore the value of the variable
 # EX:
 for _ in range(5):
