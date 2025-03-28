@@ -83,6 +83,8 @@ Explanation: Shows a list of branches in your repo or creates a new branch.
 Example:
   git branch  # List branches
   git branch new-feature  # Create a new branch
+  git checkout new-branch
+  git checkout -b my-new-branch # create new branch and checkout right away
 
 Usage: Use branches to work on different features without affecting the main codebase.
 
@@ -91,10 +93,19 @@ Usage: Use branches to work on different features without affecting the main cod
 if branch is merged: git branch -d <branch-name>
 if not merged of commited: git branch -D feature/new-feature
 # for remote branches
-git push origin --delete <branch-name>
+git push origin --delete <branch-name>  
 
 --------------------
-9. git checkout <branch>
+9. git Stash
+--------------------
+If you have changes that you dont want to commit but you dont want to lose code do:
+  git stash # this will stash all the changes
+  - then do what you want branch commit change code etc
+  - when you want that stashed code back:
+  git stash pop # brings all stashed cahnged back to codebase
+
+--------------------
+10. git checkout <branch>
 --------------------
 Purpose: Switches to a different branch.
 Explanation: Changes your working directory to the state of the specified branch.
@@ -104,7 +115,7 @@ Example:
 Usage: Switch branches before working on different tasks.
 
 --------------------
-10. git merge <branch>
+11. git merge <branch>
 --------------------
 Purpose: Merges a branch into the current branch.
 Explanation: Incorporates changes from another branch into your current branch.
@@ -115,7 +126,7 @@ Usage: Merge your feature branch into the main branch when ready.
 NOTE: at any time you want to cancle the merge do: git merge --abort
 
 --------------------
-11. git log
+12. git log
 --------------------
 Purpose: Shows the commit history.
 Explanation: Displays a list of all the commits in the current branch with details like author, date, and commit message.
@@ -125,7 +136,7 @@ Example:
 Usage: Use `git log` to review the commit history.
 
 --------------------
-12. git reset <file>
+13. git reset <file>
 --------------------
 Purpose: Unstages a file from the staging area.
 Explanation: Removes a file from the staging area (without modifying the actual file).
@@ -135,7 +146,7 @@ Example:
 Usage: Use `git reset` to unstage files before committing.
 
 --------------------
-13. git rm <file>
+14. git rm <file>
 --------------------
 Purpose: Removes a file from the repository.
 Explanation: Deletes a file from both the working directory and the staging area.
@@ -149,7 +160,7 @@ Usage: Use `git rm` to remove files from your repository.
     - folder: git rm --cached -r node_modules/
 
 --------------------
-14. git diff
+15. git diff
 --------------------
 Purpose: Shows changes between commits, commit and working directory, etc.
 Explanation: Displays the differences between various Git states.
@@ -159,7 +170,7 @@ Example:
 Usage: Use `git diff` to see changes that are not yet staged for commit.
 
 --------------------
-15. git remote -v
+16. git remote -v
 --------------------
 Purpose: Shows remote repository URLs.
 Explanation: Lists the remote repositories connected to your local repo.
@@ -169,7 +180,7 @@ Example:
 Usage: Use this to check which remote repository your local repo is connected to.
 
 --------------------
-16. git ignore
+17. git ignore
 -------------------
 - To ignore files or folders, i.e to stop tracking files or folders:
 make a file called .gitignore
@@ -187,7 +198,7 @@ global: /foldername (will ignore the folder everywhere no matter where it is)
 -- Then place the file or folder name into the git ignotr and it should not traking it 
 
 --------------------
-17. git remote -v
+18. git remote -v
 --------------------
 you can just merge two branches but not always 
 if you code on your branch once you commit it github will tell you this branch is different than the main branch
