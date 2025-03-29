@@ -239,7 +239,7 @@ for i in [4,8]: print(i) # prints 4 and 8, the in keyword is used to iterate ove
 
 # iterating over a list
 fruits = ["apple", "banana", "cherry"]
-for fruit in fruits:
+for fruit in fruits: # or for fruit in ["apple", "banana", "cherry"]: or using sets for this like for fruit in {"apple", "banana", "cherry"} sets are faster
     print(fruit)
 
 # iterating over string 
@@ -297,7 +297,7 @@ for letter in word:
 # output: P y t h o n (each letter is printed on a new line)
 # EX:
 fruits = ["apple", "banana", "cherry"] # list can hold any type of data
-for fruit in fruits:
+for fruit in fruits: # or place the list here like for fruit in ["apple", "banana", "cherry"]: or use sets for this like for fruit in {"apple", "banana", "cherry"} Sets are faster than lists
     print(fruit) # here at each iteration fruit is the value of the list at the current index
     
 # ! iterating over a dictionary 
@@ -417,7 +417,7 @@ def my_function():
     # this line will be executed after the pass in the if statement
 
 my_function() # nothing will happen as we pass before any code is executed
-
+# what are functions? See below
 
 ##  !Functions
 
@@ -481,7 +481,7 @@ print(list2) # [2] # now list1 and list2 are different lists
 def squareFirst(mylist):
     return mylist[0] ** 2
 print(squareFirst(mylist = [5, 10])) # we declare and pass the list on the same line (its scope is limited to the function)
-# print(mylist) # NameError: name 'mylist' is not defined
+# print(mylist) # NameError: name 'mylist' is not defined 
 
 # ! using logical operators in return statements
 # you can use logical operators to return a value based on if its none
@@ -568,6 +568,7 @@ print(isinstance(a, float)) # False
 # ! Type Hinting (in python3), syntax is var_name: type = value
 # python is a dynamicly typed language means that the type of a variable is determined at runtime
 # but we can specify the type of a variable using type hints, Syntax is, var_name: type = value
+# * NOTE: Since python is not strictly typed, type hints are not enforced and are only used for documentation purposes
 pdf_title: str = "Document Title" # var name is pdf_title and its type is str and equals 'Document Title'
 page_count: int = 10
 is_published: bool = True
@@ -578,12 +579,12 @@ def print_title(title: str) -> None:
 
 print_title(pdf_title)
 
-# we can also combine data types like we would in c or typescript
+# we can also combine data types like we would in c or typescript (type union)
 # we can use the | operator to combine data types
 mylist[int | str] = [1, 2, 3, "hello"] # mylist can hold both ints and strings
+myvar: str | int = "hello" # myvar can hold both strings and ints
 def print_title(title: str | int) -> None: # the -> type is used to specify the return type of a function
     print(title)
-
 
 # ! Allocation and deallocation of memory
 # Python is a dynamically typed language, which means that the type of a variable is determined at runtime. 
@@ -1515,7 +1516,7 @@ print(mylist) # output [2,1]
 """ In Python, sets are unordered collections of unique elements. 
 They are defined using curly braces {} or the set() function, 
 and they automatically remove duplicate values. """
-my_set = {1, 2, 3, 4} # using dictionaries and {}
+my_set = {1, 2, 3, 4} # declare a set with unique elements using curly braces its like a dictionary but with no key value pairs jsut values
 my_set = set([1, 2, 3, 4]) # using the set() function my_set is now a set and will remove duplicates if they are added
 my_set.add(5) # add 5 to the set
 my_set.add(1) # add 1 to the set, but it will be ignored because 1 is already in the set
@@ -1528,6 +1529,10 @@ if 2 in my_set:
 unique_elements = list(set([1,1,2,2,3,4,5,5]))
 print(unique_elements) # output [1,2,3,4,5] # no duplicates
 # * NOTE you can also compare sets iterate over them and do unions intersection etc etc
+
+# you can also use sets insted of lists when you want to serch for an element in a list
+for word in set(["apple", "banana", "cherry"]): # or word in {"apple", "banana", "cherry"} or using lists for this like for word in ["apple", "banana", "cherry"]:
+    print(word)
 
 ## ! dictionary
 # You can create a dictionary by enclosing a comma-separated list of key-value pairs within curly braces {}.

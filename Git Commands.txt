@@ -204,3 +204,26 @@ you can just merge two branches but not always
 if you code on your branch once you commit it github will tell you this branch is different than the main branch
 here you can open a pull request to have your branchs code merged into main, note you still need to resolve conflicts 
 once done you can delete you branch 
+
+--------------------
+19. Rolling Back a Git Commit in VS Code
+--------------------
+1) **Undo Last Commit and Remove Changes (Hard Reset)**
+  git reset --hard HEAD~1
+  Removes the last commit and all changes.
+  Warning: This action is irreversible.
+
+2) Undo Last Commit but Keep Changes (Soft Reset - Recommended)
+  git reset --soft HEAD~1
+  Moves the commit back but keeps changes unstaged.
+  Allows you to fix mistakes and recommit properly.
+
+3) Undo Commit and Keep Changes Staged (Mixed Reset)
+  git reset --mixed HEAD~1
+  Uncommits changes but keeps them staged for easy recommitting.
+  After this you will see the diff between the latest commit and the 2nd latest commit then change and commit 2 times one for rollback 2nd for any changes
+
+4) Revert a Commit (Safer if Pushed to Remote)
+  git revert HEAD
+  Creates a new commit that undoes the last commit.
+  Best option if you've already pushed the bad commit.
