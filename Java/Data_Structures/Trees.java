@@ -76,7 +76,7 @@ Tree Types Overview:
      - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1. This means at each node the left and right subtrees must be as close to the same height as possible.
      - In a pathalogical binary tree, every parent node has only 1 child node.
      - total number of nodes = num of nodes in left subtree + num of nodes in right subtree + 1. (+1 for the root node)
-   - Uses: Commonly used in various applications such as expression trees for evaluating mathematical expressions and heaps for efficient data storage.
+   - Uses: Commonly used in various applications such as expression trees for evaluating mathematical expressions and heaps for efficient data storage. Also used for decision trees in machine learning, binary search trees for efficient searching and sorting, and Huffman coding trees for data compression.
 
 2. **Binary Search Tree (BST)**:
    - Definition: A special type of binary tree that maintains a sorted order of elements.

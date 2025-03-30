@@ -1,9 +1,10 @@
 # ! Trees in python
+""" 
 # ! a tree is a non linear data structure meaning unlike a list the next element dosent alwasy have to be left or right after another it can be anywhere but all the nodes must be connected
-# ! there can also he a hierircy to trees
+# ! there can also he a hierircy to trees meaning a node can have a parent and children nodes and a child node can have children nodes and so on.
 # ! a tree is a recursive data structure meaning they can be divided into sub trees
-# ! ex of a tree and its properties 
-"""
+# ! in a tree there can only be 1 path between 2 nodes, if there are more than 1 path then its a graph not a tree. this means 2 nodes cannot point to each other in a tree. only from one node to another.
+
 A simple representation of a tree data structure.
 
 Example Tree Structure:
@@ -34,21 +35,23 @@ Tree Properties:
 
 - **Sibling**: Nodes that share the same parent. `[Child 1]` and `[Child 2]` are siblings since they share the same parent `[Root]` notice how there on the same level.
 
-- **Ancestor**: A node that lies on the path between the root and a given node. For example, `[Root]` is an ancestor of `[Great Grandchild 1]`. NOTE: the root is the ancestor of all nodes in the tree. for '[great grandchild 1]' the number of ancestors is 4 (root, child 1, grandchild 1, great grandchild 1) this is the ancestor path for '[great grandchild 1]'. this path for every node will be unique.
+- **Ancestor**: A node that lies on the path between the root and a given node. For example, `[Root]` is an ancestor of `[Great Grandchild 1]`. NOTE: the root is the ancestor of all nodes in the tree. for '[great grandchild 1]' the number of ancestors is 4 (root, child 1, grandchild 1, great grandchild 1) this is the ancestor path for '[great grandchild 1]'. this path for every node will be unique. any node is its own ancestor
 
-- **Descendant**: A node that lies on the path between the root and a given node. For example, `[Great Grandchild 1]` is a descendant of `[Root]`. NOTE: all nodes in the tree are descendants of the root. for 'Child 1' the number of descendants is 5 (child 1, grandchild 1, great grandchild 1, grandchild 2, child 3) since there are many descendants we can take multiple paths as we have multiple descendants so the decentant path for 'Child 1' is not unique.
+- **Descendant**: A node that lies on the path between the root and a given node. For example, `[Great Grandchild 1]` is a descendant of `[Root]`. NOTE: all nodes in the tree are descendants of the root. for 'Child 1' the number of descendants is 5 (child 1, grandchild 1, great grandchild 1, grandchild 2, child 3) since there are many descendants we can take multiple paths as we have multiple descendants so the decentant path for 'Child 1' is not unique. any node is its own descendant
 
 - **Neighbors**: In a graph, a neighbor node is any node that is directly connected by an edge. here child 1 is a  neighbor of root, GC1 and GC2
 
 - **Subtree**: A tree consisting of a node and all its descendants. For example, the subtree rooted at `[Child 1]` includes `[Child 1]` (the subtrees new root), `[Grandchild 1]`, `[Grandchild 2]`, and `[Great Grandchild 1]`. NOTE: for the subtree at child 1 the grandchild 1 would acctualy be a child of child 1 if we were to traverse it. NOTE: every next node will have its own subtree or subtrees on left right etc. The smallest subtree is a leaf node and the largest subtree at the root. The Number of subtrees in a tree is equal to the number of nodes in the tree.
 
-- **Height**: The height of a node in a tree is the number of edges in the longest path from the node to a leaf. For example, the height of `[Root]` is 3 (from root to GGC1). the height of '[Child 1]' is 2 (from child 1 to GC1). Dont confuse with depth
+- **Height**: The height of a node in a tree is the number of edges in the longest path from the node to a leaf (known as the path). For example, the height of `[Root]` is 3 (from root to GGC1). the height of '[Child 1]' is 2 (from child 1 to GC1). Dont confuse with depth. Depth is from the root to the node height is from the node to the leaf node. NOTE: the height of a tree is the height of the root node.
 
-- **Depth/Level**: The depth of a node is the length of the path from the root to that node. The root node has a depth of 0, its children have a depth of 1, and so on. NOTE: the depth starts at 0 and the depth of the tree (max depth) is the length of the longest path from the root to a leaf, so the max depth of this tree is 3 (from root to GGC1) = to the number of edges in that path = depth of the tree, Dont confuse with height
+- **Depth/Level**: The depth of a node is the number of edges from the root to that node (known as the path). The root node has a depth of 0, its children have a depth of 1, and so on. NOTE: the depth starts at 0 and the depth of the tree (max depth) is the length of the longest path from the root to a leaf, so the max depth of this tree is 3 (from root to GGC1) = to the number of edges in that path = depth of the tree, Dont confuse with height. Depth is from the root to the node height is from the node to the leaf NOTE: the depth of a tree is the depth of the leaf node. if a node has the same depth as another then they are one the same level
 
 - **Degree of a node**: The degree of a node is the number of children it has. For example, the degree of `[Child 1]` is 2 (it has two children: `[Grandchild 1]` and `[Grandchild 2]`), while the degree of `[Child 2]` is 1 (it has one child: `[Child 3]`). 
 
 - **Degree of a tree**: The degree of a tree is the maximum degree of any node in the tree or can be the max number of children that a particular node has. here root and child 1 have a degree of 2 while all others have 1 or 0 this means the degree of the tree is 2.
+
+- **Orderd Tree**: A tree in which the nodes are ordered in a specific way. For example, a binary search tree is an ordered tree where the nodes are ordered in a specific way. our tree is ordered as the root is the first node and the children are ordered in a specific way (left to right) and so on.
 """
 
 # ! Trees can have many types, but only one type of data structure, by type of trees we mean binary trees or n-ary trees etc what makes these trees different is that they have different properties meaning they have different shapes and structure and rules.
@@ -68,13 +71,13 @@ Tree Types Overview:
    - Definition: A tree in which each node has at most two children, referred to as the left child and the right child.
    - Characteristics: 
      - Each node can have 0, 1, or 2 children.
-     - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf). (special case of a complete binary tree)
+     - In a full binary tree, every node other than the leaves has exactly two children meaning any node can have 2 children or 0 children (making it a leaf). (a special case of a complete binary tree). Also called a proper binary tree.
      - In a complete binary tree, all levels of the tree except the last level are completely filled (meaning must have 2 child nodes). Last level can be either completely filled or filled left to right meaning that if the last level has 2 child nodes they must be on the left most node of the previous level. if we have one node it must be a left node to the left most node of the previous level. This left most node must be filled first before moving to the right
      - In a Perfect binary tree, all the nodes except for leaf nodes have 2 children and all the leaf nodes are at the same level.
      - In a Balanced binary tree, the difference in height between the left and right subtrees of every node is at most 1. This means at each node the left and right subtrees must be as close to the same height as possible.
      - In a pathalogical binary tree, every parent node has only 1 child node.
      - total number of nodes = num of nodes in left subtree + num of nodes in right subtree + 1. (+1 for the root node)
-   - Uses: Commonly used in various applications such as expression trees for evaluating mathematical expressions and heaps for efficient data storage.
+   - Uses: Commonly used in various applications such as expression trees for evaluating mathematical expressions and heaps for efficient data storage. Also used for decision trees in machine learning, binary search trees for efficient searching and sorting, and Huffman coding trees for data compression.
 
 2. **Binary Search Tree (BST)**:
    - Definition: A special type of binary tree that maintains a sorted order of elements.
@@ -124,17 +127,18 @@ Tree Types Overview:
              left of 8 after replacing here the largest value in the left subtree dose satisfies BST if we chose 7 then the left subtree will have value > than parent which is not allowed in BST (NOTE: same logic for right subtree)
 
     - Treversal: To traverse a BST its not linear, we must visit each node once and in a specific order not linear (i.e first second third etc). There are different types of traversal for BST, different alogrithims visit nodes in different orders. here are some: NOTE(for the tree examples assume that the given tree is a BST in that smaller value on left and larger value on right for every node)
-      - 1. Pre order Traversal: (Given a Non Empty BST) Visit the root node, then the left subtree(left child of root), then the right subtree(right child of root). DO THIS RECURSIVELY! meaning the node on left and right subtree will become the new root node 
+      - 1. Pre order Traversal (works on any Tree): Visit the root node, then the left subtree, then the right subtree. DO THIS RECURSIVELY! meaning the node on left and right subtree will become the new root node 
            and we will do steps 2 and 3 on both left and right nodes over and over Recursilvely until we run out of nodes meaning the node is a leaf node. NOTE: the step 1 is checking the root but here the root is the left or right subtree of the prevoius root. 
            so after printing this root which is on the left or right subtree we will do the same steps on the left node of this left node until  we run out of nodes on the left subtree then we go right and check for left children on this right node until we run out of left children on this right node then we go right on this right node and do the same steps until we have no left children on this right node we repete this until we run out of nodes
            EX: in the first ex tree after first run we will get in this order: (Root, Child1, G1, GG1, G2, C2, C3) at each root we alwasy fully traverse all the left nodes of each left nodes (ie the left subtree) when we run out of left nodes we go right this is our new root and we must first now cehc kif this root has a left serch the left like befrore if it dose then once we run out we go right. and so on until we are done with all the nodes.
-      - 2. In order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first left most node, it will be on left side of root), then the root node (at first is the root of our left most node we just traversed), then the right subtree (at first the node right of the root). DO THIS RECURSIVLY! meaning after going to thr right node we must go to the left most node of this right node and so on until we run out of nodes meaning the node is a leaf node
+      - 2. In order Traversal (works only on BT's): Traverse the left subtree, then the root node, then the right subtree. DO THIS RECURSIVLY! meaning after going to thr right node we must go to the left most node of this right node and so on until we run out of nodes meaning the node is a leaf node
            EX: in the first ex tree after first run we will get in this order: (GG1, G1, C1, GC2, Root, c2, c3) note how from the left most node we bo back up checking to see if we can go right after finishing the right subtree we go right back where we branched right and move back once more
-           once we reach the root of bst we do the. NOTE!: by doing this traversal we will get the values in order smallest to largest
-      - 3. Post order Traversal: (Given a Non Empty BST) Traverse the left subtree (at first the left most node on left side of root), then the right subtree (going to the right most node of this prevoius left node), then the root node (the curretn node it will have no left or right child). DO THIS RECURSIVELY at each node! just like before after this step the new root node will
+           once we reach the root of bst we do the. NOTE!: by doing this traversal we will get the values in order smallest to largest. in order is a type of DFS for BT's
+      - 3. Post order Traversal (works on any Tree): Traverse the left subtree (at first the left most node on left side of root), then the right subtree, then the root node. DO THIS RECURSIVELY at each node! just like before after this step the new root node will
            EX from tree: (GG1, G1, G2, C1, C3, C2, Root) note how we go to left most then backwards until we reach a node with right node and do the same first step of going as left as we can and repeting.
-      - 4. Breadth First Traversal: (Given a Non Empty BST) Traverse each level of the tree from left to right then move onto the next level do this from top to bottom (level 0 to level n). DO THIS RECURSIVELY! EX from tree: 1) root, 2) Child one and child two 3) GC 1 and GC2 and Child 3 and so on. going level by level in each level left to right. NOTE: this is the only traversal that is linear. 
-      - 5. Depth First Traversal: (Given a Non Empty BST) Traverse the tree in a depth first manner. meaning starting a the root visit any neigbour node and keep doing deaper traversing each neighbours neighbours until you reach a node with no unvisited neighbors (leaf), backtrack to the last node with unvisited neighbors. Repeat until all nodes are visited. EX: root, Child, G1, GG1, G2, Child 2, Child3
+      - 4. Breadth First Traversal (works on any Tree): Traverse each level of the tree from left to right then move onto the next level do this from top to bottom (level 0 to level n). DO THIS RECURSIVELY! EX from tree: 1) root, 2) Child one and child two 3) GC 1 and GC2 and Child 3 and so on. going level by level in each level left to right. NOTE: this is the only traversal that is linear. 
+      - 5. Depth First Traversal (works on any Tree): Traverse the tree in a depth first manner. meaning starting a the root visit any neigbour node and keep doing deaper traversing each neighbours neighbours until you reach a node with no unvisited neighbors (leaf), backtrack to the last node with unvisited neighbors. Repeat until all nodes are visited. EX: root, Child, G1, GG1, G2, Child 2, Child3
+      - Note (traversal for General Tree): in the case of a GT where a root has say 3 children if we use pre order we would do root then the left most child then the middle child then the right child. this follows the root left right, as wee visit the root tehn make our way left to right on the children. if say the left child had 2 children we would visit that left child then goto its left child then right child then goto the middle child then teh right child. this follows for all (pre order, in order, post order)
 
     NOTE!: When i say left node right etc, i mean from the root(first node) we go left until we cant go left anymore meaning no left node exits only then can we move on to the next step in this case we goto node
     node is just the current node (we can print this node etc), after this node we can goto the right of this root (as no more left nodes) and right after this we repeat meaning we check for left nodes again on this right node until no more left nodes then we goto root then right so on
