@@ -333,11 +333,34 @@ let location = {
 }
 
 // Ex1
+// accsessing value of key
 console.log(location.position?.lat); // if position DNE it will return undefined and wont give error for trying to get lat of something that DNE
+// or using bracket notation
+console.log(location["position"]?.lat);
 // Ex2 using a prop that DNE
 console.log(location.positionFormatted?.lat); // positionFormatted DNE so it will return undefined
 // error checking with ??
 console.log(location.positionFormatted ?? "LocationFormatted DNE"); // if positionFormatted DNE then return "Location DNE"
+// geeting keys 
+console.log(Object.keys(location)); // gets all keys into a array
+// or use a for loop
+for (let key in location) {
+    console.log(key); // prints all keys of the object
+    console.log(location[key]); // prints all values of the object
+}
+// adding key value pairs to an object, lets add a 'state'
+location.state = "NY"; // adding a new key value pair to the object
+// if we want a custom key value pair meaning we want to add state or city or etc we do 
+const key = 'planet';
+const value = 'earth';
+location[key] = value; // adding a new key value pair to the object, since key is a var we cannot use it in the object i.e location.key
+// removeing key value pairs from an object
+delete location.state; // removing a key value pair from the object
+// modifying key value pairs from an object
+location.city = "LA"; // modifying a key value pair from the object
+// increasing key value pairs from an object, lets add 1 to lat
+location.position.lat += 1; // NOTE: you cannot have optional parameters when modifying key value pairs from an object
+
 
 // * Spread operator
 // The spread operator (...) is used to expand an iterable object into individual elements

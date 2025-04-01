@@ -761,16 +761,10 @@ printf("The square of 5 is: %d", SQUARE(5));
 #define ARRAY_LENGTH 50 // this makes compilation faster insted of using a variable, always at the top of the file and all caps
 int num[ARRAY_LENGTH];
 
-
-// ! -------------------------------------------------------------------------------------------------------------------------------------------------->>
-
-// ! Multi-file Programs
-
+// ! header files 
 // In C, you can separate code into multiple files for better organization.
 // Use 'include' to include header files.
 #include "myHeader.h"  // Including a custom header file that might contain function declarations.
-
-// ! Header Files
 
 // Header files contain declarations for functions and types, typically ending with '.h'.
 #ifndef MYHEADER_H
@@ -782,10 +776,15 @@ void myFunction();  // Function declaration.
 
 // In your main file, you would define myFunction and implement its logic.
 // Include this header file to use the declared function in your main file.
+// main file def from myHeader.h
+// this makes a function declaration which is a prototype of the function in the header file
+void myFunction() {
+    printf("Hello from myFunction!\n");
+}
 
 // ! Inline Functions
-
 // Inline functions are defined using the 'inline' keyword to suggest to the compiler to insert the function code directly where it's called.
+// better than macros as they are type safe and can be debugged
 inline int square(int x) {
     return x * x;  // Returns the square of x.
 }
@@ -800,10 +799,15 @@ union Data {
     int intValue;
     float floatValue;
     char charValue;
-};
+    // You can also have a union inside a struct
+    struct {
+        int x;
+        int y;
+    } point; // this struct var point is inside the union to access the point struct we use data1.point.x and data1.point.y
+} data1; // Declaring a union variable data of type Data
 
-union Data data;  // Declaring a union variable.
-data.intValue = 10;  // Storing an integer.
+union Data data;  // Declaring a union variable of type Data.
+data.intValue = 10;  // Storing an integer. or data1.intValue since we declared it as a union variable
 printf("%d\n", data.intValue);  // Prints 10.
 
 // Overwriting the memory location:
@@ -839,7 +843,70 @@ printf("Line: %d\n", __LINE__);   // Current line number.
 printf("Date: %s\n", __DATE__);    // Current date.
 printf("Time: %s\n", __TIME__);    // Current time.
 
-// ! Constants in Header Files
+/* 
+// ! TYPES OF C / C++ FILES
+### C and C++ File Extensions and Their Purposes
 
-// Constants can be declared in header files to be reused across multiple files.
-#define MAX_SIZE 100  // Defining a constant.
+#### **C Language File Extensions**
+- `.c`  - C source file
+- `.h`  - C header file
+- `.i`  - Preprocessed C source file
+- `.ii` - Preprocessed C++ source file (used in some cases for C as well)
+- `.m`  - Objective-C source file (used in combination with C)
+- `.mi` - Preprocessed Objective-C source file
+- `.hxx` - Alternate C/C++ header file extension
+- `.hh` - Alternate C/C++ header file extension
+- `.h++` - Alternate C++ header file extension
+- `.hpp` - Alternate C++ header file extension (common in C++ projects, but may be used for C headers as well)
+
+#### **C++ Language File Extensions**
+- `.cpp`  - C++ source file
+- `.cxx`  - C++ source file (alternative to `.cpp`)
+- `.cc`   - C++ source file (used by some Unix-based compilers)
+- `.C`    - C++ source file (case-sensitive systems treat it differently from `.c`)
+- `.cp`   - C++ source file (rarely used)
+- `.c++`  - C++ source file (uncommon, but still recognized by some compilers)
+- `.h`    - Header file (used in both C and C++)
+- `.hpp`  - C++ header file
+- `.hxx`  - C++ header file
+- `.hh`   - C++ header file
+- `.h++`  - C++ header file
+
+#### **Objective-C and Objective-C++ File Extensions (Uses C/C++ Code)**
+- `.m`   - Objective-C source file (can contain C code)
+- `.mm`  - Objective-C++ source file (can contain both C++ and C code)
+- `.mi`  - Preprocessed Objective-C source file
+- `.mii` - Preprocessed Objective-C++ source file
+
+#### **C and C++ Precompiled and Intermediate Files**
+- `.pch`  - Precompiled header file
+- `.gch`  - Precompiled GNU C/C++ header file
+- `.s`    - Assembly file (generated from C or C++)
+- `.S`    - Assembly file with C preprocessor support
+- `.o`    - Object file (compiled output of C/C++ source files, Unix/Linux systems)
+- `.obj`  - Object file (compiled output of C/C++ source files, Windows systems)
+
+#### **C and C++ Debugging and Compiled Files**
+- `.a`   - Static library archive (Unix/Linux)
+- `.lib` - Static library file (Windows)
+- `.so`  - Shared object library file (Unix/Linux, dynamically linked)
+- `.dll` - Dynamic-link library file (Windows, dynamically linked)
+- `.exe` - Executable file (Windows)
+- `.out` - Executable file (Unix default output, e.g., `a.out`)
+
+#### **C and C++ Makefiles and Configuration Files**
+- `Makefile` - Script for GNU Make utility to compile C/C++ projects
+- `CMakeLists.txt` - Configuration file for CMake build system
+- `.mk` - Makefile fragment (used in some projects for modular makefiles)
+- `.ninja` - Build file for the Ninja build system (used with C/C++)
+
+#### **Miscellaneous C and C++ Related Files**
+- `.def`  - Module-definition file for Windows DLLs
+- `.rc`   - Resource script file (Windows, used in C/C++ applications for icons, menus, etc.)
+- `.idl`  - Interface Definition Language file (used in COM, CORBA, and other systems)
+- `.exp`  - Export file (contains exported symbols from Windows DLLs)
+- `.map`  - Memory map file (generated by linkers, used for debugging memory layout)
+- `.lst`  - Listing file (generated by some assemblers and compilers for debugging purposes)
+
+This file covers all known C and C++ file extensions and their uses.
+*/

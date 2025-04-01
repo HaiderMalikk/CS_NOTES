@@ -187,7 +187,7 @@ make a file called .gitignore
 then place the file or folder names into the file to ignore it 
 files: filename
 folder: /foldername/ (will ignore the whole folder at the root level), app/logs/ (will ignore the logs folder inside tge app folder)
-global: /foldername (will ignore the folder everywhere no matter where it is)
+global: /foldername (will ignore the folder everywhere no matter where it is), if that dose not work specify the relitive path
 
 - if you add a file.folder after commiting it still exists so 
 
