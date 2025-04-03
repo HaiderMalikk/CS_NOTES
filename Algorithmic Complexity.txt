@@ -53,7 +53,27 @@ Here's a systematic approach with Examples:
 Determine the most frequent or expensive operation (e.g., comparisons, assignments, iterations) performed by the algorithm.
 Focus on this operation, as its count dominates the time complexity.
 
-2. Analyze Loops
+2.1 Analyze Primitive Operations (PO) 
+# in the other examples below this we only consider the Running time in big O notation and dont count indivisual operations but we can
+# a PO is the smallest operation our algorithim can do one PO is (= assignment, < > comparison, a[x] Accessing by index, etx)
+# for loops we can say PO = n * x where n is the number of times the loop runs and x is the number of PO done this is just one EX
+# for the PO we assume the code runs its max time i.e if a conditional exists assume it runs each to get the max PO.
+# ex finding maximum from array
+int findmax (int[], int n){ # arr and len on array given 
+    currMax = a[0] # PO = 2 (one PO for assignment and one PO for accsessing element by index )
+    for (int i = 1; i < n; ){ # PO = n + 1 (n PO as the loop runs n times, on the nth run i < n is false i.e we go from 1 -> n and compare i<n (one PO) once each time so n * 1=n PO and + 1 PO for i=1 which only happens once at the start of loop)
+        if (a[i] > currMax){ # PO = 2(n-1) (n-1 is how many times this statement runs and we assume it runs everytime, 2PO as 1 for accsessing by idx "a[i]" and one for comparison ">")
+            currMax = a[i] # PO = 2(n-1) (n-1 is how many times this statement runs and we assume it runs everytime, 2PO as 1 for accsessing by idx "a[i]" and one for assignment "=")
+        }
+        i++; # PO = 2(n-1) (i++ = i+=1 = i = i+1 so this is 2PO * n-1 as thats how many times this loop runs)
+    }
+    return currMax; # PO = 1 (just returns)
+}
+### TOTAL = 2 + n+1 + 2(n-1) + 2(n-1) + 2(n-1) + 1 = 7n-2. NOTE: if we want the big O notation we say the RT is O(n) see '5' for why also this is more accurate.
+# NOTE; so here the loop condition runs n times but the loop body runs n-1 times as on nth time i<n is false so even if we had i<n; i++ we would stop at i<n at the nth loop
+# this means we would not get to the i++ and hence i++ still runs only n-1 times
+
+2.2 Analyze Loops
 Single loop: If a loop runs n times, its complexity is O(n)
 Nested loops: Multiply the iterations of nested loops.
 Example:
@@ -129,6 +149,7 @@ Algorithms Time complexity cases
                         EX: Algorithm A sorts 1 million elements in 1 second with 18MB used. This method is hardware dependent. so its not a good way to compare algorithms.
 - Relative efficiency: The time complexity of an algorithms based on their growth rate (Big-O complexity) rather than exact execution time. 
                         EX: Algorithm A sorts in O(n log n) time. This method is hardware independent. so its a good way to compare algorithms.
+# EX: 7n-2 is the ABS RT, the RT on lets say Mac m1 is (7n-2) * t where t is some time constant the computer uses for one PO this would give us the RT in seconds Mac M1 would take
                         
 -- NOTE: The running time of a algorithim can be Calculated by counting the number of primitive operations it performs (see CS terminology for what that is)
 -- NOTE: Algorithims do not always have perfect time complexities it can be linear and still be 7n-2 but the the big O is a family of functions so 7n-2 = O(n)

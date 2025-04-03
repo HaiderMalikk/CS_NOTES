@@ -104,7 +104,14 @@ if x3 == 5 or y3 == 6: # true
     
 if not x3 == 5: # false 
     print("x3 is not equal to 5")
-
+    
+# You can add multiple conditions in many lines using \ after the condition
+# EX:
+if x3 == 5 and \
+    y3 == 7 and \
+    x3 + y3 == 12:
+    print("All conditions are true")
+    
 # ! NOTE ON LOGICAL OPERATORS
 #  * in python True is 1 and False is 0
 # this is carried over to arithmetic operations like addition, multiplication, etc. (logic arithmetic)

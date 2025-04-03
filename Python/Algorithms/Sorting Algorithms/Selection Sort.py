@@ -88,6 +88,8 @@ def selection_sort(arr): # define function
         # Swap the found minimum element with the first element in the unsorted portion
         # only swap is the min_index is not the same as the current index i meaning we did not find the smallest element in the unsorted portion compared to the current element i
         # this is beacuse we assume the current element is the smallest when we start the pass so to avoid a redundant swap we only swap if the min_index is different from i
+        # if min_id == i then the element we are comparing with is already the smallest element and so its correct position and no swap is needed
+        # for ex: if we have [1,3,4,2] in the first itr i = 0 and since arr[0] = 1 is the smallest elemnt its in the correct position and no new min will be found so we dont swap it with itself
         if min_index != i:
             arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr # return the sorted array after all passes complete (outer loop completes)

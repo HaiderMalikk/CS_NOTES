@@ -13,7 +13,7 @@ Backtracking is a systematic way of searching for a solution to a problem by exp
 - Often used in problems that require all possible combinations or permutations.
 """
 
-# Example Problem: N-Queens
+# Example Problem: Generating All Subsets
 """ 
 Generating All Subsets (Power Set)
 Given a set of numbers, generate all possible subsets using backtracking.
@@ -72,9 +72,7 @@ def solve_n_queens(n):
     def is_safe(board, row, col):
         # Check column
         for i in range(row):
-            if board[i] == col or \
-               board[i] - i == col - row or \
-               board[i] + i == col + row:
+            if board[i] == col or board[i] - i == col - row or board[i] + i == col + row:
                 return False
         return True
     
