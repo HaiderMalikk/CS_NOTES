@@ -1,5 +1,4 @@
-# these examples were enhanced using CHAT GPT* ## repersents topics
-
+# OOP Basics in Python
 """
 # TOPICS COVERED:
 0. basic syntax, dynamic attributes, slots, repr method ,dataclasses
@@ -9,10 +8,11 @@
 4. Encapsulation
 5. Polymorphism
 6. Abstraction
-7. Method Overriding 
-8. Interface 
-9. Wrapper Function (not a OOP consept but usefull in OOP)
-10. ETC (Public, Private , Protected, Magic Methods, using objects as parameters)
+7. Interface 
+8. Access Modifiers (Public, Private , Protected)
+9. Wrapper Function (aka higher order functions) (not a OOP consept but usefull in OOP)
+10. Decorator Functions (not a OOP consept but usefull in OOP)
+11. Magic Methods (not a OOP consept but usefull in OOP)
 """
 
 # ! Basic syntax
@@ -434,75 +434,6 @@ the main difference is that an interface only defines method signatures without 
 in python both abstract classes and interfaces are implemented using the abc module, hence the main difference is in how they are used
 """
 
-## ! Wrapper Function: this can be used with other OOp concepts to extend functionality without modifying existing code
-## ! also known as decorator functions
-## ! can also be classes that wrap around other classes
-"""
-Wrapper functions, also known as wrapper methods or wrapper classes, are functions or methods that provide an interface for 
-invoking other functions or methods. They "wrap" around existing functionality, allowing you to add additional behavior 
-or modify the behavior of the wrapped functions without directly modifying them.
-"""
-def wrapper_function(func):
-    # this is a nested function the parms *args and **kwargs allow the wrapper to accept any number of positional arguments (ex x,y) and keyword arguments (ex x=1, y=2)
-    #* '*' allows any number of positional arguments and '**' allows any number of keyword arguments
-    def wrapper(*args, **kwargs): 
-        print("Before calling the function")
-        # this calls the original function with the arguments passed to the wrapper, func was a parameter of the wrapper function and since func will be function 
-        # we can use it as a function by calling it we use *args and **kwargs to pass any numberof arguments to the 'original_function' whoch is 'func' in this case
-        result = func(*args, **kwargs) 
-        print("After calling the function")
-        return result
-    return wrapper # this returns the wrapper function to the caller which is the original function
-
-# Original function in this case the func we pass to the wrapper function as a parameter
-def original_function(x, y):
-    return x + y
-
-# Wrapping the original function with the wrapper function, we pass the original function to the wrapper function
-wrapped_function = wrapper_function(original_function)
-
-# Calling the wrapped function
-# this calls the wrapper function which calls the original function, since the func is wrapped
-#* we dont need to do original_function(3,5) we just call the wrapped function with the arguments of original function
-result = wrapped_function(3, 5) 
-print("Result:", result)
-
-"""
-In this example, the wrapper_function acts as a wrapper around the original_function. It prints messages before and after 
-calling the original function, adding extra functionality. The wrapper_function takes the original function (func) as an argument, 
-defines a nested function (wrapper) that calls the original function, and returns the wrapper function. Finally, the original 
-function is wrapped by calling wrapper_function(original_function), and the wrapped function is assigned to wrapped_function. 
-When the wrapped function is called, it executes the additional code defined in the wrapper function.
-
-* NOTE: since we use *args and **kwargs our original function i.e the function being wrapped can take any number of arguments and keyword arguments 
-* and we can wrap it and pass it to the wrapper function the number of arguments and keyword arguments does not matter for the function being wrapped
-"""
-
-# ! higher order functions (an alternative to wrapper functions)
-# Python supports advanced features like function decorators and higher-order functions, 
-# which allow you to modify orextend the behavior of functions python
-def my_decorator(func):
-    def wrapper():
-        print("Something is happening before the function is called.")
-        func()
-        print("Something is happening after the function is called.")
-    return wrapper
-# @mydeecorator my_decorator is a function that takes another function func as its argument. 
-# Inside my_decorator, there's an inner function called wrapper. wrapper is defined inside my_decorator and 
-# serves as a wrapper function that surrounds the execution of func. It performs some actions before and after calling func.
-# @my_decorator is a decorator syntax in Python. When you decorate a function with @my_decorator, 
-# it means that you are applying the my_decorator function to the decorated function.
-#  In your example, you decorate the say_hello function with @my_decorator.
-# When you call say_hello(), you are actually calling the wrapper function that my_decorator returned.
-#  This is how decorators work in Python. The decorated function (say_hello) is replaced by the wrapper function, 
-# which adds functionality around the original function.
-@my_decorator
-def say_hello(): # this is func()
-    print("Hello!")
-
-say_hello() # calling function (this one has no parameters)
-
-
 # ! public, protected, private
 """ 
 # In Python, attributes and methods can be public, protected, or private. 
@@ -552,6 +483,111 @@ print(value)  # This will print: 42
 # This will not generate an error, but it's discouraged.
 # print(obj.__private_var)  # This is discouraged and not recommended
 
+## ! Wrapper Function: this can be used with other OOp concepts to extend functionality without modifying existing code
+## ! also known as decorator functions
+## ! can also be classes that wrap around other classes
+"""
+Wrapper functions, also known as wrapper methods or wrapper classes, are functions or methods that provide an interface for 
+invoking other functions or methods. They "wrap" around existing functionality, allowing you to add additional behavior 
+or modify the behavior of the wrapped functions without directly modifying them.
+"""
+def wrapper_function(func):
+    # this is a nested function the parms *args and **kwargs allow the wrapper to accept any number of positional arguments (ex x,y) and keyword arguments (ex x=1, y=2)
+    #* '*' allows any number of positional arguments and '**' allows any number of keyword arguments
+    def wrapper(*args, **kwargs): 
+        print("Before calling the function")
+        # this calls the original function with the arguments passed to the wrapper, func was a parameter of the wrapper function and since func will be function 
+        # we can use it as a function by calling it we use *args and **kwargs to pass any numberof arguments to the 'original_function' whoch is 'func' in this case
+        result = func(*args, **kwargs) 
+        print("After calling the function")
+        return result
+    return wrapper # this returns the wrapper function to the caller which is the original function
+
+# Original function in this case the func we pass to the wrapper function as a parameter
+def original_function(x, y):
+    return x + y
+
+# Wrapping the original function with the wrapper function, we pass the original function to the wrapper function
+wrapped_function = wrapper_function(original_function)
+
+# Calling the wrapped function
+# this calls the wrapper function which calls the original function, since the func is wrapped
+#* we dont need to do original_function(3,5) we just call the wrapped function with the arguments of original function
+result = wrapped_function(3, 5) 
+print("Result:", result)
+
+"""
+In this example, the wrapper_function acts as a wrapper around the original_function. It prints messages before and after 
+calling the original function, adding extra functionality. The wrapper_function takes the original function (func) as an argument, 
+defines a nested function (wrapper) that calls the original function, and returns the wrapper function. Finally, the original 
+function is wrapped by calling wrapper_function(original_function), and the wrapped function is assigned to wrapped_function. 
+When the wrapped function is called, it executes the additional code defined in the wrapper function.
+
+* NOTE: since we use *args and **kwargs our original function i.e the function being wrapped can take any number of arguments and keyword arguments 
+* and we can wrap it and pass it to the wrapper function the number of arguments and keyword arguments does not matter for the function being wrapped
+"""
+
+# ! Decorators
+# Decorators are functions that modify the behavior of other functions. use the @ symbol to apply a decorator to a function
+# higher order functions (an alternative to wrapper functions)
+# Python supports advanced features like function decorators and higher-order functions, 
+# which allow you to modify orextend the behavior of functions python
+def my_decorator(func):
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func()
+        print("Something is happening after the function is called.")
+    return wrapper
+# @mydeecorator my_decorator is a function that takes another function func as its argument. 
+# Inside my_decorator, there's an inner function called wrapper. wrapper is defined inside my_decorator and 
+# serves as a wrapper function that surrounds the execution of func. It performs some actions before and after calling func.
+# @my_decorator is a decorator syntax in Python. When you decorate a function with @my_decorator, 
+# it means that you are applying the my_decorator function to the decorated function.
+#  In your example, you decorate the say_hello function with @my_decorator.
+# When you call say_hello(), you are actually calling the wrapper function that my_decorator returned.
+#  This is how decorators work in Python. The decorated function (say_hello) is replaced by the wrapper function, 
+# which adds functionality around the original function.
+@my_decorator
+def say_hello(): # this is func()
+    print("Hello!")
+
+say_hello() # calling function (this one has no parameters)
+
+# * using static and class methods in python to get static methods in python
+class Example:
+    # Class variable (static variable)
+    counter = 0
+    
+    def __init__(self, name):
+        self.name = name
+        Example.counter += 1
+    
+    # Static method (a static method in a method that is not bound to a specific instance of a class)
+    # this means we can call this method before creating an instance of the class, to do so we use the classname.staticmethod
+    @staticmethod
+    def utility_function(x, y):
+        return x + y
+    
+    # Class method (a class method in a method that is bound to a specific instance of a class)
+    # this means we can call this method before creating an instance of the class, to do so we use the classname.classmethod
+    # but unlike static methods class methods can access class variable
+    @classmethod
+    def get_count(cls):
+        return cls.counter
+    
+    # Regular instance method, we pass in self which means we must pass in an instance of the class my using dot notation
+    def greet(self):
+        return f"Hello, {self.name}!"
+
+# Using class variable and methods
+a = Example("Alice")
+b = Example("Bob")
+
+# counter is a class variable but you dont need to create an instance of the class to access it (in a sense a static var)
+print(Example.counter)  # 2 as we made 2 instances a and b
+print(Example.utility_function(5, 3))  # 8 adds 2 numbers noo need to use a classes obj (instance) method is static
+print(Example.get_count())  # 2 retuens Example.counter but classmethods can access class variable
+print(a.greet())  # Hello, Alice! (must use a class obj method)
 
 ## ! special methods Python provides special methods (also known as magic methods or dunder methods) 
 # that you can define in your classes to customize their behavior. For example, 
