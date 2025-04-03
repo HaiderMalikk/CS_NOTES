@@ -127,13 +127,17 @@ class Animal:
     def speak(self):
         print("Animal speaks")  # Generic animal sound
 
+    age = 10 # this is a class variable that is shared by all instances of the class, if public or protected all subclasses can access it is prrivate they cannot
 
 # Child class that inherits from Animal
 class Dog(Animal):
     def __init__(self, name, breed):
         super().__init__(name)  # Call the parent class constructor to initialize the name
         self.breed = breed  # Initialize the breed attribute
-    
+        
+    # * Method Overriding 
+    # Method overriding allows a subclass to provide a specific implementation of a method that is already defined in its superclass. 
+    # This allows subclasses to customize or extend the behavior of inherited methods. In this example, the Dog class overrides the speak method defined in the Animal superclass.
     def speak(self):
         print("woof woof")  # Override the speak method with a specific sound for dogs
 
@@ -143,7 +147,7 @@ class Canine:
     def __init__(self, state):
         self.state = state  # Initialize the state attribute
         print(state)  # Print the state when the Canine object is created
-    
+
     def bark(self):
         print("Canine barking")  # Method for barking behavior
 
@@ -156,6 +160,13 @@ class GuardDog(Animal, Canine):
     
     def guard(self):
         print("Guarding the house")  # Method specific to GuardDog for guarding behavior
+    
+    animalage = Animal.age # access the age variable from the Animal class remember that this is a class variable
+    def get_age(self):
+        return self.animalage
+    age = 5 # this is a class variable that overrides the parent class (Animals) age variable
+        
+    # * all other methods like speak and bark are inherited from the parent classes Animal and Canine where they are defined, ofcourse we can override them
 
 
 # Usage example
@@ -171,6 +182,9 @@ guard_dog.speak()        # Output: Animal speaks (Invoke the speak method inheri
 guard_dog.bark()         # Output: Canine barking (Invoke the bark method inherited from Canine)
 guard_dog.guard()        # Output: Guarding the house (Invoke the guard method specific to GuardDog)
 
+print(dog.age) # Output: 10 (Accessing the class variable from the parent class) note that DOG class inherits the age variable from the Animal class
+print(guard_dog.age) # Output: 5 (Accessing the class variable from the GuardDog class) note that GuardDog class overrides the age variable from the Animal class
+print(guard_dog.get_age()) # Output: 10 (Accessing the class variable from the Animal class) note that GuardDog class inherits the age variable from the Animal class
 
 """
 In this example:
@@ -377,32 +391,7 @@ This demonstrates abstraction by defining a common interface (speak) that subcla
 while hiding the specific implementation details in each subclass.
 """
 
-## ! Method Overriding 
-"""
-Method overriding allows a subclass to provide a specific implementation of a method that is already defined in its superclass. 
-This allows subclasses to customize or extend the behavior of inherited methods. In Python, 
-method overriding is a common practice when implementing polymorphism.
-In this example, the Dog class overrides the speak method defined in the Animal superclass.
-"""
-class Animal:
-    def speak(self):
-        return "Animal makes a sound"
-
-class Dog(Animal):
-    def speak(self):
-        return "Dog barks"
-
-# Create instance
-dog = Dog()
-print(dog.speak())  # Output: Dog barks
-
-"""
-The Animal class defines a speak method that returns a generic sound. The Dog class inherits from Animal and overrides
-the speak method to make a specific sound ("Dog barks"). When an instance of Dog calls the speak method,
-it executes the overridden method in the Dog class, demonstrating method overriding in action.
-"""
-
-## ! Interface 
+## ! Interface
 """
 An interface defines a contract for classes to implement, specifying what methods they must provide. In this example,
 the Shape class defines an area method, and the Circle class implements this method to calculate the area of a circle.
@@ -416,6 +405,7 @@ class Shape(ABC):
     @abstractmethod
     def area(self):
         pass
+    var = 10
 
 # Implement interface
 class Circle(Shape):
@@ -436,6 +426,14 @@ the area of a circle based on its radius. This demonstrates how interfaces can b
 ABCs to ensure that classes provide specific methods.
 """
 
+# * interface vs abstract class
+""" 
+An interface defines a contract for classes to implement, specifying what methods they must provide.
+An abstract class is a class that cannot be instantiated directly and is used as a base class for other classes.
+the main difference is that an interface only defines method signatures without any implementation, while an abstract class provides the implementation details for the methods
+in python both abstract classes and interfaces are implemented using the abc module, hence the main difference is in how they are used
+"""
+
 ## ! Wrapper Function: this can be used with other OOp concepts to extend functionality without modifying existing code
 ## ! also known as decorator functions
 ## ! can also be classes that wrap around other classes
@@ -445,22 +443,28 @@ invoking other functions or methods. They "wrap" around existing functionality, 
 or modify the behavior of the wrapped functions without directly modifying them.
 """
 def wrapper_function(func):
-    def wrapper(*args, **kwargs):
+    # this is a nested function the parms *args and **kwargs allow the wrapper to accept any number of positional arguments (ex x,y) and keyword arguments (ex x=1, y=2)
+    #* '*' allows any number of positional arguments and '**' allows any number of keyword arguments
+    def wrapper(*args, **kwargs): 
         print("Before calling the function")
-        result = func(*args, **kwargs)
+        # this calls the original function with the arguments passed to the wrapper, func was a parameter of the wrapper function and since func will be function 
+        # we can use it as a function by calling it we use *args and **kwargs to pass any numberof arguments to the 'original_function' whoch is 'func' in this case
+        result = func(*args, **kwargs) 
         print("After calling the function")
         return result
-    return wrapper
+    return wrapper # this returns the wrapper function to the caller which is the original function
 
-# Original function
+# Original function in this case the func we pass to the wrapper function as a parameter
 def original_function(x, y):
     return x + y
 
-# Wrapping the original function with the wrapper function
+# Wrapping the original function with the wrapper function, we pass the original function to the wrapper function
 wrapped_function = wrapper_function(original_function)
 
 # Calling the wrapped function
-result = wrapped_function(3, 5)
+# this calls the wrapper function which calls the original function, since the func is wrapped
+#* we dont need to do original_function(3,5) we just call the wrapped function with the arguments of original function
+result = wrapped_function(3, 5) 
 print("Result:", result)
 
 """
@@ -469,10 +473,12 @@ calling the original function, adding extra functionality. The wrapper_function 
 defines a nested function (wrapper) that calls the original function, and returns the wrapper function. Finally, the original 
 function is wrapped by calling wrapper_function(original_function), and the wrapped function is assigned to wrapped_function. 
 When the wrapped function is called, it executes the additional code defined in the wrapper function.
+
+* NOTE: since we use *args and **kwargs our original function i.e the function being wrapped can take any number of arguments and keyword arguments 
+* and we can wrap it and pass it to the wrapper function the number of arguments and keyword arguments does not matter for the function being wrapped
 """
 
-# EX 2
-## higher order functions
+# ! higher order functions (an alternative to wrapper functions)
 # Python supports advanced features like function decorators and higher-order functions, 
 # which allow you to modify orextend the behavior of functions python
 def my_decorator(func):
@@ -498,25 +504,33 @@ say_hello() # calling function (this one has no parameters)
 
 
 # ! public, protected, private
+""" 
 # In Python, attributes and methods can be public, protected, or private. 
-# Public attributes and methods can be accessed directly,
+# Public attributes and methods can be accessed directly, they are our regular attributes and methods (e.g., public_attr),
 # protected attributes and methods are denoted with a single underscore (e.g., _protected_attr), 
 # and private attributes and methods are denoted with a double underscore (e.g., __private_attr).
 
+# Public members are accessible from anywhere, both inside and outside the class including subclasses.
+#Protected members are not meant to be accessed from outside the class  but can still be accessed if desired. 
+***** For inheritance protected members are accessible in subclasses *****
+# Private members are intended to be private and are not accessible from outside the class. not even by subclasses
+"""
+
 class MyClass:
     def __init__(self):
-        self.public_attr = "I'm a public attribute"
+        self.public_attr = "I'm a public attribute" 
         self._protected_attr = "I'm a protected attribute"
         self.__private_attr = "I'm a private attribute"
+    
+    __var = 10 # you can also make any variable protected or private by using a single or double underscore this is a class variable
 
-    def public_method(self): #Public members are accessible from anywhere, both inside and outside the class.
+    def public_method(self): 
         return "I'm a public method"
 
-    def _protected_method(self): #Protected members are not meant to be accessed from outside the class 
-        # but can still be accessed if desired.
+    def _protected_method(self):
         return "I'm a protected method"
 
-    def __private_method(self): #Private members are intended to be private and are not accessible from outside the class.
+    def __private_method(self): 
         return "I'm a private method"
 
 ## ! private var ex
@@ -552,27 +566,3 @@ class MyClass:
     # Equals magic method
     def __eq__(self, other):
         return self.value == other.value 
-    
-# using objects as parameters 
-# usaly we do seft to refer to the object that is calling the method but that is we are outside the class
-# then we can pass the whole object as a parameter
-class userOBJ:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-# making a user obj
-user1 = userOBJ("John", 30)
-class User:
-    def print_user(self, user):
-        print(f"Name: {user.name}, Age: {user.age}")
-# OR drop the class and just use teh method
-def print_user(user):
-    print(f"Name: {user.name}, Age: {user.age}")
-
-# make the user class and then use its print user method to print the user
-# we pass the user object to the print_user method as a parameter
-user = User()
-user.print_user(user1)  # Output: Name: John, Age: 30
-# OR
-print_user(user1)
