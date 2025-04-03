@@ -103,7 +103,7 @@ so EX: if we wanted to remove the smallest number first from [20, 10, 30] we can
 NOTE we are no longer doing FIFO we now assosite elemnts with priority 
 """
  
-# ! this is not a good method the best way to impliment this is using a bianry heap data structure
+# * this is not a good method the best way to impliment this is using a bianry heap data structure
 # example of priority queue using numbers we want to remeove the smallest number first and we will assign the head or front at the end of the list ie pop(0)
 queue = []
 # adding element note we can add sort after each addition or at the end etc
@@ -116,8 +116,25 @@ queue.sort() # here i will sort after adding now i have  [10, 20, 40]
 queue.pop(0) # removing 10 now  my queue is  [20, 40]
 queue.pop(0) # removing 20 now  my queue is  [40]
 queue.pop(0) # removing 40 now  my queue is  []
+# example of priority queue using bianry heap in the the Trees.py file. "Cntrl or CMD + F" thrn serch for "proiority queue" to see the code faster.
+# that will gove you more context but her eit is 
 
-#! example of priority queue using bianry heap in the the Trees.py file. "Cntrl or CMD + F" thrn serch for "proiority queue" to see the code faster.
+# * priority queue using heapq (a bianry heap)
+# NOTE: a priority queue is a queue where the elements are ordered based on their priority each element has a data and value to beused in determining the priority "see the priority Queue.py for more"
+# NOTE: smallest element is always at the front of the queue meaning => SMALLEST VALUE = HIGHEST PRIORITY so the smallest value is always popped first ie removed first from the queue
+import heapq
+priority_queue = [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')] # creating a list of tuples where each tuple has a data and value to be used in determining the priority the order dose not matter
+heapq.heapify(priority_queue) # converting the list to a heap queue note that now each tuple is ordered based on the value of the tuple with the smallest value at the root of the tree
+# pop i.e remove the elements from the queue to the the order of the queue mening the order the elements should be removed here the highest proirity is 1 and is given to 'a
+for i in range(len(priority_queue)):
+  print(heapq.heappop(priority_queue)) # removing the elements from the queue in the order of priority as we heapify the priority queue beforehand this will print the elements in the order of priority
+""" 
+output:
+(1, 'a') = > highest priority
+(2, 'b')
+(3, 'c')
+(4, 'd') = > lowest priority
+"""
 
 # ! Deque
 """ 

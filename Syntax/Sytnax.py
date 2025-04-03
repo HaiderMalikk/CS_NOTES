@@ -14,9 +14,9 @@
 
 print("Hello, World!") # print is a function that prints the string in the parentheses to the console
 
-# importing module
+# ! importing module
 import random # import the random module
-import random as rd # here we import the module random as rd meanong we use rd.random() instead of random.random()
+import random as rd # here we import the module random as rd meanong we use rd.random() instead of random.random() # ! as keyword is used to give an alias to the module
 from random import random as rd # here we use the random library and import the random function as rd, thsi is selctive import
 
 # * F strings
@@ -1965,9 +1965,9 @@ for number in count_up_to(3):
 # 3
 
 # ! async and await keywords 
-# In Python, async and await are used to define and manage asynchronous code, allowing you to run non-blocking tasks concurrently, USED FOR IO OPERATIONS
-# async is used to define an asynchronous function this is a function that can run in parallel with other functions or be paused and resumed to allow other functions to run
+# In Python, async and await are used to define and manage asynchronous code, allowing you to pause and resume execution waiting for other tasks, USED FOR IO OPERATIONS
 # await is used to pause and resume an asynchronous function, YOU CANNOT USE AWAIT OUTSIDE OF AN ASYNC FUNCTION
+# ! NOTE async != parrallel (twi functions using async dose not mean they run in parrallel it means they can wait for other functions to finish before continuing)
 # EX
 import asyncio
 
@@ -1996,6 +1996,32 @@ asyncio.run(main())
 # after the first line task1 pauses for 2 seconds while task2 pauses for 1 second 
 # after one second task2 finishes and task1 resumes and finishes one second later, this means task 2 finishes before task 1
 # In the console task 1 started and task 2 started are printed at the same time, 2 seconds later task 2 finished and 1 second later task 1 finished is printed
+
+# async await for HTTP requests
+# EX
+import asyncio
+import aiohttp
+import time
+# in this EX we use async to allow functions so pause and wait for other functions to finish before continuing
+# the async session line makes sure we wait untill wr have a session then we can use it to fetch data which is also async
+# this makes sure the data is fetched before we continue with the rest of the code
+# then we return the data sinse we use await it will pause the function until the data is fetched
+# since the code is async teh function getdata must be async too
+async def fetch_data(url): # fetch data is a function that fetches data from a url its async meaning it can run in parallel with other functions
+    async with aiohttp.ClientSession() as session: # creates a client session with the aiohttp library its also async
+        async with session.get(url) as response: # gets the data from the url its also async
+            return await response.text() # returns the data but uses await meaning it will pause the function until the data is fetched
+
+async def main(): # since we are using async we need to define a main function that will run the other functions concurrently i.e if a function runs async function it must be async too
+    start_time = time.time()
+    url = "https://jsonplaceholder.typicode.com/posts"
+    data = await fetch_data(url) # fetches the data from the url and wait until it is fetched before continuing
+    end_time = time.time()
+    print(f"Data fetched in {end_time - start_time} seconds")
+
+asyncio.run(main())
+# Output:
+# Data fetched in X seconds
 
 # ! Threding in python (used for CPU bound tasks)
 # Threading is a way to run multiple tasks concurrently in a single process, allowing you to perform multiple tasks at the same time

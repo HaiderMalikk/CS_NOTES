@@ -3,12 +3,12 @@
 The stack and the heap are two key memory areas used by programs to store data during execution
 - Definition:
 Stack: Used for statically allocated memory (e.g., local variables or refrences to objs in heap). used by only one thread of execution and follows the LIFO
-       This is used for short liveed variable. The memory is fixed and manages memory automatically. EX: int x = 10 // stored in stack
+       This is used for short lived variable. The memory is fixed and manages memory automatically. EX: int x = 10 // stored in stack
 Heap: Used for dynamically allocated memory (e.g., objects). this part of the memory can grow or shrink in size as the program demands and is available to 
       the whole program this means more control but can cause bad things in low level languages that dont have Garbage collection. For ex if you accsess memory
       you are not supposed to or that dose not exist (known as a segmentation fault), if memory that no longer used and you dont free it that 
       can cause the memory to be unreachable this is called a memory leaks as slowly more and more memory becomes unreachable crashing a program
-      this is why in high lvl languges like python use garbage collectores. NOTE: heap is used for larger more complex objs that span the whole program
+      this is why in high lvl languges like python use garbage collectores. NOTE: heap is used for larger more complex objs that span the whole program and are more permenent 
       EX: int *ptr = (int *)malloc(sizeof(int));  // Allocated on heap
 - Management:
 Stack: Managed automatically with LIFO order.

@@ -5,6 +5,9 @@
 # ! a tree is a recursive data structure meaning they can be divided into sub trees
 # ! in a tree there can only be 1 path between 2 nodes, if there are more than 1 path then its a graph not a tree. this means 2 nodes cannot point to each other in a tree. only from one node to another.
 
+### !!! NOTE: for the trees we build we only have a key and a leftchild and a rightchild but you can also have a value or data in the node
+### !!!!!!!!! This would be useful if we wanted to build a heap tree using our definition of a node. the key (number) helps us order the nodes in the tree. the value is data that we want to store in the node.
+
 A simple representation of a tree data structure.
 
 Example Tree Structure:
@@ -152,18 +155,18 @@ Tree Types Overview:
 8. **Binary Heap Tree**: (NOTE there are more types of heap trees)
    - Definition: A complete binary tree that satisfies the heap property, where each node has a specific order relative to its children.
    - Heap is Used for dynamic memory allocation, can grow and shrink in size during program execution.
-   NOTE: complete BT => all levels of the tree except the last level are completely filled or filled left to right meaning the left most node of each level is filled first, heap property => for any given node, the parent node is either greater than (max heap) or less than (min heap) the children node, so if every node is greater than or equal to its children its max heap or if its less than or equal to its children its min heap.
-   this implies that for max heap the root node is the max value and for min heap the root node is the min value. ! this rule for heap must be true for all nodes in the tree.
-   - Characteristics:
-     - **Max-Heap**: The value of each node is greater than or equal to the values of its children.
-     - **Min-Heap**: The value of each node is less than or equal to the values of its children.
-     - Implemented as an array, where parent-child relationships are defined by indices. 
-   - Uses:
-     - Efficiently implements priority queues, enabling quick access to the highest or lowest priority elements.
-     - Forms the basis for the heapsort algorithm, sorting elements in O(n log n) time.
-     - Utilized in graph algorithms, such as Dijkstra's algorithm, for efficient minimum element retrieval. and kth largest element.
-     - Heap sort is a comparison-based sorting algorithm that uses a binary heap data structure.
-     
+   - Heap property => for any given node, the parent node is either greater than (max heap) or less than (min heap) the children node, so if every node is greater than or equal to its children its max heap or if its less than or equal to its children its min heap and the tree must be a complete binary tree.
+   - NOTE: for a heap tree to be a valid heap tree it must be a complete binary tree and the heap property must be true for all nodes in the tree. a complete binary tree is a tree where all levels are completely filled except for the last level, which is filled from left to right. this means that the last level can be partially filled but must be filled from left to right.
+    - Characteristics:
+      - **Max-Heap**: The value of each node is greater than or equal to the values of its children. the root node is the max value.
+      - **Min-Heap**: The value of each node is less than or equal to the values of its children. the root node is the min value.
+      - Implemented as an array, where parent-child relationships are defined by indices. 
+    - Uses:
+      - Efficiently implements priority queues, enabling quick access to the highest or lowest priority elements.
+      - Forms the basis for the heapsort algorithm, sorting elements in O(n log n) time.
+      - Utilized in graph algorithms, such as Dijkstra's algorithm, for efficient minimum element retrieval. and kth largest element.
+      - Heap sort is a comparison-based sorting algorithm that uses a binary heap data structure.
+      
 
 # other trees not covered:
 3. **Balanced Binary Search Tree (BBST)**:
@@ -839,10 +842,9 @@ root.min_node() # 5
 root.max_node() # 100
 
 
-
 # ! Implementing Heap Tree in Python (see details on heap tree in tree types notes)
 # EX of heap tree (note both are complete Binary trees):
-# min heap:
+# min heap (the parent node is less than its children and so the root node is the min value):
 """ 
      1
     / \
@@ -850,7 +852,7 @@ root.max_node() # 100
   / \
 70  100 
 """
-# max heap:
+# max heap (the parent node is greater than its children and so the root node is the max value):
 """ 
      100
     /   \
@@ -930,6 +932,10 @@ root.max_node() # 100
 # ! Heap queue 
 # * a heap queue is a data structure that is a combination of a queue and a heap specifically a min heap
 # * used to implement priority queues where elements are inserted with a priority (higher priority items are processed first)
+""" 
+# NOTE: Heap trees can have key, value pairs wher the key is used for the priority and the value is used for the data
+# Here we only use the key for the priority and the value is not used but the node objects can have a value and key pair (see priority queue)
+"""
 
 # * we will first use the heapq python module to implement a heap queue as we will get methods like heapify and insert by importing heapq
 import heapq # importing the heapq module
@@ -991,9 +997,10 @@ heapq.nsmallest(2, heap) # getting the 2 smallest elements in the heap queue = [
 # we can do the same thing to get nth largest numbers
 heapq.nlargest(2, heap) # getting the 2 largest elements in the heap queue = [100, 70]
 
-# ! priority queue using heapq
+# ! priority queue, using heapq
 # NOTE: a priority queue is a queue where the elements are ordered based on their priority each element has a data and value to beused in determining the priority "see the priority Queue.py for more"
 # NOTE: smallest element is always at the front of the queue meaning => SMALLEST VALUE = HIGHEST PRIORITY so the smallest value is always popped first ie removed first from the queue
+# * since a heap queue is a min heap this means the smallest element is always at the root of the tree and hence the first element in the priority queue this means we can remove the smallest element from the queue using the heappop method and then hepify the queue to maintain the heap property and repeat this process
 priority_queue = [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')] # creating a list of tuples where each tuple has a data and value to be used in determining the priority the order dose not matter
 heapq.heapify(priority_queue) # converting the list to a heap queue note that now each tuple is ordered based on the value of the tuple with the smallest value at the root of the tree
 
@@ -1008,53 +1015,6 @@ output:
 (3, 'c')
 (4, 'd') = > lowest priority
 """
-
-# Inverted Binary Tree
-""" 
-In a binary tree at every parent node the smaller value is on the left and the larger value is on the right
-in inverted binary tree the smaller value is on the right and the larger value is on the left
-the operation mirror the tree
-
-BST
-# Input Tree:
-    #       1
-    #      / \
-    #     2   3
-    #    / \
-    #   4   5
-
-Inverted BST 
-# Mirror Tree:
-    #       1
-    #      / \
-    #     3   2
-    #        / \
-    #       5   4
-    
-approach: 
-1) go as left as possible recursively
-2) then go as right as possible recursively
-3) once we reach a leaf node we do step 4 but nothing changes as leaf node has no children
-4) swap the left and right child of the current node (note that since left and right are objects in memory not temp is needed)
-5) keep going back to last node (last function call) as swap its left and right children, do this until root node is reached 
-"""
-# NOTE: i will not show creating and adding to the tree that is coverd before here is jut the methods to mirror the tree 
-# given a class BST: self.key = data, self.leftchild = None, self.rightchild = None and methods to add nodes we add the method as:
-def mirror(root): # root is the root of the tree i.e the first node
-    if root is None: # if the root is none 
-        return None # return none as there is nothing to mirror
-    
-    # go as left as possible recursively then go as right as possible recursively
-    # this is done by calling the mirror method on both the left and right child recursively
-    left = mirror(root.leftchild) # mirror the left child recursively
-    right = mirror(root.rightchild) # mirror the right child recursively
-  
-    # Swap the left and right subtrees of the current node (root)
-    root.leftchild = right
-    root.rightchild = left
-    
-    return root # return the root to the caller of mirror(root) this insures root.left /right for that function call is on the correct node
-
 
 # ! Quad-Trees
 """

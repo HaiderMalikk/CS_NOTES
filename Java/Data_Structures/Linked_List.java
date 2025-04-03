@@ -10,6 +10,7 @@ Linked list: linked list is a data structure that consists of nodes where each n
 Arrays do well in indexing and searching but not in insertion and deletion. EX if i want to goto get the last index i simply have to do array[n-1] this is constant time O(1) but if i want to insert at the start i have to shift all the elements to the right which is O(n) time complexity
 Linked lists do well in insertion and deletion. not in indexing and searching. EX: if want to goto get the last index i have to goto the first node and then the next node and so on until i reach the last node which is O(n) time complexity
 but if i want to insert at the start i simply have to point the head to the new node and the new node to the old head which is O(1) time complexity
+* Trading space for time:
 - NOTE we can make some O(n) LL algorithms o(1) by using a tail pointer which points to the last node and then we can insert at the end in O(1) time complexity this takes more space but is more efficient, this trade off is known as Trading space for time. 
 lso know we will have to update this tail pointer every time we add a new node to the end or remove a node from the end etc this is the trade off.
 In Short LL is not a array so there is no shifting of elements like for ex when we delete start we must shift all elements but is LL we dont as we have ref to next node. but we can serch a arrays element using indexing where as in LL we can only do that for the last node (tail)

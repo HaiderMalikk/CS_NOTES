@@ -10,10 +10,12 @@ Linked list: linked list is a data structure that consists of nodes where each n
 Arrays do well in indexing and searching but not in insertion and deletion. EX if i want to goto get the last index i simply have to do array[n-1] this is constant time O(1) but if i want to insert at the start i have to shift all the elements to the right which is O(n) time complexity
 Linked lists do well in insertion and deletion. not in indexing and searching. EX: if want to goto get the last index i have to goto the first node and then the next node and so on until i reach the last node which is O(n) time complexity
 but if i want to insert at the start i simply have to point the head to the new node and the new node to the old head which is O(1) time complexity
+* Trading space for time:
 - NOTE we can make some O(n) LL algorithms o(1) by using a tail pointer which points to the last node and then we can insert at the end in O(1) time complexity this takes more space but is more efficient, this trade off is known as Trading space for time. 
 lso know we will have to update this tail pointer every time we add a new node to the end or remove a node from the end etc this is the trade off.
+In Short LL is not a array so there is no shifting of elements like for ex when we delete start we must shift all elements but is LL we dont as we have ref to next node. but we can serch a arrays element using indexing where as in LL we can only do that for the last node (tail)
 
-* linked lists:
+* Singly linked lists:
 # A linked list is a data structure that consists of nodes where each node contains data and a reference to the next node in the sequence. 
 # innitially a head points to nothing. but after adding the first node the head points to the first node and the next node will have the head pointed to it from the prevoius node and so on.
 # a node is nothing but a class that contains the data of current node and a link to next node called refrence so the refrence of the current node points to the next node. The last node points to NONE, the last node is known as the tail its ref MUST BE NONE.
@@ -26,6 +28,15 @@ HEAD     →     [ Data | Ref 1001 ]     →     [ Data | Ref 1002 ]     →    
         There are also doubly linked lists where the ref of the current node points to the next node and the previous node points to the current node
         there are also circular linked lists where the ref of the current node points to the next node and the last node points to the first node
         there can also be a circular doubly linked lists, and other variations.
+
+* Doubly linked lists:
+[HEADER | next → 1000 | prev ← NONE]  ↔  [ Data | Ref 1001 | Prev 1000 ]  ↔  [ Data | Ref 1002 | Prev 1001 ]  ↔  [ Data | Ref 1003 | Prev 1002 ]  ↔  [TRAILER | next → NONE | prev ← 1003]  
+↑ (Ref 0000)                                    ↑ Node 1 (Ref 1000)               ↑ Node 2 (Ref 1001)                ↑ Node 3 (Ref 1002, last node)       ↑ (Ref 9999)
+# The header always points to the first node, and the trailer always points to the last node.
+# Each node has two references: one to the next node and one to the previous node.
+# The first node's previous reference points to the header.
+# The last node's next reference points to the trailer.
+# If the DLL is empty, HEADER <-> TRAILER directly.
  
 * NOTE: Nodes and garbage collection
 - AS we know if we assign any obj to node EX: arr = None then the garbage collector will delete the obj and free up memory
@@ -64,19 +75,18 @@ and can easily be implemented using the concepts and methods in these notes, so 
 * Time Complexity of LL operations:
 // * Comparison of operations on different data structures (Array, Singly Linked List, Doubly Linked List)
 *
-* -------------------------------------------------------------------------------------------------------
-* | OPERATION                     | ARRAY       | SINGLY LINKED LIST (SLL)  | DOUBLY LINKED LIST (DLL)  |
-* ------------------------------------------------------------------------------------------------------|
-* | Get size                      | O(1)        | O(1)                      | O(1)                      |
-* | Get first/last element        | O(1)        | O(1) (first), O(n) (last) | O(1)                      |
-* | Get element at index i        | O(1)        | O(n)                      | O(n)                      |
-* | Remove last element           | O(1)        | O(n)                      | O(1)                      |
-* | Add/remove first element      | O(1)        | O(1)                      | O(1)                      |
-* | Add last element              | O(1)        | O(n)                      | O(1)                      |
-* | Add/remove i-th element       | O(n)        | O(n) (without reference)  | O(n) (without reference)  |
-* | Given reference to (i-1)th    | O(1)        | O(1)                      | O(1)                      |
-* ------------------------------------------------------------------------------------------------------|
-
+* -----------------------------------------------------------------------------------------------------------
+* | OPERATION                     | ARRAY       | SINGLY LINKED LIST (SLL)       | DOUBLY LINKED LIST (DLL)  |
+* -----------------------------------------------------------------------------------------------------------|
+* | Get size                      | O(1), len() | O(1) (with counter else O(n))  | O(1)                      |
+* | Get first/last element        | O(1)        | O(1) (first), O(n) (last)      | O(1)                      |
+* | Get element at index i        | O(1)        | O(n)                           | O(n)                      |
+* | Remove last element           | O(1)        | O(n)                           | O(1)                      |
+* | Add/remove first element      | O(n)        | O(1)                           | O(1)                      |
+* | Add last element              | O(1)        | O(1) (with tail else O(n))     | O(1)                      |
+* | Add/remove i-th element       | O(n)        | O(n) (without reference)       | O(n) (without reference)  |
+* | Given reference to (i-1)th    | O(1)        | O(1)                           | O(1)                      |
+* -----------------------------------------------------------------------------------------------------------|
 """
 
 # ! Singly Linked List
