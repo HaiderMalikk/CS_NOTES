@@ -572,6 +572,9 @@ a = 10
 print(isinstance(a, int)) # True
 print(isinstance(a, float)) # False
 
+# you can also cast to other things like a absolute value
+print(abs(-10)) # 10
+
 # ! Type Hinting (in python3), syntax is var_name: type = value
 # python is a dynamicly typed language means that the type of a variable is determined at runtime
 # but we can specify the type of a variable using type hints, Syntax is, var_name: type = value
