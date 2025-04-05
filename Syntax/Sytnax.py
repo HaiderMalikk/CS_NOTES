@@ -1356,6 +1356,10 @@ print(upper_fruits)  # Output: ['APPLE', 'BANANA', 'CHERRY']
 # EX
 coordinates = [(x, y) for x in range(3) for y in range(3)] # for y is nested in for x
 print(coordinates)  # Output: [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+# Ex tuples 
+threes = [(1,2,3),(4,5,6),(7,8,9)]
+first = [x[0] for x in data]
+print(first)  # Output: [1, 4, 7]
 # EX flat lists
 nested_list = [[1, 2], [3, 4], [5, 6]]
 flat_list = [num for sublist in nested_list for num in sublist]

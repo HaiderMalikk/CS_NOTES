@@ -11,7 +11,7 @@
 7. Interface 
 8. Access Modifiers (Public, Private , Protected)
 9. Wrapper Function (aka higher order functions) (not a OOP consept but usefull in OOP)
-10. Decorator Functions (not a OOP consept but usefull in OOP)
+10. Decorator Functions & static methods (Decorators are not a OOP consept but usefull in OOP)
 11. Magic Methods (not a OOP consept but usefull in OOP)
 """
 
@@ -570,7 +570,7 @@ class Example:
     
     # Class method (a class method in a method that is bound to a specific instance of a class)
     # this means we can call this method before creating an instance of the class, to do so we use the classname.classmethod
-    # but unlike static methods class methods can access class variable
+    # but unlike static methods class methods can access class variables
     @classmethod
     def get_count(cls):
         return cls.counter
@@ -588,6 +588,9 @@ print(Example.counter)  # 2 as we made 2 instances a and b
 print(Example.utility_function(5, 3))  # 8 adds 2 numbers noo need to use a classes obj (instance) method is static
 print(Example.get_count())  # 2 retuens Example.counter but classmethods can access class variable
 print(a.greet())  # Hello, Alice! (must use a class obj method)
+# @staticmethod vs @classmethod: @staticmethod: Doesn’t access class or instance. @classmethod: Takes cls as first argument; can modify class state.
+
+
 
 ## ! special methods Python provides special methods (also known as magic methods or dunder methods) 
 # that you can define in your classes to customize their behavior. For example, 
