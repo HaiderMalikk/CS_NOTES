@@ -516,6 +516,9 @@ print(returnThis(5)) # 5
 # lambda are simple functions 
 square = lambda x: x ** 2
 result = square(5)  # result = 25
+# multi variable lambda function
+add = lambda x, y: x + y
+result = add(3, 4)  # result = 7
 
 # ! using a dictionary to return multiple values
 # you can use a dictionary to return multiple values from a function
@@ -1224,12 +1227,6 @@ s = "Hello World!"
 s = "".join((filter(str.isalpha, s))) # remove all non alpha characters from s
 print(s) # Output: "HelloWorld"
 
-# * using list comprehension inside a filter/ inside a tuple
-s = "A man, a plan, a canal: Panama" # say we want to remove only all the non alpha characters and make it lower case, deleting the spaces, we still keep the numbers
-# here we loop over the string and if the character is alpha or digit we add it to the new string s
-# then this new filtered string is lowercased using .lower and we use .join to join each character in the string by a empty space
-s = ''.join(c for c in s if c.isalpha() or c.isdigit()).lower()
-
 # ! sorted vs sort and using keys with sort 
 # (key is just a argument that is passed into the function stating how to do the task i.e based on length square etc of the iteams in the list insted of there original order or value)
 # sort is used to sort a list in place (i.e it changes the list) and returns None
@@ -1253,10 +1250,18 @@ items = [(1, 2), (3, 1), (5, 0)]
 items.sort(key=lambda x: x[1])  # Sort by the second element in each tuple
 print(items)  # Output: [(5, 0), (3, 1), (1, 2)]
 
-# ! map function with lambda function
-numbers = [1, 2, 3, 4, 5]
-squares = list(map(lambda x: x ** 2, numbers))
+# ! map function 
+# the map function applies a function to all the items in an input list (or any iterable) and returns a map object (which is an iterator).
+# to use the map function we must use a lambda function too define the function we want to apply to each item in the input list
+numbers = [1, 2, 3, 4, 5] # input list
+squares = list(map(lambda x: x ** 2, numbers)) # apply the lambda function to each item in the input list, x is each element in the input list, here we square each element in the list and update the list squares with the new values mapping each sqr to the corresponding element in the input list
 print(squares)  # Output: [1, 4, 9, 16, 25] # each 'x' in the lambda function is mapped to the corresponding element in the 'numbers' list
+#EX: using multiple iterables
+# if one list is longerr we only go upto the length of the shorter list and stop the mapping
+numbers = [1, 2, 3, 4, 5]
+weights = [0.1, 0.2, 0.3, 0.4, 0.5]
+sums = map(lambda x, y: x + y, numbers, weights) # each element (at the same index) in the two lists is added together, x is the element in the numbers list and y is the element in the weights list we simply add the two together
+print(list(sums))  # Output: [1.1, 2.2, 3.3, 4.4, 5.5]
 
 # ! using conditions in a list comprehension, lambda function and map
 # * since the filter function returns a filter object always cast it into a list using list(filter)
@@ -1399,6 +1404,22 @@ fruits = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig']
 # instead of the value beaing accessed using something like i for i in list, also note we use list[i] not just i as i is a number (index)
 basket = [fruits[i] for i in range(len(fruits)) if i % 2 == 0] 
 print(basket)
+
+# !tuple comprehension
+# * using list comprehension inside a   / inside a tuple
+# EX
+fruits = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig']
+# here we add to the tuple fruits at index i fruits[i] where i is in range of the length of the list so 0 to 5
+# and if i is even then only we add list[i] to the new tuple basket, this way we use the index i to access the elements in the list
+# instead of the value beaing accessed using something like i for i in list, also note we use list[i] not just i as i is a number (index)
+# this code says select fruits[i] for i in range(fuits) and add fruits[i] to the new tuple basket if i is even
+basket = tuple(fruits[i] for i in range(len(fruits)) if i % 2 == 0)  # * MUST use tuple() to create a tuple
+print(basket) # Output: ('apple', 'cherry', 'fig')
+# EX 2
+s = "A man, a plan, a canal: Panama" # say we want to remove only all the non alpha characters and make it lower case, deleting the spaces, we still keep the numbers
+# here we loop over the string and if the character is alpha or digit we add it to the new string s
+# then this new filtered string is lowercased using .lower and we use .join to join each character in the string by a empty space
+s = ''.join(c for c in s if c.isalpha() or c.isdigit()).lower()
 
 # ! list splicing List slicing in Python allows you to extract portions of a list or sequence using a specific syntax:
 # syntax general: list[start:stop:step]
