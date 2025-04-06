@@ -1181,6 +1181,9 @@ my_string.strip() # this wont change the original string because it is immutable
 print(my_string) # Output: "    Hello    ", the original string is still the same
 my_string = my_string.strip() # this will change the original string because we assigned the result to a new variable. *** it can be the same variable or a new variable if we want to keep the original string intact
 print(my_string) # Output: "Hello", the original string is now changed
+# EX for tuples 
+my_tuple = (1, 2, 3)
+# my_tuple[0] = 10 # this will throw an error because tuples are immutable and we cant change them in place
 
 # ! using the list function for safe iteration and for casting to list
 # we can pass a list or nonlist to the list function and it will iterate over each item in the list 
