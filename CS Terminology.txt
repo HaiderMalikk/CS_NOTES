@@ -447,3 +447,31 @@ EX: Making the locally optimal choice at each stage.
 
 Divide and Conquer
 EX: Dividing the problem into smaller subproblems, solving them independently, and combining the results.
+
+Multiple Dispatch Pattern 
+============================
+Multiple Dispatch Pattern
+Multiple dispatch is a programming language feature where a function or method can be dynamically dispatched based on the runtime types of multiple arguments, rather than just the type of a single receiver object (as in traditional object-oriented programming).
+Languages like python require a import + decorators like julia has this built in 
+#EX:
+``` python
+# Python example using functools.singledispatchmethod with registration
+from functools import singledispatchmethod
+
+class Calculator:
+    @singledispatchmethod
+    def add(self, a, b):
+        raise NotImplementedError("Unsupported types")
+    
+    @add.register
+    def _(self, a: int, b: int):
+        return a + b
+    
+    @add.register
+    def _(self, a: str, b: str):
+        return a + b
+    
+    @add.register
+    def _(self, a: list, b: list):
+        return a + b
+```
