@@ -310,7 +310,7 @@ for fruit in fruits: # or place the list here like for fruit in ["apple", "banan
 # ! iterating over a dictionary 
 # EX:
 person = {"name": "John", "age": 30, "city": "New York"}
-for key, value in person.items():
+for key, value in person.items(): # .item gives us a list of tuples (key, value) so we can iterate over them
     print(f"{key}: {value}")
 # * can use only key or only value for loop to iterate over the keys or values of the dictionary
 # EX:
@@ -326,7 +326,8 @@ for value in person.values():
 for key in person:
     print(key, person[key]) # output: name John age 30 city New York
 
-# ! iterating over a list of tuples
+# ! iterating with multiple variables
+# iterating over a list of tuples
 # EX:
 coordinates = [(1, 2), (3, 4), (5, 6)]
 for x, y in coordinates:
@@ -334,6 +335,10 @@ for x, y in coordinates:
 # using in to check if a tuple is in a list
 if (1, 2) in coordinates:
     print("1, 2 is in the list")
+# iterating over a list of lists 
+coord = [[1,2,3], [3,4,5]]
+for f, s, t in coord: # can be _, s, t if we dont want to use f
+    print(f + s + t)
 
 # ! Enumerate function
 # * if we use range to iterate we have the index but not the value
@@ -614,8 +619,40 @@ del array  # Frees the memory allocated for the list, talked more about in del k
 # or
 array = None  # Removes the reference to the list, allowing the garbage collector to free the memory
 
-# ! Strings
+# ! Compile time vs runtime
+# Compile time is when the code is compiled and checked for errors before it is run.
+# Runtime is when the code is executed and errors are checked during execution.
+#EX:
+a = 10 # known at compile time
+arr = [1, 2, 3] # known at compile time if we miss a bracekt or a comma it will throw an error at compile time
+arr[0] # known at runtime if its out of range we wont get a error until we run the code
 
+# ! Primitive vs Reference types
+# Primitive types are the basic data types in Python, such as int, float, str, and bool.
+# Reference types are the data types that are not primitive, such as list, dict, and tuple.
+# EX:
+a = 10 # primitive type
+b = "hello" # primitive type
+c = [1, 2, 3] # reference type
+d = {"name": "John", "age": 30} # reference type
+e = (1, 2, 3) # reference type
+# primite types do not hold a reference to a object they hold a value 
+#EX:
+aa = a # aa = the value of a = 10
+def changeaa(aa):
+    aa = 20 # aa = the value of aa = 20 this chnage is only local to the function
+changeaa(aa) # pass in aa
+print(aa) # Output: 10
+# refrence variables hold a refrence in memory to something s
+# EX:
+a = [1,2,3] # out previous prim type is now a reference type (python is dynamicly typed)
+def change(a): # pass in a reference to the list
+    a[0] = 10 # changes the list object in memory (changed everywhere)
+print(a) # Output: [1, 2, 3]
+change(a) # pass in a reference to the list
+print(a) # Output: [10, 2, 3] # the change is reflected in the original list
+
+# ! Strings
 ## String methods 
 # In Python, strings are sequences of characters enclosed in either single (') or double (") quotes """ makes a docstring 
 str1 = 'Hello, World!'
@@ -1652,6 +1689,7 @@ my_dict.clear() # removing all key value pairs
 print(my_dict) # Output: {}
 # NOTE you cant just add a key, EX: my_dict["A"] is not valid you can set it equal to a value or set a empty value
 
+# ! filtering, sorting and dictionary comprehension
 # For sorting dictionaries by keys or values, you can use the sorted() function in combination with the dict() function to convert the soted obj to a dictionary
 # sort by key
 my_dict = {'b': 2, 'a': 3, 'c': 1}
