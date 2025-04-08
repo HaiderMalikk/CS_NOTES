@@ -1,4 +1,6 @@
 # python basics 
+# python is a interpreted language meaning it is not compiled and is run line by line, its interpreted at runtime making it dynamicly typed
+# the interpreter is written in C and is called CPython
 
 # operators
 # "=" is to assign, "==" is to check, != is dose not equal
@@ -11,6 +13,17 @@
 # * / vs //. / divides 2 numbers and gives a decimal number, // divides 2 numbers and gives a whole number and it always rounds down
 # Keywords
 # True False and, or, not, pass, break, continue, def, del, elif, else, except, exec, finally, for, global, if, import, in, is, lambda, nonlocal, not, or, pass, raise, return, try, while, with, yield 
+# Python Objects Properties (protocols)
+""" 
+Term	        Meaning	                                                                Example
+Iterable	    Can be looped over (for...in)	                                        List, Tuple, String
+Hashable	    Can be used as a dictionary key or put in a set (has a fixed hash)	    int, str, tuple
+Subscriptable	Supports indexing like obj[0]	                                        List, Tuple, Dict, String
+Callable	    Can be called like a function obj()	                                    Functions, Classes, Objects with __call__
+Mutable	        Can be changed after creation	                                        List, Dict
+Immutable	    Cannot be changed after creation	                                    int, str, tuple
+"""
+# data types: int, float, str, bool, list, tuple, dict, set
 
 print("Hello, World!") # print is a function that prints the string in the parentheses to the console
 
@@ -330,20 +343,14 @@ for value in person.values():
 # EX:
 for key in person:
     print(key, person[key]) # output: name John age 30 city New York
-
-# ! iterating with multiple variables
-# iterating over a list of tuples
-# EX:
-coordinates = [(1, 2), (3, 4), (5, 6)]
-for x, y in coordinates:
-    print(x, y)
-# using in to check if a tuple is in a list
-if (1, 2) in coordinates:
-    print("1, 2 is in the list")
-# iterating over a list of lists 
-coord = [[1,2,3], [3,4,5]]
-for f, s, t in coord: # can be _, s, t if we dont want to use f
-    print(f + s + t)
+    
+# ! Tuple's 
+# tuples are immutable meaning they cannot be changed once created they are written in () and can hold any type of data
+my_tuple = (1, 2, 3)
+print(my_tuple) # output: (1, 2, 3)
+print(my_tuple[0]) # output: 1
+my_tuple = (1, 2, 3, 4) # this is ok as we resign the tuple to a new tuple i.e change the variables value
+# my_tuple[0] = 99 # this is not ok as tuples are immutable CANNOT BE CHANGED
 
 # ! Enumerate function
 # * if we use range to iterate we have the index but not the value
@@ -1600,10 +1607,29 @@ my_list = [1, 2, 3]
 a, b, c = my_list # unpacking
 print(a, b, c)  # Output: 1 2 3
 # EX
-my_list = [1, 2, 3]
-a, *b, c = my_list
-print(a, b, c)  # Output: 1 [2] 3
+my_list = [1, 2, 3, 4, 5]
+a, *b, c = my_list # you can use the * operator to select the rest of the elements in the list and assign them to a new variable b
+print(a, b, c)  # Output: 1 [2, 3, 4] 5
+# unpacking lists into lists
+list1 = [1, 2]
+list2 = [3, 4]
+combined = [*list1, *list2] # unpacking the two lists into a new list using the * operator (SEE BELOW FOR EXPLAINATION)
+print(combined)  # [1, 2, 3, 4]
+combinedsublists = [list1, list2] # = [[1, 2], [3, 4]] just turns the list into lists insted of variables. ALTERNATIVE = [[*list1], [*list2]] 
 
+# ! mapping multiple variables to a iterable (combining 4 above)
+# iterating over a list of tuples
+# EX:
+coordinates = [(1, 2), (3, 4), (5, 6)]
+for x, y in coordinates: # mapping x and y to the two values in each tuple (tuple unpacking since each coordinate is a tuple)
+    print(x, y)
+# using in to check if a tuple is in a list
+if (1, 2) in coordinates: # single tuple
+    print("1, 2 is in the list")
+# iterating over a list of lists using list unpacking
+coord = [[1,2,3], [3,4,5]]
+for f, s, t in coord: # unpack each list into its individual variables can be _, s, t if we dont want to use f or use * operator to pack the rest of the elements into one variable
+    print(f + s + t)
 
 #! Unpacking with the * operator
 # In Python, the * operator is used for unpacking — meaning it takes a collection (like a list, tuple, set) and pulls out the individual elements.
@@ -1626,6 +1652,7 @@ list1 = [1, 2]
 list2 = [3, 4]
 combined = [*list1, *list2]
 print(combined)  # [1, 2, 3, 4]
+# why not put the lists directly into the list? combinedsublists = [list1, list2] # = [[1, 2], [3, 4]] just turns the list into lists insted of variables. ALTERNATIVE = [[*list1], [*list2]] 
 # 2) Double asterisk (**) for unpacking dictionaries: This is used to unpack key-value pairs from a dictionary into another dictionary.
 # EX unpacking a dictionary (insted of passing in the dictionary we pass in the key value pairs)
 def greet(name, age): 
