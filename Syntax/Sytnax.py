@@ -22,7 +22,7 @@ from random import random as rd # here we use the random library and import the 
 # * F strings
 # f-string is a way     to format strings in python
 # f-string is used to insert the value of a variable inside a string
-x = 10
+x = 10 # variable x is equal to 10
 y = 20
 print(f"the value of x is {x} and the value of y is {y}")
 
@@ -226,6 +226,11 @@ else:
     print("Password is strong")
 # Alternatively we can do
 if pwd in ["password", "12345", "qwerty"]: # this will check if the password is equal to any of these values, idealy you should use a set its faster
+    print("Password is weak")
+else:
+    print("Password is strong")
+# better using a set
+if pwd in {"password", "12345", "qwerty"}: # this will check if the password is equal to any of these values, idealy you should use a set its faster
     print("Password is weak")
 else:
     print("Password is strong")
@@ -462,6 +467,7 @@ def add(a, b=0): # b is a default parameter if nothing is entered for be it will
 
 result1 = add(3, 4)  # Positional arguments, result1 = 7
 result2 = add(5)     # Default argument, result2 = 5, b = 0 so 5+0=0
+
 # * NOTE for default parameters 
 # the default parameter are only evaluated when the function is called not when the function is defined
 # this means different function calls will share the same default parameter value which is not always what you want
@@ -488,12 +494,25 @@ print(list1) # [1]
 list2 = append_to_list(2)
 print(list2) # [2] # now list1 and list2 are different lists
 
-# ! delcaing vaiables inside the function call
-# you can declare variables inside the function call and they will be local to the function
-def squareFirst(mylist):
-    return mylist[0] ** 2
-print(squareFirst(mylist = [5, 10])) # we declare and pass the list on the same line (its scope is limited to the function)
+# ! Positional and Keyword Arguments
+# Positional arguments are arguments that are passed to a function in the order they are defined in the function signature.
+# Keyword arguments are arguments that are passed to a function using a keyword and a value. the argument name must be the same as the parameter name in the function signature. 
+  #NOTE: Once you decide to use a keyword argument, all subsequent arguments must also be keyword arguments.
+# Positional arguments EX:
+def add(a, b):
+    return a + b
+result1 = add(3, 4)  # Positional arguments, result1 = 7. 3 and 4 must be in the same order as the parameters in the function signature (a, b)
+
+# Keyword arguments EX:
+# this is like delcaing vaiables inside the function call parantheses. These arguments will be local to the function and can be used inside the function only
+def squareFirst(mylist, exponent): 
+    return mylist[0] ** exponent 
+print(squareFirst(exponent = 2, mylist = [5, 10])) # 25. the order dose not matter as we are defining the arguments by name which are the same as the parameters name in the function hence they are recognized
 # print(mylist) # NameError: name 'mylist' is not defined 
+# print(squareFirst(exponent = 2, list = [5, 10])) ### ERROR unexpected keyword argument 'list'
+# print(squareFirst(mylist=[5, 10], 2)) # ERROR positional argument follows keyword argument
+# print(squareFirst(2, [1,2])) # ERROR it assigns exponent to a list and list to a number so doing 2[0] is a error. remember the order of the positional arguments matters
+# print(squareFirst([5, 10], 2)) # ok
 
 # ! using logical operators in return statements
 # you can use logical operators to return a value based on if its none
@@ -1524,6 +1543,22 @@ matrix[::2], # skip rows step size  (select every other row)
 [row[::2] for row in matrix] # skip columns step size
 )
 
+# ! Declaring multiple variables at once without using tuple unpacking
+# this includes all types of variables
+# We can also reassign multiple variables at once
+a, b = 1, 2
+# we can also use this to map a result of a function to multiple variables
+def get_coordinates():
+    return 10, 20 # returns (10, 20)
+x, y = get_coordinates() # x = 10 and y = 20
+
+# ! Swapping multiple variables in place
+mylist = [1, 2]
+# swaping the two elements in place with not temporal variables
+mylist[0], mylist[1] = mylist[1], mylist[0]
+print(mylist) # output [2,1]
+# with temp this would be temp = mylist[0], mylist[0] = mylist[1], mylist[1] = temp. since list[0] is changed we must save its value in temp to get it later 
+
 # ! tuple unpacking (a way to delare and assign multiple variables at once)
 # syntax general a, b, c = (1, 2, 3)
 # * NOTE that the variables and arguments must be in the same order and the number of variables must match the number of arguments (a, b) = (1, 2, 3) is not allowed
@@ -1554,16 +1589,6 @@ b = 20
 a, b = b, a
 print(a)  # Output: 20
 print(b)  # Output: 10
-    
-# ! Declaring multiple variables at once without using tuple unpacking
-# this includes all types of variables
-# We can also reassign multiple variables at once
-a, b = 1, 2
-# we can also use this to map a result of a function to multiple variables
-def get_coordinates():
-    return 10, 20 # returns (10, 20)
-x, y = get_coordinates() # x = 10 and y = 20
-
 
 # ! list unpacking
 # You can unpack a list into multiple variables you can use the * operator to make that variable a list 
@@ -1578,15 +1603,51 @@ print(a, b, c)  # Output: 1 2 3
 my_list = [1, 2, 3]
 a, *b, c = my_list
 print(a, b, c)  # Output: 1 [2] 3
-# EX
 
-# ! Swapping multiple variables in place
-mylist = [1, 2]
-# swaping the two elements in place with not temporal variables
-mylist[0], mylist[1] = mylist[1], mylist[0]
-print(mylist) # output [2,1]
-# with temp this would be temp = mylist[0], mylist[0] = mylist[1], mylist[1] = temp. since list[0] is changed we must save its value in temp to get it later 
 
+#! Unpacking with the * operator
+# In Python, the * operator is used for unpacking — meaning it takes a collection (like a list, tuple, set) and pulls out the individual elements.
+# this means if we pass a list into the * operator it will unpack the list menaning it will take each element in the list and assign it to the variable
+# There are 3 ways to use the * operator
+# 1) Single asterisk (*) for unpacking: This is used to unpack elements from an iterable into individual variables.
+# ex: (in this example know the number of elements but this might not always be the case)
+def add(a, b, c):
+    return a + b + c
+numbers = [1, 2, 3]
+# Instead of writing add(numbers[0], numbers[1], numbers[2])
+print(add(*numbers))  # Unpacks the list into separate arguments, Here, *numbers means "pass 1, 2, and 3 as separate arguments."
+# Ex: (here middle grabs all the elements in the list between first and last)
+first, *middle, last = [1, 2, 3, 4, 5]
+print(first)   # 1
+print(middle)  # [2, 3, 4]
+print(last)    # 5
+# EX;
+list1 = [1, 2]
+list2 = [3, 4]
+combined = [*list1, *list2]
+print(combined)  # [1, 2, 3, 4]
+# 2) Double asterisk (**) for unpacking dictionaries: This is used to unpack key-value pairs from a dictionary into another dictionary.
+# EX unpacking a dictionary (insted of passing in the dictionary we pass in the key value pairs)
+def greet(name, age): 
+    print(f"Hello {name}, you are {age} years old.")
+info = {'name': 'Alice', 'age': 30}
+# Instead of greet(info['name'], info['age']) we use:
+greet(**info) # Unpacks the dictionary into separate keyword arguments, Here, **info means "pass name='Alice' and age=30 as separate keyword arguments." It matches keys to parameter names automatically!
+# Ex merging twi dictionaries like the lsit ex but using the ** operator
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'c': 3, 'd': 4}
+combined = {**dict1, **dict2}
+print(combined)  # {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+# 3) using both of the * and ** operators
+# this is used to define a function that takes both positional arguments(i.e arguments that are passed in the order they are defined) and keyword arguments (i.e arguments that are passed in by name)
+def fun(a, b, *args, **kwargs): # this function 2 mandatory arguments a and b, and then any number of positional arguments (args) and keyword arguments (kwargs) the **defines the keyword arguments and the * defines the positional arguments, there can be as many positional arguments as you want
+    print(f"a = {a}")
+    print(f"b = {b}")
+    print(f"args = {args}")
+    print(f"kwargs = {kwargs}")
+
+fun(1, 2, 3, 4, 5, x=100, y=200) # a = 1, b = 2, args = (3, 4, 5), kwargs = {'x': 100, 'y': 200}, we must define a and b the rest are optional and we can define as many positional and keyword arguments as we want
+    
 # ! sets in python 
 """ In Python, sets are unordered collections of unique elements. 
 They are defined using curly braces {} or the set() function, 
@@ -1692,7 +1753,7 @@ my_dict.clear() # removing all key value pairs
 print(my_dict) # Output: {}
 # NOTE you cant just add a key, EX: my_dict["A"] is not valid you can set it equal to a value or set a empty value
 
-# ! filtering, sorting and dictionary comprehension
+# ! filtering, sorting, dictionary comprehension and dictionary splicing
 # For sorting dictionaries by keys or values, you can use the sorted() function in combination with the dict() function to convert the soted obj to a dictionary
 # sort by key
 my_dict = {'b': 2, 'a': 3, 'c': 1}
@@ -1729,6 +1790,7 @@ sub_dict = {key: my_dict[key] for key in list(my_dict)[:2]}
 print(sub_dict)  # Output: {'a': 1, 'b': 2}
 
 # ! Try catch 
+# each try has its own catch in nested try catch statements the first catch after a try is its corresponding catch, the nested try only runs if the first try is successful
 try:
     # Code that might raise an exception
     result = 10 / 0
@@ -1762,15 +1824,19 @@ except ValueError as e:
     
 # * EX with raise keyword to make our own error class and raise it
 class CustomError(Exception): # we inherit a custom error class from the Exception class
-    pass # we pass an empty class we can add functionality later
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)  # call the parent class constructor with the message
+    def __str__(self): # this is the string representation of the error class
+        return f"CustomError: {self.message}"
 
 def test_function():
     raise CustomError("This is a custom error") # we raise our custom error using the raise keyword
 
 try:
     test_function()
-except CustomError as e:
-    print(e)  # Output: This is a custom error
+except CustomError as e: # as e means we are catching the error and assigning it to e
+    print(e)  # Output: CustomError: This is a custom error. NOTE: if the exception class was empty it would print 'This is a custom error' what was passed when raising the error
 
 
 # ! Using assert to check conditions
