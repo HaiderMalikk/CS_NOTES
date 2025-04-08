@@ -216,6 +216,86 @@ myvar = 3 and 0 # my var is 0
 # for the and if there is a flase value the var will be that value but if both are true it will be the second value
 # can also be used in a functions return statment see function notes
 
+#! Bitwise Operators in Python - Quick Full Notes
+# like C you can do bit munipulation in python using bitwise operators
+# all the values here are in hex for convenience but in reality they are in binary, ex; 0b0101 would have a binary 000..0010 and a decimal value ex 7746..
+
+# Bitwise AND (&)
+# Compares each bit and returns 1 if both bits are 1
+a = 5         # 0b0101
+b = 3         # 0b0011
+result_and = a & b  # 0b0001 -> 1
+print("AND:", result_and)
+
+# Bitwise OR (|)
+# Compares each bit and returns 1 if either bit is 1
+result_or = a | b   # 0b0111 -> 7
+print("OR:", result_or)
+
+# Bitwise XOR (^)
+# Compares each bit and returns 1 if bits are different
+result_xor = a ^ b  # 0b0110 -> 6
+print("XOR:", result_xor)
+
+# Bitwise NOT (~)
+# Flips all bits (also changes sign using two's complement)
+result_not = ~a     # -(a + 1) => -(5 + 1) = -6
+print("NOT:", result_not)
+
+# Bit Shift Operators
+# shift right means divide by 2^n and shift left means multiply by 2^n where n is the value of the shift (i.e 1) 
+# 0100 = 4 and 0100 << 1 = 1000 = 8 and 0100 >> 1 = 0010 = 2
+# you can shift right with both signed and unsigned integers but you can only shift left with unsigned integers if you shoft left with signed integers it gives undefined behavior.
+
+# Bitwise Left Shift (<<) 
+# Shifts bits to the left, adds zeros at the right
+# Multiplying by 2 for each shift, here the shift is 1
+result_left_shift = a << 1  # 0b1010 -> 10
+print("Left Shift:", result_left_shift)
+
+# Bitwise Right Shift (>>)
+# Shifts bits to the right, discards bits on the right
+# Dividing by 2 for each shift
+result_right_shift = a >> 1  # 0b0010 -> 2
+print("Right Shift:", result_right_shift)
+
+# ----------------------------------------
+# Special Case: Only Inverting Limited Bits
+# (Like flipping just the 3 lowest bits)
+
+# Example: Invert only the 3 lowest bits of number 5 (0b101)
+x = 5  # 0b101
+n_bits = 3  # How many bits we care about
+
+# Create a mask with n bits all set to 1 (e.g., 0b111 for 3 bits)
+mask = (1 << n_bits) - 1  # (1 << 3) - 1 = 8 - 1 = 7 (0b111)
+
+# Invert x, but keep only n bits
+inverted_x = ~x & mask  # First do ~x, then mask it
+print("Inverted Limited Bits:", inverted_x)  # Output: 2 (0b010)
+
+# ----------------------------------------
+# Quick Summary of Bitwise Tricks:
+
+# 1. ~x is equal to -(x + 1)
+# 2. (x & 1) checks if x is odd (last bit is 1)
+# 3. (x >> n) shifts x right by n bits (divides by 2^n)
+# 4. (x << n) shifts x left by n bits (multiplies by 2^n)
+# 5. x ^ x = 0 (useful trick to cancel values)
+# 6. x & (x-1) removes the lowest set 1-bit (used to check powers of 2)
+
+# Example of (x & (x-1)):
+y = 8  # 0b1000
+print("y & (y-1):", y & (y-1))  # Output: 0 (because 8 is power of 2)
+
+# 7. Swapping two numbers without a temp variable using XOR:
+a, b = 5, 3
+a = a ^ b
+b = a ^ b
+a = a ^ b
+print("After XOR Swap: a =", a, "b =", b)
+
+
 ## While loops
 
 # while loops are loops that run if a statment is true the loop will check each time it runs if statment is true 
