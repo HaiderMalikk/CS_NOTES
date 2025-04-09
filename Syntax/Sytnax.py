@@ -21,7 +21,7 @@ Hashable	    Can be used as a dictionary key or put in a set (has a fixed hash)	
 Subscriptable	Supports indexing like obj[0]	                                        List, Tuple, Dict, String
 Callable	    Can be called like a function obj()	                                    Functions, Classes, Objects with __call__
 Mutable	        Can be changed after creation	                                        List, Dict
-Immutable	    Cannot be changed after creation	                                    int, str, tuple
+Immutable	    Cannot be changed after creation (can still redefine)                   int, str, tuple
 """
 # data types: int, float, str, bool, list, tuple, dict, set
 
@@ -125,6 +125,27 @@ if x3 == 5 and \
     x3 + y3 == 12:
     print("All conditions are true")
     
+# ! Multiple Conditions in a conditional Statement
+# DO NOT DO if n > a and b and c: # this will not work as expected as by default a,b,c are true so the statement will always be true
+# this wont check if n > b and n> b hence we must do
+# * the in keyword is used to check if a value is in a iterable
+# EX (correct)
+pwd = "password"
+if pwd == "password" or pwd == "12345" or pwd == "qwerty": # this will check if the password is equal to all of these values
+    print("Password is weak")
+else:
+    print("Password is strong")
+# Alternatively we can do
+if pwd in ["password", "12345", "qwerty"]: # this will check if the password is equal to any of these values, idealy you should use a set its faster
+    print("Password is weak")
+else:
+    print("Password is strong")
+# better using a set
+if pwd in {"password", "12345", "qwerty"}: # this will check if the password is equal to any of these values, idealy you should use a set its faster
+    print("Password is weak")
+else:
+    print("Password is strong")
+    
 # ! NOTE ON LOGICAL OPERATORS
 #  * in python True is 1 and False is 0
 # this is carried over to arithmetic operations like addition, multiplication, etc. (logic arithmetic)
@@ -140,6 +161,8 @@ In Python, logical operators or, and, and not have specific precedence (priority
 not (highest priority)
 and (middle priority)
 or (lowest priority)
+
+NOTE: Arithmetic operators have higher priority than logical operators.
 """
 # EX:
 x = True
@@ -191,6 +214,10 @@ False
 # 4. Addition and Subtraction (+/-)
 # 5. Comparison operators (==, !=, <, >, <=, >=)
 # 6. Logical operators (and, or, not)
+# NOTE logical operators have lower priority than arithmetic operators (higher precedence)
+
+# EX of another usefull mathematical operator called absolute value, you can use abs function to get the absolute value of a number which just means only the magnitude of the number no sign
+print(abs(-10)) # 10
 
 # ! shorthand if else like ternary operator
 # syntax:
@@ -313,26 +340,6 @@ while count <= 5: # loop will run until this statement is false
     break # this will break the while loop scince the while loop only had 1 chance to run and then broke the loop will only print 1
     # Increment the count by 1 in each iteration
     # once count is 6 the loop breaks scince the loop breaks it cannot run so 6 will not be printed 
-    
-# ! Multiple Conditions in a conditional Statement
-# DO NOT DO if n > a and b and c: # this will not work as expected as by default a,b,c are true so the statement will always be true
-# this wont check if n > b and n> b hence we must do
-# EX (correct)
-pwd = "password"
-if pwd == "password" or pwd == "12345" or pwd == "qwerty": # this will check if the password is equal to all of these values
-    print("Password is weak")
-else:
-    print("Password is strong")
-# Alternatively we can do
-if pwd in ["password", "12345", "qwerty"]: # this will check if the password is equal to any of these values, idealy you should use a set its faster
-    print("Password is weak")
-else:
-    print("Password is strong")
-# better using a set
-if pwd in {"password", "12345", "qwerty"}: # this will check if the password is equal to any of these values, idealy you should use a set its faster
-    print("Password is weak")
-else:
-    print("Password is strong")
 
 #! for loops !!
 #In Python, a for loop is a control structure that is used to iterate over a sequence 
@@ -362,7 +369,7 @@ for letter in word:
 # but since i starts at 0 going 5 times means 0,1,2,3,4 which is what we want as arrays are 0 indexed meaning looping 5 times 
 # over a array of length 5 is = looping over its indexes 0,1,2,3,4 thats still looping 5 times 
 # in this ex we print the numbers from 0 to 4
-# so in short we loop over the array 5 times but the value of i is 0,1,2,3,4 as we start at 0
+# so in short we loop over the array 5 times but the value of i is 0,1,2,3,4 as we start at 0. this means that the stop value of the range is not included (exclusive)
 for i in range(5):
     print(i) 
 # EX array, here length is 5 so it will loop over 5 times but as i starts at 0 going 5 times means we print arr at index i at i = 0,1,2,3,4 (still 5 iterations, range(5))
@@ -379,6 +386,20 @@ for i in range(0, 10, 2):
     print(i)
 # output: 0 2 4 6 8 # here 10 is not included so we get 0,2,4,6,8
 
+# using a range with a negative step
+# having a negative step means we are going in reverse order ex -2 means we go backwards by 2 each iteration
+# NOTE: since we are going backwards we need to use range(5, 0, -1) i.e we start at 5 and end at 0 while -1 is the step meaning we go backwards from 5 by 1 each iteration till 0
+# EX using -1 to simpley go backwards (in reverse order)
+for i in range(5, 0, -1): 
+    print(i)
+# output: 5 4 3 2 1
+# ALTERNATIVE
+# alternatively we can use reversed(range(5)) to first reverse the sequence made by range(5) then loop over that so it would be like looping over (4,3,2,1,0)
+rev = list(reversed(range(5))) # reversed returns a reversed iterator so we convert it to a list
+for i in rev:
+    print(i) 
+# Output: 4 3 2 1 0
+
 # * why use range:
 """ 
 in a normal for loop: for i in [1, 2, 3, 4, 5]: print(i)
@@ -389,15 +410,6 @@ i at each iteration is the index of the element as it starts at 0 and goes to 4 
 now the loop goes over 5 times = len of array, and since 5 is discluded we get 0,1,2,3,4 which is the indexes of the array
 so now we can get the index of any element in the array with i and teh value at i using numbers[i].
 """
-
-# Going in reverse order over a list
-# Op1 use reversed:
-rev = list(reversed(range(5))) # reversed returns a reversed iterator so we convert it to a list
-for i in rev:
-    print(i) # Output: 4 3 2 1 0
-# Op2 use range with a negative step:
-for i in range(4, -1, -1): # note start in inclusive (its included) and end is exclusive (its not included we go upto 0 not -1) and step how many numbers to skip between each iteration
-    print(i) # Output: 4 3 2 1 0
 
 # ! iterating over a iterable like a list or a string
 # since strings are a list of characters we can iterate over them like a list
@@ -437,6 +449,27 @@ print(my_tuple) # output: (1, 2, 3)
 print(my_tuple[0]) # output: 1
 my_tuple = (1, 2, 3, 4) # this is ok as we resign the tuple to a new tuple i.e change the variables value
 # my_tuple[0] = 99 # this is not ok as tuples are immutable CANNOT BE CHANGED
+
+# Tuples can also be spliced
+#EX:
+my_tuple = (1, 2, 3, 4, 5, 6, 7)
+print(my_tuple[0:3]) # output: (1, 2, 3)
+
+# tules also support nested tuples
+#EX:
+nested_tuple = (1, 2, (3, 4), 5)
+# accessing the nested tuple
+print(nested_tuple[2]) # output: (3, 4)
+print(nested_tuple[2][0]) # output: 3
+
+# tuples also have support list comprehension
+even = [x for x in my_tuple if x % 2 == 0] # pick out all the even numbers
+print(even) # output: [2, 4, 6]
+
+# you can also have labmda functions with them so they can also be filtered
+# EX:
+even = tuple(filter(lambda x: x % 2 == 0, my_tuple)) # pick out all the even numbers but we must convert it to a tuple by casting it
+# For full details on list comprehension, splicing and lambda functions check list comprehension notes below
 
 # ! Enumerate function
 # * if we use range to iterate we have the index but not the value
@@ -542,7 +575,9 @@ my_function() # nothing will happen as we pass before any code is executed
 # you can have zero parameters and just a function and you can define a parameter a default value (optinal paramters) 
 def greet(name):
     """
-    This is a docstring that provides a brief description of the function.
+    This is a docstring that provides a brief description of the function. when you hover over a instance of the function it will show this docstring
+    some keywords you can use in the docstring to be highlited are: param, return, raise argument, exception, type, example etc these are reserved keywords regocnized by the IDE
+    You can acctually do the same for any file by adding a docstring at the top of the file with a discription of the file
     """
     print(f"Hello, {name}!") # this is a f print statement format = f"String, {variable}!" "!"  & "," is part of string
     # in this statment vars must be in {} while inside the string while all string is inside ""
@@ -579,7 +614,7 @@ print(list2) # [1, 2]
 # To fix this issue you set the default parameter to None then create a new list when the function is called using the fact that the list is None when the function is called
 def append_to_list(element, list=None):
     if list is None:
-        list = [] # Create a new list if list is None for every function call a new list is created
+        list = [] # Create a new list if list is None for every function call a new list is create. this means each time a new obj it made it wil have its own new empty list made, and since the list is none when the function is called it will create a new list evey time the function is called
     list.append(element)   
     return list 
 list1 = append_to_list(1)
@@ -590,7 +625,7 @@ print(list2) # [2] # now list1 and list2 are different lists
 # ! Positional and Keyword Arguments
 # Positional arguments are arguments that are passed to a function in the order they are defined in the function signature.
 # Keyword arguments are arguments that are passed to a function using a keyword and a value. the argument name must be the same as the parameter name in the function signature. 
-  #NOTE: Once you decide to use a keyword argument, all subsequent arguments must also be keyword arguments.
+  #NOTE: Once you decide to use a keyword argument, all subsequent arguments must also be keyword arguments. if you deicde to use positional arguments all subsequent arguments must also be positional arguments. YOU CAN ONLY CHOOSE ONE
 # Positional arguments EX:
 def add(a, b):
     return a + b
@@ -604,6 +639,7 @@ print(squareFirst(exponent = 2, mylist = [5, 10])) # 25. the order dose not matt
 # print(mylist) # NameError: name 'mylist' is not defined 
 # print(squareFirst(exponent = 2, list = [5, 10])) ### ERROR unexpected keyword argument 'list'
 # print(squareFirst(mylist=[5, 10], 2)) # ERROR positional argument follows keyword argument
+# print(squareFirst(exponent = 2, [5, 10])) # ERROR cannot use positional argument after keyword argument
 # print(squareFirst(2, [1,2])) # ERROR it assigns exponent to a list and list to a number so doing 2[0] is a error. remember the order of the positional arguments matters
 # print(squareFirst([5, 10], 2)) # ok
 
@@ -628,7 +664,14 @@ def returnThis(value):
 print(returnThis(0)) # default value
 print(returnThis(5)) # 5
 
-# ! lambda function (anonymous function)
+# ! using a dictionary to return multiple values like a JSON object
+# you can use a dictionary to return multiple values from a function
+def get_name_and_age(name, age):
+    return {'name': name, 'age': age}
+person = get_name_and_age('Alice', 30)
+print(person) # {'name': 'Alice', 'age': 30}
+
+# ! lambda function (anonymous function aka inline function)
 # how to create a lambda function in python 
 # lambda are simple functions 
 square = lambda x: x ** 2
@@ -636,13 +679,6 @@ result = square(5)  # result = 25
 # multi variable lambda function
 add = lambda x, y: x + y
 result = add(3, 4)  # result = 7
-
-# ! using a dictionary to return multiple values
-# you can use a dictionary to return multiple values from a function
-def get_name_and_age(name, age):
-    return {'name': name, 'age': age}
-person = get_name_and_age('Alice', 30)
-print(person) # {'name': 'Alice', 'age': 30}
 
 # ! python classes
 # classes are templates for creating objects
@@ -692,10 +728,7 @@ a = 10
 print(isinstance(a, int)) # True
 print(isinstance(a, float)) # False
 
-# you can also cast to other things like a absolute value
-print(abs(-10)) # 10
-
-# ! Type Hinting (in python3), syntax is var_name: type = value
+# ! Type Hinting (in python3), syntax is var_name: type = value, this is not enforced and is only used for documentation purposes
 # python is a dynamicly typed language means that the type of a variable is determined at runtime
 # but we can specify the type of a variable using type hints, Syntax is, var_name: type = value
 # * NOTE: Since python is not strictly typed, type hints are not enforced and are only used for documentation purposes
@@ -763,6 +796,8 @@ def change(a): # pass in a reference to the list
 print(a) # Output: [1, 2, 3]
 change(a) # pass in a reference to the list
 print(a) # Output: [10, 2, 3] # the change is reflected in the original list
+# WHY?: when you pass a refrence type you pass its address (call by refrence) when you pass in a primitive type to a function you pass its value (call by value)
+#       same with assignment when you assign a valiable a reference type it holds the address of the object in memory not the value of the object but when you assign a primitive type to a valiable it holds the value of the object
 
 # ! Strings
 ## String methods 
@@ -864,6 +899,7 @@ print(new_string)  # Output: "This is a example. This example is important."
 # syntax str[start:stop:step] # same as lists
 text = "Hello, World!"
 
+# ! String slicing (you can do ths with any sequence type like lists, tuples, etc.)
 # Extract a substring
 print(text[0:5])  # Output: "Hello" (characters from index 0 to 4)
 # Omit the start index
