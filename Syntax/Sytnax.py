@@ -219,6 +219,12 @@ myvar = 3 and 0 # my var is 0
 #! Bitwise Operators in Python - Quick Full Notes
 # like C you can do bit munipulation in python using bitwise operators
 # all the values here are in hex for convenience but in reality they are in binary, ex; 0b0101 would have a binary 000..0010 and a decimal value ex 7746..
+# bits are used to represent numbers and there are 32 bits in a byte they consist of 0 and 1, for EX: 50000 = 0000C350(hex) = 0000 ... 0000 1100 0011 0101 0000(binary 32 bits)
+# Most significant bit (MSB) is the leftmost bit, and the least significant bit (LSB) is the rightmost bit. in our example 1 is the MSB and 0 is the LSB the number begins at 1 the zeros before it are irrelevant the LSB is used to determine the sign of the number (negative or positive) by using two's complement
+# Signed vs Unsigned: Signed integers can represent both positive and negative numbers, while unsigned integers can only represent non-negative numbers. In Python, integers are signed by default. we use the first bit to determine the sign (0 for positive, 1 for negative)
+# in our example 0 0000 ... 0000 1100 0011 0101 0000 is a signed integer as the first bit can be used to determine the sign, while 0000 ... 0000 1100 0011 0101 0000 is an unsigned integer as the first bit is not used to determine the sign, we know its signed or unsigned by the number of bits for signed numbers is one more than the number of bits for unsigned numbers
+# EX: -6 in binary is 1111 1010 (two's complement) and 6 is 0000 0110, the first bit is used to determine the sign of the number, so we know its signed if it was unsigned we would just look at the magnitude of the number not the first bit
+# NOTE: for floating point numbers bit manipulation is not possible as they are stored in a different format (IEEE 754) and are not represented in binary like integers
 
 # Bitwise AND (&)
 # Compares each bit and returns 1 if both bits are 1
