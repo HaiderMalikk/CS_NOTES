@@ -268,7 +268,7 @@ print("OR:", result_or)
 
 # Bitwise XOR (^)
 # Compares each bit and returns 1 if bits are different
-result_xor = a ^ b  # 0b0110 -> 6
+result_xor = a ^ b  # 0b0110 -> 6 
 print("XOR:", result_xor)
 
 # Bitwise NOT (~)
