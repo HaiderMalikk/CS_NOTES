@@ -252,6 +252,7 @@ myvar = 3 and 0 # my var is 0
 # in our example 0 0000 ... 0000 1100 0011 0101 0000 is a signed integer as the first bit can be used to determine the sign, while 0000 ... 0000 1100 0011 0101 0000 is an unsigned integer as the first bit is not used to determine the sign, we know its signed or unsigned by the number of bits for signed numbers is one more than the number of bits for unsigned numbers
 # EX: -6 in binary is 1111 1010 (two's complement) and 6 is 0000 0110, the first bit is used to determine the sign of the number, so we know its signed if it was unsigned we would just look at the magnitude of the number not the first bit
 # NOTE: for floating point numbers bit manipulation is not possible as they are stored in a different format (IEEE 754) and are not represented in binary like integers
+# Ahofting is visually and coneptually the same for hex numbers  Shifting Right (multiplying by 2^3) 0b00010000 >> 3 → 0b00000010    Shifting left (dividing by 2^3) 0b00010000 << 3 → 0b10000000
 
 # Bitwise AND (&)
 # Compares each bit and returns 1 if both bits are 1
@@ -274,6 +275,8 @@ print("XOR:", result_xor)
 # Flips all bits (also changes sign using two's complement)
 result_not = ~a     # -(a + 1) => -(5 + 1) = -6
 print("NOT:", result_not)
+
+# Bitwise opearotors in python do not have &= etc etc like C
 
 # Bit Shift Operators
 # shift right means divide by 2^n and shift left means multiply by 2^n where n is the value of the shift (i.e 1) 
