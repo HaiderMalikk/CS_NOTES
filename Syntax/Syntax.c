@@ -71,6 +71,23 @@ printf("Float: %.2f\n", b);  // %f for floats with 2 decimal places. b = 5.75 so
 // Constants are variables whose value cannot be changed.
 const int DAYS_IN_WEEK = 7; // 'const' keyword makes this a constant value.
 
+// ! Static variables
+// Static variables retain their value between function calls.
+// Static Variables are initialized only once and retain their value between function calls.
+// even if we try to redefine a static varible in a function but its already defined before it will not change the value of the variable
+// EX:
+void func() {
+    static int count = 10; // Static variable using 'static' keyword.
+    count += 5;
+    printf("%d ", count); }
+int main() {
+    for (int i = 0; i < 4; i++) {
+        func(); 
+    }
+    return 0; 
+}
+// output 15, 20, 25, 30. even though we try to redefine count its retains it value from the first call and only adds to it each time hence we dont see 15, 15 ...
+
 // ! Arithmetic Operators
 
 // Basic arithmetic operators in C:
@@ -382,14 +399,20 @@ printf("%s\n", names[1]);  // Prints "Bob"
 // char *str stores the address of the first character of the string, and char str[] is a array of chars but since its a array str points to the first character of the string
 // now here we say char *names this means that names points to a str and *names[] means that names points to a array of pointers in this case the pointers are char pointers i.e strings where the pointer just points to teh first character of the strings in the array
 char *names[] = {"Alice", "Bob", "Charlie"}; 
-print("%p\n", names) // prints the array address
-print("%s\n", names[1]);  // Prints "Bob" beacuse we used the %s format specifier to print a string
+printf("%p\n", names); // prints the array address
+printf("%s\n", names[1]);  // Prints "Bob" beacuse we used the %s format specifier to print a string
 // using pointer arithmetic, we know the address points to the first element and we also know we can add * to a pointer to get its value so:
 printf ("%s\n", *names);  // Prints "Alice" as names gives the first element in the array and doing *names gives the first elements value which is the string "Alice"
 printf ("%s\n", *(names+1));  // Prints "Bob" as *(names+1) is the value at the address of the second element of the array
+// OR
+printf("%s\n", (names+1)[0]);  // Prints "Bob" since (names+1) is the address of the second element of the array and [0] is the first character of the string we must specify this first element as we dont dereference the address pointed by (names+1) the first element at index 0 is enough to get the whole string "Bob" automatically
 printf("%c\n", names[1][0]);  // Prints "B" as names[1] is the address of the "Bob" string and [0] is the first character of the string remember that each element of the array names is a string which itself is a array of characters
 // or 
 printf("%c\n", *(*(names+1))); // Prints "B" as *(names+1) is the address of the "Bob" string and *(*(names+1)) is the value of the first character of the string do *(*(names+1))+n to get the nth character of the string Bob
+int arr[4] = {5, 10, 15, 20}; // Array of 4 integers
+int (*ptr)[4] = &arr; // Pointer to an array of 4 integers the size of the pointer must match the size of the array now ptr is a pointer to arr's first emelemnt making it the smae is ptr[0] 
+// NOTE: this is a array of pointers the elements of ptr are not values but addresses to the values for ex ptr[0] is the address of the first element of the array arr to gets its value we need to dereference it in short *ptr = arr and so we can index it like: *ptr[0] or do ptr[0][0] both are the same as arr[0] and etc
+printf("%d %d", (*ptr)[1], ptr[0][3]); // 10 20. the firs one derefrences the arr its its values, as derefrenceing *ptr points to the first element it arr the we can accsess the second element of the array by [1], NOTE that *ptr = arr and *ptr[0] = arr[0] etc so we can use *ptr as a array and index its values 
 
 // ! Pointer Arithmetic
 // an array is a reference type meaning if we have int arr = [20]; arr hold a address to the first element of the array i.e arr is a address not a value
@@ -474,6 +497,16 @@ funcPtr = sayHello;  // Storing the address of the function in the pointer. this
 // NOTE: we can do this in one line as well by: void (*funcPtr)(char *) = sayHello; // no declaration needed
 funcPtr("Alice");  // Calling the function using the pointer.
 // and array of function pointers can be used to store multiple functions
+// EX 2;
+int (*ptr)(int, int);
+int add(int a, int b) { return a + b; }
+ptr = add;
+printf("%d", ptr(3, 4)); // so need to dereference as the function pointer is already a address to the function
+
+int (*ptr)(int, int);
+int add(int a, int b) { return a + b; }
+ptr = &add; // storing a address of a function in a pointer
+printf("%d", (*ptr)(3, 4)); // must dereference the pointer to call the function
 
 // ! Void Pointers
 // Void pointers are generic pointers that can store the address of any data type.
