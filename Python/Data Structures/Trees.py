@@ -221,6 +221,20 @@ Tree Types Overview:
    5   20
        / \
      15  100
+     
+- DEF: every node in the left subtree of a parent node must be less than the parent node and every node in the right subtree must be greater than the parent node and every node itself must be a BST.
+     
+NOTE: 
+       x
+      / \
+    15  100
+    \
+    120
+  
+THIS IS NOT VALID BECAUSE 120 IS NOT A CHILD OF 100, even though 15's left child is 120 > 15 its also greater then an node which in the BST which is not its parent (100) so this is not a valid BST.
+Another way to think about it is that every node in the left subtree of 20 must be less than 20 and every node in the right subtree must be greater than 20 (as 20 is the parent node).
+This is so when we are serching for ex 120 we would branch right on 20 and go right as 120 > 20 but is 120 is on the left side it will never be found hence its unvalid
+      
 
 # in the repersentation below we can see what the tree above would look like in actual memory. each square is a node with key(data) left child and right child (the references to them) 
 # once we get to the left child or right child we then have accsess to data and there children and the proccess is repeated until we reach a leaf node (recursively done).
@@ -844,15 +858,17 @@ root.max_node() # 100
 
 # ! Implementing Heap Tree in Python (see details on heap tree in tree types notes)
 # EX of heap tree (note both are complete Binary trees):
-# min heap (the parent node is less than its children and so the root node is the min value):
+# min heap (the parent node is less than or equal to its children and so the root node is the min value):
 """ 
      1
     / \
    4  10
   / \
 70  100 
+    /  \
+  120  120
 """
-# max heap (the parent node is greater than its children and so the root node is the max value):
+# max heap (the parent node is greater than or equal to its children and so the root node is the max value):
 """ 
      100
     /   \

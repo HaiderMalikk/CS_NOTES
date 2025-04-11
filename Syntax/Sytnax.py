@@ -938,6 +938,7 @@ print(new_text)  # Output: "Hello, AWorld!"
 # ! arrays 
 # using arrays 
 from array import array
+# arrays only hold one type of data, they are more efficient than lists for large amounts of data
 #You can create an array by specifying its type code and initializing it with elements. 
 # The type code determines the data type of the elements in the array. Here are some common type codes:
 
@@ -968,64 +969,6 @@ int_array = new_int_array  # Updating the reference
 sub_array = int_array[1:4]  # Slicing: creates a new array with elements 2, 3, 4
 concatenated_array = int_array + array('i', [6, 7, 8])  # Concatenation
 index = int_array.index(3)  # Searching for the index of element 3
-
-# 2d arrays is a array within a array it has 2 indexes matrix[0][0] is 1 [1][2] is 6
-matrix = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
-print(matrix[1][0])
-
-
-# ! arrays [this, is, a, array]
-# use numpy library to work with arrays
-## use [] to create and store array elemnts  
-my_array = [1,2,3,4,5]
-
-## now you have created a array to accese its elemets using a index
-# starts at 0, to accese the array end to start use -1, -1 is the last element in a array
-print(my_array[0]) # first element
-# output: 1
-print(my_array[2]) # if i wanted to print the third element i would stop i index before here thats 2
-#output: 3
-print(my_array[-1]) # accese last element -2 would give me the sencond last and so on
-#output: 5
-
-## to modify a array (change a element)
-my_array[3] = 10 # simply assign the element using the [index] and setting it = to the new value
-print (my_array)
-# output: [1, 2, 3, 10, 5]
-
-## Modifing entire arrays
-array1 = [1,2,3,4,5]
-array2 = [6,7,8,9,10]
-# a simple operation is to add the two arrays element wise
-# this adds each element in the array (array1[0] + array2[0])
-result = array1 + array2
-print(result)
-# output [7, 9, 11, 13, 15]
-# thier are also other operations ex multiply divide etc...
-
-# 2d arrays (matrix) the outer array is the rows and the inner array is the columns
-## trasposing a matrix to swap its rows and columns 
-matrix = [[1,2,3], [4,5,6]]
-print("at matrix subarray 2 elemet 2:", matrix[1][1])
-
-# to create a array without typing every single element
-my_array_shortcut = list(range(1, 11)) # prints 1-10 and index starts at 0 so goes 1 number before 11
-print(my_array_shortcut)
-
-## ex of func and array
-def array(a, b, c):
-    array = [a, b, c]
-    array.sort()
-    array2 = array[::-1]  # Reverse the sorted list and store it in array2
-    return f"Sorted smallest to largest: {array}, Sorted largest to smallest: {array2}"
-
-# sourcery skip: convert-any-to-in, merge-list-append, use-any, use-named-expression, use-next
-result = array(5, 3, 2)
-print(result)
 
 # ! lists
 my_list = [1, 2, 3, 4, 5] # simple list
@@ -1721,6 +1664,12 @@ b = 20
 a, b = b, a
 print(a)  # Output: 20
 print(b)  # Output: 10
+# 3) Tuple unpacking with the * operator
+# EX
+tuple1 = (1, 2, 3)
+tuple2 = (4, 5, 6)
+coordinates = [ *tuple1, *tuple2 ] # unpacking the tuple and adding them to a list
+print(coordinates) # Output: [1, 2, 3, 4, 5, 6]
 
 # ! list unpacking
 # You can unpack a list into multiple variables you can use the * operator to make that variable a list 
@@ -1742,7 +1691,15 @@ combined = [*list1, *list2] # unpacking the two lists into a new list using the 
 print(combined)  # [1, 2, 3, 4]
 combinedsublists = [list1, list2] # = [[1, 2], [3, 4]] just turns the list into lists insted of variables. ALTERNATIVE = [[*list1], [*list2]] 
 
-# ! mapping multiple variables to a iterable (combining 4 above)
+# ! Dictionary unpacking
+# just like lists we can unpack dictionaries into new dictionaries using the ** operator
+# EX:
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'c': 3, 'd': 4}
+combined = {**dict1, **dict2} # unpacking the two dictionaries into a new dictionary using the ** operator
+print(combined) # {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+
+# ! mapping multiple variables to a iterable (combining 4 above not including dictionary unpacking)
 # iterating over a list of tuples
 # EX:
 coordinates = [(1, 2), (3, 4), (5, 6)]
@@ -1790,7 +1747,14 @@ dict1 = {'a': 1, 'b': 2}
 dict2 = {'c': 3, 'd': 4}
 combined = {**dict1, **dict2}
 print(combined)  # {'a': 1, 'b': 2, 'c': 3, 'd': 4}
-# 3) using both of the * and ** operators
+# 3) Tuple unpacking with the * operator
+# EX
+tuple1 = (1, 2, 3)
+tuple2 = (4, 5, 6)
+coordinates = [ *tuple1, *tuple2 ] # unpacking the tuple and adding them to a list
+print(coordinates) # Output: [1, 2, 3, 4, 5, 6]
+
+# *  4) using both of the * and ** operators for functions
 # this is used to define a function that takes both positional arguments(i.e arguments that are passed in the order they are defined) and keyword arguments (i.e arguments that are passed in by name)
 def fun(a, b, *args, **kwargs): # this function 2 mandatory arguments a and b, and then any number of positional arguments (args) and keyword arguments (kwargs) the **defines the keyword arguments and the * defines the positional arguments, there can be as many positional arguments as you want
     print(f"a = {a}")
@@ -1814,9 +1778,20 @@ my_set.discard(3)  # Does not raise an error if the element is not found
 if 2 in my_set:
     print("2 is in the set")
 # using sets to make non duclicate lists (must cast to list)
-unique_elements = list(set([1,1,2,2,3,4,5,5]))
+unique_elements = list(set([1,1,2,2,3,4,5,5])) # or pass in a list as ref
 print(unique_elements) # output [1,2,3,4,5] # no duplicates
 # * NOTE you can also compare sets iterate over them and do unions intersection etc etc
+# EX
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+union = set1.union(set2)
+print(union)  # Output: {1, 2, 3, 4, 5}
+intersection = set1.intersection(set2)
+print(intersection)  # Output: {3} # only if in both sets
+difference = set1.difference(set2)
+print(difference)  # Output: {1, 2} # only in set1 and not in set2
+symmetric_difference = set1.symmetric_difference(set2)
+print(symmetric_difference)  # Output: {1, 2, 4, 5} # in set 1 and 2 but not in both
 
 # you can also use sets insted of lists when you want to serch for an element in a list
 for word in set(["apple", "banana", "cherry"]): # or word in {"apple", "banana", "cherry"} or using lists for this like for word in ["apple", "banana", "cherry"]:

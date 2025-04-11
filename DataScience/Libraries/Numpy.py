@@ -117,14 +117,14 @@ element wise operations
 # Two 2D arrays
 a = np.array([[1, 2], [3, 4]])
 b = np.array([[5, 6], [7, 8]])
-result = a + b  # [[6, 8], [10, 12]]
+result = a + b  # [[6, 8], [10, 12]] 
 
 """ 
 Subsetting
 Access individual elements:
 """
 # accsess indivisual elements 
-np_2d[0][2]  # First row, third element
+np_2d[0][2]  # First row, third element 
 np_2d[0, 2]  # Same as above, more intuitive
 # select multiple elements
 np_2d[:, 1:3]  # All rows, columns 1 to 2 (excluding 3)
