@@ -475,8 +475,8 @@ print((int *)arr, 3, 3);  // Pass address of first element * the cast makes the 
 // but if we assign a pointer to a whole array its pointing to the address of the array
 // this is useful when we want to pass an array to a function as a pointer since we pass the address of the array and the function can access the elements of the array
 int arr[4] = {5, 10, 15, 20};  // Array of 4 integers
-int (*ptr)[4] = &arr;          // Pointer to an array of 4 integers the size of the pointer must match the size of the array
-printf("%d %d", (*ptr)[1], ptr[0][3]);  // Accessing elements of the array, (*ptr)[1] is the second element of the array as *ptr gets the values and [1] gets the second element of the array, ptr[0][3] is the fourth element of the array as ptr[0] gets the values and [3] gets the fourth element of the array  
+int (*ptr)[4] = &arr;          // Pointer to an array of 4 integers the size of the pointer must match the size of the array. now ptr = [address of arr] and *(address of array) = arr = [5, 10, 15, 20], this measn derefrencing the first element of ptr, ptr[0] or *(ptr) will give us the arr array which is [5, 10, 15, 20] then we can index this arr to get any element like ptr[0][1] for second element, note that ptr holds one element but its size is def as 4 because it's element holds a array of 4 integers.
+printf("%d %d", (*ptr)[1], ptr[0][3]);  // Accessing elements of the array, (*ptr)[1] is the second element of the array as *ptr gets the arr and [1] gets the second element of the arr, ptr[0][3] is the fourth element of the array as ptr[0] gets the arr and [3] gets the fourth element of the arr  
 
 // ! pointers to pointers
 int x = 10;      // x is initialized to 10
@@ -582,8 +582,8 @@ int size = sizeof(arr) / sizeof(arr[0]);
 // ! Memory allocation and deallocation
 // in C memory is allocated using malloc and free is used to free the memory
 // * Dynamic Memory Allocation
-// Dynamic memory allocation allows you to allocate memory at runtime.
-// * Malloc (allocate memory but does not initialize it)
+// Dynamic memory allocation allows you to allocate memory at runtime. but it must be the size of the data type
+// * Malloc (allocate memory but does not initialize it) it only allocates one block of memory
 // p is a int pointer to a memory location that is the size of a int so p can hold one int
 int *p = malloc(sizeof(int)); // Allocating memory for an integer using malloc. optionally you can cast it to a int pointer like int *p = (int *)malloc(sizeof(int)); this is a common practice
 *p = 42;  // Assigning a value to the allocated memory. use *p to access the value
@@ -592,7 +592,7 @@ printf("%d\n", *p);  // Accessing the value through the pointer.
 free(p);  // Freeing the allocated memory. now we can reuse p for anoehr number 
 // free(p) // double free causes a error 
 
-// * calloc (allocate memory and initialize it to 0)
+// * calloc (allocate memory and initialize it to 0) it can allocate multiple blocks of memory at once
 int *p = calloc(5, sizeof(int)); // Allocating memory for 5 integers and initializing them to 0 using calloc. again you can cast it to a int pointer like int *p = (int *)calloc(5, sizeof(int));
 // loop 5 times to assign 5 values or read 5 values
 for (int i = 0; i < 5; i++) {
@@ -602,7 +602,8 @@ for (int i = 0; i < 5; i++) {
 printf("%d\n", *p[0]);  // Accessing the value through the pointer.
 free(p);  // Freeing the allocated memory. this initializes the memory to 0 and then we can use it
 
-// * realloc (reallocate memory) changes the size of the allocated memory from default to a new size
+// * realloc (reallocate memory) changes the size of the allocated memory from default to a new size 
+// * can be used to increase or decrease the size of the memory block, in the case of multiple blocks like for calloc we need to use the index of the block we want to change or a for loop to change all the blocks
 int *p = malloc(5 * sizeof(int)); // Allocating memory for 5 integers.
 // p first had 5 integers now it has 10 integers note we reassign using the address hence we dont dereference the pointer. you can also use a different pointer to store the new memory location
 p = realloc(p, 10 * sizeof(int)); // Reallocating the memory to 10 integers. again you can cast it to a int pointer like int *p = (int *)realloc(p, 10 * sizeof(int));
