@@ -731,14 +731,30 @@ int factorial(int n) {
 // Using recursion:
 int fact = factorial(5);  // 5! = 120
 
+// ! bitwise operators
+/* 
+!NOTE: C has the ability to do any bit operation and do the assignment in one line so for ex &= or >>= or ^= so you dont have to do it separately. this is called compound assignment using compound operators
+*/
+// Least significant bit (LSB) is the rightmost bit in a binary number, and the most significant bit (MSB) is the leftmost bit.
+
+// Bitwise operators are used to perform operations on individual bits of a number.
+// 1. AND (&): Sets each bit to 1 if both bits are 1. ex 0110 & 0101 = 0100 or in decimal 6 & 5 = 4
+int x = 6 & 5; // x will be 4
+// 2. OR (|): Sets each bit to 1 if either bit is 1. ex 0110 | 0101 = 0111 or in decimal 6 | 5 = 7
+int y = 6 | 5; // y will be 7
+// 3. XOR (^): Sets each bit to 1 if only one of the bits is 1 or in other words if the bits are different. ex 0110 ^ 0101 = 0011 or in decimal 6 ^ 5 = 3
+int z = 6 ^ 5; // z will be 3
+// 4. NOT (~): Inverts each bit. ex ~0110 = 1001 or in decimal ~6 = -7
+int w = ~6; // w will be -7
+
 // ! bit shifting
-// shift right means divide by 2 and shift left means multiply by 2 so 
+// shift right means divide by 2^n and shift left means multiply by 2^n wher n is the value of the shift (i.e 1) in our case below
 // 0100 = 4 and 0100 << 1 = 1000 = 8 and 0100 >> 1 = 0010 = 2
 // you can shift right with both signed and unsigned integers but you can only shift left with unsigned integers if you shoft left with signed integers it gives undefined behavior.
 
 // Bit shifting is the act of moving bits to the left or right.
 int num = 5;  // In binary: 0101
-num <<= 1;  // Shifts the bits to the left by 1: num becomes 1010 (10).
+num <<= 1;  // Shifts the bits to the left by 1: num becomes 1010 (10). or int shifted = num << 1; // shifted = 10
 num >>= 1;  // Shifts the bits to the right by 1: num becomes 0101 (5).
 
 // ! bit masking
