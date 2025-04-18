@@ -751,6 +751,15 @@ mylist[int | str] = [1, 2, 3, "hello"] # mylist can hold both ints and strings
 myvar: str | int = "hello" # myvar can hold both strings and ints
 def print_title(title: str | int) -> None: # the -> type is used to specify the return type of a function
     print(title)
+    
+# custom types via classes
+# just like a var can be of class int, str etc a varibale can be of a class i.e its type is a class
+class Person:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+# creating an instance of the class
+person: Person = Person("Alice", 30) # person is of type Person i.e person holds a obj of class Person
 
 # ! Allocation and deallocation of memory
 # Python is a dynamically typed language, which means that the type of a variable is determined at runtime. 
@@ -1935,6 +1944,7 @@ else:
     print("Operation was successful.")
 finally:
     # This block always runs, regardless of what happened
+    # note you cannot use return, break, or continue in a finally block because it will raise a syntax error
     print("Execution complete.")
     
 # ! to create a custom error class we use the raise keyword
@@ -2176,7 +2186,7 @@ print(p.name)  # Output: Bob
 del p.name
 # print(p.name)  # Raises AttributeError: 'Person' object has no attribute 'name'
 
-# help function in python
+# ! help function in python
 # The help() function is used to display information about a Python object or module.
 # EX
 help(max) # Display information about the max() function
