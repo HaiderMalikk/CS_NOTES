@@ -628,7 +628,8 @@ print(list2) # [2] # now list1 and list2 are different lists
 # ! Positional and Keyword Arguments
 # Positional arguments are arguments that are passed to a function in the order they are defined in the function signature.
 # Keyword arguments are arguments that are passed to a function using a keyword and a value. the argument name must be the same as the parameter name in the function signature. 
-  #NOTE: Once you decide to use a keyword argument, all subsequent arguments must also be keyword arguments. if you deicde to use positional arguments all subsequent arguments must also be positional arguments. YOU CAN ONLY CHOOSE ONE
+# NOTE: you cannot have positional arguments after keyword arguments as this will cause an error having positional arguments before keyword arguments is fine
+# keyword args are usefull beacuse lets say you had func with 10 parameters and you only wanted to change 1 of them, you would have to pass in all the other 9 parameters as well which is not ideal. insted you use a keyword arg for that 1 arg you want to change and you do not have to define any parms before or after it
 # Positional arguments EX:
 def add(a, b):
     return a + b
@@ -639,6 +640,9 @@ result1 = add(3, 4)  # Positional arguments, result1 = 7. 3 and 4 must be in the
 def squareFirst(mylist, exponent): 
     return mylist[0] ** exponent 
 print(squareFirst(exponent = 2, mylist = [5, 10])) # 25. the order dose not matter as we are defining the arguments by name which are the same as the parameters name in the function hence they are recognized
+# OR
+testlist = [5, 10]
+print(squareFirst(testlist, exponent=2)) # testlist is defined outside and is valid
 # print(mylist) # NameError: name 'mylist' is not defined 
 # print(squareFirst(exponent = 2, list = [5, 10])) ### ERROR unexpected keyword argument 'list'
 # print(squareFirst(mylist=[5, 10], 2)) # ERROR positional argument follows keyword argument
