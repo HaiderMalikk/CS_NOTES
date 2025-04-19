@@ -634,7 +634,6 @@ print(list2) # [2] # now list1 and list2 are different lists
 def add(a, b):
     return a + b
 result1 = add(3, 4)  # Positional arguments, result1 = 7. 3 and 4 must be in the same order as the parameters in the function signature (a, b)
-
 # Keyword arguments EX:
 # this is like delcaing vaiables inside the function call parantheses. These arguments will be local to the function and can be used inside the function only
 def squareFirst(mylist, exponent): 
