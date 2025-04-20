@@ -623,7 +623,7 @@ def append_to_list(element, list=None):
 list1 = append_to_list(1)
 print(list1) # [1]  
 list2 = append_to_list(2)
-print(list2) # [2] # now list1 and list2 are different lists
+print(list2) # [2] # now list1 and list2 are different lists 
 
 # ! Positional and Keyword Arguments
 # Positional arguments are arguments that are passed to a function in the order they are defined in the function signature.
