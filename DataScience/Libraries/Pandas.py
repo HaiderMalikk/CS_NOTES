@@ -70,7 +70,7 @@ BR,249,False,212559417
 """
 # * Loading a DataFrame from a CSV file
 # Assume 'cars.csv' exists in the working directory
-cars = pd.read_csv("DataScience/Libraries/cars.csv", index_col=0) # index_col=0 means the first column (row label) is the index and will always be there in the output
+cars = pd.read_csv("DataScience/Libraries/assets/cars.csv", index_col=0) # index_col=0 means the first column (row label) is the index and will always be there in the output
 print(cars)
 # Output
 #         cars_per_cap  drives_right  population 
