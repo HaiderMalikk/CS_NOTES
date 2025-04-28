@@ -25,6 +25,19 @@ Immutable	    Cannot be changed after creation (can still redefine)             
 """
 # data types: int, float, str, bool, list, tuple, dict, set
 
+# Common conventions
+# Constant variables are written in all caps at top of the file
+# flags are written with _flag_var case with a _ at start at top of the file or top of the function class etc
+# variables are written in snake_case with a _ between words
+# file names are written in snake_case with a _ between words
+# class names are written in CamelCase with a _ between words
+# function names are written in snake_case with a _ between words
+# module names are written in snake_case with a _ between words
+# package names are written in snake_case with a _ between words
+# import all packages at the top of the file
+# include docstrings at the top of the file and at the top of each function this can be seen on hover over class, function, module etc
+# include types with python 3, they can be seen on hover over class, function, module etc
+
 print("Hello, World!") # print is a function that prints the string in the parentheses to the console
 
 # ! importing module
@@ -2002,6 +2015,8 @@ Built-in Scope: Predefined names in Python (e.g., print, len).
 # NOTE: In Python, you can modify a global variable inside a function, but only if you're not assigning a new value to it. for Ex adding a element to a list inside a function to a global list will change the global list everywhere
 # This means if we said in the function modify global: global_var = 20 this will not work and will raise a NameError
 # so to work out that problem we use the global keyword to let python know that we want to modify the global varible x and it should change it outside the function and hence everywhere the varible x is used
+# NOTE: global vars also are preserved in the global scope of the module meaning if we modify a global variable it will be preserved in the global scope of the module and not just in the function so any function including the one that modified it will have the modified value no matter where it is used 
+# even if we call that function again and it was in a module it will have the modified value
 
 global_var = 10 # creating a variable outside the function ! NOTE: this valiable is a global variable as it is outside the function
 def print_global(): # this prints the global variable's current value
@@ -2017,6 +2032,31 @@ def modify_global(): # this modifies the global variable
 print_global() # this will print 10
 modify_global() # this will modify the global variable and print 20
 # NOTE: global x = 20  # This will cause a syntax error you can only modify a global variable stright away follow the syntax
+
+# * the global keyword has a very important property, its use in a function will make it so the global var 
+# is preserved from function call to function call, so if we modify the global variable in one function it will be modified in all functions that use the global variable
+# this means if i import a module ot use a class object, the global var is like a static variable in C++ or a class variable in Java, but you mist add the global variable at indentation level in a module or top of the class
+
+# Global variable
+_flag = False
+
+def sum_function():
+    global _flag
+    print(f"Current _flag value: {_flag}")
+    _flag = True
+    print(f"Changed _flag value: {_flag}")
+
+# First call
+sum_function()
+# Second call
+sum_function()
+""" 
+output:
+Current _flag value: False
+Changed _flag value: True
+Current _flag value: True
+Changed _flag value: True
+"""
 
 # * global var optimization
 # if your accsessing a global variable in a function python will check the function scope for that var before going to global scope 

@@ -36,7 +36,7 @@ class Person: # class Name:
     def greet(self): # the self parameter allows greet to access the self parameters name and age
         return f"Hello, my name is {self.name} and I am {self.age} years old."
 
-# creating the objects using the cunstructer 
+# creating the objects using the cunstructer (this is called creating a class instance)
 #object --> name = classname(parameters)
 person1 = Person("Alice", 30) # the object has two parameters name, age. self is not a parameter
 person2 = Person("Bob", 25) # this prints nothing but address of obj as the constructor returns nothing
@@ -605,3 +605,29 @@ class MyClass:
     # Equals magic method
     def __eq__(self, other):
         return self.value == other.value 
+    
+# global vars vs class attr
+# global vaiables are global and so are shared by all instances of the class (or a module)
+# class variables are unique to each instance of the class and are not shared by other instances
+
+# EX 2
+class Calculator:
+    # Class variable (shared across all instances)
+    _class_flag = False
+    
+    def __init__(self):
+        # Instance variable (unique to each instance)
+        self._instance_flag = False
+        
+    def sum(self, a, b):
+        global _global_flag  # Refers to a module-level global
+        
+        # Access and modify the class variable
+        print(f"Class flag: {Calculator._class_flag}")
+        Calculator._class_flag = True
+        
+        # Access and modify the instance variable
+        print(f"Instance flag: {self._instance_flag}")
+        self._instance_flag = True
+        
+        return a + b
