@@ -119,7 +119,7 @@ QUICK NOTE: all the other nodes in teh LL still have a reference from there prev
 
 * Primitive vs Reference Types
 ================================================================================================
-Primitive types are value types that are stored on the stack (faster), while reference types are stored on the heap (slower)
+NOTE: Primitive types are value types that are stored on the stack (faster), while reference types are stored on the heap (slower)
 - Definition:
 Primitive types: Integers, floats, booleans, etc. Fixed memory size, default can be 0 etc etc cannot be none. 
 Reference types: Objects, arrays, strings, etc. Dynamic memory size, are objects and default is none.
@@ -454,7 +454,6 @@ Multiple Dispatch Pattern
 Multiple dispatch is a programming language feature where a function or method can be dynamically dispatched based on the runtime types of multiple arguments, rather than just the type of a single receiver object (as in traditional object-oriented programming).
 Languages like python require a import + decorators like julia has this built in 
 #EX:
-``` python
 # Python example using functools.singledispatchmethod with registration
 from functools import singledispatchmethod
 
@@ -474,4 +473,48 @@ class Calculator:
     @add.register
     def _(self, a: list, b: list):
         return a + b
-```
+
+Deep copy vs Shallow copy for mutable ref objects 
+============================
+- a Shallow copy creates a new object but dose not create copies of nested obj's it only copies the reference to them
+- a Deep copy makes a new object and recursivly copies all objects found in that object (i.e all nested objects)
+  for each nested obj it finds it makes a whole new obj and copies it over to the new deep copy obj in the same position is original obj
+
+# When to Use Each
+- Shallow Copy: When you only need to modify top-level elements or when nested objects are immutable.
+- Deep Copy: When you need a completely independent duplicate where changes to any level won't affect the original.
+
+# shallow copy eximport copy
+
+# Original list with nested list
+original = [1, 2, [3, 4]]
+
+# Shallow copy
+shallow = copy.copy(original)
+# Or using slice notation
+shallow = original[:]
+
+# Modifying the nested list
+shallow[2][0] = 99
+
+print(original)  # [1, 2, [99, 4]] - nested list was modified!
+print(shallow)   # [1, 2, [99, 4]]
+
+# However, modifying top-level elements doesn't affect the original
+shallow[0] = 100
+print(original)  # [1, 2, [99, 4]] - unchanged
+print(shallow)   # [100, 2, [99, 4]]
+
+# deep coy eximport copy
+
+# Original list with nested list
+original = [1, 2, [3, 4]]
+
+# Deep copy
+deep = copy.deepcopy(original)
+
+# Modifying the nested list
+deep[2][0] = 99
+
+print(original)  # [1, 2, [3, 4]] - original unchanged
+print(deep)      # [1, 2, [99, 4]]
