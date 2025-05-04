@@ -1067,9 +1067,14 @@ print(my_list)  # Output: [(1, 2, 3), (4, 5, 6)]
 # You can iterate through the elements of an array using loops or NumPy-specific functions like np.nditer. 
 
 # Adding to arrays using += operator
+# NOTE: you cannot add integer's to arrays using += operator as thats doing list = list + 1 and you cannt add a list and a int
+# but you can add lists with lists so the += operator works with two lists. NOTE: using += with strings and chars is allowed
 myarray = [1, 2, 3]
 myarray += [4, 5, 6]
 print(myarray) # Output: [1, 2, 3, 4, 5, 6]
+# NOT OK: myarray += 1 # ERROR TypeError: can only concatenate list (not "int") to list
+# FIX: myarray.append(1) or myarray += [1] # OK as we cast int to a list before adding it to the list
+# OK: myarray += "a" # OK
 
 # array reference: a variable assigned to an array contains a reference to the array not the array itself
 myarray = [1, 2, 3]
