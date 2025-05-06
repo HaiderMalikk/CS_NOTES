@@ -88,7 +88,7 @@ to start: ‘npm start’
 ————————————————————————————————————————————————
 Express JS (backend)
 1) to create hop into a folder
-- then do: ‘npm init -y’ (to generate the package json file for dependencies)
+- then do: ‘npm init -y’ (to generate the package json file for dependencies) or npm init for a fully custom package.json
 - then to make express: ‘npm install express’ (you have package
 - make a server js file 
 - to start do: node filename.js
