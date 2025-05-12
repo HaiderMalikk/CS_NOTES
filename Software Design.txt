@@ -807,3 +807,4 @@ sendPlainTextEmail("test@example.com");
 sendHtmlEmail("test@example.com");
 🔹 Why? It’s easier to understand the function call without checking the method definition.
 
+
