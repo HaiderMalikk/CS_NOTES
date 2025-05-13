@@ -1,0 +1,11 @@
+# ignore ds store in gitignore in a gitignore file
+.DS_Store
+# gitigore gitigore file 
+.qodo
+
+DataScience/venv
+
+/.vscode
+
+.env
+
