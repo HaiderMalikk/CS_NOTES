@@ -220,14 +220,20 @@ Output:
 
 False
 """
-# !  Priority of mathematical operators and logical operators:
+
+# !  Priority of all Operators (mathematical operators, logical operators, assignment operators, and comparison operators etc):
 # 1. Parentheses ()
 # 2. Exponentiation **
-# 3. Multiplication and Division (*/%)
+# 3 Unary plus and minus (+/-), (flipping the sign of a number EX: x = 5 => -x = -5 the -x is a unary operator)
+# 3. Multiplication, Division, Modulus (*/%)
 # 4. Addition and Subtraction (+/-)
-# 5. Comparison operators (==, !=, <, >, <=, >=)
-# 6. Logical operators (and, or, not)
-# NOTE logical operators have lower priority than arithmetic operators (higher precedence)
+# 5. Bitwise shifts and operations (e.g., <<, >>, &, |)
+# 6. Comparison operators (==, !=, <, >, <=, >=)
+# 7. Logical Not (not)
+# 8. Logical And (and)
+# 9. Logical Or (or)
+# 10 Conditional expressions (if-else)
+# 11 Assignment operators (=, +=, -=, etc.)
 
 # EX of another usefull mathematical operator called absolute value, you can use abs function to get the absolute value of a number which just means only the magnitude of the number no sign
 print(abs(-10)) # 10
