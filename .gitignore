@@ -3,9 +3,10 @@
 # gitigore gitigore file 
 .qodo
 
-DataScience/venv
+AI/venv
 
 /.vscode
 
 .env
+
 
