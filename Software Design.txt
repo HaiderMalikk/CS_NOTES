@@ -1,4 +1,5 @@
-- Software Design Principles =======================================================================================================================
+- Software Design principles
+
 1. SOLID Principles
 The SOLID principles are five core guidelines for object-oriented design that help make software more maintainable and scalable.
 
