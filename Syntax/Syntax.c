@@ -293,6 +293,9 @@ for (int i = 0; i < 5; i++) {
 
 // ! Arrays
 
+// * C dose not have bound checking for arrays, meaning you can access any index of the array even if it is out of bounds, this can lead to undefined behavior
+// * Arrays are zero-indexed, meaning the first element is at index 0.
+
 // Arrays are collections of data of the same type. you must either initialize the array with a size or with values
 int numbers[] = {1, 2, 3, 4, 5}; // values defined no more adding values
 printf("%d\n", numbers[0]);  // Accessing the first element of the array.
