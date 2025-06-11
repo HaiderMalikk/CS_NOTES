@@ -110,5 +110,3 @@ TO BUILD (for reactjs)
 1) in next.config.mjs goto const nextConfig and put: output: ‘export’ , typescript: {ignoreBuildErrors: true,} NOTE that the second part is if you get a error in p2
 2) in terminal do npm run build it will return it in a out folder after compile succsessful NOTE delete unneeded folders, 
 3) in hoststinger goto dashboard - filemanager - public_html then delete default then put your out folder inside public_html then you can visit website.
-
-
