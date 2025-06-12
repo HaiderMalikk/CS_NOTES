@@ -584,6 +584,13 @@ def my_function():
 my_function() # nothing will happen as we pass before any code is executed
 # what are functions? See below
 
+# * pass for classes
+# you can use pass in classes or you can make a class empty and leave it for later by using '...'
+class MyClass:
+    pass # passes the class (dose nothing)
+class MyClass2:
+    ... # will be equavalent to pass
+
 ##  !Functions
 
 # you can define a function in Python using the def keyword, followed by the function name and a pair of parentheses. 
@@ -782,6 +789,19 @@ class Person:
         self.age = age
 # creating an instance of the class
 person: Person = Person("Alice", 30) # person is of type Person i.e person holds a obj of class Person
+
+# * Python 3.12 new type hinting features
+# You can now declare type variables directly in brackets, without importing TypeVar or Generic.
+def first[T](elements: list[T]) -> T: # first is a function of type T that takes a list of type T and returns a value of type T
+    return elements[0]
+
+class Container[T: Mapping]: # Container is a class of type T that takes a type T that is a subclass of Mapping
+    ... # ... is used to indicate that the class body is empty, it is a placeholder for future code THIS IS VALID PYTHON SYNTAX
+
+type Pair[T, U] = tuple[T, U] # pair is a type that is a tuple of type T and U, this is a new feature in python 3.12 that allows you to create type aliases without importing anything. a type alias is a way to give a name to a type, so you can use it later in your code
+# now we can use Pair instead of tuple and pass in two elements of type T and U in our tuple
+# EX: 
+pair: Pair[int, str] = (1, "hello")  # pair is a tuple of type int and str
 
 # ! Allocation and deallocation of memory
 # Python is a dynamically typed language, which means that the type of a variable is determined at runtime. 
