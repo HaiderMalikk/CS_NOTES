@@ -790,7 +790,9 @@ class Person:
 # creating an instance of the class
 person: Person = Person("Alice", 30) # person is of type Person i.e person holds a obj of class Person
 
+""" 
 # * Python 3.12 new type hinting features
+# will give a error if you dont have 3.12 saying: SyntaxError: type hints require Python 3.12 or import typing to use
 # You can now declare type variables directly in brackets, without importing TypeVar or Generic.
 def first[T](elements: list[T]) -> T: # first is a function of type T that takes a list of type T and returns a value of type T
     return elements[0]
@@ -802,6 +804,7 @@ type Pair[T, U] = tuple[T, U] # pair is a type that is a tuple of type T and U, 
 # now we can use Pair instead of tuple and pass in two elements of type T and U in our tuple
 # EX: 
 pair: Pair[int, str] = (1, "hello")  # pair is a tuple of type int and str
+"""
 
 # ! Allocation and deallocation of memory
 # Python is a dynamically typed language, which means that the type of a variable is determined at runtime. 
