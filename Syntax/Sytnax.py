@@ -615,6 +615,7 @@ def greet(name):
 greet("Alice") # function name (argument) argument meaning value or var "parenthisis"
 
 # ! default parameters
+# * NOTE: a default parameter cannot be before a non-default parameter in the function signature all default parameters must come after non-default parameters (see default paramters and keyword arguments)
 # ex2 with a parameter and a optinal parameter. parameter 2 is defined and is 0 by default but can be changed if wanted
 def add(a, b=0): # b is a default parameter if nothing is entered for be it will = 0
     """
@@ -674,6 +675,16 @@ print(squareFirst(testlist, exponent=2)) # testlist is defined outside and is va
 # print(squareFirst(exponent = 2, [5, 10])) # ERROR cannot use positional argument after keyword argument
 # print(squareFirst(2, [1,2])) # ERROR it assigns exponent to a list and list to a number so doing 2[0] is a error. remember the order of the positional arguments matters
 # print(squareFirst([5, 10], 2)) # ok
+
+# * default parameters and positional arguments
+# * NOTE # * NOTE: a default parameter cannot be before a non-default parameter in the function signature all default parameters must come after non-default parameters
+def power(base, exponent=2): # exponent has a default value of 2
+    return base ** exponent
+# we must specify the base but the exponent is optional BUT using keyword arguments we can specify the base and leave the exponent or define it using its name or position
+print(power(3)) # 9
+print(power(3, 3)) # 27
+print(power(base = 3)) # 9
+print(power(3, exponent=3)) # 27
 
 # ! using logical operators in return statements
 # you can use logical operators to return a value based on if its none
@@ -1827,7 +1838,7 @@ fun(1, 2, 3, 4, 5, x=100, y=200) # a = 1, b = 2, args = (3, 4, 5), kwargs = {'x'
 """ In Python, sets are unordered collections of unique elements. 
 They are defined using curly braces {} or the set() function, 
 and they automatically remove duplicate values. """
-my_set = {1, 2, 3, 4} # declare a set with unique elements using curly braces its like a dictionary but with no key value pairs jsut values
+my_set = {1, 2, 3, 4} # declare a set with unique elements using curly braces its like a dictionary but with no key value pairs jsut values, * IF YOU ADD DUPLICATES, THEY WILL BE IGNORED
 my_set = set([1, 2, 3, 4]) # using the set() function my_set is now a set and will remove duplicates if they are added
 my_set.add(5) # add 5 to the set
 my_set.add(1) # add 1 to the set, but it will be ignored because 1 is already in the set
