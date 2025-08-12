@@ -167,6 +167,44 @@ print(False + False)  # Output: 0
 print(True * False)  # Output: 0
 print(12 * True + False - 2 )  # Output: 10
 
+# ! 0, 1 as Logical operators
+# in python 0 by itself is False and 1 is True
+print(0 == False)  # Output: True
+print(1 == True)    # Output: True
+# EX:
+var1 = 0 
+var2 = 1
+# 0 and 1 behave like false and true
+print(var1 and var2)  # Output: 0
+print(var1 or var2)   # Output: 1
+print(var1 or "this")   # Output: this
+print(not var1)       # Output: True
+
+# ! if statments with checks '=='
+# if the value is true no need to use == True or compare with a number or string
+# for integers this only works if the integer is 0 for false and one for true
+value = 1
+if value == 1:
+    print("Value is one") 
+# or do:
+if value:
+    print("Value is one")
+# for strings its true if the sting is non empty
+str1 = "hi"
+str2 = ""
+if str1:
+    print("String is not empty") # prints 
+if str2:
+    print("String is not empty") # dose not print
+# boolean * BOTH WORK
+var1 = True
+var2 = False
+if var1:
+    print("var1 is true") # prints 
+if var2 == True:
+    print("var2 is true") # dose not print 
+
+
 # ! Priority of operators 
 """ 
 In Python, logical operators or, and, and not have specific precedence (priority) when evaluating expressions. Here's their order of precedence:
@@ -831,6 +869,7 @@ array = [None] * 100  # Allocates memory for a list of 100 elements with the val
 del array  # Frees the memory allocated for the list, talked more about in del keyword
 # or
 array = None  # Removes the reference to the list, allowing the garbage collector to free the memory
+print(array) # Output: None (prints none but arr memory gone and freed) 
 
 # ! Compile time vs runtime
 # Compile time is when the code is compiled and checked for errors before it is run.
