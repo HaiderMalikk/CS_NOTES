@@ -162,6 +162,24 @@ const myFunction6def = myFunction6();
 myFunction6def.func1(); // func1
 myFunction6def.func2(); // func2
 
+// you can also directy return another function from a function like so 
+// return function name() { return "Hello" }
+
+// you can also have functions be var and let with the difference being there not constant and can be changed later 
+let myfunc = (name) => {
+    return {
+        mrname: () => {
+            return "Mr" + name
+        },
+        msname: () => {
+            return "Ms" + name
+        }
+     }
+}
+
+name = myfunc("ali")
+console.log(name.mrname())
+
 
 // * switch case (always cehcks equality and type ie ===)
 switch (num) {
