@@ -9,6 +9,11 @@ console.log("start") // print to console
 //  * variables (any type can be null, bool, Str, symbol(immutable primative), num, obj) 
 // * operators: +, -, *, /, %, **, ++, --, +=, -=, *=, /=, %=, ==, ===, !=, !==, >, <, >=, <=, &&, ||, !, ?:, ??
 
+// PRE increment and decrement operators
+// ++var (pre-increment) and --var (pre-decrement) will change the value before it is used
+// var++ (post-increment) and var-- (post-decrement) will change the value after it is used
+// EX: var = 10, then return --var; // returns 9 and var is now 9, and return var--; // returns 9 but var is now 8 as its decrement after 
+
 // ! 3 ways to declare a variable can be any of the above
 var myName = "Haider"; // avalible in whole program no scope ,can be initialized later i.e var myName; myName = "Haider";
 let num = 10; // avalible in scope of block only , can be changed later i.e let num; num = 10;
