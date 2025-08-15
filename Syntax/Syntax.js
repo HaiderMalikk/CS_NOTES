@@ -207,6 +207,12 @@ iwant = "this is waht i want"
 nowant = "this is what i dont want"
 // format is (condition) ? (if true) : (if false)
 iwant != nowant ? console.log("iwant is not nowant") : console.log("iwant is nowant");
+
+let iwant = "this is waht i want";
+let nowant = "this is what i dont want";
+let result_ = iwant != nowant ? "yes" : "NO";
+console.log(result_); // yes
+
 // alternate format using ??
 var1 = null;
 var2 = 88;
@@ -235,6 +241,9 @@ console.log(person.name); // John
 console.log(person["name"]); // John but '' for dynamic key meaning key is not known at compile time if name DNE it will return undefined
 console.log(person.address.street); // 123 main st
 person.work = "google";  // add new key value pair
+// add to a nester object, you cannot just add on like person.address.city.district = "x" you must use the correct syntax
+person.address.city = {city: person.address.city, district: "Bronx"}
+console.log(person.address.city) // { city: 'NYC', district: 'Bronx' }
 
 // can also store in arrays (can be nested)
 let Objarray  = [
