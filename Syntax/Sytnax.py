@@ -1076,7 +1076,7 @@ index = int_array.index(3)  # Searching for the index of element 3
 
 # ! lists
 my_list = [1, 2, 3, 4, 5] # simple list
-mixed_list = [1, "Hello", 3.14, True, ["apple", "banana", "cherry"]] # array can have diffrent typs of elemets 
+mixed_list = [1, "Hello", 3.14, True, ["apple", "banana", "cherry"]] # list can have diffrent types of elemets 
 
 # you can add lists 
 list1 = [1, 2, 3]
@@ -1113,7 +1113,7 @@ print(my_list)  # Output: [1, 99, 2, 3, 4]
 # removing stuff from lists
 my_list = [1, 2, 3, 4, 5]
 
-# Remove a specific value
+# Remove a specific value, NOTE: it will remove the first occurance, to remove all occurances do: my_list = [x for x in my_list if x != 3] or use a for loop
 my_list.remove(3)
 print(my_list)  # Output: [1, 2, 4, 5]
 
@@ -1122,7 +1122,7 @@ popped_value = my_list.pop(2)  # Removes the element at index 2 (value 4) and re
 print(my_list)  # Output: [1, 2, 5]
 print("Popped value:", popped_value)  # Output: Popped value: 4
 
-# to get indexof a value in 1dlist
+# to get indexof a value in 1dlist NOTE: it returns the index of the first occurrence if you want a list of all occurrences do: my_list = [i for i in range(len(my_list)) if my_list[i] == value]
 print(my_list.index(1)) # returns position of 1 in mylist
 
 # inseting tuples into a list
@@ -1132,6 +1132,10 @@ my_list.append(my_tuple)
 # or 
 my_list.append((4, 5, 6))
 print(my_list)  # Output: [(1, 2, 3), (4, 5, 6)]
+
+# inserting list into a list is the same use append(sublist)
+my_list.append([7, 8, 9])
+print(my_list)  # Output: [(1, 2, 3), (4, 5, 6), [7, 8, 9]]
 
 ## Array Broadcasting:
 # NumPy also supports broadcasting, which allows you to perform operations on arrays of different shapes in certain cases.
