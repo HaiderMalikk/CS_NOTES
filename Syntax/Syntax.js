@@ -33,6 +33,23 @@ console.log(arr[0]); // 1
 console.log(arr.length); // 5
 console.log(arr[arr.length - 1]); // 5  
 console.log(arr[10]); // undefined  
+
+// adding to arr
+arr[5] = 6; // arr = [1, 2, 3, 4, 5, 6]; // adding to the end of the array
+arr[7] = 7; // indexs in middel empty like so: arr = [1, 2, 3, 4, 5, 6, <empty item>, 7];
+// real use 
+arr[arr.length] = 8; // or use push (best) arr = [1, 2, 3, 4, 5, 6, <empty item>, 7, 8];
+
+// deleting
+let arr = [1, 2, 3, 4, 5];
+delete arr[5];
+console.log(arr); // [1, 2, 3, 4, <empty item>]
+
+// to actually delete a element by index:
+arr.splice(4, 1); // removes the element at index 4 the 1 means to remove 1 element arr = [1, 2, 3, 4]
+
+let arr = [1, 2, 3, 4, 5];
+console.log(arr); // [1, 2, 3, 4, 5]
 // adding to array
 arr.push(6);
 console.log(arr); // [1, 2, 3, 4, 5, 6]
@@ -185,6 +202,22 @@ let myfunc = (name) => {
 name = myfunc("ali")
 console.log(name.mrname())
 
+// *  function parametrs 
+// optional parameters
+const greet = (name, title = "Mr.") => {
+    return `Hello ${title} ${name}`;
+};
+
+console.log(greet("Ali")); // Hello Mr. Ali
+console.log(greet("Ali", "Dr.")); // Hello Dr. Ali
+
+// NOTE: passing more or less then expected:
+// If you pass fewer arguments than the function expects The missing ones become undefined.
+function f(a, b) { console.log(a, b); }
+f(10); // logs: 10 undefined
+// If you pass more arguments than the function expects The extra ones are ignored.
+function f(a) { console.log(a); }
+f(10, 20, 30); // logs: 10
 
 // * switch case (always cehcks equality and type ie ===)
 switch (num) {
