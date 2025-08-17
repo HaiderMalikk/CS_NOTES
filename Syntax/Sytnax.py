@@ -1469,6 +1469,7 @@ data = {
     "peach": 12
 }
 # cannot do data_filterd = dict(filter(lambda x: data[x] > 10, data)) list is not a list so you cannot do this as looping over data gives you keys only so the filterd result is just [apple, peach] which you cannot cast to a dictionary 
+# remember the item i.e in lambda x: ... the x is whats kept so if we want the whole k,v mening the iteam then we must loop over it if we wanted just the fruits wo could have done: list(filter(lambda x: data[x] > 10, data)) which would have given us a list of the keys that have values greater than 10 to get just the values we could get them from the values 
 data_n = dict(filter(lambda item: item[1] > 10, data.items())) # correct way is to loop over it like a tuple with .items pick the second element which is the number and then check 
 print(data_n)
 
