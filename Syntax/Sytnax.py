@@ -1529,6 +1529,7 @@ data = {
     "peach": 12
 }
 # you cannot do data_filtered = dict(map(lambda x: data[x] + 1, data)) as looping over data gives you only values like apple so the result would be [23, 3, 13] witch cannot be casted to a dict
+# remember that the x is whast selcted here just the values since we loop over data and the RHS ie after ":" is whast the new mapped value in out case a k,v pair 
 data_n = dict(map(lambda x: (x, data[x] + 1), data)) # coorect way as now you are mapping each x i.e each key to a proper k,v pair insted of just the key
 print(data_n)
 
