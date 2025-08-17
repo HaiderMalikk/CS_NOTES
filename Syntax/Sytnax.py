@@ -1441,8 +1441,8 @@ arr3 = arr1 + [fill] + arr2 # this will make an array [1, 2, 3, 4, 5, 6] we have
 # in the array example we can see how 
 
 data = [(1, 'apple'), (3, 'banana'), (2, 'cherry')]
-sorted_data = sorted(data, key=lambda x: x[1])  # Sort by fruit name
-print(sorted_data)  # Output: [(3, 'banana'), (2, 'cherry'), (1, 'apple')]
+sorted_data = sorted(data, key=lambda x: x[0])  # Sort by number, by deafult i.e sorted(data) will also do that but with this we can select any part to use to sort it
+print(sorted_data)  # Output: [(1, 'apple'), (2, 'cherry'), (3, 'banana')]
 
 words = ["apple", "banana", "cherry", "kiwi"]
 sorted_words = sorted(words, key=len)  # Sort by length of words
@@ -1461,6 +1461,17 @@ print(list(even_numbers))  # Output: [2, 4, 6], used list function to convert it
 # NOTE: filter returns a filter object you must convert it to a list or other iterable to see the results, here i used list function to convert it to a list
 
 # NOTE: if you pass a matrix into a max or min function it will add up all the elements in teh subarray and return the max or min of those sums
+
+# NOTE NOTE NOTE: YOU must respect the data type you are working on for ex with a dict
+data = {
+    "apple": 22,
+    "banana": 2,
+    "peach": 12
+}
+# cannot do data_filterd = dict(filter(lambda x: data[x] > 10, data)) list is not a list so you cannot do this as looping over data gives you keys only so the filterd result is just [apple, peach] which you cannot cast to a dictionary 
+data_n = dict(filter(lambda item: item[1] > 10, data.items())) # correct way is to loop over it like a tuple with .items pick the second element which is the number and then check 
+print(data_n)
+
 
 # * Using filter on string:
 s = "Hello World!"
@@ -1509,6 +1520,16 @@ numbers = [1, 2, 3, 4, 5]
 weights = [0.1, 0.2, 0.3, 0.4, 0.5]
 sums = map(lambda x, y: x + y, numbers, weights) # each element (at the same index) in the two lists is added together, x is the element in the numbers list and y is the element in the weights list we simply add the two together
 print(list(sums))  # Output: [1.1, 2.2, 3.3, 4.4, 5.5]
+
+# NOTE: you must respect the data type you are mapping on: i.e if you have a dictionary you must not do a map liek a list
+data = {
+    "apple": 22,
+    "banana": 2,
+    "peach": 12
+}
+# you cannot do data_filtered = dict(map(lambda x: data[x] + 1, data)) as looping over data gives you only values like apple so the result would be [23, 3, 13] witch cannot be casted to a dict
+data_n = dict(map(lambda x: (x, data[x] + 1), data)) # coorect way as now you are mapping each x i.e each key to a proper k,v pair insted of just the key
+print(data_n)
 
 # ! using conditions in a list comprehension, lambda function and map
 # * since the filter function returns a filter object always cast it into a list using list(filter)
@@ -2028,6 +2049,20 @@ my_dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
 # get the first 2 key value pairs
 sub_dict = {key: my_dict[key] for key in list(my_dict)[:2]}
 print(sub_dict)  # Output: {'a': 1, 'b': 2}
+
+data = {
+    "apple": 22,
+    "banana": 2,
+    "peach": 12
+}
+data_n = dict(map(lambda x: (x, data[x] + 1), data))
+print(data_n) # output: {'apple': 23, 'banana': 3, 'peach': 13}
+
+data_n = {k: v for k, v in data.items() if v > 10}
+print(data_n) # output: {'apple': 22, 'peach': 12}
+
+
+ 
 
 # ! Try catch 
 # each try has its own catch in nested try catch statements the first catch after a try is its corresponding catch, the nested try only runs if the first try is successful
