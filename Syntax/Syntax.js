@@ -426,6 +426,19 @@ location.city = "LA"; // modifying a key value pair from the object
 // increasing key value pairs from an object, lets add 1 to lat
 location.position.lat += 1; // NOTE: you cannot have optional parameters when modifying key value pairs from an object
 
+// modifing while checking using '?'
+if ("street" in location) {
+    location.street = "new street";
+} else {
+    console.log("DNE");
+}
+// or 
+("street" in location)
+    ? location.street = "new street"
+    : console.log("DNE");
+// or 
+location.street === undefined ? console.log("DNE") : location.street = 'new street'; // since location.random would return undifined if random dose not exists 
+
 
 // * Spread operator
 // The spread operator (...) is used to expand an iterable object into individual elements
