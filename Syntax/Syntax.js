@@ -187,6 +187,12 @@ myFunction6def.func2(); // func2
 // you can also directy return another function from a function like so 
 // return function name() { return "Hello" }
 
+// inline arrow funcs
+let fn = (a, b, c) => {
+    return a + b + c;
+};
+console.log(fn(1, 2, 3)); // 6
+
 // you can also have functions be var and let with the difference being there not constant and can be changed later 
 let myfunc = (name) => {
     return {
@@ -218,6 +224,20 @@ f(10); // logs: 10 undefined
 // If you pass more arguments than the function expects The extra ones are ignored.
 function f(a) { console.log(a); }
 f(10, 20, 30); // logs: 10
+
+// how to keep a function variable throuout calls
+// in this example we make a function with param n and store it in a variable
+// we use this variable to call the same instance of the function where n is only initilized omce 
+var createCounter = function(n) {
+    
+    return function() {
+        return n++
+    };
+};
+const counter = createCounter(0); // create a counter starting at 0
+console.log(counter()); // 0
+console.log(counter()); // 1
+console.log(counter()); // 2
 
 // * switch case (always cehcks equality and type ie ===)
 switch (num) {

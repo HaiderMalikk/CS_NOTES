@@ -1834,6 +1834,10 @@ dict1 = {'a': 1, 'b': 2}
 dict2 = {'c': 3, 'd': 4}
 combined = {**dict1, **dict2} # unpacking the two dictionaries into a new dictionary using the ** operator
 print(combined) # {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+# getting keys using unpacking 
+info = {'name': 'Alice', 'age': 30}
+k1, k2 = info
+print(k1, k2)  # Output: name age
 
 # ! mapping multiple variables to a iterable (combining 4 above not including dictionary unpacking)
 # iterating over a list of tuples
@@ -1899,6 +1903,10 @@ def fun(a, b, *args, **kwargs): # this function 2 mandatory arguments a and b, a
     print(f"kwargs = {kwargs}")
 
 fun(1, 2, 3, 4, 5, x=100, y=200) # a = 1, b = 2, args = (3, 4, 5), kwargs = {'x': 100, 'y': 200}, we must define a and b the rest are optional and we can define as many positional and keyword arguments as we want
+# combining unpacking with this
+list1 = [11,22,44]
+list2 = [33,55,66]
+fun(1,2, 5, 6, list1, y=[*list2]) # a = 1, b = 2, args = (5, 6, [11, 22, 44]), kwargs = {'y': [33, 55, 66]}
     
 # ! sets in python 
 """ In Python, sets are unordered collections of unique elements. 
