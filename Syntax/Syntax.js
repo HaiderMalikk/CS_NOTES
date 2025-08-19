@@ -556,6 +556,78 @@ const fetchAllData = async () => {
   
 fetchAllData();
 
+// passing promises to a function
+// in this example we pass in a single promise fetchdata1 2 3 and 3 sepetly to a function that takes in 1 promise and then logs the value of it 
+const logPromiseValue = async (promise) => {
+    try {
+      const value = await promise;
+      console.log(value);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  logPromiseValue(fetchData1());
+  logPromiseValue(fetchData2());
+  logPromiseValue(fetchData3());
+
+// passing a parameter to resolve
+// in this ex we pass a parameter to resolve so we can do promise.resolve(2) and it prints the square of that number
+const squarePromise = (num) => {
+    return new Promise((resolve) => {
+      resolve(num * num);
+    });
+  };
+
+squarePromise(2).then((result) => console.log(result)); // 4
+
+// processing many promise results 
+// in this example we add the result from 2 promises
+const addPromises = async (promise1, promise2) => {
+    const result1 = await promise1;
+    const result2 = await promise2;
+    console.log(result1 + result2);
+};
+
+addPromises(squarePromise(2), squarePromise(3)); // Output: 13 (4 + 9) no need to do . then or anything the function handels that 
+addPromises(Promise.resolve(2), Promise.resolve(3)); // Output: 5 (2 + 3) // using the Promise class we made 2 promises that resolve right way with a pre def value 
+
+// clearing and setting timeouts
+// EX: 
+// here if cancel time is > timeout time the function will not run
+// we have a timer set for 20ms and the cancel time is 50ms
+// so since we return the cancel time right away it waits for 50 seconds before the function is called and the timeout is cleared and the timer is not ran
+// but at the same time cancle function is returned the timer starts for time t and after time t it runs the function
+// so since 20 ms passes before 50 ms the timer finished and executes + returns the value before cancleFn's 50ms timer is done and hence timer is not cleared 
+let cancellable = function(fn, args, t) {
+    // schedule fn to run
+    const timer = setTimeout(() => {
+        fn(...args);
+    }, t);
+
+    // return the cancel function
+    return function cancelFn() {
+        clearTimeout(timer);
+    };
+};
+const cancelTimeMs = 50;
+const cancelFn = cancellable((x) => console.log(x * 5), [2], 20);
+// cancel after 50ms
+setTimeout(cancelFn, cancelTimeMs);
+
+// set and clear interval
+// in this example the interval function will run every second until cleared
+// dont pass any function into the setInt rather pass a helper func
+// here the function is ran for the first time after 1 second,  to run it immediently and then at a interval call the function once before starting the interval
+const intervalFn = () => console.log("Interval running");
+const intervalId = setInterval(intervalFn, 1000);
+
+// clear the interval after 5 seconds
+setTimeout(() => {
+    clearInterval(intervalId);
+    console.log("Interval cleared");
+}, 5000);
+
 // common js functions
 /* 
 console.log() // Outputs data to the console
