@@ -224,6 +224,9 @@ f(10); // logs: 10 undefined
 // If you pass more arguments than the function expects The extra ones are ignored.
 function f(a) { console.log(a); }
 f(10, 20, 30); // logs: 10
+// or use const let or nothing like so 
+fn = (x) => x + 1;
+console.log(fn(5)); // 6
 
 // how to keep a function variable throuout calls
 // in this example we make a function with param n and store it in a variable
@@ -238,6 +241,40 @@ const counter = createCounter(0); // create a counter starting at 0
 console.log(counter()); // 0
 console.log(counter()); // 1
 console.log(counter()); // 2
+
+// passing a function to a function
+// in this example we pass a function to another function and it will run the passed function
+// here x is a number and fn is a function that dose a op on x and returns it 
+function runOperation(n, fn) {
+  return fn(n);
+}
+fn1 = (x) => x + 1; // fn must take in x and return whatever but it cannot do x[1] or stuff like that because we def x to be a number 
+console.log(runOperation(5, fn1)); // 6
+// etc
+
+// JS function type hinting
+// this feture allows the user to specify the types of parameters and return values for functions this is not enforced at runtime but can be used by IDEs for better autocompletion and error checking
+/**
+ * @param {number} a
+ * @param {number} b
+ * @return {number}
+ */
+function add(a, b) {
+    return a + b;
+}
+
+// JS type casting
+let num1 = "5";
+num1 = Number(num1); // cast to number
+console.log(num1 + 5); // 10
+// cast into arr
+let str1 = "1,2,3,4,5";
+let arr = str1.split(","); // split string into array
+console.log(arr); // ["1", "2", "3", "4", "5"]
+// cast into obj
+let str2 = '{"name": "John", "age": 30}';
+let obj2 = JSON.parse(str2); // parse JSON string into object
+console.log(obj2); // {name: "John", age: 30}
 
 // * switch case (always cehcks equality and type ie ===)
 switch (num) {
@@ -342,6 +379,34 @@ do {
     console.log(k);
     k++;
     } while (k < 10); 
+
+// continue, break, pass, return
+// continue - skip the rest of the current iteration and move to the next one
+// break - exit the loop entirely
+// return - exit the function and optionally return a value
+//ex return
+function example() {
+    return 42;
+}
+// ex continue
+function example() {
+    for (let i = 0; i < 10; i++) {
+        if (i === 5) {
+            continue; // skip the rest of the current iteration
+        }
+        console.log(i);
+    }
+} // output: 0, 1, 2, 3, 4, 6, 7, 8, 9
+// ex break
+function example() {
+    for (let i = 0; i < 10; i++) {
+        if (i === 5) {
+            break; // exit the loop entirely
+        }
+        console.log(i);
+    }
+} // output: 0, 1, 2, 3, 4
+
 
 // * destructuring assignments ie making new variables from existing ones
 // old way
@@ -466,6 +531,7 @@ const arr1 = [1, 2, 3];
 const arr2 = [4, 5, 6];
 const combinedArr = [...arr1, ...arr2]; // this will combine the two arrays into one array but ...arr1 will spred all the elements of arr1 into the new array and so on
 console.log(combinedArr); // [1, 2, 3, 4, 5, 6] each element is a new item
+const combinedArr2 = [...arr1, 7, 8, 9]; // this will add 7, 8, 9 to the end of arr1 = [1, 2, 3, 7, 8, 9]
 // this function takes in spred arguments meaning how ever many are given each will be added to the array as a new item
 // so here the spred operater was used to unpack the arguments into an array
 function mySpredFunction(...args) {
@@ -627,6 +693,23 @@ setTimeout(() => {
     clearInterval(intervalId);
     console.log("Interval cleared");
 }, 5000);
+
+// using Array.prototype methods
+// ex one using a built in one:
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((n) => n * 2);
+console.log(doubled); // [2, 4, 6, 8, 10]
+// making you own
+// in this example i make a funciton that when used on any list retunes the last element 
+/**
+ * @return {null|boolean|number|string|Array|Object}
+ */
+Array.prototype.last = function() {
+   return (this.length == 0) ? -1 : this[this.length -1]; 
+};
+const arr = [1, 2, 3];
+arr.last(); // 3
+
 
 // common js functions
 /* 

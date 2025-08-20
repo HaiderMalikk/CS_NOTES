@@ -761,6 +761,20 @@ result = square(5)  # result = 25
 add = lambda x, y: x + y
 result = add(3, 4)  # result = 7
 
+# passing functions to functions
+# in this example we pass a number n and a function fn whichs maps n and retuns it, like ex n ** 2, this function is passed as a arg
+def map_value(n, fn):
+    return fn(n)
+
+result = map_value(5, lambda x: x ** 2) # pass inline anonymous function
+print(result)  # Output: 25
+# or 
+def square(n):
+    return n ** 2
+
+result = map_value(5, square) # pass a defined function 
+print(result)  # Output: 25
+
 # ! python classes
 # classes are templates for creating objects
 # class name is PascalCase
@@ -1444,6 +1458,38 @@ data = [(1, 'apple'), (3, 'banana'), (2, 'cherry')]
 sorted_data = sorted(data, key=lambda x: x[0])  # Sort by number, by deafult i.e sorted(data) will also do that but with this we can select any part to use to sort it
 print(sorted_data)  # Output: [(1, 'apple'), (2, 'cherry'), (3, 'banana')]
 
+""" 
+alternitive to this using a sorting function is different while you can use the quick sort function for ex to sort a 1d array 
+its more complicated to do it for something like dictionaries where you have nested data and need to sort based some some element in that nested data
+ex: 
+mtx = [[3, 4], [5, 2], [10, 1]]
+sorted_mtx = sorted(mtx, key=lambda x: x[1])  # Sort by the second element of each sublist
+print(sorted_mtx)
+Ex: QS version, this is harder as we compare the elements no by indexing then like its a 1d list but bby using a mapping function to accsess the element
+we are sorting by and then adding the whole obj like in this case the nested list to our output insted of just that element returned by the mapping function 
+def QS(arr, fn):
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[0]
+    left = []
+    right = []
+    
+    for n in arr[1:]:
+        if fn(n) < fn(pivot):
+            left.append(n)
+        else:
+            right.append(n)
+    
+    return QS(left, fn) + [pivot] + QS(right, fn)
+
+fn = lambda x: x[1]
+print(QS([[3, 4], [5, 2], [10, 1]], fn))  # [[10, 1], [5, 2], [3, 4]]
+
+fn1 = lambda x: x
+print(QS([5, 4, 1, 2, 3], fn1))  # [1, 2, 3, 4, 5]
+"""
+
 words = ["apple", "banana", "cherry", "kiwi"]
 sorted_words = sorted(words, key=len)  # Sort by length of words
 print(sorted_words)
@@ -1988,6 +2034,10 @@ for key, value in my_dict.items():
 # You can check if a key exists in a dictionary using the in operator.
 if "name" in my_dict:
     print("Name key exists")
+    
+## size / len of dictionaries
+my_dict = {"name": "Alice", "age": 30, "city": "New York"}
+print(len(my_dict))  # Output: 3
 
 ## serching dictionays 
 my_dict = {"name": "Alice", "age": 30, "city": "New York"}
