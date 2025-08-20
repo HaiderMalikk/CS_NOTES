@@ -1896,11 +1896,13 @@ print(coordinates) # Output: [1, 2, 3, 4, 5, 6]
 
 # *  4) using both of the * and ** operators for functions
 # this is used to define a function that takes both positional arguments(i.e arguments that are passed in the order they are defined) and keyword arguments (i.e arguments that are passed in by name)
+# here we do *args becuse we unpack all positional arguments into a tuple as we do **kwargs for the same thing but for keyword arguments we do ** beacuse its key value pairs like dictionaries
 def fun(a, b, *args, **kwargs): # this function 2 mandatory arguments a and b, and then any number of positional arguments (args) and keyword arguments (kwargs) the **defines the keyword arguments and the * defines the positional arguments, there can be as many positional arguments as you want
     print(f"a = {a}")
     print(f"b = {b}")
     print(f"args = {args}")
     print(f"kwargs = {kwargs}")
+    print(f"first keyword argument = {list(kwargs.keys())[0]} first keyword argument value = {list(kwargs.values())[0]}") # will print x and 100 for ex1
 
 fun(1, 2, 3, 4, 5, x=100, y=200) # a = 1, b = 2, args = (3, 4, 5), kwargs = {'x': 100, 'y': 200}, we must define a and b the rest are optional and we can define as many positional and keyword arguments as we want
 # combining unpacking with this
@@ -1913,6 +1915,7 @@ fun(1,2, 5, 6, list1, y=[*list2]) # a = 1, b = 2, args = (5, 6, [11, 22, 44]), k
 They are defined using curly braces {} or the set() function, 
 and they automatically remove duplicate values. """
 my_set = {1, 2, 3, 4} # declare a set with unique elements using curly braces its like a dictionary but with no key value pairs jsut values, * IF YOU ADD DUPLICATES, THEY WILL BE IGNORED
+my_set2 = {1,2,2} # will = {1,2} 2 removes automatically
 my_set = set([1, 2, 3, 4]) # using the set() function my_set is now a set and will remove duplicates if they are added
 my_set.add(5) # add 5 to the set
 my_set.add(1) # add 1 to the set, but it will be ignored because 1 is already in the set
@@ -1954,7 +1957,7 @@ my_dict = {
 # You can access values in a dictionary by specifying the key in square brackets [] or by using the get() method.
 # Accessing values
 name = my_dict["name"]  # Using square brackets
-age = my_dict.get("age")  # Using get() method
+age = my_dict.get("age")  # Using get() method // *NOTE unlike square brackets this will not raise an error if the key does not exist, it will return None instead
 
 #You can change the value associated with a specific key in a dictionary.
 # Modifying values
@@ -2060,6 +2063,7 @@ my_dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
 sub_dict = {key: my_dict[key] for key in list(my_dict)[:2]}
 print(sub_dict)  # Output: {'a': 1, 'b': 2}
 
+# map example
 data = {
     "apple": 22,
     "banana": 2,
