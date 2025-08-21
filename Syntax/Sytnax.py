@@ -2167,7 +2167,7 @@ class CustomError(Exception): # we inherit a custom error class from the Excepti
     def __init__(self, message):
         self.message = message
         super().__init__(self.message)  # call the parent class constructor with the message
-    def __str__(self): # this is the string representation of the error class
+    def __str__(self): # this is the string representation of the error class, if this was not here the except would print the message only
         return f"CustomError: {self.message}"
 
 def test_function():
