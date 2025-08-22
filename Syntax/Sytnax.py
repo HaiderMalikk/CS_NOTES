@@ -2197,30 +2197,30 @@ Global Scope: Variables defined at the top level of the script.
 Built-in Scope: Predefined names in Python (e.g., print, len).
 """
 # ! global keyword in python
-# a global variable is a variable that is defined outside of a function or a class and can be accessed from anywhere in the program
-# but what is we want to modify this global variable from a function?
-# NOTE: In Python, you can modify a global variable inside a function, but only if you're not assigning a new value to it. for Ex adding a element to a list inside a function to a global list will change the global list everywhere
-# This means if we said in the function modify global: global_var = 20 this will not work and will raise a NameError
-# so to work out that problem we use the global keyword to let python know that we want to modify the global varible x and it should change it outside the function and hence everywhere the varible x is used
-# NOTE: global vars also are preserved in the global scope of the module meaning if we modify a global variable it will be preserved in the global scope of the module and not just in the function so any function including the one that modified it will have the modified value no matter where it is used 
-# even if we call that function again and it was in a module it will have the modified value
+#In Python, the global keyword is used inside a function to tell Python that a variable refers to a global variable (outside the function), rather than creating a new local variable.
+#By default, when you assign a value to a variable inside a function, Python treats it as a local variable. If you want to modify a variable defined outside the function (in the global scope), you must declare it with global.
+# EX with no global 
+x = 5
 
-global_var = 10 # creating a variable outside the function ! NOTE: this valiable is a global variable as it is outside the function
-def print_global(): # this prints the global variable's current value
-    # when accessing a global variable inside a function we dont need to use the global keyword
-    print(global_var)
-    local_var = 20 * global_var # ok as we are only accessing the global variable
-    
-def modify_global(): # this modifies the global variable 
-    # to use a global variable in the scope of a function we use the global keyword and mention the variable
-    global global_var # this is the key line that lets python know we want to modify the global variable here for that we use the global keyword
-    global_var = 20 # this is the line that modifies the global variable now that inside the scope of the function we have used global global_var we can modify globa_var and it will change everywhere the variable is used
-    
-print_global() # this will print 10
-modify_global() # this will modify the global variable and print 20
-# NOTE: global x = 20  # This will cause a syntax error you can only modify a global variable stright away follow the syntax
+def change():
+    x = 10  # creates a *new local* variable x
+    print("Inside function:", x) # x has value 10 only inside function
 
-# * the global keyword has a very important property, its use in a function will make it so the global var 
+change() # prints : 10
+print("Outside function:", x) # prints : 5
+
+# Ex with global
+x = 5
+
+def change():
+    global x # lets python know we want to use the global variable x inside our function
+    x = 10  # modifies the *global* x
+    print("Inside function:", x) # x has value 10 inside function
+
+change() # prints : 10
+print("Outside function:", x) # prints : 10 (value changed everywhere)
+
+# * using the global variable to preserve variables between function calls
 # is preserved from function call to function call, so if we modify the global variable in one function it will be modified in all functions that use the global variable
 # this means if i import a module ot use a class object, the global var is like a static variable in C++ or a class variable in Java, but you mist add the global variable at indentation level in a module or top of the class
 
@@ -2250,7 +2250,31 @@ Changed _flag value: True
 # so assign the global var to a local varable inside the function or pass the global variable as an argument to the function and use it inside the function
 
 # ! nonlocal keyword in python
-# when a variable is a function but we have a inner function inside that fuction we can use the nonlocal keyword to access the variable in the outer function
+# when a variable is a function but we have a inner function inside that fuction we can use the nonlocal keyword to access the variable in the outer function insted of creating a new local variable in the inner function
+# so basically like the global keyword but for enclosing (outer) scopes (nested functions and closures)
+
+# EX1:
+def f1():
+    count = 10
+    def f2():
+        count = 20 # creates new local var count for inside the function only
+        print(count) # prints 20 the value of the local count 
+    f2() # this will not change f1's count variable 
+    print(count) # count still 10 as f2 made new count vaiable only in its scope
+f1()
+# Output: 20, 10
+def f1():
+    count = 10
+    def f2():
+        nonlocal count # tells python to bring the count variable from the outer function in tis functions scope to use insted of making a new local variable
+        count = 20 # changes the count in f1 (f2 has no variable called count we are using f1's count)
+        print(count) # prints 20 
+    f2()
+    print(count) # prints 20 as f2 changed f1's count variable
+f1()
+# output 20, 20
+
+# EX 2:
 def outer_function():
     count = 0  # Variable in the enclosing scope
 
