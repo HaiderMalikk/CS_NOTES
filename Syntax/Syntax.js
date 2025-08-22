@@ -464,6 +464,32 @@ class Person{
 
 }
 
+// ex
+class ArrayWrapper {
+  constructor(nums) {
+    this.nums = nums;
+  }
+
+  valueOf() {
+    let total = 0;
+    for (let i = 0; i < this.nums.length; i++) {
+      total += this.nums[i];
+    }
+    return total;
+  }
+
+  toString() {
+    return `[${this.nums.join(",")}]`;
+  }
+}
+
+const obj4 = new ArrayWrapper([1, 2]);
+const obj5 = new ArrayWrapper([3, 4]);
+
+console.log(obj4 + obj5); // 10
+console.log(String(obj4)); // "[1,2]"
+
+
 // creating objs here const is not needed but is good practice
 const personex = new Person();
 console.log(personex.greet());
