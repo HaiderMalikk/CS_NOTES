@@ -880,7 +880,7 @@ pair: Pair[int, str] = (1, "hello")  # pair is a tuple of type int and str
 array = [0] * 100  # Allocates memory for a list of 100 elements with the value 0 as a placeholder so = [0, 0, 0, 100 timee]
 array = [None] * 100  # Allocates memory for a list of 100 elements with the value None as a placeholder closest to C malloc
 # deallocate memory
-del array  # Frees the memory allocated for the list, talked more about in del keyword
+del array  # Frees the memory allocated for the list, talked more about in del keyword, see more in #del keyword notes
 # or
 array = None  # Removes the reference to the list, allowing the garbage collector to free the memory
 print(array) # Output: None (prints none but arr memory gone and freed) 
@@ -2351,7 +2351,8 @@ print(all(empty_list))  # True, because there are no elements, so the condition 
 
 # ! zip function in python
 # The zip() function takes iterables, aggregates them in a tuple, and returns it.
-# if the twi list are of different length then the shorter list will be padded with None
+# if one of the iterables is shorter than the others, zip() stops creating tuples when the shortest iterable is exhausted.
+# meaning if one list has 3 elements and the other has 5 elements zip will only create 3 tuples
 # syntax: zip(*iterables)
 # EX
 names = ["Alice", "Bob", "Charlie"]
@@ -2411,6 +2412,12 @@ else:
 
 # ! del keyword in python
 # The del keyword is used to delete variables, lists, tuples, and dictionaries.
+# you can also point the variable to None to do the same thing, x = 10, x = None or x = 10, del x
+# why use del if python has garbage collection?
+# 1) to free up memory by deleting large objects that are no longer needed
+# 2) to remove items from a list or dictionary by specifying the index or key
+# 3) to delete variables that are no longer needed to avoid accidental use later in the
+# use del ot point to None?: del is used to completely remove the variable from memory, while assigning None keeps the variable in memory but indicates that it has no value.
 # EX
 x = 10
 print(x)  # Output: 10
