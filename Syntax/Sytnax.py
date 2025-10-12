@@ -1721,6 +1721,10 @@ fruits = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig']
 basket = [fruits[i] for i in range(len(fruits)) if i % 2 == 0] 
 print(basket)
 
+# Ex of list comprehention with anonymous list (no ref to the list)
+name_list = [ "Alice", "Bob", "Charlie", "David"]
+[print(name) for name in name_list if len(name) >= 4] # prints Alice Bob David without any need to create a new list (the [] must be there to make it a list comprehension)
+
 # !tuple comprehension
 # * using list comprehension inside a   / inside a tuple
 # EX
