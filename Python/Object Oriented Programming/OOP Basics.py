@@ -553,6 +553,44 @@ def say_hello(): # this is func()
 
 say_hello() # calling function (this one has no parameters)
 
+# deep dive into decorators
+# in short decorators extend the functionality of a function without modifying the function itself, there used to extend or add functionality to the original function without adding the functionality to the original function
+# * when you call a function with a decorator you are really calling the decorator function and passing the original function as a parameter to the decorator function
+# why no do wrapper_function(original_function) instead of using the @ syntax, beacuse the @ syntax is just a shorthand for doing so and makes the code more readable and easier to understand
+# real example 
+# for fibonacci sequence we can use a decorator to cache the results of the function so we dont have to calculate the same value multiple times
+from functools import lru_cache
+@lru_cache(maxsize=128) # here we add a lru_cache decorator to the fibonacci function to cache the results of the function, this decorator adds the lru cache functionality to the fibonacci function without modifying the fibonacci function itself to do so we use the @ symbol followed by the decorator name
+def fibonacci(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)
+    
+# Implementating a decorator from scratch
+# say you wanted to know how long a function takes to execute you can make a decorator to do so
+# with this decorator you could add it to any function you want by using the @ symbol followed by the decorator name and it would add the functionality to calculate the time taken to execute the function
+import time # import the time module to get the current time
+from functools import wraps # import wraps to preserve the original function name and docstring
+def timer_decorator(func): # this is the definition of the decorator function its just like a regular function, func is the function being decorated (that function is passed as a parameter to the decorator function)
+    @wraps(func) # this is used to preserve the original function's name and docstring without this the original function's name and docstring would be lost and replaced with the wrapper's name and docstring
+    def wrapper(*args, **kwargs): # this is the wrapper function or the inner function that does the actual work (in our case it calculates the time taken to execute the function) it takes any number of arguments and keyword arguments beacuse we dont know how many arguments the original function takes, this way the decorator can handle any function signature
+        start = time.time() # get the current time before the function is called
+        result = func(*args, **kwargs) # call the original function
+        end = time.time() # get the current time after the function is called
+        print(f"Function {func.__name__} took {end - start} seconds to execute.") # print the time taken to execute the function and the name of the function
+        return result # return the result of the original function, !!!NOTE this is important beacuse whatever your original function returns must be returned by the wrapper function otherwise the original function will return None, in our case 'finished' is returned by the original function to the wrapper function when its called from herer but we must return it to the caller of the wrapped function which is the print(slow_function(2)) line
+    return wrapper # return the wrapper function to the caller which is the original function, a decorator must return a function beacuse the decorator replaces the original function with the wrapper function and must return the wrapper function to the caller (wrapper function calles the original function and extends its functionality)
+
+@timer_decorator # this adds the timer_decorator to the slow_function now this function is replaced by the timer_decorator function with this 'slow_function' is passed as a parameter to the timer_decorator function = timer_decorator(slow_function)
+def slow_function(n):
+    time.sleep(n)
+    return "Finished"
+
+print(slow_function(2)) # this will print the time taken to execute the function slow_function 'print statement' and then 'Finished' the return value of the slow_function
+
 # * using static and class methods in python to get static methods in python
 class Example:
     # Class variable (static variable)
