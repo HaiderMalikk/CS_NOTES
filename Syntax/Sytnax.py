@@ -1521,10 +1521,18 @@ print(data_n)
 
 
 # * Using filter on string:
+# when using strings the filter will return a list of characters that pass the filter condition
+# what if we want a string ? 1 way is to but it back into a string use .join method
+# we need to still cast the filter to a list and cating to string like 'str(filterobj) will not work
+s = "Hello World!" # example remove all non alpha characters from string
+salpha = list(filter(lambda c: c.isalpha(), s))
+salpha =  "".join(salpha) 
+print(salpha) # Output: "HelloWorld" 
+
+# how do we preserve the original string while only removing the non alpha chars? 
 s = "Hello World!"
-s = (filter(str.isalpha, s)) # remove all non alpha characters from s
-print(list(s)) # Output: ['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']
-# * we can see that we still need to convert s to a list to see the results as filter returns a filter object and a cast to str(s) wont work
+salpha = ''.join(filter(lambda c: c.isalpha() or c.isspace(), s))  # Keep alphabetic characters and spaces
+print(salpha)  # Output: "Hello World"
 
 # * to solve this use .join to joing the individual elements(characters) in the string so that the filter function returns a string
 # * NOTE: the .joinh joins each character in the string by some string and so we cant preserve the original string's spaces
