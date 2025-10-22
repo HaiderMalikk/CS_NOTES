@@ -970,6 +970,23 @@ replaced_str = str1.replace("World", "Python")  # replaced_str = "Hello, Python!
 # splits strings into substrings based on dilimeter i.e " " or ","
 words = str2.split(" ")  # words = ["Python", "is", "awesome!"] here it splits at (" ") "a space"
 
+# Spliting a word into chars:
+# string is list of chars in python !
+word = "hello" 
+characters = list(word)
+print(characters)
+# OR 
+word = "example"
+characters = [char for char in word] # or use a for loop and append each char
+print(characters)
+# OR
+
+# ! String unpacking
+word = "unpack"
+*characters, = word # you must have the comma to indicate its a list unpacking the ',' will be addeed after each char
+print(characters)
+
+
 # combines a list of strings into one string 
 word_list = ["Python", "is", "awesome!"]
 joined_str = " ".join(word_list)  # joined_str = "Python is awesome!"
@@ -1951,6 +1968,10 @@ tuple1 = (1, 2, 3)
 tuple2 = (4, 5, 6)
 coordinates = [ *tuple1, *tuple2 ] # unpacking the tuple and adding them to a list
 print(coordinates) # Output: [1, 2, 3, 4, 5, 6]
+# 4) string unpacking wirh * (string is a list of chars so same as list unpacking)
+word = "unpack"
+*characters, = word # you must use the ',' after characters to make it a list otherwise it will be a string the , will add a ',' after characters making it a list. *list, has no effect as alredy a list
+print(characters)
 
 # *  4) using both of the * and ** operators for functions
 # this is used to define a function that takes both positional arguments(i.e arguments that are passed in the order they are defined) and keyword arguments (i.e arguments that are passed in by name)
