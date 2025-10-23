@@ -979,7 +979,24 @@ print(characters)
 word = "example"
 characters = [char for char in word] # or use a for loop and append each char
 print(characters)
-# OR
+
+# casting to str
+x = 100
+string = str(x)  # string = "100"
+
+# * characters:
+# Chars are simply strings of length 1 in python so there is no char type only str type EX: ch = 'A' is a string of length 1 so its a char
+char = 'A'
+# comparing chars by ascii values (see ord and chr for more)
+char1 = 'A'
+char2 = 'B'
+is_greater = char1 > char2  # is_greater = False since 'A' has a lower ascii value than 'B'
+
+# * string comparisions 
+# in python strings are compared lexicographically using the ASCII values of the characters meaning it evaluates each char based on as until True
+x = "BBa" 
+y ="AA"
+print(x>y) # True as B > A in ascii values so the first char is enough to determine the result python stops there as it found a true condition
 
 # ! String unpacking
 word = "unpack"
@@ -1724,6 +1741,12 @@ numbers = [1, 2, 3, 4, 5]
 even_or_cube = [num ** 2 if num % 2 == 0 else num ** 3 for num in numbers]
 print(even_or_cube)  # Output: [1, 4, 27, 16, 125]
 
+# 2D or Nested list comprehention (using a double for loop in list comprehention can go for X levels of nesting) 
+# EX simple:
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened_matrix = [num for row in matrix for num in row] # syntax: declared_var for iterable1 in aterable2 for declared_var in iterable1
+print(flattened_matrix) # Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 # list comprihention equvalent using simple flow control is the same as filter function
 # EX
 data = [1, 2, 3, 4, 5]
@@ -2124,6 +2147,23 @@ print(sorted_by_values)  # Output: {'c': 1, 'b': 2, 'a': 3}
 sorted_by_keys_desc = dict(sorted(my_dict.items(), reverse=True))
 # by value
 sorted_by_values_desc = dict(sorted(my_dict.items(), key=lambda item: item[1], reverse=True))
+
+# sorting a string in alphabetical order using sorted:
+my_string = "hello world"
+sorted_string = sorted(my_string) # [' ', 'd', 'e', 'h', 'l', 'l', 'l', 'o', 'o', 'r', 'w']
+joined_sorted_string = ''.join(sorted_string)
+print(joined_sorted_string) # ' dehllloorw' empty space at start to remove space split words and join back then do this procedure, basically remove spaces first
+
+# OR using string unpacking to convert into list then sorting 
+list_string = *my_string, # ('h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd')
+sorted_string = sorted(list_string) # [' ', 'd', 'e', 'h', 'l', 'l', 'l', 'o', 'o', 'r', 'w']
+joined_sorted_string = ''.join(sorted_string)
+print(joined_sorted_string) # ' dehllloorw'
+
+# OR doing it all together using unpacking
+sorted_list = ''.join(sorted((*my_string,)))
+print(sorted_list) # ' dehllloorw'
+
 # filter EX, filter out eeryh=thing except the keys that are greater than 1
 filterd_by_keys= {'b': 2, 'a': 3, 'c': 1}
 filterd_by_keys = dict(filter(lambda item: item[1] > 1, filterd_by_keys.items()))
@@ -2232,6 +2272,8 @@ Built-in Scope: Predefined names in Python (e.g., print, len).
 # ! global keyword in python
 #In Python, the global keyword is used inside a function to tell Python that a variable refers to a global variable (outside the function), rather than creating a new local variable.
 #By default, when you assign a value to a variable inside a function, Python treats it as a local variable. If you want to modify a variable defined outside the function (in the global scope), you must declare it with global.
+# only useable in functions 
+
 # EX with no global 
 x = 5
 
@@ -2285,6 +2327,7 @@ Changed _flag value: True
 # ! nonlocal keyword in python
 # when a variable is a function but we have a inner function inside that fuction we can use the nonlocal keyword to access the variable in the outer function insted of creating a new local variable in the inner function
 # so basically like the global keyword but for enclosing (outer) scopes (nested functions and closures)
+# only useable in nested functions
 
 # EX1:
 def f1():
@@ -2325,6 +2368,17 @@ outer_function() # this will print Count:1 and Count:2
 # count is defined in outer_function (the enclosing scope).
 # inner_function uses the nonlocal keyword to modify count.
 # Without nonlocal, count += 1 inside inner_function would create a new local variable count instead of modifying the one in outer_function. 
+
+# * For loop variable scope
+# if a var is declared in a for loop you cann use it outside the for loop and it will hold the value last assigned to that var in the loop
+for i in range(5):
+    x = i
+print(x)  # Output: 4
+# or
+x = None
+for i in range(5):
+    x = i
+print(x)  # Output: 4
 
 
 #! is vs == in python
@@ -2479,6 +2533,23 @@ p = Person("Bob")
 print(p.name)  # Output: Bob
 del p.name
 # print(p.name)  # Raises AttributeError: 'Person' object has no attribute 'name'
+
+# ! ord and chr 
+# ord converts a single character to its corresponding ASCII (or Unicode) integer value (EX: ord('A') = 65)
+# unicode is good as it orders characters by their position in the unicode table i.e 'A' = 65, 'B' = 66, 'Z' = 90, 'a' = 97, 'b' = 98, 'z' = 122 the 7 number jump from Z->a is because of special characters like '[' in inbetween
+# chr is the opposite it converts an integer value to its corresponding character (EX: chr(65) = 'A')
+# EX
+ch = 'A'
+num = ord(ch)   # 65
+back = chr(num) # 'A'
+# usefull because you can do math on characters
+# EX usecase keeping only uppercase letters without built in functions except ord and chr
+# without ord or chr
+text = "Hello World! 123"
+caps_only = ''.join(ch for ch in text if 'A' <= ch <= 'Z') # in python you can compare chars like this and they word on position in the ascii table so 'A' > 'a' is False
+print(caps_only)  # Output: HW
+caps_only = ''.join(ch for ch in text if 65 <= ord(ch) <= 90)
+print(caps_only)  # Output: HW
 
 # ! help function in python
 # The help() function is used to display information about a Python object or module.
