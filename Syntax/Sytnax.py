@@ -2754,6 +2754,12 @@ here we get the current value of counter before incrementing it as during the ti
 another thread might have already incremented counter changing its value. so we get the current value of counter at the start and work with it during the lock.
 """
 
+# magic methods and __files__
+# Magic methods in OOP Basics.py
+# ex of magic methods: __init__, __str__, __repr__, __add__, __len__, __eq__, __lt__, __gt__, __call__, __enter__, __exit__, etc.
+# what they do is they allow you to define how your objects behave with built-in operations and functions for ex init is called when an object is created and lets you make a constructor for your class
+# __files__ is a special attribute that contains the path to the current file for ex __init__ .py is the init file in a package it lets python know that this folder is a package
+
 # ==================== NON PYTHON SYNTAX ====================
 
 # ! ENV's in python
