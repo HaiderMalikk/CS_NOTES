@@ -2754,6 +2754,76 @@ here we get the current value of counter before incrementing it as during the ti
 another thread might have already incremented counter changing its value. so we get the current value of counter at the start and work with it during the lock.
 """
 
+# permutaions in python 
+# using itertools module
+from itertools import permutations
+
+# Example 1: Permutations of a list 
+data_list = [1, 2, 3]
+all_permutations = permutations(data_list)
+
+print("Permutations of [1, 2, 3]:")
+for p in all_permutations:
+    print(p)
+# output:
+# (1, 2, 3)
+# (1, 3, 2)
+# (2, 1, 3)
+# (2, 3, 1)
+# (3, 1, 2)
+# (3, 2, 1)
+
+# Example 2: Permutations of a string
+data_string = "abc"
+string_permutations = permutations(data_string)
+
+print("\nPermutations of 'abc':")
+for p in string_permutations:
+    print(''.join(p)) # Join characters to form a string because permutation is returned as a tuple ex: ('a', 'b', 'c')
+# output:
+# abc
+# acb
+# bac
+# bca
+# cab
+# cba
+
+# Example 3: Permutations of a specific length (r)
+data_r = [1, 2, 3, 4]
+permutations_of_length_2 = permutations(data_r, 2)
+
+print("\nPermutations of [1, 2, 3, 4] with length 2:")
+for p in permutations_of_length_2:
+    print(p)
+# output:
+# (1, 2)
+# (1, 3)
+# (1, 4)
+# (2, 1)
+# (2, 3)
+# (2, 4)
+# (3, 1)
+# (3, 2)
+# (3, 4)
+# (4, 1)
+# (4, 2)
+# (4, 3)
+
+# How to manually calculate permutations
+def calculate_permutations(data, r): # r is the length of each permutation
+    n = len(data)
+    if r > n:
+        return []
+    if r == n:
+        return [data]
+    if r == 1:
+        return [[x] for x in data]
+    permutations = []
+    for i in range(n):
+        for p in calculate_permutations(data[:i] + data[i+1:], r-1):
+            permutations.append([data[i]] + p)
+    return permutations
+
 # magic methods and __files__
 # Magic methods in OOP Basics.py
 # ex of magic methods: __init__, __str__, __repr__, __add__, __len__, __eq__, __lt__, __gt__, __call__, __enter__, __exit__, etc.
