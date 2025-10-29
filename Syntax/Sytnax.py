@@ -2056,6 +2056,23 @@ my_dict = {
     "city": "New York"
 }
 
+# creating a dictionary from a list of tuples
+pairs = [("name", "Alice"), ("age", 25), ("city", "Los Angeles")]
+my_dict = dict(pairs) # since the tuples are in the form (key, value) we can use the dict() function to convert the list of tuples into a dictionary
+# output: {'name': 'Alice', 'age': 25, 'city': 'Los Angeles'}
+
+# creating a dictionary from a list of key-value pairs
+my_dict = dict([("name", "Alice"), ("age", 25), ("city", "Los Angeles")]) # same idea as long as the tuples are in the form (key, value)
+# output: {'name': 'Alice', 'age': 25, 'city': 'Los Angeles'}
+
+# creating a dictionary from a list (the value is the index)
+my_list = ["apple", "banana", "cherry"]
+my_dict = {value: index for index, value in enumerate(my_list)} # this way the value is the element in the list and the index is the index of that element in the list
+# output: {'apple': 0, 'banana': 1, 'cherry': 2}
+# using fromkeys method
+my_dict = dict.fromkeys(my_list, 0) # this way the value is 0 for all keys in the list the '0' is options if left empty value of key is None
+# output: {'apple': 0, 'banana': 0, 'cherry': 0}
+
 # You can access values in a dictionary by specifying the key in square brackets [] or by using the get() method.
 # Accessing values
 name = my_dict["name"]  # Using square brackets
