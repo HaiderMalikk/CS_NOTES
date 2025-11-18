@@ -2847,6 +2847,154 @@ def calculate_permutations(data, r): # r is the length of each permutation
 # what they do is they allow you to define how your objects behave with built-in operations and functions for ex init is called when an object is created and lets you make a constructor for your class
 # __files__ is a special attribute that contains the path to the current file for ex __init__ .py is the init file in a package it lets python know that this folder is a package
 
+# ! flags in python 
+"""
+Simple CLI flags example using argparse.
+
+This script demonstrates:
+- Defining flags (string, int, boolean, repeated flags, and choices)
+- Requiring a flag (fails if missing)
+- Listing which flags were provided and their values
+- Counting how many recognized flags were provided
+- Showing unknown flags that were passed
+- Producing a simple result based on the flags
+
+Usage (examples):
+
+  # Minimal: required --name only
+  python cli_flags_example.py --name Alice
+
+  # Add optional flags
+  python cli_flags_example.py --name Alice --repeat 3 --verbose
+
+  # Repeated flags (e.g., tags)
+  python cli_flags_example.py --name Bob --tag ml --tag ai --tag nlp
+
+  # With a choice flag
+  python cli_flags_example.py --name Carol --mode slow
+
+  # Pass some unknown flags (script will list them but not fail)
+  python cli_flags_example.py --name Dan --foo --bar=123
+
+Required flags:
+- --name is required. If omitted, argparse will show an error and usage.
+
+Notes:
+- "Recognized flags" count = how many defined flags were actually provided and differ from their defaults
+  (e.g., providing --repeat 1 doesnt count because 1 is the default).
+- Repeated flags like --tag count as one flag if provided, but youll see how many values were given.
+
+import argparse
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Demo of CLI flags: required, optional, repeated, choices, and reporting."
+    )
+    # Required flag
+    parser.add_argument(
+        "--name",
+        required=True,
+        help="Your name (required)."
+    )
+    # Optional with default
+    parser.add_argument(
+        "--repeat",
+        type=int,
+        default=1,
+        help="How many times to repeat the greeting (default: 1)."
+    )
+    # Boolean/flag (store_true)
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="If set, print extra details."
+    )
+    # Repeated values: pass multiple times e.g. --tag a --tag b
+    parser.add_argument(
+        "--tag",
+        dest="tags",
+        action="append",
+        default=[],
+        help="Add a tag (can be provided multiple times)."
+    )
+    # Choice-constrained flag
+    parser.add_argument(
+        "--mode",
+        choices=["fast", "slow"],
+        default="fast",
+        help="Select a mode (default: fast)."
+    )
+    return parser
+
+
+def main(argv=None) -> int:
+    parser = build_parser()
+
+    # Defaults snapshot for comparison to detect which flags were actually provided
+    defaults = parser.parse_args([])
+
+    # Accept unknown flags so we can show them rather than erroring out
+    args, unknown = parser.parse_known_args(argv)
+
+    # Determine which recognized flags the user actually provided (differs from default)
+    tracked_fields = ["name", "repeat", "verbose", "tags", "mode"]
+    provided = {}
+    for field in tracked_fields:
+        if getattr(args, field) != getattr(defaults, field):
+            provided[field] = getattr(args, field)
+
+    recognized_flags_count = len(provided)
+
+    # Extract unknown flags (tokens starting with '-' from the unknown list)
+    unknown_flags = [tok for tok in unknown if tok.startswith("-")]
+    unknown_flags_count = len(unknown_flags)
+
+    # Report
+    print("=== Flags Summary ===")
+    print(f"Recognized flags provided ({recognized_flags_count}):")
+    if provided:
+        for k, v in provided.items():
+            if k == "tags":
+                print(f"  --{k}: {v} (values: {len(v)})")
+            else:
+                print(f"  --{k}: {v}")
+    else:
+        print("  (none)")
+
+    if unknown:
+        print(f"\nUnknown tokens received ({len(unknown)}), unknown flags ({unknown_flags_count}):")
+        for tok in unknown:
+            print(f"  {tok}")
+    else:
+        print("\nNo unknown flags.")
+
+    # Do something simple with the flags
+    greeting = f"Hello, {args.name}!"
+    for i in range(args.repeat):
+        print(greeting)
+
+    if args.verbose:
+        print("\n[verbose] Details:")
+        print(f"- mode: {args.mode}")
+        print(f"- tags count: {len(args.tags)}")
+        if args.tags:
+            print(f"- tags: {', '.join(args.tags)}")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+# usage 
+# python cli_flags_example.py --name Alice --repeat 3 --verbose --tag ml --tag nlp --mode slow
+# If you omit a required flag, argparse shows a helpful error and usage:
+# python cli_flags_example.py
+# error: the following arguments are required: --name
+"""
+
+
+
 # ==================== NON PYTHON SYNTAX ====================
 
 # ! ENV's in python
