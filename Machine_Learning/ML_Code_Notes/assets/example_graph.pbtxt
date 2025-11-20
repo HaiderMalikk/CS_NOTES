@@ -153,5 +153,5 @@ node {
   }
 }
 versions {
-  producer: 2129
+  producer: 2288
 }
