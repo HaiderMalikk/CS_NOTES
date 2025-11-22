@@ -1,0 +1,226 @@
+{
+    "model_name": "baseline_model",
+    "timestamp": "20251122_151705",
+    "model_type": "Sequential",
+    "hyperparameters": {
+        "vocab_size": 10000,
+        "seq_length": 250,
+        "embedding_dim": 64,
+        "hidden_units": 64,
+        "batch_size": 32,
+        "epochs": 3
+    },
+    "model_architecture": {
+        "layers": [
+            {
+                "layer_type": "Embedding",
+                "layer_index": 0,
+                "layer_name": "embedding_3",
+                "config": {
+                    "name": "embedding_3",
+                    "trainable": true,
+                    "dtype": {
+                        "module": "keras",
+                        "class_name": "DTypePolicy",
+                        "config": {
+                            "name": "float32"
+                        },
+                        "registered_name": null
+                    },
+                    "input_dim": 10000,
+                    "output_dim": 64,
+                    "embeddings_initializer": {
+                        "module": "keras.initializers",
+                        "class_name": "RandomUniform",
+                        "config": {
+                            "seed": null,
+                            "minval": -0.05,
+                            "maxval": 0.05
+                        },
+                        "registered_name": null
+                    },
+                    "embeddings_regularizer": null,
+                    "activity_regularizer": null,
+                    "embeddings_constraint": null,
+                    "mask_zero": false
+                },
+                "trainable": true
+            },
+            {
+                "layer_type": "GlobalAveragePooling1D",
+                "layer_index": 1,
+                "layer_name": "global_average_pooling1d_3",
+                "config": {
+                    "name": "global_average_pooling1d_3",
+                    "trainable": true,
+                    "dtype": {
+                        "module": "keras",
+                        "class_name": "DTypePolicy",
+                        "config": {
+                            "name": "float32"
+                        },
+                        "registered_name": null
+                    },
+                    "data_format": "channels_last",
+                    "keepdims": false
+                },
+                "trainable": true
+            },
+            {
+                "layer_type": "Dense",
+                "layer_index": 2,
+                "layer_name": "dense_6",
+                "config": {
+                    "name": "dense_6",
+                    "trainable": true,
+                    "dtype": {
+                        "module": "keras",
+                        "class_name": "DTypePolicy",
+                        "config": {
+                            "name": "float32"
+                        },
+                        "registered_name": null
+                    },
+                    "units": 64,
+                    "activation": "relu",
+                    "use_bias": true,
+                    "kernel_initializer": {
+                        "module": "keras.initializers",
+                        "class_name": "GlorotUniform",
+                        "config": {
+                            "seed": null
+                        },
+                        "registered_name": null
+                    },
+                    "bias_initializer": {
+                        "module": "keras.initializers",
+                        "class_name": "Zeros",
+                        "config": {},
+                        "registered_name": null
+                    },
+                    "kernel_regularizer": null,
+                    "bias_regularizer": null,
+                    "kernel_constraint": null,
+                    "bias_constraint": null
+                },
+                "trainable": true
+            },
+            {
+                "layer_type": "Dense",
+                "layer_index": 3,
+                "layer_name": "dense_7",
+                "config": {
+                    "name": "dense_7",
+                    "trainable": true,
+                    "dtype": {
+                        "module": "keras",
+                        "class_name": "DTypePolicy",
+                        "config": {
+                            "name": "float32"
+                        },
+                        "registered_name": null
+                    },
+                    "units": 1,
+                    "activation": "sigmoid",
+                    "use_bias": true,
+                    "kernel_initializer": {
+                        "module": "keras.initializers",
+                        "class_name": "GlorotUniform",
+                        "config": {
+                            "seed": null
+                        },
+                        "registered_name": null
+                    },
+                    "bias_initializer": {
+                        "module": "keras.initializers",
+                        "class_name": "Zeros",
+                        "config": {},
+                        "registered_name": null
+                    },
+                    "kernel_regularizer": null,
+                    "bias_regularizer": null,
+                    "kernel_constraint": null,
+                    "bias_constraint": null
+                },
+                "trainable": true
+            }
+        ],
+        "total_layers": 4,
+        "total_params": 644225,
+        "trainable_params": 644225,
+        "non_trainable_params": 0
+    },
+    "compilation": {
+        "optimizer": {
+            "class_name": "Adam",
+            "config": {
+                "name": "adam",
+                "learning_rate": 0.0010000000474974513,
+                "weight_decay": null,
+                "clipnorm": null,
+                "global_clipnorm": null,
+                "clipvalue": null,
+                "use_ema": false,
+                "ema_momentum": 0.99,
+                "ema_overwrite_frequency": null,
+                "loss_scale_factor": null,
+                "gradient_accumulation_steps": null,
+                "beta_1": 0.9,
+                "beta_2": 0.999,
+                "epsilon": 1e-07,
+                "amsgrad": false
+            }
+        },
+        "loss_function": "binary_crossentropy",
+        "metrics": [
+            "loss",
+            "compile_metrics"
+        ]
+    },
+    "training_history": {
+        "loss": [
+            0.46843957901000977,
+            0.27965086698532104,
+            0.2273213267326355
+        ],
+        "accuracy": [
+            0.7663599848747253,
+            0.8840799927711487,
+            0.9074000120162964
+        ],
+        "epochs_completed": 3
+    },
+    "evaluation_metrics": {
+        "test_loss": 0.34961238503456116,
+        "test_accuracy": 0.8503199815750122,
+        "precision": 0.8230780581378191,
+        "recall": 0.89248,
+        "f1_score": 0.8563752206954787,
+        "roc_auc_score": 0.9336967872,
+        "specificity": 0.80816,
+        "matthews_corrcoef": 0.7031440877249642,
+        "confusion_matrix": {
+            "matrix": [
+                [
+                    10102,
+                    2398
+                ],
+                [
+                    1344,
+                    11156
+                ]
+            ],
+            "true_negatives": 10102,
+            "false_positives": 2398,
+            "false_negatives": 1344,
+            "true_positives": 11156
+        },
+        "error_rates": {
+            "false_positive_rate": 0.19184,
+            "false_negative_rate": 0.10752
+        },
+        "total_predictions": 25000,
+        "correct_predictions": 21258,
+        "incorrect_predictions": 3742
+    }
+}
