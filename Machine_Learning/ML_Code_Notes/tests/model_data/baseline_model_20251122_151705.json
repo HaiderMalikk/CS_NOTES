@@ -179,48 +179,48 @@
     },
     "training_history": {
         "loss": [
-            0.46843957901000977,
-            0.27965086698532104,
-            0.2273213267326355
+            0.1508881002664566,
+            0.14511753618717194,
+            0.14272142946720123
         ],
         "accuracy": [
-            0.7663599848747253,
-            0.8840799927711487,
-            0.9074000120162964
+            0.9432399868965149,
+            0.9477199912071228,
+            0.9467999935150146
         ],
         "epochs_completed": 3
     },
     "evaluation_metrics": {
-        "test_loss": 0.34961238503456116,
-        "test_accuracy": 0.8503199815750122,
-        "precision": 0.8230780581378191,
-        "recall": 0.89248,
-        "f1_score": 0.8563752206954787,
-        "roc_auc_score": 0.9336967872,
-        "specificity": 0.80816,
-        "matthews_corrcoef": 0.7031440877249642,
+        "test_loss": 0.47598370909690857,
+        "test_accuracy": 0.8441600203514099,
+        "precision": 0.8900979325353645,
+        "recall": 0.78528,
+        "f1_score": 0.8344100646038762,
+        "roc_auc_score": 0.9205480064,
+        "specificity": 0.90304,
+        "matthews_corrcoef": 0.6931428289499134,
         "confusion_matrix": {
             "matrix": [
                 [
-                    10102,
-                    2398
+                    11288,
+                    1212
                 ],
                 [
-                    1344,
-                    11156
+                    2684,
+                    9816
                 ]
             ],
-            "true_negatives": 10102,
-            "false_positives": 2398,
-            "false_negatives": 1344,
-            "true_positives": 11156
+            "true_negatives": 11288,
+            "false_positives": 1212,
+            "false_negatives": 2684,
+            "true_positives": 9816
         },
         "error_rates": {
-            "false_positive_rate": 0.19184,
-            "false_negative_rate": 0.10752
+            "false_positive_rate": 0.09696,
+            "false_negative_rate": 0.21472
         },
         "total_predictions": 25000,
-        "correct_predictions": 21258,
-        "incorrect_predictions": 3742
+        "correct_predictions": 21104,
+        "incorrect_predictions": 3896
     }
 }
