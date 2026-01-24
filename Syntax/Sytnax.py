@@ -1857,6 +1857,12 @@ my_list = [0, 1, 2, 3, 4, 5]
 copy_list = my_list[:]  # Copy the entire list
 print(copy_list)  # Output: [0, 1, 2, 3, 4, 5]
 
+# the end index dose not have to be in range of list
+list_ex = ['apple', 'orange', 'banana', 'grape', 'mango']
+start = 0
+end = 10
+print(list_ex[start:end]) # prints: ['apple', 'orange', 'banana', 'grape', 'mango'] even though end is out of range it just goes to the end of the list
+
 # list splicing equvalent using simple flow control 
 # note for skiping elements you need to use a while loop that way you can increase the index in any iteration and in any ammount
 # EX
