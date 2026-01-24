@@ -869,6 +869,42 @@ type Pair[T, U] = tuple[T, U] # pair is a type that is a tuple of type T and U, 
 pair: Pair[int, str] = (1, "hello")  # pair is a tuple of type int and str
 """
 
+# ! Pydantic classes and types 
+""" 
+# Pydantic is a data validation and settings management library for Python, based on Python type annotations.
+# Pydantic enforces type hints at runtime and provides user-friendly errors when data is invalid
+# install: pip install pydantic
+"""
+from pydantic import BaseModel
+
+# simple class 
+class User(BaseModel):
+    id: int
+    name: str
+    is_active: bool = True  # default value
+    
+user: User = User(id=1, name="Alice") # user is of type user 
+
+# advanced example  
+class CountryCode(str):
+    @classmethod #  @classmethod lets a method receive the class (cls) instead of an instance, so it can construct/modify class-level state or provide alternate constructors.
+    def __get_validators__(cls): # this megaic methid is hook called by pydantic 
+        # yield turns a function into a generator: each yield value produces one item lazily to the caller (e.g., a for loop) and pauses the function, 
+        # resuming from that point on the next iteration. It’s there so the function can stream results one-by-one without building a full list in memory.
+        yield cls.validate
+        
+    @classmethod
+    def validate(cls, v):
+        if not isinstance(v, str) or len(v) != 2:
+            raise ValueError("must be a 2-letter country code")
+        return cls(v.upper())
+
+class Address(BaseModel):
+    country: CountryCode  # custom type used as the field type
+
+addr = Address(country="ca")
+print(addr.country)       # "CA" (type CountryCode)
+
 # ! Allocation and deallocation of memory
 # Python is a dynamically typed language, which means that the type of a variable is determined at runtime. 
 # This means that the memory used by a variable can change as the program runs, depending on the value of the variable.
