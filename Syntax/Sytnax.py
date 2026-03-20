@@ -555,6 +555,39 @@ for i in range(3):  # Outer loop
     for j in range(2):  # Inner loop
         print(f"Outer loop index: {i}, Inner loop index: {j}") # in a printf everything must be in "" a var must be in {}
         
+# ! else clause in for loops
+# Python has a lesser known feature. You can attach an else to for and while loops. (best use is for serching)
+# It does not mean “run if condition is false.” It means: Run the else block only if the loop finishes normally.
+# That means: 1) No break happened 2) The loop was not stopped early
+
+for x in [1, 2, 3]:
+    if x == 4:
+        print("Found 4")
+        break
+else:
+    print("4 not found")
+
+# What happens: -> Loop checks all values -> Never hits break -> else runs → prints "4 not found"
+
+for x in [1, 2, 3, 4]:
+    if x == 4:
+        print("Found 4")
+        break
+else:
+    print("4 not found")
+
+# What happens: break runs when x == 4 -> else is skipped
+
+n = 3
+
+while n > 0:
+    n -= 1
+    if n == 1:
+        break
+else:
+    print("Finished normally")
+# What happens: Loop hits break -> else does NOT run
+        
 # ! Unnammed variables
 # if we dont need a variable we can use _ no make it an unnamed variable (anonymous variable)
 # ex 1
@@ -2811,6 +2844,32 @@ Here temp is optional as we are using a lock to ensure only one thread can modif
 but it demonstrates the importance race conditions where multiple threads are accessing the same resource without any synchronization.
 here we get the current value of counter before incrementing it as during the time we take to increment it, 
 another thread might have already incremented counter changing its value. so we get the current value of counter at the start and work with it during the lock.
+"""
+
+""" 
+The Global Interpreter Lock, or GIL, is a rule inside CPython (you have no control over this unlike the threading locks we can use) that only allows one thread to execute Python bytecode at a time.
+Core idea
+- Only one thread can execute Python code at a time in a single process.
+Why it exists
+- Makes memory management simple
+- Prevents race conditions inside the interpreter
+- Keeps performance predictable for single threaded code
+What it affects
+- CPU bound tasks
+    - Threads do not run in parallel
+    - You get no speedup from multiple cores
+- I O bound tasks
+    - Works fine
+    - While one thread waits, another runs
+
+Example
+You run two threads doing heavy math: They take turns using the CPU Total time is almost the same as one thread
+You run two threads doing network requests: One waits for response The other runs You get faster overall execution 
+
+What to do about it
+- Use multiprocessing for CPU heavy work
+- Use threading or async for I O tasks
+Or use alternatives like PyPy or Jython that handle threading differently
 """
 
 # permutaions in python 
