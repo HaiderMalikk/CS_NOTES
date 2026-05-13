@@ -432,6 +432,15 @@ An interface defines a contract for classes to implement, specifying what method
 An abstract class is a class that cannot be instantiated directly and is used as a base class for other classes.
 the main difference is that an interface only defines method signatures without any implementation, while an abstract class provides the implementation details for the methods
 in python both abstract classes and interfaces are implemented using the abc module, hence the main difference is in how they are used
+
+
+| Feature | Abstract Method | Interface Method |
+|    :--- |            :--- |             :--- |
+| **Focus** | What the object is (Identity). | What the object can do (Capability). |
+| **Keywords** | Uses `abstract class` and `extends`. | Uses `interface` and `implements`. |
+| **Inheritance** | A class can only extend one abstract class. | A class can implement many interfaces. |
+| **Variables** | Class can have regular variables. | Only allows `public static final` constants. |
+
 """
 
 # ! public, protected, private
