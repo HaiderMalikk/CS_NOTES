@@ -203,7 +203,73 @@ if var1:
     print("var1 is true") # prints 
 if var2 == True:
     print("var2 is true") # dose not print 
+    
+# ! Match case 
+# aka switch case ( a match case or switch case is a control structure that allows you to execute different blocks of code based on the value of a variable or expression)
+# it basically replaces a series of if-elif-else statements
 
+# 1. Basic Value MatchingThe simplest use case is evaluating a variable against specific exact literal values.pythondef check_status(status_code):
+def check_status(status_code):
+    match status_code:
+        case 200:
+            # can do xyz here like for ex print("Success") or x = 1 etc you dont have to always return a value but you can if you want to you just cannot leave it empty
+            # ex: case 200:
+            #       print("Success")
+            #.      pass # Do nothing and continue to the next line of code
+            return "Success"
+        case 404:
+            return "Not Found"
+        case 500:
+            return "Server Error"
+        case _:
+            return "Unknown Status"  # Catch-all wildcard
+# case _: acts as the default fallback case if no other pattern matches.
+
+# 2. Combining Multiple PatternsYou can combine multiple values into a single case block using the pipe operator (|), which functions as a logical OR
+day = "Monday"
+match day:
+    case "Saturday" | "Sunday":
+        print("Weekend!")
+    case "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday":
+        print("Weekday")
+    case _:
+        print("Invalid day")
+# 3. Sequence UnpackingThe true strength of match-case comes from matching the structure of sequences like lists or tuples and binding their values to internal variables automatically
+def process_command(command):
+    match command.split():
+        case ["quit"]:
+            print("Exiting application...")
+        case ["go", direction]:
+            print(f"Moving toward the {direction}")
+        case ["teleport", x, y]:
+            print(f"Teleporting to coordinates: {x}, {y}")
+        case ["broadcast", *message]:
+            print(f"Sending message to all: {' '.join(message)}")
+        case _:
+            print("Command not recognized.")
+# ["go", direction] matches a 2-item sequence starting with "go" and binds the second item to direction.
+# *message uses extended unpacking to capture any remaining list elements.
+
+# 4. Adding Conditions with GuardsYou can append an if statement to a pattern to create a guard condition. The case will execute only if the pattern matches and the conditional expression evaluates to True
+def analyze_number(num):
+    match num:
+        case int() if num > 0:
+            print("Positive Integer")
+        case int() if num < 0:
+            print("Negative Integer")
+        case 0:
+            print("Zero")
+        case _:
+            print("Not an integer")
+
+# 5. Matching Dictionaries (Mappings)You can match specific keys inside dictionaries and bind their corresponding values to local variables
+user_action = {"action": "delete", "user_id": 458}
+match user_action:
+    case {"action": "delete", "user_id": id}:
+        print(f"Deleting user record for ID: {id}")
+    case {"action": "create", "role": role}:
+        print(f"Creating a new {role} profile.")
+# Dict matching succeeds even if the dictionary contains extra keys not specified in the case pattern for ex the user_action dict contains a key called 'action' but the case pattern is looking for 'action' and 'user_id'
 
 # ! Priority of operators 
 """ 
