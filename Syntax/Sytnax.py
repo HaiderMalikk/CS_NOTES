@@ -880,6 +880,9 @@ print(result)  # Output: 25
 class Person:
     # constructor method, a constructor is a special method that is called when a new object is created 
     # it initializes the object and sets its attributes, after the constrcutor we can use those attributes anywhere in the class
+    # ! NOTE: self is not reserved. For a normal instance method, Python passes the object instance as the first argument, and you can name it anything
+    # ex: def greet(banana): # first var is the class instance itself always.
+    #         print(banana.name) # assuming that greet is in a class with attr name this is the same as self.name (if we pass in self as arg to greet in line above
     def __init__(self, name): # self is the object itself, its a reference to the current instance of the class, name is a parameter passed in when creating the object
         self.name = name # self.name is an attribute of the object, it is equal to the name parameter passed in when creating the object
         # now we can refer to self.name anywhere in the class and it will hold the value of the name parameter
