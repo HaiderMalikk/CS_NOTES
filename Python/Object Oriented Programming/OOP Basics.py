@@ -525,6 +525,29 @@ wrapped_function = wrapper_function(original_function)
 result = wrapped_function(3, 5) 
 print("Result:", result)
 
+# * using wrapper function with class mentods
+def show_service(method):
+    # Note to ensure it works with function that have *args or *kwargs or both in their signature we add *args and **kwargs to the wrapper function's parameters
+    def wrapper(service, endpoint, *args, **kwargs): # the first argument is the instance of the class (self) it can be called self or any other name 
+        print("Service:", service.SERVICE) # same as self.SERVICE i.e ApiClient.SERVICE service is just a class var so it can be accessed via the instance as well
+        return method(service, endpoint, *args, **kwargs) # equivalent to calling get(service, endpoint) where service is same as self
+
+    return wrapper
+
+class ApiClient:
+    SERVICE = "le"
+
+    @show_service # self and any args are passed to the wrapper function
+    def get(self, endpoint, **kwargs):
+        print("Getting:", endpoint)
+        print("Additional arguments:", kwargs)
+
+client = ApiClient()
+client.get("/users") # this effectivly calles wrapper(client, "/users") where client is teh APiClient classes instance
+# output:
+# Service: le
+# Getting: /users
+
 """
 In this example, the wrapper_function acts as a wrapper around the original_function. It prints messages before and after 
 calling the original function, adding extra functionality. The wrapper_function takes the original function (func) as an argument, 
