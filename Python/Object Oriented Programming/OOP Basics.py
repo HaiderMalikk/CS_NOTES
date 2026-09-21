@@ -649,9 +649,11 @@ class MathUtility:
         return a + b
     # 3. Class Method
     # (Has access to 'cls', making it cleaner to update static vars)
+    # cls is the standard name for the first argument of a Python class method, representing the class itself rather than a specific object instance.
+    # You use cls to access or modify class-level data and to build alternative constructors (factory methods) that can create new objects.It acts as a dynamic reference to the class itself, ensuring that if a subclass inherits the method, cls automatically points to that subclass rather than the parent class.
     @classmethod
     def area_of_circle(cls, radius):
-        cls.calculation_count += 1
+        cls.calculation_count += 1 # cls points to MathUtility class itself NOTE: cls is a predefined var unlike with self you cannot use any var name cls must be cls
         return cls.PI * (radius ** 2)
 
 # --- (No instances created) ---
