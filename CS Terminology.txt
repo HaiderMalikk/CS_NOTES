@@ -518,3 +518,12 @@ deep[2][0] = 99
 
 print(original)  # [1, 2, [3, 4]] - original unchanged
 print(deep)      # [1, 2, [99, 4]]
+
+Magic Numbers
+===================
+- In programming, when you put a raw number or string directly into a calculation without explaining what it is, it is called a magic number (or hardcoded literal).
+// Is it tax? A discount? A processing fee? (BAD WAY magic number)
+let finalPrice = orderTotal - (orderTotal * 0.15);
+// The Good Way: Using a Named Constant javascript Now it is perfectly clear what the number does. (GOOD WAY nammed constant)
+const loyalty_discount_rate = 0.15;
+let finalPrice = orderTotal - (orderTotal * loyalty_discount_rate);
