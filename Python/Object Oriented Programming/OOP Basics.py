@@ -669,7 +669,6 @@ print(f"Area: {result2}")             # Output: Area: 28.27431
 print(MathUtility.calculation_count)  # Output: 2
 
 # --- (instances created use self to get instance specific stuff) ---
-
 # 1. Create two distinct instances.
 # Each instance represents a unique 'self' in your computer's memory.
 calc_A = MathUtility("Calculator A")
@@ -690,6 +689,36 @@ print(f"{calc_B.label}'s private history: {calc_B.history}")
 print(f"Global total math operations executed: {MathUtility.calculation_count}")
 # Output: Global total math operations executed: 5
 
+# * @property decorator
+# The @property decorator in Python turns a class method into a managed attribute, allowing you to access and change it using simple dot notation while running hidden validation or computation logic.
+# Its three main submethods (or behaviors) are the getter (to read the value), the setter (to validate and assign a new value), and the deleter (to run cleanup logic when deleting the attribute)
+class Product:
+    def __init__(self, price):
+        self.price = price  # This calls the setter automatically!
+    # 1. Getter: Runs when you read the attribute (e.g., x.price)
+    @property
+    def price(self):
+        print("Getting the price...")
+        return self._price
+    # 2. Setter: Runs when you assign a value (e.g., x.price = 50)
+    @price.setter
+    def price(self, value):
+        print("Setting the price...")
+        if value < 0:
+            raise ValueError("Price cannot be negative.")
+        self._price = value
+    # 3. Deleter: Runs when you delete the attribute (e.g., del x.price)
+    @price.deleter
+    def price(self):
+        print("Deleting the price...")
+        del self._price
+        
+# --- How to use it ---
+item = Product(100)  # Output: Setting the price...
+print(item.price)  # Output: Getting the price... \n 100
+item.price = 150  # Output: Setting the price...
+del item.price  # Output: Deleting the price...
+
 ## ! special methods Python provides special methods (also known as magic methods or dunder methods) 
 # that you can define in your classes to customize their behavior. For example, 
 # you can define __str__ to control how an object is represented as a string when using str()
@@ -703,6 +732,12 @@ class MyClass:
     # Equals magic method
     def __eq__(self, other):
         return self.value == other.value 
+
+# ex
+MyClass(5)
+# Both of these trigger the str method is there was none then prints something like __main__.MyClass object at 0x7f8b9c1d3e50>
+print(my_book)      
+text = str(my_book)
     
 # global vars vs class attr
 # global vaiables are global and so are shared by all instances of the class (or a module)
