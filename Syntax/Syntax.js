@@ -550,6 +550,10 @@ if ("street" in location) {
 // or 
 location.street === undefined ? console.log("DNE") : location.street = 'new street'; // since location.random would return undifined if random dose not exists 
 
+// using ! chaining 
+// if you know for sure that that for ex location has a city you can use ! This forces TypeScript to shut up and allow the code
+// but sometimes teh obj or our obj in this case may not have a city or it may be null which if it is unline ? it crashes and dose nto return undifined 
+console.log(location.city!.length) // better alt is to use location.city?.length
 
 // * Spread operator
 // The spread operator (...) is used to expand an iterable object into individual elements
