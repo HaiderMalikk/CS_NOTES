@@ -623,44 +623,70 @@ def slow_function(n):
 
 print(slow_function(2)) # this will print the time taken to execute the function slow_function 'print statement' and then 'Finished' the return value of the slow_function
 
-# * using static and class methods in python to get static methods in python
-class Example:
-    # Class variable (static variable)
-    counter = 0
-    
-    def __init__(self, name):
-        self.name = name
-        Example.counter += 1
-    
-    # Static method (a static method in a method that is not bound to a specific instance of a class)
-    # this means we can call this method before creating an instance of the class, to do so we use the classname.staticmethod
+# ! using static and class methods in python to get static methods in python with the use of decorators
+class MathUtility:
+    # 1. Static Variable
+    PI = 3.14159
+    calculation_count = 0
+    # NEW: Constructor to initialize instance-specific variables
+    def __init__(self, label):
+        self.label = label        # Unique name for this specific instance
+        self.history = []         # Unique list to track calculations for this instance only
+    # NEW: Instance Method (Uses 'self' to access object-specific data)
+    def track_and_add(self, a, b):
+        # 1. Use static method to do the heavy lifting
+        result = MathUtility.add(a, b) 
+        # 2. Use 'self' to save this specific calculation to THIS object's history
+        record = f"{a} + {b} = {result}"
+        self.history.append(record)
+        return result
+    # 2. Static Method 
+    # (No self, no cls. It behaves like a plain function)
     @staticmethod
-    def utility_function(x, y):
-        return x + y
-    
-    # Class method (a class method in a method that is bound to a specific instance of a class)
-    # this means we can call this method before creating an instance of the class, to do so we use the classname.classmethod
-    # but unlike static methods class methods can access class variables
+    def add(a, b):
+        # We can't use 'cls', so we must use the class name to update the static var
+        MathUtility.calculation_count += 1
+        return a + b
+    # 3. Class Method
+    # (Has access to 'cls', making it cleaner to update static vars)
     @classmethod
-    def get_count(cls):
-        return cls.counter
-    
-    # Regular instance method, we pass in self which means we must pass in an instance of the class my using dot notation
-    def greet(self):
-        return f"Hello, {self.name}!"
+    def area_of_circle(cls, radius):
+        cls.calculation_count += 1
+        return cls.PI * (radius ** 2)
 
-# Using class variable and methods
-a = Example("Alice")
-b = Example("Bob")
+# --- (No instances created) ---
+# Accessing the static variable directly
+print(MathUtility.PI)                 # Output: 3.14159
+# Calling the Static Method directly on the class
+result1 = MathUtility.add(5, 10)
+print(f"5 + 10 = {result1}")          # Output: 5 + 10 = 15
+# Calling the Class Method directly on the class
+result2 = MathUtility.area_of_circle(3)
+print(f"Area: {result2}")             # Output: Area: 28.27431
+# Checking how many times our "static utility" was used
+print(MathUtility.calculation_count)  # Output: 2
 
-# counter is a class variable but you dont need to create an instance of the class to access it (in a sense a static var)
-print(Example.counter)  # 2 as we made 2 instances a and b
-print(Example.utility_function(5, 3))  # 8 adds 2 numbers noo need to use a classes obj (instance) method is static
-print(Example.get_count())  # 2 retuens Example.counter but classmethods can access class variable
-print(a.greet())  # Hello, Alice! (must use a class obj method)
-# @staticmethod vs @classmethod: @staticmethod: Doesn’t access class or instance. @classmethod: Takes cls as first argument; can modify class state.
+# --- (instances created use self to get instance specific stuff) ---
 
-
+# 1. Create two distinct instances.
+# Each instance represents a unique 'self' in your computer's memory.
+calc_A = MathUtility("Calculator A")
+calc_B = MathUtility("Calculator B")
+# 2. Use Instance Methods on calc_A
+# Python secretly passes 'calc_A' into the 'self' argument behind the scenes.
+calc_A.track_and_add(10, 20)
+calc_A.track_and_add(100, 200)
+# 3. Use Instance Methods on calc_B
+# Python secretly passes 'calc_B' into the 'self' argument here instead.
+calc_B.track_and_add(7, 3)
+# 4. Check the results! Notice how 'self' kept their calculation histories completely separate.
+print(f"{calc_A.label}'s private history: {calc_A.history}")
+# Output: Calculator A's private history: ['10 + 20 = 30', '100 + 200 = 300']
+print(f"{calc_B.label}'s private history: {calc_B.history}")
+# Output: Calculator B's private history: ['7 + 3 = 10']
+# 5. Look at the shared global counter (Updated by both static, class, and instance methods)
+print(f"Global total math operations executed: {MathUtility.calculation_count}")
+# Output: Global total math operations executed: 5
 
 ## ! special methods Python provides special methods (also known as magic methods or dunder methods) 
 # that you can define in your classes to customize their behavior. For example, 
