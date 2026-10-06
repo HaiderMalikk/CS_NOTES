@@ -2140,6 +2140,24 @@ word = "unpack"
 *characters, = word # you must use the ',' after characters to make it a list otherwise it will be a string the , will add a ',' after characters making it a list. *list, has no effect as alredy a list
 print(characters)
 
+# * Unpacking Comprehention 
+lists = [[1, 2], [3, 4], [5]]
+x = [*L for L in lists]  # equivalent to [x for L in lists for x in L]
+print(x) # [1, 2, 3, 4, 5]
+
+sets = [{1, 2}, {2, 3}, {3, 4}]
+x = {*s for s in sets}  # equivalent to {x for s in sets for x in s}
+print(x) # {1, 2, 3, 4}
+
+dicts = [{'a': 1}, {'b': 2}, {'a': 3}]
+x = {**d for d in dicts}  # equivalent to {k: v for d in dicts for k,v in d.items()}
+print(x) # {'a': 3, 'b': 2}
+
+# generator unpacking 
+gen = (*L for L in lists)  # equivalent to (x for L in lists for x in L)
+x = list(gen)
+print(x) # [1, 2, 3, 4, 5]
+
 # *  4) using both of the * and ** operators for functions
 # this is used to define a function that takes both positional arguments(i.e arguments that are passed in the order they are defined) and keyword arguments (i.e arguments that are passed in by name)
 # here we do *args becuse we unpack all positional arguments into a tuple as we do **kwargs for the same thing but for keyword arguments we do ** beacuse its key value pairs like dictionaries
